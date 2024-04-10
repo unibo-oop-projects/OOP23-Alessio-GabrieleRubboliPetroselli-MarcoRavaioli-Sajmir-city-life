@@ -1,5 +1,6 @@
 # City-Simulation
-City simulation made via java for OOP project.
+City simulation made on java for OOP project.
+
 Email Components:
 
 • alessio.bifulco@studio.unibo.it
