@@ -11,8 +11,8 @@ public interface Person<S> {
     <S> getState();
     
     /**
-	 * @return the money holded by the person
-	 */
+     * @return the amount of money the person has
+     */
     int getMoney();
     
 }
