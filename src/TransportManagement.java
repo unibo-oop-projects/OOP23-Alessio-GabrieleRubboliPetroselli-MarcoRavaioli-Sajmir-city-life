@@ -13,6 +13,4 @@ public interface TransportManagement {
 	 */
     int getCapacity();
 
-
-
 }
