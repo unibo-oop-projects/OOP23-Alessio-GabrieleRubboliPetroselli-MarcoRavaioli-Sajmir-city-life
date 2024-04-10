@@ -1,4 +1,3 @@
-
 /**
  * An interface for modelling a person
  * 
