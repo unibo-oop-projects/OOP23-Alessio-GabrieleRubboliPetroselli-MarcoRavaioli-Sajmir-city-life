@@ -1,4 +1,4 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.person;
 /**
  * An interface for modelling a person
  * 

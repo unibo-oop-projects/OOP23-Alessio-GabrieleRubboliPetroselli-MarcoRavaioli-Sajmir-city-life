@@ -1,4 +1,4 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.transport;
 import java.util.List;
 /**
  * 
