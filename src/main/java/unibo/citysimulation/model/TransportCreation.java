@@ -1,3 +1,4 @@
+package unibo.citysimulation.model;
 import java.util.List;
 /**
  * 

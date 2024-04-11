@@ -1,3 +1,4 @@
+package unibo.citysimulation.model;
 /**
  * An interface for monitoring the state of transports.
  */

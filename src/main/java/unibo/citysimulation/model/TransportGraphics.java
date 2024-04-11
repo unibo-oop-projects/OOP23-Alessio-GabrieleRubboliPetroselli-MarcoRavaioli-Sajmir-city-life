@@ -1,3 +1,4 @@
+package unibo.citysimulation.model;
 /**
  * An interface for managing the graphical representation of transports.
  */
