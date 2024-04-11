@@ -1,17 +1,18 @@
-# Ignore files specific to Gradle
-.gradle
-build/
-
-# Ignore files specific to Visual Studio
-.vscode/
-*.suo
-*.user
-*.sln.docstates
-
-# Ignore compiled files
+# Compiled class file and directories
 *.class
+bin
+build
 
-# Ignore package files
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
 *.jar
 *.war
 *.nar
@@ -20,23 +21,20 @@ build/
 *.tar.gz
 *.rar
 
-# Ignore logs and other generated files
-*.log
-*.log.*
-logs/
-*.db
-*.sqlite
-*.sqlite3
-
-# Ignore OS-specific files
+# Editor and IDE #
+.vscode
+.idea
 .DS_Store
-Thumbs.db
 
-# Ignore Gradle GUI config
-gradle-app.setting
+# gradle #
+.gradle
 
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Cache of project
-.gradletasknamecache
+# Documentation #
+*.pdf
+*.aux
+*.bbl
+*.blg
+*.out
+*.gz
+*.toc
+*.bak
