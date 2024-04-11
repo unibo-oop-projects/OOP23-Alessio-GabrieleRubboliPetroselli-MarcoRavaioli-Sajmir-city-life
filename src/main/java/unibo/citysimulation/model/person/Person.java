@@ -9,7 +9,7 @@ public interface Person<S> {
     /**
 	 * @return the state of the person
 	 */
-    <S> getState();
+    S getState();
     
     /**
      * @return the amount of money the person has
