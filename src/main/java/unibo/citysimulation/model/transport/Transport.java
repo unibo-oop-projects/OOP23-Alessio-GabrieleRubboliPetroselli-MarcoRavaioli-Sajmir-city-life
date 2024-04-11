@@ -4,7 +4,7 @@ package unibo.citysimulation.model.transport;
  * 
  * 
  */
-public interface TransportManagement {
+public interface Transport {
     /**
 	 * @return the congestion of the transportLine
 	 */

@@ -4,7 +4,7 @@ import java.util.List;
  * 
  * An interface for creating transports.
  */
-public interface TransportCreation extends TransportManagement {
+public interface TransportCreation extends Transport {
     /**
      * Creates a new transport.
      *
