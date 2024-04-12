@@ -19,4 +19,9 @@ public class PersonImpl<S> implements Person<S> {
     public int getMoney() {
         return money;
     }
+
+    protected void setState(S state) {
+        this.state = state;
+    }
+    
 }
