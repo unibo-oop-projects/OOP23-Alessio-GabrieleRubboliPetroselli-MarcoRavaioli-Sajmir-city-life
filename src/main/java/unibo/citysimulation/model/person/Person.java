@@ -30,5 +30,10 @@ public interface Person<PersonState> {
      * @param state the new state of the person to set
      */
     void setState(PersonState state);
+
+    /**
+     * @param money the amount of money to sum/sub to the actual amount of money the person has
+     */
+    void setMoney(int money);
     
 }

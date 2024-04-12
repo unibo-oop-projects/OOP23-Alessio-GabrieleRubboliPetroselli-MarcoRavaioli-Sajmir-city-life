@@ -23,5 +23,10 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
     public void setState(PersonState state) {
         this.state = state;
     }
+
+    @Override
+    public void setMoney(int amount) {
+        this.money = this.money + amount;
+    }
     
 }
