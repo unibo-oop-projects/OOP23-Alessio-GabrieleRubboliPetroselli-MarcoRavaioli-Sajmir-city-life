@@ -1,17 +1,17 @@
 package unibo.citysimulation.model.person;
 
 
-public class PersonImpl<S> implements Person<S> {
-    private S state;
+public class PersonImpl<PersonState> implements Person<PersonState> {
+    private PersonState state;
     private int money;
 
-    public PersonImpl(S state, int money) {
+    public PersonImpl(PersonState state, int money) {
         this.state = state;
         this.money = money;
     }
 
     @Override
-    public S getState() {
+    public PersonState getState() {
         return state;
     }
 
@@ -20,7 +20,7 @@ public class PersonImpl<S> implements Person<S> {
         return money;
     }
 
-    protected void setState(S state) {
+    protected void setState(PersonState state) {
         this.state = state;
     }
     
