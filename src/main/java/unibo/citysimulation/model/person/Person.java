@@ -25,5 +25,10 @@ public interface Person<PersonState> {
      * @return the amount of money the person has
      */
     int getMoney();
+
+    /**
+     * @param state the new state of the person to set
+     */
+    void setState(PersonState state);
     
 }

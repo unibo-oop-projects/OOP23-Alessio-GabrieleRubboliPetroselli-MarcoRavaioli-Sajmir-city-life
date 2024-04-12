@@ -20,7 +20,7 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
         return money;
     }
 
-    protected void setState(PersonState state) {
+    public void setState(PersonState state) {
         this.state = state;
     }
     
