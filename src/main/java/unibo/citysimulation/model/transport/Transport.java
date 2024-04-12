@@ -6,11 +6,11 @@ package unibo.citysimulation.model.transport;
  */
 public interface Transport {
     /**
-	 * @return the congestion of the transportLine
+	 * @return the congestion of the transport Line
 	 */
     int getCongestion();
     /**
-	 * @return the capacity of the transportLine
+	 * @return the capacity of the transport Line
 	 */
     int getCapacity();
 
