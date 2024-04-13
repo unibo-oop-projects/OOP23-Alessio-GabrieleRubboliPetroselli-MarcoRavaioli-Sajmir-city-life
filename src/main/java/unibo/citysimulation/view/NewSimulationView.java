@@ -1,34 +1,50 @@
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+package unibo.citysimulation.view;
 
-public class NewSimulationView extends BorderPane {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+
+public class NewSimulationView extends JFrame {
 
     public NewSimulationView() {
+        setTitle("City Simulation");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 400);
+
         configureLayout();
         createComponents();
+
+        setVisible(true);
     }
 
     private void configureLayout() {
-        setPadding(new Insets(10));
+        setLayout(new BorderLayout());
     }
 
     private void createComponents() {
-        VBox leftPane = new VBox();
-        HBox topPane = new HBox();
-        HBox centerPane = new HBox();
-        VBox rightPane = new VBox();
+        JPanel topPanel = new JPanel(new FlowLayout());
+        JPanel leftPanel = new JPanel(new GridLayout(0, 1));
+        JPanel centerPanel = new JPanel(new FlowLayout());
+        JPanel rightPanel = new JPanel(new GridLayout(0, 1));
 
-        Button startButton = new Button("Start");
-        Button pauseButton = new Button("Pause");
-        Button stopButton = new Button("Stop");
+        JButton startButton = new JButton("Start");
+        JButton pauseButton = new JButton("Pause");
+        JButton stopButton = new JButton("Stop");
 
-        topPane.getChildren().addAll(startButton, pauseButton, stopButton);
-        setTop(topPane);
-        setLeft(leftPane);
-        setCenter(centerPane);
-        setRight(rightPane);
+        topPanel.add(startButton);
+        topPanel.add(pauseButton);
+        topPanel.add(stopButton);
+
+        add(topPanel, BorderLayout.NORTH);
+        add(leftPanel, BorderLayout.WEST);
+        add(centerPanel, BorderLayout.CENTER);
+        add(rightPanel, BorderLayout.EAST);
+    }
+
+    public static void main(String[] args) {
+        new NewSimulationView();
     }
 }
