@@ -1,19 +1,26 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Color;
 
 public class NewSimulationView extends JFrame {
 
     public NewSimulationView() {
-        setTitle("City Simulation");
+        setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
-
+        setLocationByPlatform(true);
+        setFocusable(true);
         configureLayout();
         createComponents();
 
@@ -22,13 +29,27 @@ public class NewSimulationView extends JFrame {
 
     private void configureLayout() {
         setLayout(new BorderLayout());
-    }
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize((int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE), 
+                (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE));
+        
+        // Aggiungi i pannelli laterali con colori diversi
+        JPanel leftPanel = new JPanel(new GridLayout(0, 1));
+        leftPanel.setBackground(Color.BLUE); // Imposta il colore blu per il pannello sinistro
+        leftPanel.add(new JLabel("Left Panel")); // Aggiungi una etichetta di testo al pannello sinistro
+        add(leftPanel, BorderLayout.WEST);
 
+        JPanel rightPanel = new JPanel(new GridLayout(0, 1));
+        rightPanel.setBackground(Color.RED); // Imposta il colore rosso per il pannello destro
+        rightPanel.add(new JLabel("Right Panel")); // Aggiungi una etichetta di testo al pannello destro
+        add(rightPanel, BorderLayout.EAST);
+
+    }
+    
     private void createComponents() {
         JPanel topPanel = new JPanel(new FlowLayout());
-        JPanel leftPanel = new JPanel(new GridLayout(0, 1));
         JPanel centerPanel = new JPanel(new FlowLayout());
-        JPanel rightPanel = new JPanel(new GridLayout(0, 1));
 
         JButton startButton = new JButton("Start");
         JButton pauseButton = new JButton("Pause");
@@ -39,9 +60,7 @@ public class NewSimulationView extends JFrame {
         topPanel.add(stopButton);
 
         add(topPanel, BorderLayout.NORTH);
-        add(leftPanel, BorderLayout.WEST);
         add(centerPanel, BorderLayout.CENTER);
-        add(rightPanel, BorderLayout.EAST);
     }
 
     public static void main(String[] args) {
