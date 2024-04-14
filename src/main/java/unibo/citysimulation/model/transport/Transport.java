@@ -1,4 +1,6 @@
 package unibo.citysimulation.model.transport;
+
+
 /**
  * An interface for modelling a person
  * 
@@ -13,5 +15,6 @@ public interface Transport {
 	 * @return the capacity of the transport Line
 	 */
     int getCapacity();
+
 
 }
