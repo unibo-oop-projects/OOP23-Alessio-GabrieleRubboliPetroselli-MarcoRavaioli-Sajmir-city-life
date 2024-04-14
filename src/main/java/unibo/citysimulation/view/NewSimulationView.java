@@ -1,6 +1,7 @@
 package unibo.citysimulation.view;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
+import unibo.citysimulation.view.map.MapPanel;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -49,19 +50,24 @@ public class NewSimulationView extends JFrame {
     
     private void createComponents() {
         JPanel topPanel = new JPanel(new FlowLayout());
-        JPanel centerPanel = new JPanel(new FlowLayout());
-
+        JPanel centerPanel = new JPanel(new BorderLayout()); // Cambiato il layout a BorderLayout per ospitare il MapPanel
+    
         JButton startButton = new JButton("Start");
         JButton pauseButton = new JButton("Pause");
         JButton stopButton = new JButton("Stop");
-
+    
         topPanel.add(startButton);
         topPanel.add(pauseButton);
         topPanel.add(stopButton);
-
+    
+        // Creazione e aggiunta del MapPanel al centro
+        MapPanel mapPanel = new MapPanel();
+        centerPanel.add(mapPanel, BorderLayout.CENTER);
+    
         add(topPanel, BorderLayout.NORTH);
         add(centerPanel, BorderLayout.CENTER);
     }
+    
 
     public static void main(String[] args) {
         new NewSimulationView();
