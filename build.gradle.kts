@@ -1,10 +1,9 @@
 plugins {
     // Apply the java plugin to add support for Java
-    java
+    id("java")
 
     // Apply the application plugin to add support for building a CLI application
-    // You can run your app via task "run": ./gradlew run
-    application
+    id("application")
 
     /*
      * Adds tasks to export a runnable jar.
@@ -13,6 +12,9 @@ plugins {
      */
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("org.danilopianini.gradle-java-qa") version "1.44.0"
+
+    // Add the JavaFX plugin
+    id("org.openjfx.javafxplugin") version "0.0.10"
 }
 
 repositories { // Where to search for dependencies
@@ -26,6 +28,8 @@ dependencies {
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
     implementation("com.omertron:API-OMDB:1.5")
     implementation("org.jooq:jool:0.9.15")
+    implementation("org.openjfx:javafx-controls:16")
+    implementation("org.openjfx:javafx-fxml:16")
 
     /*
      * Simple Logging Facade for Java (SLF4J) with Apache Log4j
