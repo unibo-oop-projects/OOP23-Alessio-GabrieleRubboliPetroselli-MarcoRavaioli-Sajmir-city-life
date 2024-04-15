@@ -1,19 +1,18 @@
 package unibo.citysimulation.view.map;
 
+import unibo.citysimulation.view.StyledPanel;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-public class MapPanel extends JPanel {
+public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
 
     public MapPanel() {
-        setLayout(new BorderLayout());
+        super(); // Chiama il costruttore di StyledPanel per applicare lo stile al pannello
 
         try {
             // Carica l'immagine usando un percorso relativo al classpath
@@ -27,9 +26,6 @@ public class MapPanel extends JPanel {
             e.printStackTrace();
             // Puoi gestire l'eccezione qui, ad esempio mostrando un messaggio di errore
         }
-
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
-        setBorder(new CompoundBorder(border, new EmptyBorder(10, 10, 10, 10)));
     }
 
     @Override
