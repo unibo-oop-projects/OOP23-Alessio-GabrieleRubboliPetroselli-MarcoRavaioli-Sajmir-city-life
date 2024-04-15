@@ -1,15 +1,17 @@
 package unibo.citylife;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import unibo.citysimulation.model.transport.Transport;
 import unibo.citysimulation.model.transport.TransportImpl;
+import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.transport.TransportStatus;
 import unibo.citysimulation.model.transport.Zone;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Test class for {@link TransportImpl}.
@@ -38,13 +40,14 @@ public class TransportImplTest {
         assertEquals(100, transport.getCapacity(), "The capacity of the transport must be 100");
         assertEquals(90, transport.getCongestion(), "The congestion of the transport must be 90");
 
-        // Verify that the status of the transport is NOT_IN_TRANSIT after adding a predefined line
-        assertEquals(TransportStatus.NON_IN_VIAGGIO, transport.getStatus(), "The status of the transport must be NOT_IN_TRANSIT");
+        // Verify that the transport line is empty after adding a predefined line
+        Optional<TransportLine> transportLineOptional = transport.getTransportLine();
+        assertFalse(transportLineOptional.isPresent(), "The transport line must not be present");
 
         // Adding a physical vehicle and verifying its association with the transport
         bus.addTransportVehicle("Bus", transport);
         Transport associatedTransport = bus.getTransportByVehicleName("Bus");
         assertEquals(transport, associatedTransport, "The associated transport must be the same as the one added");
-
     }
 }
+
