@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Implementation of the Transport interface representing a mode of transportation within the city simulation.
@@ -13,7 +14,7 @@ public class TransportImpl implements Transport {
     private int capacity;
     public Map<Zone, Map<Zone, List<Transport>>> predefinedLines;
     private Map<String, Transport> transportMap; // Map associating the name of the physical vehicle to the transport
-    private TransportStatus status; // Status of the transport
+    private TransportLine transportLine; // Instance representing the current transport line
 
     /**
      * Constructs a new TransportImpl instance with the specified congestion and capacity.
@@ -26,7 +27,6 @@ public class TransportImpl implements Transport {
         this.capacity = capacity;
         this.predefinedLines = new HashMap<>();
         this.transportMap = new HashMap<>();
-        this.status = TransportStatus.NON_IN_VIAGGIO; // Initialize status to NON_IN_VIAGGIO
     }
 
     /**
@@ -84,20 +84,20 @@ public class TransportImpl implements Transport {
     }
 
     /**
-     * Updates the status of the specified transport instance.
+     * Sets the current transport line.
      *
-     * @param status The new status of the transport.
+     * @param transportLine The transport line to set.
      */
-    public void setStatus(TransportStatus status) {
-        this.status = status;
+    public void setTransportLine(TransportLine transportLine) {
+        this.transportLine = transportLine;
     }
 
     /**
-     * Retrieves the current status of the transport.
+     * Retrieves the current transport line.
      *
-     * @return The current status of the transport.
+     * @return An Optional containing the current transport line if present, otherwise an empty Optional.
      */
-    public TransportStatus getStatus() {
-        return status;
+    public Optional<TransportLine> getTransportLine() {
+        return Optional.ofNullable(transportLine);
     }
 }
