@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.transport;
 
+import java.util.Optional;
+
 /**
  * An interface for modeling a transportation line.
  */
@@ -19,16 +21,16 @@ public interface Transport {
     int getCapacity();
 
     /**
-     * Sets the status of the transportation line.
+     * Sets the transport line associated with this transport.
      * 
-     * @param status the status to set for the transportation line
+     * @param transportLine the transport line to set
      */
-    void setStatus(TransportStatus status);
+    void setTransportLine(TransportLine transportLine);
 
     /**
-     * Gets the status of the transportation line.
+     * Gets the current transport line associated with this transport, if any.
      * 
-     * @return the status of the transportation line
+     * @return an Optional containing the current transport line, or an empty Optional if none is set
      */
-    TransportStatus getStatus();
+    Optional<TransportLine> getTransportLine();
 }
