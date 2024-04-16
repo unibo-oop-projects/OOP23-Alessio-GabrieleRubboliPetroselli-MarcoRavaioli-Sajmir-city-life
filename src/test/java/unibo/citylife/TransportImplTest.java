@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import unibo.citysimulation.model.transport.Transport;
 import unibo.citysimulation.model.transport.TransportImpl;
 import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.transport.TransportStatus;
 import unibo.citysimulation.model.transport.Zone;
 
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test class for {@link TransportImpl}.
@@ -48,6 +48,55 @@ public class TransportImplTest {
         bus.addTransportVehicle("Bus", transport);
         Transport associatedTransport = bus.getTransportByVehicleName("Bus");
         assertEquals(transport, associatedTransport, "The associated transport must be the same as the one added");
+    }
+    /**
+     * Test method for adding and removing vehicles from the transport line.
+     */
+    @Test
+    public void testVehicleAdditionAndRemoval() {
+        // Create a transport line
+        TransportLine transportLine = new TransportLine("Line 1", 10, 8, 20);
+
+        // Create a vehicle
+        Transport vehicle = new TransportImpl(80, 120);
+
+        // Add the vehicle to the transport line
+        transportLine.addVehicle(vehicle);
+
+        // Check if the vehicle was added successfully
+        assertTrue(transportLine.getVehicles().contains(vehicle), "The vehicle must be added to the transport line");
+
+        // Remove the vehicle from the transport line
+        boolean removed = transportLine.removeVehicle(vehicle);
+
+        // Check if the vehicle was removed successfully
+        assertTrue(removed, "The vehicle must be removed from the transport line");
+        assertFalse(transportLine.getVehicles().contains(vehicle), "The vehicle must not be present in the transport line");
+    }
+
+    /**
+     * Test method for calculating the average congestion level of the transport line.
+     */
+    @Test
+    public void testAverageCongestionCalculation() {
+        // Create a transport line
+        TransportLine transportLine = new TransportLine("Line 2", 15, 7, 21);
+
+        // Create vehicles with different congestion levels
+        Transport vehicle1 = new TransportImpl(90, 100);
+        Transport vehicle2 = new TransportImpl(70, 150);
+        Transport vehicle3 = new TransportImpl(80, 120);
+
+        // Add vehicles to the transport line
+        transportLine.addVehicle(vehicle1);
+        transportLine.addVehicle(vehicle2);
+        transportLine.addVehicle(vehicle3);
+
+        // Calculate the average congestion level
+        double averageCongestion = transportLine.calculateAverageCongestion();
+
+        // Verify the average congestion calculation
+        assertEquals((90 + 70 + 80) / 3.0, averageCongestion, "The average congestion level must be calculated correctly");
     }
 }
 
