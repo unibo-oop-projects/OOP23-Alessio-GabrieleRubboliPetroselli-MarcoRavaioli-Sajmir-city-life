@@ -12,5 +12,5 @@ public final class ConstantAndResourceLoader extends ClassLoader{
     /**
      * Screen size percentage
      */
-    public static final double SCREEN_SIZE_PERCENTAGE = 0.7;
+    public static final double SCREEN_SIZE_PERCENTAGE = 0.75;
 }
