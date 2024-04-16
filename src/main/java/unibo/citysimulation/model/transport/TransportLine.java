@@ -41,6 +41,42 @@ public class TransportLine {
     public boolean removeVehicle(Transport vehicle) {
         return vehicles.remove(vehicle);
     }
+    // Method to get the list of vehicles in the transport line
+    public List<Transport> getVehicles() {
+        return vehicles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getServiceFrequency() {
+        return serviceFrequency;
+    }
+
+    public void setServiceFrequency(int serviceFrequency) {
+        this.serviceFrequency = serviceFrequency;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
+
+    public void setStartHour(int startHour) {
+        this.startHour = startHour;
+    }
+
+    public int getEndHour() {
+        return endHour;
+    }
+
+    public void setEndHour(int endHour) {
+        this.endHour = endHour;
+    }
 
     /**
      * Calculates the average congestion level of the vehicles in the transport line.
