@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ClockPanel extends StyledPanel {
-    public ClockPanel() { 
-        setBackground(Color.PINK);
+    public ClockPanel(Color bgColor) {
+        super(bgColor);
 
         // Crea una JLabel con il testo desiderato
         JLabel label = new JLabel("CLOCKPANEL", SwingConstants.CENTER); // Allinea il testo al centro

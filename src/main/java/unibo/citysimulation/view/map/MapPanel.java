@@ -12,7 +12,7 @@ public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
 
     public MapPanel() {
-        super(); // Chiama il costruttore di StyledPanel per applicare lo stile al pannello
+        super(bgColor); // Chiama il costruttore di StyledPanel per applicare lo stile al pannello
 
         try {
             // Carica l'immagine usando un percorso relativo al classpath

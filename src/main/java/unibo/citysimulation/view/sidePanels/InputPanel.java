@@ -6,9 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InputPanel extends StyledPanel {
-    public InputPanel() {
-        setBackground(Color.RED);
-        setLayout(new BorderLayout()); // Imposta il layout del pannello a BorderLayout
+    public InputPanel(Color bgColor) {
+        super(bgColor);
+        
+        
 
         // Crea una JLabel con il testo desiderato
         JLabel label = new JLabel("INPUTPANEL", SwingConstants.CENTER); // Allinea il testo al centro

@@ -6,8 +6,8 @@ import unibo.citysimulation.view.StyledPanel;
 import javax.swing.*;
 import java.awt.*;
 public class InfoPanel extends StyledPanel{
-    public InfoPanel() { 
-        setBackground(Color.GREEN);
+    public InfoPanel(Color bgColor) { 
+        super(bgColor);
 
         // Crea una JLabel con il testo desiderato
         JLabel label = new JLabel("INFOPANEL", SwingConstants.CENTER); // Allinea il testo al centro

@@ -6,8 +6,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GraphicsPanel extends StyledPanel {
-    public GraphicsPanel() {
-        setBackground(Color.BLUE);
+    public GraphicsPanel(Color bgColor) {
+        super(bgColor);
 
         // Crea una JLabel con il testo desiderato
         JLabel label = new JLabel("GRAPHICSPANEL", SwingConstants.CENTER); // Allinea il testo al centro

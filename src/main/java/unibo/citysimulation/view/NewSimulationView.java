@@ -38,7 +38,6 @@ public class NewSimulationView extends JFrame {
 
         // Aggiungi il pannello della mappa al centro
         MapPanel mapPanel = new MapPanel();
-        mapPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(mapPanel, BorderLayout.CENTER);
 
         //Aggiungi i pannelli laterali
@@ -48,14 +47,13 @@ public class NewSimulationView extends JFrame {
     private void createSidePanels() {
         // Creazione del pannello sinistro superiore con due sottopannelli di colore diverso
         JPanel leftPanel = new JPanel(new GridLayout(2, 1));
-        leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        leftPanel.add(new InputPanel(), BorderLayout.CENTER);
-        leftPanel.add(new InfoPanel(), BorderLayout.SOUTH);
+        leftPanel.add(new InputPanel(Color.BLUE), BorderLayout.CENTER);
+        leftPanel.add(new InfoPanel(Color.GREEN), BorderLayout.SOUTH);
 
         // Creazione del pannello destro superiore con due sottopannelli di colore diverso
         JPanel rightPanel = new JPanel(new GridLayout(2, 1));
-        rightPanel.add(new ClockPanel(), BorderLayout.NORTH);
-        rightPanel.add(new GraphicsPanel(), BorderLayout.CENTER);
+        rightPanel.add(new ClockPanel(Color.PINK), BorderLayout.NORTH);
+        rightPanel.add(new GraphicsPanel(Color.RED), BorderLayout.CENTER);
 
         // Aggiunta dei pannelli laterali al frame
         add(leftPanel, BorderLayout.WEST);
