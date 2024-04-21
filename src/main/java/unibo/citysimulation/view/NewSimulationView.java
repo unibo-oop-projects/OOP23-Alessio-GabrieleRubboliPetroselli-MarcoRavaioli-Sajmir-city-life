@@ -1,5 +1,6 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class NewSimulationView extends JFrame {
+    InfoPanel infoPanel = new InfoPanel(Color.GREEN);
 
     public NewSimulationView() {
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
@@ -35,9 +37,10 @@ public class NewSimulationView extends JFrame {
     }
 
     private void createComponents() {
+        MapModel mapModel = new MapModel();
 
         // Aggiungi il pannello della mappa al centro
-        MapPanel mapPanel = new MapPanel();
+        MapPanel mapPanel = new MapPanel(mapModel, infoPanel);
         add(mapPanel, BorderLayout.CENTER);
 
         //Aggiungi i pannelli laterali
@@ -48,7 +51,7 @@ public class NewSimulationView extends JFrame {
         // Creazione del pannello sinistro superiore con due sottopannelli di colore diverso
         JPanel leftPanel = new JPanel(new GridLayout(2, 1));
         leftPanel.add(new InputPanel(Color.BLUE), BorderLayout.CENTER);
-        leftPanel.add(new InfoPanel(Color.GREEN), BorderLayout.SOUTH);
+        leftPanel.add(infoPanel, BorderLayout.SOUTH);
 
         // Creazione del pannello destro superiore con due sottopannelli di colore diverso
         JPanel rightPanel = new JPanel(new GridLayout(2, 1));

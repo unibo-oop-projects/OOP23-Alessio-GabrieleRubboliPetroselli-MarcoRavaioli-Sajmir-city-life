@@ -6,6 +6,8 @@ import unibo.citysimulation.view.StyledPanel;
 import javax.swing.*;
 import java.awt.*;
 public class InfoPanel extends StyledPanel{
+    private JLabel coordinates = new JLabel("Coordinates: (x, y)", SwingConstants.CENTER);
+
     public InfoPanel(Color bgColor) { 
         super(bgColor);
 
@@ -15,5 +17,11 @@ public class InfoPanel extends StyledPanel{
         
         // Aggiungi la JLabel al pannello al centro
         add(label, BorderLayout.CENTER);
+
+        add(coordinates, BorderLayout.SOUTH);
+    }
+
+    public void setCoordinates(int x, int y){
+        coordinates.setText("Coordinates: (" + x + ", " + y + ")");
     }
 }
