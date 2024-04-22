@@ -20,12 +20,13 @@ repositories { // Where to search for dependencies
 }
 
 dependencies {
-    // Suppressions for SpotBugs
+    // Suppressions for SpotBugs 
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.4")
 
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
     implementation("com.omertron:API-OMDB:1.5")
     implementation("org.jooq:jool:0.9.15")
+    
 
     /*
      * Simple Logging Facade for Java (SLF4J) with Apache Log4j
@@ -41,6 +42,9 @@ dependencies {
     // when dependencies share the same version, grouping in a val helps to keep them in sync
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+
+    // JFreeChart for creating plots
+    implementation("org.jfree:jfreechart:1.5.0")
 }
 
 application {
