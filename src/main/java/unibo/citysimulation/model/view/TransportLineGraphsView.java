@@ -2,119 +2,108 @@ package unibo.citysimulation.model.view;
 
 import javax.swing.*;
 import java.awt.*;
+import org.jfree.data.xy.XYSeries; // Import the XYSeries class
+import org.jfree.chart.ChartFactory;
 
-/**
- * A JFrame class for displaying transport line graphs.
- */
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+ 
 public class TransportLineGraphsView extends JFrame {
-
-    /**
-     * Constructs a new instance of TransportLineGraphsView.
-     */
+    private JPanel leftPanel;
+    private JPanel rightPanel;
+    private JPanel centerPanel;
+ 
     public TransportLineGraphsView() {
         setTitle("Transport Line Graphs");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setFocusable(true);
-        setPreferredSize(new Dimension(1000, 600)); // Set the preferred size of the window
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Make the window full screen
         configureLayout();
         createComponents();
-        pack(); // Resize the window based on the components
         setVisible(true);
     }
-
+ 
     /**
      * Configures the layout of the frame.
      */
     private void configureLayout() {
-        setLayout(new BorderLayout());
+        setLayout(new GridBagLayout());
     }
-
+ 
     /**
      * Creates the components of the frame.
      */
     private void createComponents() {
-        // Main panel divided into three sections
-        JPanel mainPanel = new JPanel(new BorderLayout());
-
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weighty = 1.0; // Set the weight to 100% of the total height
+ 
+        // Left panel with "Capacity" and "Data" panels
+        leftPanel = new JPanel(new GridBagLayout());
+        leftPanel.setBackground(Color.RED);
+ 
+        XYSeries series = new XYSeries("Data");
+ 
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            "Title",
+            "X-Axis",
+            "Y-Axis",
+            null,
+            PlotOrientation.VERTICAL,
+            true,
+            true,
+            false
+        );
+        ChartPanel chartPanel = new ChartPanel(chart);
+ 
+        leftPanel.add(chartPanel, gbc);
+ 
+        JPanel capacityPanel = new JPanel();
+        capacityPanel.setBackground(Color.GREEN);
+        capacityPanel.setBorder(BorderFactory.createTitledBorder("Capacity"));
+        gbc.weightx = 0.2;  // Set the weight to 20% of the total width
+        gbc.fill = GridBagConstraints.BOTH;
+        leftPanel.add(capacityPanel, gbc);
+ 
+        gbc.weightx = 0.2;  // Reset the weight
+        gbc.fill = GridBagConstraints.BOTH;
+        add(leftPanel, gbc);
+ 
         // Central panel for the main graphs
-        JPanel centerPanel = new JPanel(); // Empty panel for white space
+        centerPanel = new JPanel(); // Empty panel for white space
         centerPanel.setBackground(Color.WHITE);
-
-        // Left panel for "Info" and "Clock" panels
-        JPanel leftPanel = new JPanel(new GridLayout(2, 1));
-        leftPanel.add(createInfoPanel());
-        leftPanel.add(createClockPanel());
-
-        // Right panel for secondary graphs "Capacity" and "Congestion"
-        JPanel rightPanel = new JPanel(new GridLayout(2, 1));
-        rightPanel.add(createGraphPanel("Capacity", Color.BLUE));
-        rightPanel.add(createGraphPanel("Congestion", Color.GREEN));
-
-        // Add the central panel to the main panel
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
-
-        // Add the side panels to the main panel
-        mainPanel.add(leftPanel, BorderLayout.WEST);
-        mainPanel.add(rightPanel, BorderLayout.EAST);
-
-        // Add the main panel to the frame
-        add(mainPanel, BorderLayout.CENTER);
+        gbc.gridx = 1;
+        gbc.weightx = 0.6;  // Set the weight to 60% of the total width
+        add(centerPanel, gbc);
+ 
+        // Right panel with "Congestion" and "Time" panels
+        rightPanel = new JPanel(new GridLayout(2, 1));
+        rightPanel.setBackground(Color.BLACK);
+ 
+        JPanel congestionPanel = new JPanel();
+        congestionPanel.setBackground(Color.BLUE);
+        congestionPanel.setBorder(BorderFactory.createTitledBorder("Congestion"));
+        rightPanel.add(congestionPanel);
+ 
+        JPanel timePanel = new JPanel();
+        timePanel.setBackground(Color.YELLOW);
+        timePanel.setBorder(BorderFactory.createTitledBorder("Time"));
+        rightPanel.add(timePanel);
+ 
+        gbc.gridx = 2;
+        gbc.weightx = 0.2;  // Set the weight to 20% of the total width
+        add(rightPanel, gbc);
     }
-
-    /**
-     * Creates the "Info" panel on the left side.
-     *
-     * @return The "Info" panel.
-     */
-    private JPanel createInfoPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel titleLabel = new JLabel("Info");
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(titleLabel, BorderLayout.NORTH);
-        panel.setBackground(Color.YELLOW); // Change the color as desired
-        panel.setPreferredSize(new Dimension(150, 600)); // Increase the width of the left panel
-        return panel;
-    }
-
-    /**
-     * Creates the "Clock" panel on the left side.
-     *
-     * @return The "Clock" panel.
-     */
-    private JPanel createClockPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel titleLabel = new JLabel("Clock");
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(titleLabel, BorderLayout.NORTH);
-        panel.setBackground(Color.ORANGE); // Change the color as desired
-        panel.setPreferredSize(new Dimension(150, 600)); // Increase the width of the left panel
-        return panel;
-    }
-
-    /**
-     * Creates a graph panel with the specified title and color on the right side.
-     *
-     * @param title The title of the graph panel.
-     * @param color The background color of the graph panel.
-     * @return The graph panel.
-     */
-    private JPanel createGraphPanel(String title, Color color) {
-        JPanel panel = new JPanel(new BorderLayout());
-        JLabel titleLabel = new JLabel(title);
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(titleLabel, BorderLayout.NORTH);
-        panel.setBackground(color);
-        panel.setPreferredSize(new Dimension(200, 600)); // Increase the width of the right panel
-        return panel;
-    }
-
-    /**
-     * Main method to launch the application.
-     *
-     * @param args The command-line arguments.
-     */
+ 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(TransportLineGraphsView::new);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new TransportLineGraphsView();
+            }
+        });
     }
 }
