@@ -4,7 +4,15 @@ package unibo.citysimulation.model.business;
  * Interface representing financial aspects of a business entity.
  */
 public interface BusinessFinancial {
-    // This interface is currently empty. Additional methods related to financial
-    // operations of the business can be added in the future.
-}
+    // Method to calculate the total income
+    double calculateIncome();
 
+    // Method to calculate the cost of personnel
+    double calculatePersonnelCost();
+
+    // Method to calculate profit
+    double calculateProfit();
+
+    // Method to check if the business made a profit or a loss
+    boolean isProfit();
+}
