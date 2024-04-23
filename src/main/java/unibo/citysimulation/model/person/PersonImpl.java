@@ -54,11 +54,11 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
     }
 
     public TransportLine getTransportLine() {
-        return linesMatrix[residenceZone.getName()][business.getZone().getName()];
+        return linesMatrix[residenceZone.getName()][getBusinessZone().getName()];
     }
 
     public boolean checkTimeToGoToWork() {
-        return clock == business.getOpeningTime() - getTransportLine.getDuration();
+        return clock == business.getOpeningTime() - getTransportLine().getDuration();
     }
     
 }
