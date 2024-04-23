@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 
 public class PersonImpl<PersonState> implements Person<PersonState> {
-    private String name;
+    private String name;aaaaa
     private PersonState state;
     private int money;
     private Business business;
