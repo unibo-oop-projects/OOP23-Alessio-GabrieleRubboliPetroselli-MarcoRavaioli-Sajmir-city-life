@@ -12,13 +12,14 @@ public class TransportLine {
     private int startHour; // Starting hour of service
     private int endHour; // Ending hour of service
     private int personInLine=0;
+    private int durationLine; // Duration Line in minutes
 
-    public TransportLine(String name, int serviceFrequency, int startHour, int endHour,int capacity) {
+    public TransportLine(String name, int startHour, int endHour,int capacity,int durationLine) {
         this.name = name;
         this.startHour = startHour;
         this.endHour = endHour;
         this.capacity=capacity;
-    
+        this.durationLine=durationLine;
     }
 
     // Getter and setter methods for other fields, if needed
