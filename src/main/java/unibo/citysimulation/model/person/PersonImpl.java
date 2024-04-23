@@ -1,11 +1,15 @@
 package unibo.citysimulation.model.person;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class PersonImpl<PersonState> implements Person<PersonState> {
     private PersonState state;
     private int money;
     private Business business;
     private Zone residenceZone;
+    private Clock clock;
 
 
 
@@ -14,6 +18,7 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
         this.money = money;
         this.business = business;
         this.residenceZone = residenceZone;
+        this.clock = new Clock();
     }
 
     @Override
@@ -37,6 +42,10 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
 
     public Business getBusiness() {
         return business;
+    }
+
+    public boolean checkTimeToGoToWork() {
+        return 
     }
     
 }
