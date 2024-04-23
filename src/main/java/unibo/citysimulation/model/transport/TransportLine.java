@@ -7,44 +7,23 @@ import java.util.List;
  * Represents a transport line within the city simulation.
  */
 public class TransportLine {
+    private int capacity;
     private String name;
-    private List<Transport> vehicles;
-    private int serviceFrequency; // Frequency of service in minutes
     private int startHour; // Starting hour of service
     private int endHour; // Ending hour of service
+    private int personInLine=0;
 
-    public TransportLine(String name, int serviceFrequency, int startHour, int endHour) {
+    public TransportLine(String name, int serviceFrequency, int startHour, int endHour,int capacity) {
         this.name = name;
-        this.serviceFrequency = serviceFrequency;
         this.startHour = startHour;
         this.endHour = endHour;
-        this.vehicles = new ArrayList<>();
+        this.capacity=capacity;
+    
     }
 
     // Getter and setter methods for other fields, if needed
 
-    /**
-     * Adds a vehicle to the transport line.
-     * 
-     * @param vehicle The vehicle to add.
-     */
-    public void addVehicle(Transport vehicle) {
-        vehicles.add(vehicle);
-    }
 
-    /**
-     * Removes a vehicle from the transport line.
-     * 
-     * @param vehicle The vehicle to remove.
-     * @return true if the vehicle was successfully removed, false otherwise.
-     */
-    public boolean removeVehicle(Transport vehicle) {
-        return vehicles.remove(vehicle);
-    }
-    // Method to get the list of vehicles in the transport line
-    public List<Transport> getVehicles() {
-        return vehicles;
-    }
 
     public String getName() {
         return name;
@@ -53,15 +32,6 @@ public class TransportLine {
     public void setName(String name) {
         this.name = name;
     }
-
-    public int getServiceFrequency() {
-        return serviceFrequency;
-    }
-
-    public void setServiceFrequency(int serviceFrequency) {
-        this.serviceFrequency = serviceFrequency;
-    }
-
     public int getStartHour() {
         return startHour;
     }
@@ -78,21 +48,4 @@ public class TransportLine {
         this.endHour = endHour;
     }
 
-    /**
-     * Calculates the average congestion level of the vehicles in the transport line.
-     * 
-     * @return The average congestion level.
-     */
-    public double calculateAverageCongestion() {
-        if (vehicles.isEmpty()) {
-            return 0.0; // Return 0 if there are no vehicles in the line
-        }
-
-        int totalCongestion = 0;
-        for (Transport vehicle : vehicles) {
-            totalCongestion += vehicle.getCongestion();
-        }
-
-        return (double) totalCongestion / vehicles.size();
-    }
 }
