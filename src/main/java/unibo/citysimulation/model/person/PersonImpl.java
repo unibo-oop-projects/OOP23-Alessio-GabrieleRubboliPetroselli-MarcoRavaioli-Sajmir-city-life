@@ -4,6 +4,7 @@ package unibo.citysimulation.model.person;
 public class PersonImpl<PersonState> implements Person<PersonState> {
     private PersonState state;
     private int money;
+    
 
     public PersonImpl(PersonState state, int money) {
         this.state = state;
