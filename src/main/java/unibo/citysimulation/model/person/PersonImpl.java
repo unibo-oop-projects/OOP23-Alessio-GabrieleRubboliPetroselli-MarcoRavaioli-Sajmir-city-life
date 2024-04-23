@@ -44,8 +44,20 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
         return business;
     }
 
+    public Zone getResidenceZone() {
+        return residenceZone;
+    }
+
+    public Zone getBusinessZone() {
+        return business.getZone();
+    }
+
+    public TransportLine getTransportLine() {
+        return linesMatrix[residenceZone.getName()][business.getZone().getName()];
+    }
+
     public boolean checkTimeToGoToWork() {
-        return 
+        return clock == business.getOpeningTime() - getTransportLine.getDuration();
     }
     
 }
