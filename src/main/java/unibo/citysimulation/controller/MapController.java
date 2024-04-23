@@ -8,11 +8,9 @@ import unibo.citysimulation.view.sidePanels.InfoPanel;
 //import java.awt.event.MouseEvent;
 
 public class MapController {
-    private MapModel model;
     private InfoPanel infoPanel;
 
     public MapController(MapModel model, InfoPanel infoPanel) {
-        this.model = model;
         this.infoPanel = infoPanel;
 
         // Aggiungi il listener del mouse alla mappa

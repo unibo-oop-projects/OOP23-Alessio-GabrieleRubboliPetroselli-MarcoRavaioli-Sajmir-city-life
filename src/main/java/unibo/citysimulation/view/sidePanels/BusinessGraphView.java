@@ -1,8 +1,7 @@
-package unibo.citysimulation.model.view;
+package unibo.citysimulation.view.sidePanels;
 
 import javax.swing.*;
 import java.awt.*;
-import org.jfree.data.xy.XYSeries; // Import the XYSeries class
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -43,8 +42,6 @@ public class BusinessGraphView extends JFrame {
         // Left panel with "Capacity" and "Data" panels
         leftPanel = new JPanel(new GridBagLayout());
         leftPanel.setBackground(Color.RED);
-
-        XYSeries series = new XYSeries("Data");
 
         JFreeChart chart = ChartFactory.createXYLineChart(
             "Title",
