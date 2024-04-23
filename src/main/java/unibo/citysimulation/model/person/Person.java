@@ -2,18 +2,38 @@ package unibo.citysimulation.model.person;
 /**
  * An interface for modelling a person
  * 
- * @param S, the state of the person
+ * @param PersonState, the state of the person
  */
-public interface Person<S> {
+public interface Person<PersonState> {
+
+
+    /**
+	 * The three standard states of a person
+	 */
+    enum PersonState {
+        MOVING,
+        WORKING,
+        AT_HOME
+    }
 
     /**
 	 * @return the state of the person
 	 */
-    S getState();
+    PersonState getState();
     
     /**
      * @return the amount of money the person has
      */
     int getMoney();
+
+    /**
+     * @param state the new state of the person to set
+     */
+    void setState(PersonState state);
+
+    /**
+     * @param money the amount of money to sum/sub to the actual amount of money the person has
+     */
+    void setMoney(int money);
     
 }
