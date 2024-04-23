@@ -5,6 +5,6 @@ package unibo.citysimulation.model.business;
  */
 public interface BusinessGraphic {
     // Method to draw the business at a certain position
-    void drawAtPosition(Position position);
+    //void drawAtPosition(Position position);
 }
 

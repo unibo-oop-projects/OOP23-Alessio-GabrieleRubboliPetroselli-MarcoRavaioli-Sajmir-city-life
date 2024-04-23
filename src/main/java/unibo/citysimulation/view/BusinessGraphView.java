@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.view;
+package unibo.citysimulation.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,7 +96,7 @@ public class BusinessGraphView extends JFrame {
         gbc.weightx = 0.2;  // Set the weight to 20% of the total width
         add(rightPanel, gbc);
     }
-
+    /* 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -105,4 +105,6 @@ public class BusinessGraphView extends JFrame {
             }
         });
     }
+
+    */
 }
