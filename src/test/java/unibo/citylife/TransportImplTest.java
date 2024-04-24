@@ -3,14 +3,14 @@ package unibo.citylife;
 import org.junit.jupiter.api.Test;
 import unibo.citysimulation.model.transport.Transport;
 import unibo.citysimulation.model.transport.TransportImpl;
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.transport.Zone;
+
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
