@@ -53,16 +53,6 @@ public class WindowView extends JFrame {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));
         pack();
-/*
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-
-        int screenHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
-        int screenWidth = screenHeight * 2;
-
-        setSize(screenWidth, screenHeight);*/
     }
 
     private void createComponents() {
@@ -79,43 +69,35 @@ public class WindowView extends JFrame {
     private void createSidePanels() {
 
         int sidePanelWidth = getSize().width / 4;
-        
+        int sidePanelsHeight = getSize().height;
 
-        GridBagLayout layout = new GridBagLayout();
-
-        JPanel leftPanel = new JPanel(layout);
+        JPanel leftPanel = new JPanel(new GridBagLayout());
+        JPanel rightPanel = new JPanel(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1;
-        constraints.weighty = 0.75;
+        
 
-        inputPanel.setPreferredSize(new Dimension(sidePanelWidth, getSize().height / 4 * 3));
+        constraints.gridy = 0;
+        constraints.weighty = 0.75;
+        inputPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 4 * 3));
         leftPanel.add(inputPanel, constraints);
 
         constraints.gridy = 1;
         constraints.weighty = 0.25;
-
-        infoPanel.setPreferredSize(new Dimension(sidePanelWidth, getSize().height / 4));
-        leftPanel.add(infoPanel, constraints);
-
-
-        layout = new GridBagLayout();
+        infoPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 4));
+        leftPanel.add(infoPanel, constraints);        
         
-        JPanel rightPanel = new JPanel(layout);
 
-        constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 1;
+        constraints.gridy = 0;
         constraints.weighty = 0.125;
-        
-        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, getHeight() / 8));
+        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8));
         rightPanel.add(clockPanel, constraints);
 
         constraints.gridy = 1;
         constraints.weighty = 0.875;
-
-        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, getHeight() / 8 * 7));
+        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8 * 7));
         rightPanel.add(graphicsPanel, constraints);
 
         

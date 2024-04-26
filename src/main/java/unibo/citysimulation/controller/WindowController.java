@@ -33,9 +33,9 @@ public class WindowController {
             model.setWidth(newWidth);
             model.setHeight(newHeight);
             view.setPreferredSize(new Dimension(newWidth, newHeight));
-
-            view.updatePanelSize();
             view.pack();
+            view.updatePanelSize();
+            
         }        
     }
     
