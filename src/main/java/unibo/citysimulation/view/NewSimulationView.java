@@ -1,69 +1,66 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
+import unibo.citysimulation.view.map.MapPanel;
+import unibo.citysimulation.view.sidePanels.InfoPanel;
+import unibo.citysimulation.view.sidePanels.InputPanel;
+import unibo.citysimulation.view.sidePanels.ClockPanel;
+import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 
 public class NewSimulationView extends JFrame {
+    InfoPanel infoPanel = new InfoPanel(Color.GREEN);
 
     public NewSimulationView() {
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
         setLocationByPlatform(true);
         setFocusable(true);
         configureLayout();
         createComponents();
-
         setVisible(true);
     }
 
     private void configureLayout() {
         setLayout(new BorderLayout());
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize((int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE), 
+        setSize((int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE),
                 (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE));
-        
-        // Aggiungi i pannelli laterali con colori diversi
-        JPanel leftPanel = new JPanel(new GridLayout(0, 1));
-        leftPanel.setBackground(Color.BLUE); // Imposta il colore blu per il pannello sinistro
-        leftPanel.add(new JLabel("Left Panel")); // Aggiungi una etichetta di testo al pannello sinistro
-        add(leftPanel, BorderLayout.WEST);
-
-        JPanel rightPanel = new JPanel(new GridLayout(0, 1));
-        rightPanel.setBackground(Color.RED); // Imposta il colore rosso per il pannello destro
-        rightPanel.add(new JLabel("Right Panel")); // Aggiungi una etichetta di testo al pannello destro
-        add(rightPanel, BorderLayout.EAST);
-
+        /*
+        Container pane = getContentPane();
+        pane.setLayout(null);
+        pane.setBackground(Color.LIGHT_GRAY);*/
     }
-    
+
     private void createComponents() {
-        JPanel topPanel = new JPanel(new FlowLayout());
-        JPanel centerPanel = new JPanel(new FlowLayout());
+        MapModel mapModel = new MapModel();
 
-        JButton startButton = new JButton("Start");
-        JButton pauseButton = new JButton("Pause");
-        JButton stopButton = new JButton("Stop");
+        // Aggiungi il pannello della mappa al centro
+        MapPanel mapPanel = new MapPanel(mapModel, infoPanel);
+        add(mapPanel, BorderLayout.CENTER);
 
-        topPanel.add(startButton);
-        topPanel.add(pauseButton);
-        topPanel.add(stopButton);
-
-        add(topPanel, BorderLayout.NORTH);
-        add(centerPanel, BorderLayout.CENTER);
+        //Aggiungi i pannelli laterali
+        createSidePanels();
     }
 
-    public static void main(String[] args) {
-        new NewSimulationView();
+    private void createSidePanels() {
+        // Creazione del pannello sinistro superiore con due sottopannelli di colore diverso
+        JPanel leftPanel = new JPanel(new GridLayout(2, 1));
+        leftPanel.add(new InputPanel(Color.BLUE), BorderLayout.CENTER);
+        leftPanel.add(infoPanel, BorderLayout.SOUTH);
+
+        // Creazione del pannello destro superiore con due sottopannelli di colore diverso
+        JPanel rightPanel = new JPanel(new GridLayout(2, 1));
+        rightPanel.add(new ClockPanel(Color.PINK), BorderLayout.NORTH);
+        rightPanel.add(new GraphicsPanel(Color.RED), BorderLayout.CENTER);
+
+        // Aggiunta dei pannelli laterali al frame
+        add(leftPanel, BorderLayout.WEST);
+        add(rightPanel, BorderLayout.EAST);
     }
+
 }
