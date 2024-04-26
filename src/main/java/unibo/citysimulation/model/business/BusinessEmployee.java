@@ -3,7 +3,7 @@ package unibo.citysimulation.model.business;
 /**
  * Interface representing employee-related aspects of a business entity.
  */
-public interface BusinessEmployee {
+/*public interface BusinessEmployee {
     // Method to hire an employee
     void hire(Employee employee);
 
@@ -23,3 +23,4 @@ public interface BusinessEmployee {
     Employee getEmployeeById(int id);
     
 }
+*/

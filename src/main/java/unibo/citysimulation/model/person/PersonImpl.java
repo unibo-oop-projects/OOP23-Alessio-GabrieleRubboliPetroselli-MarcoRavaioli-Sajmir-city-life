@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.person;
+/*package unibo.citysimulation.model.person;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -61,4 +61,4 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
         return clock == business.getOpeningTime() - getTransportLine().getDuration();
     }
     
-}
+}*/
