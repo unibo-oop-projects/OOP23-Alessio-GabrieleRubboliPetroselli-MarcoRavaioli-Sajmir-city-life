@@ -11,6 +11,7 @@ public class TransportLineImpl {
     private int startHour; // Starting hour of service
     private int endHour; // Ending hour of service
     private int personInLine=0;
+    @SuppressWarnings("unused")
     private int durationLine; // Duration Line in minutes
     private Map<Zone, Zone> predefinedLines;
     private Map<Zone, Integer> predefinedDurations;
