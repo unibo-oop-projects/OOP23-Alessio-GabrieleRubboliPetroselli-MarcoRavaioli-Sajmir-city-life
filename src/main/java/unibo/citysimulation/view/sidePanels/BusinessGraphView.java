@@ -1,8 +1,18 @@
 <<<<<<< HEAD:src/main/java/unibo/citysimulation/view/BusinessGraphView.java
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:src/main/java/unibo/citysimulation/view/BusinessGraphView.java
+>>>>>>> origin/branch_view
 package unibo.citysimulation.view;
 =======
 package unibo.citysimulation.view.sidePanels;
 >>>>>>> e4045bf7852c553942b01df07bf0f4cfe25751ea:src/main/java/unibo/citysimulation/view/sidePanels/BusinessGraphView.java
+<<<<<<< HEAD
+=======
+=======
+package unibo.citysimulation.view.sidePanels;
+>>>>>>> origin/branch_view:src/main/java/unibo/citysimulation/view/sidePanels/BusinessGraphView.java
+>>>>>>> origin/branch_view
 
 import javax.swing.*;
 import java.awt.*;
