@@ -1,6 +1,7 @@
 package unibo.citysimulation;
 
 import unibo.citysimulation.controller.WindowController;
+import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.WindowView;
@@ -21,8 +22,9 @@ public final class SimulationLauncher {
      */
     public static void main(final String[] args) {
         WindowModel windowModel = createInitialWindowModel();
-        WindowView windowView = new WindowView(windowModel);
-        new WindowController(windowModel, windowView);
+        MapModel mapModel = new MapModel();
+        WindowView windowView = new WindowView(windowModel, mapModel);
+        new WindowController(windowModel, windowView, mapModel);
     }
 
     private static WindowModel createInitialWindowModel() {
@@ -34,7 +36,7 @@ public final class SimulationLauncher {
 
         int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
         int frameWidth = frameHeight * 2;
-        
+        System.out.println("Simulation Launcher createInitialWindowModel");
         return new WindowModel(frameWidth, frameHeight);
     }
 }

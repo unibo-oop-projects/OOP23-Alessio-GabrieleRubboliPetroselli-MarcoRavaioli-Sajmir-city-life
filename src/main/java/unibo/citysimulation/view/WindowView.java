@@ -1,5 +1,6 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.controller.MapController;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
@@ -15,14 +16,19 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 
 public class WindowView extends JFrame {
-    private WindowModel model;
+    private WindowModel windowModel;
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
     private ClockPanel clockPanel = new ClockPanel(Color.RED);
     private InputPanel inputPanel = new InputPanel(Color.BLUE);
     private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
+    private MapModel mapModel;
+    private MapController mapController;
 
-    public WindowView(WindowModel model) {
-        this.model = model;
+    public WindowView(WindowModel windowModel, MapModel mapModel){
+        this.windowModel = windowModel;
+
+        this.mapModel = mapModel;
+        mapController = new MapController(mapModel, infoPanel);
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,6 +37,10 @@ public class WindowView extends JFrame {
         configureLayout();
         createComponents();
         setVisible(true);
+
+
+
+        System.out.println("windowView initialized, istanziato mapModel e mapController");
     }
 
     public void addResizeListener(ComponentAdapter adapter) {
@@ -38,12 +48,12 @@ public class WindowView extends JFrame {
     }
 
     public void updatePanelSize(){
-        int panelWidth = model.getWidth() / 4;
+        int panelWidth = windowModel.getWidth() / 4;
 
-        inputPanel.setPreferredSize(new Dimension(panelWidth, model.getHeight()));
-        infoPanel.setPreferredSize(new Dimension(panelWidth, model.getHeight()));
-        clockPanel.setPreferredSize(new Dimension(panelWidth, model.getHeight()));
-        graphicsPanel.setPreferredSize(new Dimension(panelWidth, model.getHeight()));
+        inputPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
+        infoPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
+        clockPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
+        graphicsPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
 
         revalidate();
         repaint();
@@ -51,12 +61,11 @@ public class WindowView extends JFrame {
 
     private void configureLayout() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(model.getWidth(), model.getHeight()));
+        setPreferredSize(new Dimension(windowModel.getWidth(), windowModel.getHeight()));
         pack();
     }
 
     private void createComponents() {
-        MapModel mapModel = new MapModel();
 
         // Aggiungi il pannello della mappa al centro
         MapPanel mapPanel = new MapPanel(mapModel, infoPanel);
