@@ -49,34 +49,48 @@ public class NewSimulationView extends JFrame {
     private void createSidePanels() {
 
         int sidePanelWidth = getSize().width / 4;
+        
 
-        // Creazione del pannello sinistro superiore con due sottopannelli di colore diverso
-        JPanel leftPanel = new JPanel(new GridLayout(2, 1));
-        inputPanel.setSize(new Dimension(sidePanelWidth, 100));//getSize().height / 4 * 3));
-        leftPanel.add(inputPanel, BorderLayout.CENTER);
-        infoPanel.setPreferredSize(new Dimension(sidePanelWidth, getSize().height / 4));
-        //leftPanel.add(infoPanel, BorderLayout.SOUTH);
+        GridBagLayout layout = new GridBagLayout();
 
-        // Creazione del pannello destro superiore con due sottopannelli di colore diverso
-        JPanel rightPanel = new JPanel(new GridLayout(2, 1));
+        JPanel leftPanel = new JPanel(layout);
+
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weightx = 1;
+        constraints.weighty = 0.75;
+
+        //inputPanel.setPreferredSize(new Dimension(sidePanelWidth, getSize().height / 4 * 3));
+        leftPanel.add(inputPanel, constraints);
+
+        constraints.gridy = 1;
+        constraints.weighty = 0.25;
+
+        //infoPanel.setPreferredSize(new Dimension(sidePanelWidth, getSize().height / 4));
+        leftPanel.add(infoPanel, constraints);
+
+
+        layout = new GridBagLayout();
+        
+        JPanel rightPanel = new JPanel(layout);
+
+        constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weightx = 1;
+        constraints.weighty = 0.125;
+        
         clockPanel.setPreferredSize(new Dimension(sidePanelWidth, getHeight() / 8));
-        rightPanel.add(clockPanel, BorderLayout.NORTH);
-        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, getHeight() / 8 * 7));
-        //rightPanel.add(graphicsPanel, BorderLayout.CENTER);
+        rightPanel.add(clockPanel, constraints);
 
-        // Aggiunta dei pannelli laterali al frame
+        constraints.gridy = 1;
+        constraints.weighty = 0.875;
+
+        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, getHeight() / 8 * 7));
+        rightPanel.add(graphicsPanel, constraints);
+
+        
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
-
-        revalidate();
-        repaint();
-
-        System.out.println("Side panel width: " + sidePanelWidth);
-        System.out.println("Input panel height: " + inputPanel.getPreferredSize().height);
-        System.out.println("Info panel height: " + infoPanel.getPreferredSize().height);
-        System.out.println("Clock panel height: " + clockPanel.getPreferredSize().height);
-        System.out.println("Graphics panel height: " + graphicsPanel.getPreferredSize().height);
-
     }
 
 }
