@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.view;
+package unibo.citysimulation.view.sidePanels;
 
 import javax.swing.*;
 import java.awt.*;
