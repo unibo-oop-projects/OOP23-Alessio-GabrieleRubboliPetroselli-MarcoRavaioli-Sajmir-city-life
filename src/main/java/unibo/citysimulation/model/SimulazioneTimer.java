@@ -51,4 +51,12 @@ public class SimulazioneTimer {
     public void stopSimulation() {
         timer.cancel();
     }
+
+    public String getFormattedDateTime() {
+        return formattedDateTime;
+    }
+
+    public int getGiornoCorrente() {
+        return giornoCorrente;
+    }
 }
