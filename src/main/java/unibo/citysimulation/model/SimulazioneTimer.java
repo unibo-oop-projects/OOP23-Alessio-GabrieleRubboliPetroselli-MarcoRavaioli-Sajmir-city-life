@@ -12,6 +12,7 @@ public class SimulazioneTimer {
     private int oreNelGiorno = 0; // Contatore per tenere traccia delle ore nel giorno
     private Timer timer;
     int giornoCorrente = 1;
+    String formattedDateTime;
 
     public SimulazioneTimer(int giorniTotali) {
         this.giorniTotali = giorniTotali;
@@ -32,7 +33,7 @@ public class SimulazioneTimer {
                     }
                     LocalDateTime oraCorrente = now.plusHours(oreNelGiorno);
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                    String formattedDateTime = oraCorrente.format(formatter);
+                    formattedDateTime = oraCorrente.format(formatter);
                     System.out.println("Giorno " + giornoCorrente + ", Ora: " + formattedDateTime);
 
                     if (oreNelGiorno == 0) {
