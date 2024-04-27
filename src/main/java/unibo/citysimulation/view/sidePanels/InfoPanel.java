@@ -27,5 +27,6 @@ public class InfoPanel extends StyledPanel{
         this.x = x;
         this.y = y;
         coordinates.setText("Coordinates: (" + x + ", " + y + ")");
+        System.out.println("Coordinates: (" + x + ", " + y + ")");
     }
 }

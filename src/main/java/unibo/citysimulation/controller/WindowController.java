@@ -8,39 +8,53 @@ import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+/**
+ * Controller class responsible for managing the main window.
+ */
 public class WindowController {
     private WindowModel windowModel;
     private WindowView windowView;
     private MapModel mapModel;
 
-    public WindowController(WindowModel model, WindowView view, MapModel mapModel) {
-        this.windowModel = model;
-        this.windowView = view;
+    /**
+     * Constructs a WindowController with the specified models and view.
+     *
+     * @param windowModel The model representing the main window.
+     * @param windowView  The view representing the main window.
+     * @param mapModel    The model representing the map.
+     */
+    public WindowController(WindowModel windowModel, WindowView windowView, MapModel mapModel) {
+        this.windowModel = windowModel;
+        this.windowView = windowView;
         this.mapModel = mapModel;
         this.windowView.addResizeListener(new ResizeListener());
-        System.out.println("windowController initialized");
     }
 
+    /**
+     * Inner class responsible for handling component resize events.
+     */
     private class ResizeListener extends ComponentAdapter {
         @Override
         public void componentResized(ComponentEvent e) {
             int newWidth = e.getComponent().getWidth();
             int newHeight = e.getComponent().getHeight();
 
+            // Adjust the window size based on aspect ratio
             if (newHeight * 2 > newWidth) {
                 newHeight = newWidth / 2;
             } else {
                 newWidth = newHeight * 2;
             }
+
+            // Update window model and view
             windowModel.setWidth(newWidth);
             windowModel.setHeight(newHeight);
             windowView.setPreferredSize(new Dimension(newWidth, newHeight));
             windowView.pack();
             windowView.updatePanelSize();
 
-            mapModel.setMaxCoordinates(newWidth, newHeight);
-            
+            // Update map model with new maximum coordinates
+            mapModel.setMaxCoordinates(newWidth / 2, newHeight);
         }        
-    }
-    
+    }    
 }

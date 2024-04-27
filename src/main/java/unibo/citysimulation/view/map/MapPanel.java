@@ -9,12 +9,21 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Panel for displaying the map.
+ */
 public class MapPanel extends StyledPanel {
     private MapController mapController;
     private MapModel mapModel;
 
+    /**
+     * Constructs a MapPanel object.
+     *
+     * @param mapModel  The MapModel object containing the map data.
+     * @param infoPanel The InfoPanel object to display additional information.
+     */
     public MapPanel(MapModel mapModel, InfoPanel infoPanel) {
-        super(bgColor); // Chiama il costruttore di StyledPanel per applicare lo stile al pannello
+        super(bgColor); // Calls the constructor of StyledPanel to apply the panel's style
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
 
@@ -26,12 +35,10 @@ public class MapPanel extends StyledPanel {
         });
     }
 
-
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Disegna l'immagine sulla JPanel
+        // Draws the image on the JPanel
         BufferedImage image = mapModel.getImage();
         if (image != null) {
             g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
