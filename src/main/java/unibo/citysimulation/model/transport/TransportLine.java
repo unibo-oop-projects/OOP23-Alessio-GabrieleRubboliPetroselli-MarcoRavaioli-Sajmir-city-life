@@ -1,7 +1,5 @@
 package unibo.citysimulation.model.transport;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a transport line within the city simulation.
