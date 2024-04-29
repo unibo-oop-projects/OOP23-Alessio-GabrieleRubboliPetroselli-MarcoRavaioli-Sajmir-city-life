@@ -1,6 +1,6 @@
 package unibo.citysimulation.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,7 +15,7 @@ public class ClockModel {
     private int currentDay;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     private ClockController clockController;
-    private LocalDateTime currentTime;
+    private LocalTime currentTime;
 
     public ClockModel(int totalDays, ClockController clockController) {
         this.totalDays = totalDays;
@@ -24,7 +24,7 @@ public class ClockModel {
     }
 
     public void startSimulation() {
-        currentTime = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0);
+        currentTime = LocalTime.of(0,0);
         currentDay = 1;
     
         TimerTask task = new TimerTask() {
@@ -51,6 +51,10 @@ public class ClockModel {
     
     public void stopSimulation() {
         timer.cancel();
+    }
+
+    public LocalTime getCurrentTime() {
+        return currentTime;
     }
 
     public String getFormattedCurrentTime() {

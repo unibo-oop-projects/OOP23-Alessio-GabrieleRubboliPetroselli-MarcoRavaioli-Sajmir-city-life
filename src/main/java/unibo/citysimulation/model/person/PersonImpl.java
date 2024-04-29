@@ -1,7 +1,9 @@
-/*package unibo.citysimulation.model.person;
+package unibo.citysimulation.model.person;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import unibo.citysimulation.model.ClockModel;
 
 
 public class PersonImpl<PersonState> implements Person<PersonState> {
@@ -10,7 +12,7 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
     private int money;
     private Business business;
     private Zone residenceZone;
-    private Clock clock;
+    private ClockModel clock;
 
 
 
@@ -58,7 +60,7 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
     }
 
     public boolean checkTimeToGoToWork() {
-        return clock == business.getOpeningTime() - getTransportLine().getDuration();
+        return clock. == business.getOpeningTime() - getTransportLine().getDuration();
     }
     
-}*/
+}
