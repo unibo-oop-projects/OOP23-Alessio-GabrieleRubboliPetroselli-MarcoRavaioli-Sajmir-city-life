@@ -1,5 +1,5 @@
 package unibo.citysimulation;
-import unibo.citysimulation.model.SimulazioneTimer;
+import unibo.citysimulation.model.ClockModel;
 import unibo.citysimulation.view.NewSimulationView;
 
 /**
@@ -17,7 +17,7 @@ public final class SimulationLauncher {
      */
     public static void main(final String[] args) {
         new NewSimulationView();
-        SimulazioneTimer simulazioneTimer = new SimulazioneTimer(7);
-        simulazioneTimer.startSimulation();
+        //ClockModel simulazioneTimer = new ClockModel(7);
+        //simulazioneTimer.startSimulation();
     }
 }

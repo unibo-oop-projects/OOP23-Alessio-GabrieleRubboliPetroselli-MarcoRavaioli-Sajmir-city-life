@@ -5,18 +5,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SimulazioneTimer {
+import unibo.citysimulation.controller.ClockController;
+
+public class ClockModel {
 
     private int giorniTotali; // Numero totale di giorni da simulare
-    private long durataGiornoMillisecondi = 1000; // Durata in millisecondi per ciascun giorno
+    private long durataGiornoMillisecondi = 1000; // Durata in millisecondi per ciascuna ora
     private int oreNelGiorno = 0; // Contatore per tenere traccia delle ore nel giorno
     private Timer timer;
-    int giornoCorrente = 1;
-    String formattedDateTime;
+    private int giornoCorrente = 1;
+    private String formattedDateTime;
+    private ClockController clockController;
 
-    public SimulazioneTimer(int giorniTotali) {
+    public ClockModel(int giorniTotali) {
         this.giorniTotali = giorniTotali;
         this.timer = new Timer();
+        
     }
 
     public void startSimulation() {

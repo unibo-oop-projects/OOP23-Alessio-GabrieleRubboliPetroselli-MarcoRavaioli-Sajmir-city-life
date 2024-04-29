@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
+import unibo.citysimulation.controller.ClockController;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class ClockPanel extends StyledPanel {
         add(timeDay, BorderLayout.SOUTH);
     }
 
-    public void setClock(String day, String time){
-        timeDay.setText("Day: " + day + ", Time: " + time);
+    public void setClockText(String text){
+        timeDay.setText(text);
     }
 }

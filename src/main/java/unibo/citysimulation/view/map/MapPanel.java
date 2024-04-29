@@ -1,7 +1,9 @@
 package unibo.citysimulation.view.map;
 
 import unibo.citysimulation.view.StyledPanel;
+import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
+import unibo.citysimulation.controller.ClockController;
 import unibo.citysimulation.controller.MapController;
 import unibo.citysimulation.model.MapModel;
 
