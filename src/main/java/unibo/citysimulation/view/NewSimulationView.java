@@ -12,7 +12,6 @@ import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.Clock;
 
 public class NewSimulationView extends JFrame {
     InfoPanel infoPanel = new InfoPanel(Color.GREEN);
