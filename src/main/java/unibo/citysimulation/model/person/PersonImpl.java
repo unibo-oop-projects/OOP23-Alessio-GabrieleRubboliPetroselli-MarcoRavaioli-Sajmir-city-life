@@ -60,7 +60,7 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
     }
 
     public boolean checkTimeToGoToWork() {
-        return clock. == business.getOpeningTime() - getTransportLine().getDuration();
+        return clock.getCurrentTime() == business.getOpeningTime() - getTransportLine().getDuration();
     }
     
 }
