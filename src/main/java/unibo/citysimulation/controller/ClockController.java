@@ -2,9 +2,6 @@ package unibo.citysimulation.controller;
 
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class ClockController {
     private ClockPanel clockPanel;
 
@@ -13,11 +10,9 @@ public class ClockController {
     }
 
     // Metodo per aggiornare l'orario nella vista
-    public void updateTime(LocalDateTime currentTime, int currentDay) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        String formattedDateTime = currentTime.format(formatter);
+    public void updateTime(String currentTime, int currentDay) {
 
-        // Aggiornamento della vista tramite il pannello
-        clockPanel.setClockText("Giorno: " + currentDay + " ora: " + formattedDateTime);
+        clockPanel.setClockText("Giorno: " + currentDay + " ora: " + currentTime);
+
     }
 }

@@ -43,7 +43,7 @@ public class NewSimulationView extends JFrame {
     private void createComponents() {
         MapModel mapModel = new MapModel();
         ClockController clockController = new ClockController(clockPanel);
-        ClockModel clockModel = new ClockModel(7, clockController);
+        ClockModel clockModel = new ClockModel(2, clockController);
         clockModel.startSimulation();
 
         // Aggiungi il pannello della mappa al centro
