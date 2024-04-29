@@ -13,11 +13,11 @@ public class ClockController {
     }
 
     // Metodo per aggiornare l'orario nella vista
-    public void updateTime(LocalDateTime currentTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public void updateTime(LocalDateTime currentTime, int currentDay) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         String formattedDateTime = currentTime.format(formatter);
 
         // Aggiornamento della vista tramite il pannello
-        clockPanel.setClockText(formattedDateTime);
+        clockPanel.setClockText("Giorno: " + currentDay + " ora: " + formattedDateTime);
     }
 }

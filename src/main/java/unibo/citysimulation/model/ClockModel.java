@@ -36,12 +36,14 @@ public class ClockModel {
                         oreNelGiorno = 0;
                     }
                     LocalDateTime oraCorrente = now.plusHours(oreNelGiorno);
-                    
-                    clockController.updateTime(oraCorrente);
+
 
                     if (oreNelGiorno == 0) {
                         giornoCorrente++;
                     }
+
+                    clockController.updateTime(oraCorrente, giornoCorrente);
+                    
                 } else {
                     timer.cancel();
                 }
