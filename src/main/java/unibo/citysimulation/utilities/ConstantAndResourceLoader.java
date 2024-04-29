@@ -13,4 +13,10 @@ public final class ConstantAndResourceLoader extends ClassLoader{
      * Screen size percentage
      */
     public static final double SCREEN_SIZE_PERCENTAGE = 0.90;
+    /**
+     * Screen minimum size pixel
+     */
+    public static final int SCREEN_MINIMUM_WIDTH_PIXEL = 1000;
+    public static final int SCREEN_MINIMUM_HEIGHT_PIXEL = 500;
+
 }
