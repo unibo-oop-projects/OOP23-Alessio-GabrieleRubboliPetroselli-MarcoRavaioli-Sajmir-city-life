@@ -17,10 +17,10 @@ public class ClockModel {
     private String formattedDateTime;
     private ClockController clockController;
 
-    public ClockModel(int giorniTotali) {
+    public ClockModel(int giorniTotali, ClockController clockController) {
         this.giorniTotali = giorniTotali;
         this.timer = new Timer();
-        
+        this.clockController = clockController;
     }
 
     public void startSimulation() {
@@ -36,9 +36,8 @@ public class ClockModel {
                         oreNelGiorno = 0;
                     }
                     LocalDateTime oraCorrente = now.plusHours(oreNelGiorno);
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-                    formattedDateTime = oraCorrente.format(formatter);
-                    System.out.println("Giorno " + giornoCorrente + ", Ora: " + formattedDateTime);
+                    
+                    clockController.updateTime(oraCorrente);
 
                     if (oreNelGiorno == 0) {
                         giornoCorrente++;
