@@ -1,14 +1,29 @@
 package unibo.citysimulation.model.business;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.Duration;
 
 public class BusinessImpl implements Business{
 
-    private List<Employee> employees;
+    private static final int DEFAULT_THRESHOLD = 1000;
 
-    public BusinessImpl(List<Employee> employees) {
-        this.employees = employees;
+    private List<Employee> employees;
+    private String name;
+    private int income;
+    private double wageRate;
+    private LocalTime openingTime;
+    private LocalTime closingTime;
+    
+
+    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime) {
+        this.employees = new ArrayList<>();
+        this.name = name;
+        this.income = income;
+        this.wageRate = wageRate;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
     }
 
     @Override
@@ -32,12 +47,7 @@ public class BusinessImpl implements Business{
     }
 
     @Override
-    public List<Employee> getEmployees() {
-        return new ArrayList<>(this.employees);
-    }
-
-    @Override
-    public EmployeeImpl getEmployeeById(int id) {
+    public Employee getEmployeeById(int id) {
         for (Employee employee : this.employees) {
             if (employee.getId() == id) {
                 return (EmployeeImpl) employee;
@@ -57,35 +67,58 @@ public class BusinessImpl implements Business{
 
     @Override
     public double calculateIncome() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculateIncome'");
+        int rate = this.employees.size() / DEFAULT_THRESHOLD;
+        return this.income * Math.pow(2, rate);
+
     }
 
     @Override
     public double calculatePersonnelCost() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculatePersonnelCost'");
+        double totalCost = 0;
+        for (Employee employee : this.employees) {
+            totalCost += this.wageRate * getBusinessHours();
+        }
+        return totalCost;
     }
 
     @Override
     public double calculateProfit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculateProfit'");
+        return calculateIncome() - calculatePersonnelCost();
     }
 
     @Override
     public boolean isProfit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isProfit'");
+        return calculateProfit() > DEFAULT_INCOME;
     }
 
     @Override
     public int getIncome() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIncome'");
+        return this.income;
     }
 
-   
-    
-    
+    @Override
+    public List<Employee> getEmployees() {
+        return new ArrayList<>(this.employees);
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public Long getBusinessHours() {
+        Duration duration = Duration.between(this.openingTime, this.closingTime);
+        return duration.toHours();
+    }
+
+    public LocalTime getOpeningTime() {
+        return this.openingTime;
+    }
+
+    public LocalTime getClosingTime() {
+        return this.closingTime;
+    }
+
+
 }

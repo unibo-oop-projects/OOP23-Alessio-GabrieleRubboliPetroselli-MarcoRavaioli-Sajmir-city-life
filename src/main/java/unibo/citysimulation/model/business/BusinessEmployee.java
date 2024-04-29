@@ -36,12 +36,6 @@ public interface BusinessEmployee {
      */
     int countEmployees();
 
-    /**
-     * Retrieves the list of all employees.
-     *
-     * @return a list of all employees
-     */
-    List<Employee> getEmployees();
 
     /**
      * Retrieves an employee by their ID.
@@ -49,7 +43,7 @@ public interface BusinessEmployee {
      * @param id the ID of the employee
      * @return the employee with the given ID, or null if no such employee exists
      */
-    EmployeeImpl getEmployeeById(int id);
+    Employee getEmployeeById(int id);
 
     /**
      * Updates an employee's information.

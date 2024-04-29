@@ -8,6 +8,7 @@ public class EmployeeImpl implements Employee{
     
     private String name;
     private int id;
+    
 
     /**
      * Constructs a new EmployeeImpl with the given name and ID.
@@ -39,4 +40,5 @@ public class EmployeeImpl implements Employee{
     public int getId() {
         return id;
     }
+
 }

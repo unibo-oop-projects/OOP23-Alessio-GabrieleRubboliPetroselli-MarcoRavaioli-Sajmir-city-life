@@ -15,5 +15,6 @@ public interface Employee {
      * @return The id of the employee.
      */
     int getId();
+
     
 }
