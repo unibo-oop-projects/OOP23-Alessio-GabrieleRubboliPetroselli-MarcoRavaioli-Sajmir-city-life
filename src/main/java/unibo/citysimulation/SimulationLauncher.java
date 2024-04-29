@@ -17,7 +17,5 @@ public final class SimulationLauncher {
      */
     public static void main(final String[] args) {
         new NewSimulationView();
-        //ClockModel simulazioneTimer = new ClockModel(7);
-        //simulazioneTimer.startSimulation();
     }
 }
