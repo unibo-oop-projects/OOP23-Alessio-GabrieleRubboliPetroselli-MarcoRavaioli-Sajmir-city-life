@@ -1,5 +1,4 @@
 package unibo.citysimulation;
-import unibo.citysimulation.model.ClockModel;
 import unibo.citysimulation.view.NewSimulationView;
 
 /**
