@@ -12,10 +12,6 @@ public interface Business extends BusinessEmployee, BusinessFinancial, BusinessG
      */
     int getIncome();
 
-    /**
-     * Returns the number of employers in the business.
-     *
-     * @return The number of employers in the business.
-     */
-    int getEmployers();
 }
+
+    
