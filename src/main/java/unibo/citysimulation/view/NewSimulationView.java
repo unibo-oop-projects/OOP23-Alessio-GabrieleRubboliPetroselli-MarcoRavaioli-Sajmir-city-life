@@ -1,5 +1,7 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.controller.ClockController;
+import unibo.citysimulation.model.ClockModel;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
@@ -10,9 +12,11 @@ import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.Clock;
 
 public class NewSimulationView extends JFrame {
     InfoPanel infoPanel = new InfoPanel(Color.GREEN);
+    ClockPanel clockPanel = new ClockPanel(Color.PINK);
 
     public NewSimulationView() {
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
@@ -38,6 +42,9 @@ public class NewSimulationView extends JFrame {
 
     private void createComponents() {
         MapModel mapModel = new MapModel();
+        ClockController clockController = new ClockController(clockPanel);
+        ClockModel clockModel = new ClockModel(7, clockController);
+        clockModel.startSimulation();
 
         // Aggiungi il pannello della mappa al centro
         MapPanel mapPanel = new MapPanel(mapModel, infoPanel);
@@ -55,7 +62,7 @@ public class NewSimulationView extends JFrame {
 
         // Creazione del pannello destro superiore con due sottopannelli di colore diverso
         JPanel rightPanel = new JPanel(new GridLayout(2, 1));
-        rightPanel.add(new ClockPanel(Color.PINK), BorderLayout.NORTH);
+        rightPanel.add(clockPanel, BorderLayout.NORTH);
         rightPanel.add(new GraphicsPanel(Color.RED), BorderLayout.CENTER);
 
         // Aggiunta dei pannelli laterali al frame
