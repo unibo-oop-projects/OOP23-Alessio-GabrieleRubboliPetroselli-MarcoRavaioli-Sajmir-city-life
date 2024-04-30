@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import unibo.citysimulation.model.ClockModel;
+import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.transport.TransportLine;
 
 
 public class PersonImpl<PersonState> implements Person<PersonState> {

@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.business;
 
 import java.util.List;
+import java.time.LocalTime;
 
 /**
  * Interface representing a business entity.
@@ -36,6 +37,10 @@ public interface Business extends BusinessEmployee, BusinessFinancial, BusinessG
      * @return The hours of the business.
      */
     Long getBusinessHours();
+
+    LocalTime getOpeningTime();
+
+    LocalTime getClosingTime();
 
 }
 
