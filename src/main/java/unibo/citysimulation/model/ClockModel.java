@@ -32,7 +32,7 @@ public class ClockModel {
             @Override
             public void run() {
                 if (currentDay <= totalDays) {
-                    currentTime = currentTime.plusHours(1);
+                    currentTime = currentTime.plusMinutes(10);
     
                     if (currentTime.getHour() == 0) {
                         currentDay++;
