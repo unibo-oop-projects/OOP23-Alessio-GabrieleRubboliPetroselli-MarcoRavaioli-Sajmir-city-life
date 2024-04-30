@@ -17,6 +17,11 @@ public interface Person {
     }
 
     /**
+     * @return the name of the person
+     */
+    String getName();
+
+    /**
 	 * @return the state of the person
 	 */
     PersonState getState();

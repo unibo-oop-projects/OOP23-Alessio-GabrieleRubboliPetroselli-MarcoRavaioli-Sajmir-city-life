@@ -26,6 +26,10 @@ public class PersonImpl implements Person {
         zoneTable = new ZoneTable();
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public PersonState getState() {
         return state;
