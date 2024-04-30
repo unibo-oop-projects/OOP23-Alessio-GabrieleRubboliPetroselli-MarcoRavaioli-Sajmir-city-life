@@ -34,10 +34,10 @@ public class ClockModel {
                 if (currentDay <= totalDays) {
                     currentTime = currentTime.plusMinutes(10);
     
-                    if (currentTime.getHour() == 0) {
+                    if (currentTime.getHour() == 0 && currentTime.getMinute() == 0) {
                         currentDay++;
                     }
-
+                    
                     clockController.updateTime(getFormattedCurrentTime(), getCurrentDay());
 
                 } else {
