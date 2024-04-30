@@ -8,12 +8,32 @@ import java.util.List;
  */
 public interface BusinessFinancial {
     
+
+    /**
+     * Calculates the total personnel cost of the business.
+     *
+     * @param wageRate the hourly wage rate for each employee
+     * @return the total personnel cost
+     */
+    double calculatePersonnelCost(Business business);
+
     /**
      * Calculates the total income of the business.
      *
      * @return the total income
      */
-    double calculateIncome(List<Employee> employees, int income);
+    double calculateIncome(Business business);
+
+    /**
+     * Calculates the profit of the business.
+     *
+     * @param business the business entity
+     * @return the profit
+     */
+    double calculateProfit(Business business);
+    
+    
+
 
     
 }

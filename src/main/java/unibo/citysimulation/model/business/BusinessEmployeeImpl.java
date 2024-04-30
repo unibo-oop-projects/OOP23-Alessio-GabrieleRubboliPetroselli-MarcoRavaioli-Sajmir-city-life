@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.business;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class BusinessEmployeeImpl implements BusinessEmployee{
@@ -14,7 +15,31 @@ public class BusinessEmployeeImpl implements BusinessEmployee{
         @Override
         public List<Employee> getEmployees() {
             return employees;
-        }     
+        }    
+        
+        @Override
+        public LocalTime getOpeningTime() {
+            return openingTime;
+        }
+
+        @Override
+        public LocalTime getClosingTime() {
+            return closingTime;
+        }
+
+        @Override
+        public double getWageRate() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getWageRate'");
+        }
+
+        @Override
+        public double getIncome() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getIncome'");
+        }
+
+        
     }
    
 

@@ -37,8 +37,19 @@ public interface Business{
      */
     LocalTime getClosingTime();
 
+    /**
+     * Returns the wage rate of the business.
+     *
+     * @return the wage rate
+     */
+    double getWageRate();
 
-
+    /**
+     * Returns the income of the business.
+     *
+     * @return the income
+     */
+    double getIncome();
 }
 
     
