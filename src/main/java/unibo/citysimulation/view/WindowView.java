@@ -1,6 +1,8 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.controller.ClockController;
 import unibo.citysimulation.controller.MapController;
+import unibo.citysimulation.model.ClockModel;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
@@ -21,6 +23,8 @@ public class WindowView extends JFrame {
     private MapModel mapModel;
     private MapController mapController;
     private WindowModel windowModel;
+    private ClockController clockController;
+    private ClockModel clockModel;
 
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
     private ClockPanel clockPanel = new ClockPanel(Color.RED);
@@ -37,6 +41,9 @@ public class WindowView extends JFrame {
         this.windowModel = windowModel;
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
+        this.clockController = new ClockController(clockPanel);
+        this.clockModel = new ClockModel(2, clockController);
+        clockModel.startSimulation();
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
