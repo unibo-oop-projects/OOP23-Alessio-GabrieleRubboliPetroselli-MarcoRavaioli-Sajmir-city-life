@@ -70,12 +70,18 @@ public class PersonImpl implements Person {
     }
 
     public boolean checkTimeToGoToWork() {
+        if (this.state == PersonState.WORKING) {
+            return false;
+        }
         return this.checkTimeToMove(clock.getCurrentTime().toSecondOfDay(),
             business.getOpeningTime().toSecondOfDay() - 
             zoneTable.getMinutesForPair(residenceZone, getBusinessZone()) * 60);
     }
 
     public boolean checkTimeToGoHome() {
+        if (this.state == PersonState.AT_HOME) {
+            return false;
+        }
         return this.checkTimeToMove(clock.getCurrentTime().toSecondOfDay(),
             business.getClosingTime().toSecondOfDay());
     }
