@@ -3,6 +3,9 @@ package unibo.citysimulation.model.business;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import unibo.citysimulation.model.transport.Zone;
+
 import java.time.Duration;
 
 public class BusinessImpl implements Business{
@@ -15,15 +18,17 @@ public class BusinessImpl implements Business{
     private double wageRate;
     private LocalTime openingTime;
     private LocalTime closingTime;
+    private Zone zone;
     
 
-    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime) {
+    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime, Zone zone) {
         this.employees = new ArrayList<>();
         this.name = name;
         this.income = income;
         this.wageRate = wageRate;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
+        this.zone = zone;
     }
 
     @Override
@@ -120,5 +125,8 @@ public class BusinessImpl implements Business{
         return this.closingTime;
     }
 
+    public Zone getZone() {
+        return this.zone;
+    }
 
 }

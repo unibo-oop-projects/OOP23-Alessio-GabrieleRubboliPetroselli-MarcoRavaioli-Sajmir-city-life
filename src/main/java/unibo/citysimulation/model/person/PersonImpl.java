@@ -1,11 +1,9 @@
-/*package unibo.citysimulation.model.person;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.ClockModel;
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.Zone;
+import unibo.citysimulation.model.transport.ZoneTable;
 
 
 public class PersonImpl<PersonState> implements Person<PersonState> {
@@ -15,6 +13,7 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
     private Business business;
     private Zone residenceZone;
     private ClockModel clock;
+    private ZoneTable zoneTable;
 
 
 
@@ -24,6 +23,7 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
         this.business = business;
         this.residenceZone = residenceZone;
         this.clock = clock;
+        zoneTable = new ZoneTable();
     }
 
     @Override
@@ -57,12 +57,11 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
         return business.getZone();
     }
 
-    public TransportLine getTransportLine() {
-        return linesMatrix[residenceZone.getName()][getBusinessZone().getName()];
-    }
-
     public boolean checkTimeToGoToWork() {
-        return clock.getCurrentTime() == business.getOpeningTime() - getTransportLine().getDuration();
+        int currentTime = clock.getCurrentTime().toSecondOfDay();
+        int openingTime = business.getOpeningTime().toSecondOfDay();
+        int lineDuration = zoneTable.getMinutesForPair(residenceZone, getBusinessZone()) * 60;
+        return currentTime == openingTime - lineDuration;
     }
     
-}*/
+}

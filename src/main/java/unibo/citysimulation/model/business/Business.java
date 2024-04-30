@@ -1,6 +1,9 @@
 package unibo.citysimulation.model.business;
 
 import java.util.List;
+
+import unibo.citysimulation.model.transport.Zone;
+
 import java.time.LocalTime;
 
 /**
@@ -41,6 +44,8 @@ public interface Business extends BusinessEmployee, BusinessFinancial, BusinessG
     LocalTime getOpeningTime();
 
     LocalTime getClosingTime();
+
+    public Zone getZone();
 
 }
 
