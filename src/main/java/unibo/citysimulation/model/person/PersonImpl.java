@@ -6,7 +6,7 @@ import unibo.citysimulation.model.transport.Zone;
 import unibo.citysimulation.model.transport.ZoneTable;
 
 
-public class PersonImpl<PersonState> implements Person<PersonState> {
+public class PersonImpl implements Person {
     private String name;
     private PersonState state;
     private int money;
@@ -17,8 +17,8 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
 
 
 
-    public PersonImpl(PersonState state, int money, Business business, Zone residenceZone, ClockModel clock) {
-        this.state = state;
+    public PersonImpl(int money, Business business, Zone residenceZone, ClockModel clock) {
+        this.state = PersonState.AT_HOME;
         this.money = money;
         this.business = business;
         this.residenceZone = residenceZone;
@@ -63,5 +63,7 @@ public class PersonImpl<PersonState> implements Person<PersonState> {
         int lineDuration = zoneTable.getMinutesForPair(residenceZone, getBusinessZone()) * 60;
         return currentTime == openingTime - lineDuration;
     }
+
+
     
 }

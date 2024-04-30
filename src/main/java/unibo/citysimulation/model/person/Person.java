@@ -4,7 +4,7 @@ package unibo.citysimulation.model.person;
  * 
  * @param PersonState, the state of the person
  */
-public interface Person<PersonState> {
+public interface Person {
 
 
     /**
