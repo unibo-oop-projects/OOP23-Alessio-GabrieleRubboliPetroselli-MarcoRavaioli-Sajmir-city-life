@@ -61,15 +61,23 @@ public class PersonImpl implements Person {
         return business.getZone();
     }
 
+    public boolean checkTimeToMove(int currentTime, int timeToMove) {
+        boolean moveBool = currentTime == timeToMove;
+        if (moveBool) {
+            this.setState(PersonState.MOVING);
+        }
+        return moveBool;
+    }
+
     public boolean checkTimeToGoToWork() {
-        int currentTime = clock.getCurrentTime().toSecondOfDay();
-        int openingTime = business.getOpeningTime().toSecondOfDay();
-        int lineDuration = zoneTable.getMinutesForPair(residenceZone, getBusinessZone()) * 60;
-        return currentTime == openingTime - lineDuration;
+        return this.checkTimeToMove(clock.getCurrentTime().toSecondOfDay(),
+            business.getOpeningTime().toSecondOfDay() - 
+            zoneTable.getMinutesForPair(residenceZone, getBusinessZone()) * 60);
     }
 
     public boolean checkTimeToGoHome() {
-        return clock.getCurrentTime().toSecondOfDay() == business.getClosingTime().toSecondOfDay();
+        return this.checkTimeToMove(clock.getCurrentTime().toSecondOfDay(),
+            business.getClosingTime().toSecondOfDay());
     }
     
 }
