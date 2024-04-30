@@ -1,7 +1,5 @@
 package unibo.citysimulation.model.transport;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a transport line within the city simulation.
@@ -9,30 +7,23 @@ import java.util.List;
 public class TransportLine {
     private int capacity;
     private String name;
-    private int startHour; // Starting hour of service
-    private int endHour; // Ending hour of service
     private int personInLine=0;
+    private int duration;
 
-    public TransportLine(String name, int serviceFrequency, int startHour, int endHour,int capacity) {
+    public TransportLine(String name,int capacity,int duration) {
         this.name = name;
-        this.startHour = startHour;
-        this.endHour = endHour;
         this.capacity=capacity;
-    
+        this.duration=duration;
     }
 
     // Getter and setter methods for other fields, if needed
     public String getName() {
         return name;
     }
-    public int getStartHour() {
-        return startHour;
-    }
-    public int getEndHour() {
-        return endHour;
-    }
-
     public double getCongestion(){
         return (double)(personInLine*100/capacity);
+    }
+    public int getDuration(){
+        return duration;
     }
 }
