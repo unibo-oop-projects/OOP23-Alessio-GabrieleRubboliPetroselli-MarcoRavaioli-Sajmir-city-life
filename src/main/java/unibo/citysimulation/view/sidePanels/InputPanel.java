@@ -68,7 +68,7 @@ public class InputPanel extends StyledPanel {
         JPanel secondRowPanel = new JPanel(new FlowLayout());
 
         // Create the label for the number of persons
-        numberOfPersonLabel = new JLabel("Number of Persons:");
+        numberOfPersonLabel = new JLabel("Number of People:");
         numberOfPersonLabel.setForeground(Color.BLACK);
         secondRowPanel.add(numberOfPersonLabel);
 
