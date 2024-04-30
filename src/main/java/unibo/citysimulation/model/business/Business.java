@@ -1,41 +1,43 @@
 package unibo.citysimulation.model.business;
 
+
+import java.time.LocalTime;
 import java.util.List;
 
 /**
  * Interface representing a business entity.
  */
-public interface Business extends BusinessEmployee, BusinessFinancial, BusinessGraphic{
-
-    public static final int DEFAULT_INCOME = 0;
-
+public interface Business{
     /**
-     * Returns the income of the business.
+     * Updates the list of employees with the given list.
      *
-     * @return The income of the business.
+     * @param employees the new list of employees
+     * @return a new instance of Business with updated employee list
      */
-    int getIncome();
+    Business updateEmployees(List<Employee> employees);
 
     /**
-     * Retrieves the list of all employees.
+     * Returns the list of employees.
      *
-     * @return a list of all employees
+     * @return the list of employees
      */
     List<Employee> getEmployees();
 
     /**
-     * Returns the name of the business.
+     * Returns the opening time of the business.
      *
-     * @return The name of the business.
+     * @return the opening time
      */
-    String getName();
-
+    LocalTime getOpeningTime();
+    
     /**
-     * Returns the hours of the business.
+     * Returns the closing time of the business.
      *
-     * @return The hours of the business.
+     * @return the closing time
      */
-    Long getBusinessHours();
+    LocalTime getClosingTime();
+
+
 
 }
 
