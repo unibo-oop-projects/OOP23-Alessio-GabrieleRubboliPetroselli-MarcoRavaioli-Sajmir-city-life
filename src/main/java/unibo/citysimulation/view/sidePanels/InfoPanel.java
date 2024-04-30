@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 public class InfoPanel extends StyledPanel{
     private JLabel coordinates = new JLabel("Coordinates: (x, y)", SwingConstants.CENTER);
+    private int x;
+    private int y;
 
     public InfoPanel(Color bgColor) { 
         super(bgColor);
@@ -21,7 +23,10 @@ public class InfoPanel extends StyledPanel{
         add(coordinates, BorderLayout.SOUTH);
     }
 
-    public void setCoordinates(int x, int y){
+    public void updatePositionInfo(int x, int y){
+        this.x = x;
+        this.y = y;
         coordinates.setText("Coordinates: (" + x + ", " + y + ")");
+        System.out.println("Coordinates: (" + x + ", " + y + ")");
     }
 }

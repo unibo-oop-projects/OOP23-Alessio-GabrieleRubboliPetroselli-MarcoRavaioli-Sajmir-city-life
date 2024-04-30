@@ -6,20 +6,15 @@ package unibo.citysimulation.model.transport;
 public class Zone {
     private String name;
 
-    /**
-     * Constructs a new Zone with the specified name.
-     *
-     * @param name the name of the zone
-     */
     public Zone(String name) {
         this.name = name;
     }
 
-    /**
-     * Gets the name of the zone.
-     *
-     * @return the name of the zone
-     */
+    // getters and setters for the fields
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
