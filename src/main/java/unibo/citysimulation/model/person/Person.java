@@ -1,6 +1,6 @@
 package unibo.citysimulation.model.person;
 
-import unibo.citysimulation.model.ClockModel;
+import unibo.citysimulation.model.clock.ClockModel;
 
 /**
  * An interface for modelling a person

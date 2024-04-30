@@ -1,18 +1,20 @@
 package unibo.citysimulation.controller;
 
+import java.time.LocalTime;
+
+import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 
-public class ClockController {
+public class ClockController implements ClockObserver{
     private ClockPanel clockPanel;
 
     public ClockController(ClockPanel clockPanel) {
         this.clockPanel = clockPanel;
     }
 
-    // Metodo per aggiornare l'orario nella vista
-    public void updateTime(String currentTime, int currentDay) {
-
+    @Override
+    public void onTimeUpdate(LocalTime currentTime, int currentDay) {
+        
         clockPanel.setClockText("Giorno: " + currentDay + " ora: " + currentTime);
-
     }
 }

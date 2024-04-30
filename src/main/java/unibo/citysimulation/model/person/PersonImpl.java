@@ -1,9 +1,11 @@
 package unibo.citysimulation.model.person;
 
-import unibo.citysimulation.model.ClockModel;
 import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.transport.Zone;
 import unibo.citysimulation.model.transport.ZoneTable;
+
+import java.time.LocalTime;
 import java.util.Optional;
 
 
@@ -20,14 +22,14 @@ public class PersonImpl implements Person {
 
 
 
-    public PersonImpl(int money, Business business, Zone residenceZone, ClockModel clock) {
+    public PersonImpl(int money, Business business, Zone residenceZone, ClockModel clock, ZoneTable zonetable) {
         this.state = PersonState.AT_HOME;
         this.lastDestination = PersonState.WORKING;
         this.money = money;
         this.business = business;
         this.residenceZone = residenceZone;
         this.clock = clock;
-        zoneTable = new ZoneTable();
+        this.zoneTable = zonetable;
     }
 
     public String getName() {
@@ -82,7 +84,10 @@ public class PersonImpl implements Person {
     }
 
     public boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
-        boolean moveBool = currentTime == timeToMove;
+        boolean moveBool = (currentTime == timeToMove);
+        System.out.println("current time: " + currentTime);
+        System.out.println("time to move: " + timeToMove);
+        System.out.println("line duration: " + lineDuration);
         if (moveBool) {
             this.setState(PersonState.MOVING);
             this.lastArrivingTime = currentTime + lineDuration;
@@ -95,9 +100,11 @@ public class PersonImpl implements Person {
         if (this.checkTimeToMove(clock.getCurrentTime().toSecondOfDay(),
             business.getOpeningTime().toSecondOfDay() - lineDuration,
             lineDuration)) {
+            System.out.println("time to move to work");
             this.lastDestination = PersonState.WORKING;
             return true;
             }
+        System.out.println("Not moving");
         return false;
     }
 
@@ -126,12 +133,15 @@ public class PersonImpl implements Person {
     public void checkState() {
         switch (this.state) {
             case MOVING:
+                System.out.println("state moving");
                 this.checkArrivingTime();
                 break;
             case WORKING:
+                System.out.println("state working");
                 this.checkTimeToGoHome();
                 break;
             case AT_HOME:
+                System.out.println("state at home");
                 this.checkTimeToGoToWork();
                 break;
         }

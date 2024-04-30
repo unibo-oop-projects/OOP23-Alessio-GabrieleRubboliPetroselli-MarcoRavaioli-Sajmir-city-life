@@ -1,11 +1,11 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.clock;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import unibo.citysimulation.controller.ClockController;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ClockModel {
 
@@ -14,13 +14,21 @@ public class ClockModel {
     private Timer timer;
     private int currentDay;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-    private ClockController clockController;
     private LocalTime currentTime;
+    private List<ClockObserver> observers;
 
-    public ClockModel(int totalDays, ClockController clockController) {
+    public ClockModel(int totalDays) {
         this.totalDays = totalDays;
         this.timer = new Timer();
-        this.clockController = clockController;
+        this.observers = new ArrayList<>();
+    }
+
+    public void addObserver(ClockObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(ClockObserver observer) {
+        observers.remove(observer);
     }
 
     public void startSimulation() {
@@ -34,11 +42,13 @@ public class ClockModel {
                 if (currentDay <= totalDays) {
                     currentTime = currentTime.plusMinutes(10);
     
-                    if (currentTime.getHour() == 0 && currentTime.getMinute() == 0) {
+                    if (currentTime.getHour() == 0 && currentTime.getMinute() == 0){
                         currentDay++;
                     }
+
+                    System.out.println("Current time: " + currentTime.format(formatter) + " Day: " + currentDay);
                     
-                    clockController.updateTime(getFormattedCurrentTime(), getCurrentDay());
+                    notifyObservers();
 
                 } else {
                     timer.cancel();
@@ -51,6 +61,12 @@ public class ClockModel {
     
     public void stopSimulation() {
         timer.cancel();
+    }
+
+    private void notifyObservers() {
+        for (ClockObserver observer : observers) {
+            observer.onTimeUpdate(currentTime, currentDay);
+        }
     }
 
     public LocalTime getCurrentTime() {

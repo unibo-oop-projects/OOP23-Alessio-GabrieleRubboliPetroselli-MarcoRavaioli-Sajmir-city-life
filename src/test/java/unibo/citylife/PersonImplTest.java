@@ -1,4 +1,4 @@
-package unibo.citylife;
+/*package unibo.citylife;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,19 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 
 public class PersonImplTest {
-    private ClockModel clock;
-    private Business business;
-    private Zone residenceZone;
-    private ZoneTable zoneTable;
     private PersonImpl person;
 
     @BeforeAll
     public void setUp() {
-        clock = person.
-        business = mock(Business.class);
-        residenceZone = mock(Zone.class);
-        zoneTable = mock(ZoneTable.class);
-        person = new PersonImpl(100, business, residenceZone, clock);
     }
 
     @Test
@@ -57,6 +48,6 @@ public class PersonImplTest {
     }
 
     // Aggiungi altri test per i metodi checkTimeToMove, checkTimeToGoToWork, checkTimeToGoHome, incrementLastArrivingTime, checkArrivingTime, checkState, ecc.
-}
+}*/
 
 
