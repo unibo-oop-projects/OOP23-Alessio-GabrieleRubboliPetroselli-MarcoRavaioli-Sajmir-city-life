@@ -19,6 +19,7 @@ public final class SimulationLauncher {
 
     /**
      * The main method.
+     * 
      *
      * @param args No arguments should be passed to this program.
      */
