@@ -1,4 +1,7 @@
 package unibo.citysimulation.model.person;
+
+import unibo.citysimulation.model.ClockModel;
+
 /**
  * An interface for modelling a person
  * 
@@ -40,5 +43,7 @@ public interface Person {
      * @param money the amount of money to sum/sub to the actual amount of money the person has
      */
     void setMoney(int money);
+
+    ClockModel getClock();
     
 }

@@ -44,6 +44,11 @@ public class PersonImpl implements Person {
         return money;
     }
 
+    @Override
+    public ClockModel getClock() {
+        return clock;
+    }
+
     public void setState(PersonState state) {
         this.state = state;
     }
