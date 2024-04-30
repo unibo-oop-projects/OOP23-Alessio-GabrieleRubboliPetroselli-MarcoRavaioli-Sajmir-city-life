@@ -68,6 +68,8 @@ public class PersonImpl implements Person {
         return currentTime == openingTime - lineDuration;
     }
 
-
+    public boolean checkTimeToGoHome() {
+        return clock.getCurrentTime().toSecondOfDay() == business.getClosingTime().toSecondOfDay();
+    }
     
 }
