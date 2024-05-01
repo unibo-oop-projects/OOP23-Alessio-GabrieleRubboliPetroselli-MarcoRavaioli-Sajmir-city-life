@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.transport;
 import java.util.HashMap;
 import java.util.Map;
+import unibo.citysimulation.model.zone.Zone;
 
 /**
  * Represents a transport line within the city simulation.
