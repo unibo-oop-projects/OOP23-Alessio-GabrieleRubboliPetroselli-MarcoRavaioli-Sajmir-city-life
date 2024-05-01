@@ -2,7 +2,8 @@ package unibo.citylife;
 import org.junit.jupiter.api.Test;
 
 import unibo.citysimulation.model.transport.TransportLineImpl;
-import unibo.citysimulation.model.transport.Zone;
+import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.model.zone.ZoneImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,12 +13,13 @@ public class TransportLineImplTest {
     @Test
     public void testAddPredefinedLine() {
         // Creazione delle zone di origine e destinazione
-        Zone originZone1 = new Zone("Origin 1");
-        Zone destinationZone1 = new Zone("Destination 1");
-        Zone originZone2 = new Zone("Origin 2");
-        Zone destinationZone2 = new Zone("Destination 2");
-        Zone originZone3 = new Zone("Origin 3");
-        Zone destinationZone3 = new Zone("Destination 3");
+        Zone originZone1 = new ZoneImpl("Origin 1");
+        Zone destinationZone1 = new ZoneImpl("Destination 1");
+        Zone originZone2 = new ZoneImpl("Origin 2");
+        Zone destinationZone2 = new ZoneImpl("Destination 2");
+        Zone originZone3 = new ZoneImpl("Origin 3");
+
+        Zone destinationZone3 = new ZoneImpl("Destination 3");
 
         // Creazione della linea di trasporto
         TransportLineImpl transportLine = new TransportLineImpl("Line 1", 8, 20, 100, 60);
