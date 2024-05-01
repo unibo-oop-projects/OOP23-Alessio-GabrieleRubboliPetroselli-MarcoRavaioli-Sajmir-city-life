@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.transport;
 import java.util.List;
+
+import unibo.citysimulation.model.zone.Zone;
 /**
  * 
  * An interface for creating transports.

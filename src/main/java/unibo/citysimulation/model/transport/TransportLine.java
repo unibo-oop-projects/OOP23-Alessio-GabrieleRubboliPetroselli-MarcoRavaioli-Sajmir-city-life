@@ -1,31 +1,29 @@
 package unibo.citysimulation.model.transport;
 
-public interface TransportLine {
-    /**
-     * Get the name of the transport line.
-     * 
-     * @return The name of the transport line.
-     */
-    String getName();
 
-    /**
-     * Get the starting hour of service for the transport line.
-     * 
-     * @return The starting hour of service.
-     */
-    int getStartHour();
+/**
+ * Represents a transport line within the city simulation.
+ */
+public class TransportLine {
+    private int capacity;
+    private String name;
+    private int personInLine=0;
+    private int duration;
 
-    /**
-     * Get the ending hour of service for the transport line.
-     * 
-     * @return The ending hour of service.
-     */
-    int getEndHour();
+    public TransportLine(String name,int capacity,int duration) {
+        this.name = name;
+        this.capacity=capacity;
+        this.duration=duration;
+    }
 
-    /**
-     * Calculate the congestion level of the transport line.
-     * 
-     * @return The congestion level as a percentage.
-     */
-    double getCongestion();
+    // Getter and setter methods for other fields, if needed
+    public String getName() {
+        return name;
+    }
+    public double getCongestion(){
+        return (double)(personInLine*100/capacity);
+    }
+    public int getDuration(){
+        return duration;
+    }
 }
