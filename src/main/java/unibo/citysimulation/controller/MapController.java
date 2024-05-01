@@ -10,6 +10,7 @@ import unibo.citysimulation.view.sidePanels.InfoPanel;
  */
 public class MapController {
     private InfoPanel infoPanel;
+    private MapModel model;
 
     /**
      * Constructs a MapController object.
@@ -18,6 +19,7 @@ public class MapController {
      * @param infoPanel The InfoPanel object to display additional information.
      */
     public MapController(MapModel model, InfoPanel infoPanel) {
+        this.model = model;
         this.infoPanel = infoPanel;
     }
 
