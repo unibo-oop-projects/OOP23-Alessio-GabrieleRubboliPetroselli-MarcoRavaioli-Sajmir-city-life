@@ -3,7 +3,7 @@ package unibo.citysimulation.model.transport;
 /**
  * An interface for managing the graphical representation of transports.
  */
-public interface TransportGraphics extends TransportLine {
+public interface TransportGraphics {
     /**
      * Displays transports on the map.
      */
