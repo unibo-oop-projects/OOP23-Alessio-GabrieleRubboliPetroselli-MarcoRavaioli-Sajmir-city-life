@@ -6,7 +6,7 @@ import unibo.citysimulation.model.zone.Zone;
  * 
  * An interface for creating transports.
  */
-public interface TransportCreation extends TransportLine {
+public interface TransportCreation {
     /**
      * Creates a new transport.
      *
