@@ -4,13 +4,16 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
+
 import java.util.List;
 import java.util.ArrayList;
 
 public class ClockModel {
 
     private int totalDays;
-    private long hourDuration = 1000;
+    private long hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
     private Timer timer;
     private int currentDay;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -41,7 +44,7 @@ public class ClockModel {
             @Override
             public void run() {
                 if (currentDay <= totalDays) {
-                    currentTime = currentTime.plusMinutes(10);
+                    currentTime = currentTime.plusMinutes(ConstantAndResourceLoader.MINUTES_IN_A_SECOND);
     
                     if (currentTime.getHour() == 0 && currentTime.getMinute() == 0){
                         currentDay++;
