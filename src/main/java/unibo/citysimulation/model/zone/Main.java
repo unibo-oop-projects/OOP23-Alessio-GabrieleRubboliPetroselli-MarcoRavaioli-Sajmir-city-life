@@ -11,11 +11,11 @@ public class Main {
         TransportLine Line_Central_BottomRight = new TransportLine("line central-bottomright",400,20);
 
         // Create instances of Zone
-        ZoneImpl centralZone = new ZoneImpl("Central Zone");
-        ZoneImpl topRightZone = new ZoneImpl("Top Right Zone");
-        ZoneImpl topLeftZone = new ZoneImpl("Top Left Zone");
-        ZoneImpl bottomRightZone = new ZoneImpl("Bottom Right Zone");
-        ZoneImpl bottomLeftZone = new ZoneImpl("Bottom Left Zone");
+        Zone centralZone = new Zone("Central Zone", null);
+        Zone topRightZone = new Zone("Top Right Zone", null);
+        Zone topLeftZone = new Zone("Top Left Zone", null);
+        Zone bottomRightZone = new Zone("Bottom Right Zone", null);
+        Zone bottomLeftZone = new Zone("Bottom Left Zone", null);
 
         // Create an instance of ZoneTable
         ZoneTable table = new ZoneTable();

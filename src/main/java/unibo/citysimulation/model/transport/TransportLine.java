@@ -26,4 +26,8 @@ public class TransportLine {
     public int getDuration(){
         return duration;
     }
+
+    public int getMinutes() {
+        return duration;
+    }
 }
