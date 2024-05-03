@@ -33,6 +33,7 @@ public class ClockModel {
 
     public void startSimulation() {
         currentTime = LocalTime.of(0,0);
+        //currentDay kept int for convenience
         currentDay = 1;
     
         TimerTask task = new TimerTask() {
