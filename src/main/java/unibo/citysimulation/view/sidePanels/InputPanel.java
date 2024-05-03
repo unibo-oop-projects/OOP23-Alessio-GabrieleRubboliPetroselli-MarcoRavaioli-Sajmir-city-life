@@ -11,9 +11,11 @@ public class InputPanel extends StyledPanel {
     private JLabel numberOfPersonLabel;
     private JTextField numberOfPersonTextField;
     private JButton confirmButton;
+    private ClockPanel clockPanel;
 
-    public InputPanel(Color bgColor) {
+    public InputPanel(Color bgColor, ClockPanel clockPanel) {
         super(bgColor);
+        this.clockPanel = clockPanel;
 
         // Set the layout manager to GridBagLayout
         setLayout(new GridBagLayout());
@@ -40,7 +42,7 @@ public class InputPanel extends StyledPanel {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle the start button click
+                clockPanel.startClock();
             }
         });
 
@@ -53,7 +55,7 @@ public class InputPanel extends StyledPanel {
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle the stop button click
+                clockPanel.stopClock();
             }
         });
 
