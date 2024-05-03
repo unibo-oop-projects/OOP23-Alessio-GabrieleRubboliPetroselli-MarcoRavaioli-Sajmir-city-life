@@ -4,8 +4,6 @@ import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.transport.Zone;
 import unibo.citysimulation.model.transport.ZoneTable;
-
-import java.time.LocalTime;
 import java.util.Optional;
 
 
