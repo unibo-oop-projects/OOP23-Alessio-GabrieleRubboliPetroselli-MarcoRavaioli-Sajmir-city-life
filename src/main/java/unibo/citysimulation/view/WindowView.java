@@ -24,7 +24,7 @@ public class WindowView extends JFrame {
 
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
     private ClockPanel clockPanel = new ClockPanel(Color.RED);
-    private InputPanel inputPanel = new InputPanel(Color.BLUE);
+    private InputPanel inputPanel = new InputPanel(Color.BLUE, clockPanel);
     private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
 
     /**
