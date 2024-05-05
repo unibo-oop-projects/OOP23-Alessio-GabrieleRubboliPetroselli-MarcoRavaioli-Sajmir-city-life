@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
+import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
@@ -11,11 +12,11 @@ public class InputPanel extends StyledPanel {
     private JLabel numberOfPersonLabel;
     private JTextField numberOfPersonTextField;
     private JButton confirmButton;
-    private ClockPanel clockPanel;
+    private ClockModel clockModel;
 
-    public InputPanel(Color bgColor, ClockPanel clockPanel) {
+    public InputPanel(Color bgColor, ClockModel clockModel) {
         super(bgColor);
-        this.clockPanel = clockPanel;
+        this.clockModel = clockModel;
 
         // Set the layout manager to GridBagLayout
         setLayout(new GridBagLayout());
@@ -42,25 +43,24 @@ public class InputPanel extends StyledPanel {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clockPanel.startClock();
+                clockModel.startSimulation();
             }
         });
 
         // Add the start button to the button panel
         buttonPanel.add(startButton);
 
-        // Create the stop button
-        JButton stopButton = new JButton("Stop");
-        stopButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-        stopButton.addActionListener(new ActionListener() {
+        // Create the pause button
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+        pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clockPanel.stopClock();
+                clockModel.pauseSimulation();
             }
         });
+        buttonPanel.add(pauseButton);
 
-        // Add the stop button to the button panel
-        buttonPanel.add(stopButton);
 
         // Add the button panel to the main panel
         gbc.gridy = 1;
