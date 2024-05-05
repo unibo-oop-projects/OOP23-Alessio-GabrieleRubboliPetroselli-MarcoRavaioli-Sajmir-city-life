@@ -2,8 +2,9 @@ package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.transport.Zone;
-import unibo.citysimulation.model.transport.ZoneTable;
+import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.model.zone.ZoneTable;
+
 import java.util.Optional;
 
 
