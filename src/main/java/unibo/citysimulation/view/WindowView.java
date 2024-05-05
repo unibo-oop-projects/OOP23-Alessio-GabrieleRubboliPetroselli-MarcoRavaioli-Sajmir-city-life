@@ -1,14 +1,25 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.controller.ClockController;
 import unibo.citysimulation.controller.MapController;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
+import unibo.citysimulation.model.business.BusinessImpl;
+import unibo.citysimulation.model.clock.ClockModel;
+import unibo.citysimulation.model.clock.ClockObserver;
+import unibo.citysimulation.model.clock.ClockObserverPerson;
+import unibo.citysimulation.model.person.Person;
+import unibo.citysimulation.model.person.PersonImpl;
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.Zone;
+import unibo.citysimulation.model.transport.ZoneTable;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
 import unibo.citysimulation.view.sidePanels.InputPanel;
 import unibo.citysimulation.view.map.MapPanel;
+import java.time.LocalTime;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +32,15 @@ public class WindowView extends JFrame {
     private MapModel mapModel;
     private MapController mapController;
     private WindowModel windowModel;
+    private ClockObserver clockController;
+    private ClockObserver clockObserverPerson;
+    private ClockModel clockModel;
+    private Zone residenceZone = new Zone("zone 1");
+    private Zone businessZone = new Zone("zone 2");
+    private TransportLine transportLine = new TransportLine("line 1-2", 500, 10);
+    private ZoneTable zoneTable = new ZoneTable();
+    private BusinessImpl business = new BusinessImpl("projectsrl", 100, 10.0, LocalTime.of(5, 0), LocalTime.of(8, 0), businessZone);
+    private PersonImpl person;
 
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
     private ClockPanel clockPanel = new ClockPanel(Color.RED);
@@ -34,9 +54,17 @@ public class WindowView extends JFrame {
      * @param mapModel    The model representing the map.
      */
     public WindowView(WindowModel windowModel, MapModel mapModel) {
+        zoneTable.addPair(residenceZone, businessZone, transportLine);
         this.windowModel = windowModel;
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
+        this.clockController = new ClockController(clockPanel);
+        this.clockModel = new ClockModel(2);
+        person = new PersonImpl(100, business, residenceZone, clockModel, zoneTable);
+        this.clockObserverPerson = new ClockObserverPerson(person);
+        clockModel.addObserver(clockObserverPerson);
+        clockModel.addObserver(clockController);
+        clockModel.startSimulation();
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
+import unibo.citysimulation.controller.ClockController;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
@@ -10,33 +11,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ClockPanel extends StyledPanel {
-    private JLabel clockLabel;
-    private Timer timer;
-    private long startTime;
+    private JLabel timeDay = new JLabel("", SwingConstants.CENTER);
 
     public ClockPanel(Color bgColor) {
         super(bgColor);
 
-        clockLabel = new JLabel("00:00:00", SwingConstants.CENTER);
-        clockLabel.setForeground(Color.WHITE);
-        add(clockLabel, BorderLayout.CENTER);
+        // Crea una JLabel con il testo desiderato
+        JLabel label = new JLabel("CLOCkPANEL", SwingConstants.CENTER); // Allinea il testo al centro
+        label.setForeground(Color.WHITE); // Imposta il colore del testo
 
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                long elapsedTime = System.currentTimeMillis() - startTime;
-                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-                clockLabel.setText(dateFormat.format(new Date(elapsedTime)));
-            }
-        });
+        // Aggiungi la JLabel al pannello al centro
+        add(label, BorderLayout.CENTER);
+
+        add(timeDay, BorderLayout.SOUTH);
     }
 
-    public void startClock() {
-        startTime = System.currentTimeMillis();
-        timer.start();
-    }
-
-    public void stopClock() {
-        timer.stop();
+    public void setClockText(String text){
+        timeDay.setText(text);
     }
 }

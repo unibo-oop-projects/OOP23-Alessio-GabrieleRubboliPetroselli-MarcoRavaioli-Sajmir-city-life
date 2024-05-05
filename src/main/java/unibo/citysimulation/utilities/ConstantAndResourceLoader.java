@@ -13,4 +13,8 @@ public final class ConstantAndResourceLoader extends ClassLoader{
      * Screen size percentage
      */
     public static final double SCREEN_SIZE_PERCENTAGE = 0.90;
+
+    public static final int MINUTES_IN_A_SECOND = 5;
+
+    public static final int TIME_UPDATE_RATE = 500;
 }
