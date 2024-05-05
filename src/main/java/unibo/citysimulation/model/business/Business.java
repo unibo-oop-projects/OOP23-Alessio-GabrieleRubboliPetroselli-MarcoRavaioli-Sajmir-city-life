@@ -2,7 +2,7 @@ package unibo.citysimulation.model.business;
 
 import java.util.List;
 
-import unibo.citysimulation.model.transport.Zone;
+import unibo.citysimulation.model.zone.Zone;
 
 import java.time.LocalTime;
 
