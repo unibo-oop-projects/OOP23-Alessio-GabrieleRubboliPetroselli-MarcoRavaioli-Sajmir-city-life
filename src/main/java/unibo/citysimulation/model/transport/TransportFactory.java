@@ -1,15 +1,25 @@
 package unibo.citysimulation.model.transport;
 
+import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Factory for creating TransportLine objects.
  * This factory creates a list of TransportLine objects based on a list of Zone objects.
  */
 public class TransportFactory {
+    
+
+    /**
+     * Constructs a TransportFactory with the specified ClockModel.
+     *
+     * @param clock the ClockModel to be used
+     */
+
     /**
      * Creates a list of TransportLine objects based on a list of Zone objects.
      *
@@ -21,7 +31,7 @@ public class TransportFactory {
 
         List<List<Object>> transportsInfo = getTransportInfoList(zones);
 
-        // Itera sulla lista di mappe di informazioni sulle zone e crea le zone corrispondenti
+        // Iterates over the list of transport information lists and creates the corresponding transport lines
         for (var entry : transportsInfo) {
             TransportLine transport = new TransportLineImpl((String)entry.get(0), (Integer)entry.get(1), (Integer)entry.get(2), (Pair<Zone,Zone>)entry.get(3));
             transports.add(transport);
@@ -29,6 +39,7 @@ public class TransportFactory {
 
         return transports;
     }
+
     /**
      * Returns a list of transport information lists.
      * Each transport information list contains the name, capacity, duration, and a pair of origin and destination zones of a transport line.
@@ -43,7 +54,7 @@ public class TransportFactory {
         infos.add(100);
         infos.add(20);
         infos.add(new Pair<>(zones.get(0), zones.get(1)));
-        
+
         transportsInfo.add(infos);
         infos.clear();
 
