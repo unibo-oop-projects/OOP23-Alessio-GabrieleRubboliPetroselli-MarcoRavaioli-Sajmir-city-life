@@ -6,7 +6,7 @@ import unibo.citysimulation.model.zone.Zone;
  * 
  * An interface for creating transports.
  */
-public interface TransportCreation extends Transport {
+public interface TransportCreation {
     /**
      * Creates a new transport.
      *
@@ -23,7 +23,7 @@ public interface TransportCreation extends Transport {
      * @param destinationZone the destination zone of the line
      * @param transports      the list of transports for the predefined line
      */
-    void addPredefinedLine(Zone originZone, Zone destinationZone, List<Transport> transports);
+    void addPredefinedLine(Zone originZone, Zone destinationZone, List<TransportLine> transports);
      /**
      * Calculates the congestion of a predefined line between zones.
      *

@@ -45,7 +45,7 @@ public class WindowView extends JFrame {
 
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
     private ClockPanel clockPanel = new ClockPanel(Color.RED);
-    private InputPanel inputPanel = new InputPanel(Color.BLUE);
+    private InputPanel inputPanel;
     private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
 
     /**
@@ -61,11 +61,11 @@ public class WindowView extends JFrame {
         this.mapController = new MapController(mapModel, infoPanel);
         this.clockController = new ClockController(clockPanel);
         this.clockModel = new ClockModel(2);
+        this.inputPanel = new InputPanel(Color.BLUE, clockModel);
         person = new PersonImpl(100, business, residenceZone, clockModel, zoneTable);
         this.clockObserverPerson = new ClockObserverPerson(person);
         clockModel.addObserver(clockObserverPerson);
         clockModel.addObserver(clockController);
-        clockModel.startSimulation();
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

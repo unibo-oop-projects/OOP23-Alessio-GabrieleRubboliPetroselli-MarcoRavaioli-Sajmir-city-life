@@ -5,6 +5,10 @@ import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ClockPanel extends StyledPanel {
     private JLabel timeDay = new JLabel("", SwingConstants.CENTER);

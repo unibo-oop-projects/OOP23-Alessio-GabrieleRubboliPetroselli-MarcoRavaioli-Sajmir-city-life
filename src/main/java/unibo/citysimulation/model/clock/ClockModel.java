@@ -19,10 +19,11 @@ public class ClockModel {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     private LocalTime currentTime;
     private List<ClockObserver> observers;
+    private boolean isPaused;
+    private TimerTask task;
 
     public ClockModel(int totalDays) {
         this.totalDays = totalDays;
-        this.timer = new Timer();
         this.observers = new ArrayList<>();
     }
 
@@ -35,36 +36,47 @@ public class ClockModel {
     }
 
     public void startSimulation() {
+        if(timer!=null){
+            timer.cancel();
+            task.cancel();
+        }   
+        this.timer = new Timer();
+        isPaused=false;
         currentTime = LocalTime.of(0,0);
         //currentDay kept int for convenience
         currentDay = 1;
     
-        TimerTask task = new TimerTask() {
+        task = new TimerTask() {
     
             @Override
             public void run() {
-                if (currentDay <= totalDays) {
-                    currentTime = currentTime.plusMinutes(ConstantAndResourceLoader.MINUTES_IN_A_SECOND);
+                if(!isPaused){
+                    if (currentDay <= totalDays) {
+                        currentTime = currentTime.plusMinutes(ConstantAndResourceLoader.MINUTES_IN_A_SECOND);
+        
+                        if (currentTime.getHour() == 0 && currentTime.getMinute() == 0){
+                            currentDay++;
+                        }
     
-                    if (currentTime.getHour() == 0 && currentTime.getMinute() == 0){
-                        currentDay++;
+                        System.out.println("Current time: " + currentTime.format(formatter) + " Day: " + currentDay);
+                        System.out.println("hour duration : "+ hourDuration);
+                        
+                        notifyObservers();
+    
+                    } else {
+                        timer.cancel();
                     }
 
-                    System.out.println("Current time: " + currentTime.format(formatter) + " Day: " + currentDay);
-                    
-                    notifyObservers();
-
-                } else {
-                    timer.cancel();
                 }
+                
             }
         };
     
         timer.scheduleAtFixedRate(task, 0, hourDuration);
     }
     
-    public void stopSimulation() {
-        timer.cancel();
+    public void pauseSimulation(){
+        isPaused=!isPaused;
     }
 
     private void notifyObservers() {
