@@ -13,8 +13,10 @@ import java.awt.*;
 public class ClockPanel extends StyledPanel {
     private JLabel timeDay = new JLabel("Giorno: 1 ora: 00:00", SwingConstants.CENTER);
     private JButton speedButton;
+    private JButton pauseButton;
     private int[] speeds = {1, 2, 10};
     private int currentSpeedIndex = 0;
+    boolean isPaused = false;
 
     public ClockPanel(Color bgColor, ClockUserController clockUserController) {
         super(bgColor);
@@ -30,12 +32,14 @@ public class ClockPanel extends StyledPanel {
             }
         });
 
-        JButton pauseButton = new JButton("Pause");
+        pauseButton = new JButton("stop");
         pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                isPaused = !isPaused;
                 clockUserController.pauseSimulation();
+                updatePauseButtonIcon();
             }
         });
 
@@ -51,6 +55,10 @@ public class ClockPanel extends StyledPanel {
 
     public void setClockText(String text){
         timeDay.setText(text);
+    }
+
+    private void updatePauseButtonIcon() {
+        pauseButton.setText(isPaused ? "resume" : "stop");
     }
     
 }
