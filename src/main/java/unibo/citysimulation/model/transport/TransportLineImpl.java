@@ -2,6 +2,7 @@ package unibo.citysimulation.model.transport;
 
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.model.clock.*;
 
 /**
  * Represents a transport line within the city simulation.
