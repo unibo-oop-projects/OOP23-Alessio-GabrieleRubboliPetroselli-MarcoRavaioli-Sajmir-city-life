@@ -43,7 +43,5 @@ public interface Person {
      * @param money the amount of money to sum/sub to the actual amount of money the person has
      */
     void setMoney(int money);
-
-    ClockModel getClock();
     
 }

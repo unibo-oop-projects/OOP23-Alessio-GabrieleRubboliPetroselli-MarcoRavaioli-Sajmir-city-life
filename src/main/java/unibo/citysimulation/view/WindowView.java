@@ -59,6 +59,7 @@ public class WindowView extends JFrame {
         this.mapController = new MapController(mapModel, infoPanel);
         this.clockModel = new ClockModel(2);
         this.clockUserController = new ClockUserController(clockModel);
+        this.clockPanel = new ClockPanel(Color.RED, clockUserController);
         this.inputPanel = new InputPanel(Color.BLUE, clockUserController);
         this.clockObserverPerson = new ClockObserverPerson(person);
         clockModel.addObserver(clockObserverPerson);

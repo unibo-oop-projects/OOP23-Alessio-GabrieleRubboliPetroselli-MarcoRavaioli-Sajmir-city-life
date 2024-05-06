@@ -32,7 +32,7 @@ public class PersonFactory {
     }
 
     private Person createPerson(String name, int age, int money, Business business, Zone residenceZone, ClockModel clock, ZoneTable zoneTable) {
-        return new PersonImpl(name, age, money, business, residenceZone, clock, zoneTable);
+        return new PersonImpl(name, age, money, business, residenceZone, zoneTable);
     }
 }
 
