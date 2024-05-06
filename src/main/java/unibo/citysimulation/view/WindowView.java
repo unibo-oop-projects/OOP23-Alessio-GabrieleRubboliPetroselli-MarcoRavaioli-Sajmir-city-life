@@ -60,9 +60,8 @@ public class WindowView extends JFrame {
         this.clockModel = new ClockModel(2);
         this.clockUserController = new ClockUserController(clockModel);
         this.clockPanel = new ClockPanel(Color.RED, clockUserController);
+        this.clockController = new ClockController(clockPanel);
         this.inputPanel = new InputPanel(Color.BLUE, clockUserController);
-        this.clockObserverPerson = new ClockObserverPerson(person);
-        clockModel.addObserver(clockObserverPerson);
         clockModel.addObserver(clockController);
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);

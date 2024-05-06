@@ -1,6 +1,7 @@
 package unibo.citysimulation;
 
 import unibo.citysimulation.controller.WindowController;
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
@@ -24,6 +25,7 @@ public final class SimulationLauncher {
      * @param args No arguments should be passed to this program.
      */
     public static void main(final String[] args) {
+        CityModel cityModel = new CityModel();
         // Create the initial window model
         WindowModel windowModel = createInitialWindowModel();
         
@@ -35,6 +37,7 @@ public final class SimulationLauncher {
         
         // Create the window controller with the window model, window view, and map model
         new WindowController(windowModel, windowView, mapModel);
+
     }
     //method for starting the simulation
     public void start(){
