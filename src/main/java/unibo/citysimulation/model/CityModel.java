@@ -17,6 +17,7 @@ public class CityModel {
 
     public CityModel() {
         this.zones = new ArrayList<>();
+        this.transports = new ArrayList<>();
         // Inizializza e aggiungi le zone alla città
         initializeZones();
         initializeTransport();
@@ -28,7 +29,7 @@ public class CityModel {
         // Itera sulla lista di mappe di informazioni sulle zone e crea le zone corrispondenti
         for (var entry : zonesInfo.entrySet()) {
             Zone zone = new ZoneImpl(entry.getKey(), (float) entry.getValue().get(0), (float) entry.getValue().get(1), (float) entry.getValue().get(2));
-            
+
             zones.add(zone);
         }
     }
