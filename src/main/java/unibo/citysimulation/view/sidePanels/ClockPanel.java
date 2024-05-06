@@ -1,38 +1,52 @@
 package unibo.citysimulation.view.sidePanels;
 
-import unibo.citysimulation.controller.ClockSpeedController;
+import unibo.citysimulation.controller.ClockUserController;
 import unibo.citysimulation.view.StyledPanel;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import java.awt.*;
 
 public class ClockPanel extends StyledPanel {
     private JLabel timeDay = new JLabel("Giorno: 1 ora: 00:00", SwingConstants.CENTER);
-    private JSlider speedSlider;
+    private JButton speedButton;
+    private int[] speeds = {1, 2, 10};
+    private int currentSpeedIndex = 0;
 
-    public ClockPanel(Color bgColor, ClockSpeedController clockSpeedController) {
+    public ClockPanel(Color bgColor, ClockUserController clockUserController) {
         super(bgColor);
 
-        speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
-        speedSlider.setMajorTickSpacing(9);
-        speedSlider.setPaintTicks(true); // Visualizza le etichette
-        speedSlider.setPaintLabels(true); // Visualizza le etichette dei valori
-        speedSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                int speed = speedSlider.getValue();
-                clockSpeedController.setClockSpeed(speed);
+        speedButton = new JButton("1x");
+        speedButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Incrementa l'indice della velocità e riportalo a 0 se arrivi all'ultimo valore
+                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
+                int newSpeed = speeds[currentSpeedIndex];
+                speedButton.setText(newSpeed + "x");
+                clockUserController.setClockSpeed(newSpeed);
+            }
+        });
+
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clockUserController.pauseSimulation();
             }
         });
 
         // Set up layout
-        JPanel sliderPanel = new JPanel(new BorderLayout());
-        sliderPanel.add(speedSlider, BorderLayout.CENTER);
+        JPanel speedPanel = new JPanel(new BorderLayout());
+        speedPanel.add(speedButton,BorderLayout.WEST);
+        speedPanel.add(pauseButton,BorderLayout.EAST);
 
         add(timeDay, BorderLayout.SOUTH);
 
-        add(sliderPanel);
+        add(speedPanel);
     }
 
     public void setClockText(String text){

@@ -1,7 +1,7 @@
 package unibo.citysimulation.view;
 
 import unibo.citysimulation.controller.ClockController;
-import unibo.citysimulation.controller.ClockSpeedController;
+import unibo.citysimulation.controller.ClockUserController;
 import unibo.citysimulation.controller.MapController;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
@@ -37,7 +37,7 @@ public class WindowView extends JFrame {
     private ClockObserver clockController;
     private ClockObserver clockObserverPerson;
     private ClockModel clockModel;
-    private ClockSpeedController ClockSpeedController;
+    private ClockUserController clockUserController;
     private Zone residenceZone = new ZoneImpl("zone 1");
     private Zone businessZone = new ZoneImpl("zone 2");
     private TransportLine transportLine = new TransportLine("line 1-2", 500, 10);
@@ -62,10 +62,10 @@ public class WindowView extends JFrame {
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
         this.clockModel = new ClockModel(2);
-        this.ClockSpeedController = new ClockSpeedController(clockModel);
-        this.clockPanel = new ClockPanel(Color.RED, ClockSpeedController);
+        this.clockUserController = new ClockUserController(clockModel);
+        this.clockPanel = new ClockPanel(Color.RED, clockUserController);
         this.clockController = new ClockController(clockPanel);
-        this.inputPanel = new InputPanel(Color.BLUE, clockModel);
+        this.inputPanel = new InputPanel(Color.BLUE, clockUserController);
         person = new PersonImpl("Aldo Manini", 60, 100, business, residenceZone, clockModel, zoneTable);
         this.clockObserverPerson = new ClockObserverPerson(person);
         clockModel.addObserver(clockObserverPerson);

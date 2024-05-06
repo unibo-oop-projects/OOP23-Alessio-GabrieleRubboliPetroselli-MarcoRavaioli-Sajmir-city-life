@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
+import unibo.citysimulation.controller.ClockUserController;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.view.StyledPanel;
 
@@ -12,11 +13,11 @@ public class InputPanel extends StyledPanel {
     private JLabel numberOfPersonLabel;
     private JTextField numberOfPersonTextField;
     private JButton confirmButton;
-    private ClockModel clockModel;
+    private ClockUserController clockUserController;
 
-    public InputPanel(Color bgColor, ClockModel clockModel) {
+    public InputPanel(Color bgColor, ClockUserController clockUserController) {
         super(bgColor);
-        this.clockModel = clockModel;
+        this.clockUserController = clockUserController;
 
         // Set the layout manager to GridBagLayout
         setLayout(new GridBagLayout());
@@ -43,23 +44,12 @@ public class InputPanel extends StyledPanel {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clockModel.restartSimulation();
+                clockUserController.restartSimulation();
             }
         });
 
         // Add the start button to the button panel
         buttonPanel.add(startButton);
-
-        // Create the pause button
-        JButton pauseButton = new JButton("Pause");
-        pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-        pauseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clockModel.pauseSimulation();
-            }
-        });
-        buttonPanel.add(pauseButton);
 
 
         // Add the button panel to the main panel
