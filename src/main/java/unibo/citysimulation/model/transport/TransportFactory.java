@@ -5,9 +5,17 @@ import unibo.citysimulation.utilities.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Factory for creating TransportLine objects.
+ * This factory creates a list of TransportLine objects based on a list of Zone objects.
+ */
 public class TransportFactory {
-
+    /**
+     * Creates a list of TransportLine objects based on a list of Zone objects.
+     *
+     * @param zones the list of Zone objects
+     * @return a list of TransportLine objects
+     */
     public static List<TransportLine> createTransports(List<Zone> zones) {
         List<TransportLine> transports = new ArrayList<>();
 
@@ -21,7 +29,13 @@ public class TransportFactory {
 
         return transports;
     }
-
+    /**
+     * Returns a list of transport information lists.
+     * Each transport information list contains the name, capacity, duration, and a pair of origin and destination zones of a transport line.
+     *
+     * @param zones the list of Zone objects
+     * @return a list of transport information lists
+     */
     private static List<List<Object>> getTransportInfoList(List<Zone> zones) {
         List<List<Object>> transportsInfo = new ArrayList<>();
         List<Object> infos = new ArrayList<>();
