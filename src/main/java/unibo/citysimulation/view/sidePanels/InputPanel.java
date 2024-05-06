@@ -1,8 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
-import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.view.StyledPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,11 +10,10 @@ public class InputPanel extends StyledPanel {
     private JLabel numberOfPersonLabel;
     private JTextField numberOfPersonTextField;
     private JButton confirmButton;
-    private ClockModel clockModel;
+    private JButton startButton;
 
-    public InputPanel(Color bgColor, ClockModel clockModel) {
+    public InputPanel(Color bgColor) {
         super(bgColor);
-        this.clockModel = clockModel;
 
         // Set the layout manager to GridBagLayout
         setLayout(new GridBagLayout());
@@ -38,28 +35,11 @@ public class InputPanel extends StyledPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
         // Create the start button
-        JButton startButton = new JButton("Start");
+        startButton = new JButton("Start");
         startButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clockModel.startSimulation();
-            }
-        });
 
         // Add the start button to the button panel
         buttonPanel.add(startButton);
-
-        // Create the pause button
-        JButton pauseButton = new JButton("Pause");
-        pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-        pauseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clockModel.pauseSimulation();
-            }
-        });
-        buttonPanel.add(pauseButton);
 
 
         // Add the button panel to the main panel
@@ -97,5 +77,9 @@ public class InputPanel extends StyledPanel {
         // Add the second row panel to the panel
         gbc.gridy = 2;
         add(secondRowPanel, gbc);
+    }
+
+    public JButton getStartButton() {
+        return startButton;
     }
 }

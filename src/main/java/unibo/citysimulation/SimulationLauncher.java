@@ -1,6 +1,7 @@
 package unibo.citysimulation;
 
 import unibo.citysimulation.controller.WindowController;
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;

@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.zone;
 
+import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.utilities.Pair;
 
 /**
@@ -20,7 +21,6 @@ public class ZoneImpl implements Zone {
         this.wellfare = wellfare;
         this.wellfareMinMax = wellfareMinMax;
         this.ageMinMax = ageMinMax;
-
     }
 
     // Getter and setter for 'name'
@@ -57,5 +57,9 @@ public class ZoneImpl implements Zone {
 
     public float getWellfare() {
         return wellfare;
+    }
+
+    public Pair<Integer, Integer> getWellfareMinMax() {
+        return wellfareMinMax;
     }
 }

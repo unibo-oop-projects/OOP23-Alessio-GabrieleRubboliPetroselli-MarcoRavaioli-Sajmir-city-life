@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ClockModel {
 
     private int totalDays;
-    private long hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
+    private int hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
     private Timer timer;
     private int currentDay;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -35,16 +35,15 @@ public class ClockModel {
         observers.remove(observer);
     }
 
-    public void startSimulation() {
+    public void startSimulation(int hourDuration) {
         if(timer!=null){
             timer.cancel();
             task.cancel();
-        }   
+        }
+        
+        this.hourDuration = hourDuration;
+
         this.timer = new Timer();
-        isPaused=false;
-        currentTime = LocalTime.of(0,0);
-        //currentDay kept int for convenience
-        currentDay = 1;
     
         task = new TimerTask() {
     
@@ -74,6 +73,17 @@ public class ClockModel {
     
         timer.scheduleAtFixedRate(task, 0, hourDuration);
     }
+
+    public void restartSimulation(){
+        if(timer!=null){
+            timer.cancel();
+            task.cancel();
+        }
+        isPaused=false;
+        currentTime = LocalTime.of(0,0);
+        currentDay = 1;
+        this.startSimulation(hourDuration);
+    }
     
     public void pauseSimulation(){
         isPaused=!isPaused;
@@ -95,5 +105,13 @@ public class ClockModel {
 
     public int getCurrentDay() {
         return currentDay;
+    }
+
+    public int getHourDuration() {
+        return hourDuration;
+    }
+
+    public void setHourDuration(int hourDuration) {
+        this.hourDuration = hourDuration;
     }
 }

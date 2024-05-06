@@ -28,13 +28,10 @@ public class WindowView extends JFrame {
     private MapController mapController;
     private WindowModel windowModel;
     private ClockObserver clockController;
-    private ClockObserver clockObserverPerson;
     private ClockModel clockModel;
-    private ZoneTable zoneTable = new ZoneTable();
-    private PersonImpl person;
 
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
-    private ClockPanel clockPanel = new ClockPanel(Color.RED);
+    private ClockPanel clockPanel;
     private InputPanel inputPanel;
     private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
 
@@ -48,12 +45,10 @@ public class WindowView extends JFrame {
         this.windowModel = windowModel;
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
-        this.clockController = new ClockController(clockPanel);
         this.clockModel = new ClockModel(2);
-        this.inputPanel = new InputPanel(Color.BLUE, clockModel);
-        this.clockObserverPerson = new ClockObserverPerson(person);
-        clockModel.addObserver(clockObserverPerson);
-        clockModel.addObserver(clockController);
+        this.clockPanel = new ClockPanel(Color.RED);
+        this.inputPanel = new InputPanel(Color.BLUE);
+        this.clockController = new ClockController(clockPanel, inputPanel, clockModel);
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

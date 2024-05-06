@@ -13,7 +13,7 @@ public class ClockObserverPerson implements ClockObserver{
 
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
-        person.checkState();
+        person.checkState(currentTime);
     }
     
 }
