@@ -13,12 +13,11 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
 public class ClockController implements ClockObserver{
     private ClockPanel clockPanel;
     private ClockModel clockModel;
-    private InputPanel inputPanel;
+
 
     public ClockController(ClockPanel clockPanel, InputPanel inputPanel, ClockModel clockModel) {
         this.clockPanel = clockPanel;
         this.clockModel = clockModel;
-        this.inputPanel = inputPanel;
 
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
