@@ -3,7 +3,9 @@ package unibo.citysimulation.model.zone;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import unibo.citysimulation.model.transport.TransportLineImpl;
+import unibo.citysimulation.utilities.Pair;
 
 public class ZoneTable {
     private Map<Pair<Zone, Zone>, TransportLineImpl> zonePairs;

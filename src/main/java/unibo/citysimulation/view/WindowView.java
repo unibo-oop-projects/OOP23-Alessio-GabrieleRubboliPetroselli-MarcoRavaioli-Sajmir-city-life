@@ -37,11 +37,7 @@ public class WindowView extends JFrame {
     private ClockObserver clockController;
     private ClockObserver clockObserverPerson;
     private ClockModel clockModel;
-    private Zone residenceZone = new ZoneImpl("zone 1");
-    private Zone businessZone = new ZoneImpl("zone 2");
-    private TransportLineImpl transportLine = new TransportLineImpl("line 1-2", 500, 10);
     private ZoneTable zoneTable = new ZoneTable();
-    private BusinessImpl business = new BusinessImpl("projectsrl", 100, 10.0, LocalTime.of(5, 0), LocalTime.of(8, 0), businessZone);
     private PersonImpl person;
 
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
@@ -56,14 +52,12 @@ public class WindowView extends JFrame {
      * @param mapModel    The model representing the map.
      */
     public WindowView(WindowModel windowModel, MapModel mapModel) {
-        zoneTable.addPair(residenceZone, businessZone, transportLine);
         this.windowModel = windowModel;
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
         this.clockController = new ClockController(clockPanel);
         this.clockModel = new ClockModel(2);
         this.inputPanel = new InputPanel(Color.BLUE, clockModel);
-        person = new PersonImpl(100, business, residenceZone, clockModel, zoneTable);
         this.clockObserverPerson = new ClockObserverPerson(person);
         clockModel.addObserver(clockObserverPerson);
         clockModel.addObserver(clockController);

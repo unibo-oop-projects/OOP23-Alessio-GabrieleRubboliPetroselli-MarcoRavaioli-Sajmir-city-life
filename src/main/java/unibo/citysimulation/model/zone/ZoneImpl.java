@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.zone;
 
+import unibo.citysimulation.utilities.Pair;
+
 /**
  * A class representing a zone in the city.
  */
@@ -10,8 +12,11 @@ public class ZoneImpl implements Zone {
     private float wellfare;
     private Pair<Integer, Integer> wellfareMinMax;
 
-    public ZoneImpl(String name) {
+    public ZoneImpl(String name, float personPercents, float businessPercents, float wellfare) {
         this.name = name;
+        this.personPercents = personPercents;
+        this.businessPercents = businessPercents;
+        this.wellfare = wellfare;
     }
 
     // Getter and setter for 'name'
