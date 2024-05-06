@@ -8,6 +8,4 @@ public class CityController {
     public CityController() {
         this.cityModel = new CityModel();
     }
-
-    // Metodi per gestire la logica della città, se necessario
 }
