@@ -10,7 +10,8 @@ import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
 import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.model.person.PersonImpl;
-import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.TransportLineImpl;
+import unibo.citysimulation.model.transport.TransportLineImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneImpl;
 import unibo.citysimulation.model.zone.ZoneTable;
@@ -38,7 +39,7 @@ public class WindowView extends JFrame {
     private ClockModel clockModel;
     private Zone residenceZone = new ZoneImpl("zone 1");
     private Zone businessZone = new ZoneImpl("zone 2");
-    private TransportLine transportLine = new TransportLine("line 1-2", 500, 10);
+    private TransportLineImpl transportLine = new TransportLineImpl("line 1-2", 500, 10);
     private ZoneTable zoneTable = new ZoneTable();
     private BusinessImpl business = new BusinessImpl("projectsrl", 100, 10.0, LocalTime.of(5, 0), LocalTime.of(8, 0), businessZone);
     private PersonImpl person;
