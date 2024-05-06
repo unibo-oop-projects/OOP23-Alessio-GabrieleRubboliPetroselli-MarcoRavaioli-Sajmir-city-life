@@ -1,32 +1,42 @@
 package unibo.citysimulation.view.sidePanels;
 
-import unibo.citysimulation.controller.ClockController;
+import unibo.citysimulation.controller.ClockSpeedController;
 import unibo.citysimulation.view.StyledPanel;
-
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class ClockPanel extends StyledPanel {
-    private JLabel timeDay = new JLabel("", SwingConstants.CENTER);
+    private JLabel timeDay = new JLabel("Giorno: 1 ora: 00:00", SwingConstants.CENTER);
+    private JSlider speedSlider;
 
-    public ClockPanel(Color bgColor) {
+    public ClockPanel(Color bgColor, ClockSpeedController clockSpeedController) {
         super(bgColor);
 
-        // Crea una JLabel con il testo desiderato
-        JLabel label = new JLabel("CLOCkPANEL", SwingConstants.CENTER); // Allinea il testo al centro
-        label.setForeground(Color.WHITE); // Imposta il colore del testo
+        speedSlider = new JSlider(JSlider.HORIZONTAL, 50, 1000, 500);
+        speedSlider.setMajorTickSpacing(4500);
+        speedSlider.setPaintTicks(true); // Visualizza le etichette
+        speedSlider.setPaintLabels(true); // Visualizza le etichette dei valori
+        speedSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                int speed = speedSlider.getValue();
+                clockSpeedController.setClockSpeed(speed);
+            }
+        });
 
-        // Aggiungi la JLabel al pannello al centro
-        add(label, BorderLayout.CENTER);
+        // Set up layout
+        JPanel sliderPanel = new JPanel(new BorderLayout());
+        sliderPanel.add(speedSlider, BorderLayout.CENTER);
 
         add(timeDay, BorderLayout.SOUTH);
+
+        add(sliderPanel);
     }
 
     public void setClockText(String text){
         timeDay.setText(text);
     }
+    
 }

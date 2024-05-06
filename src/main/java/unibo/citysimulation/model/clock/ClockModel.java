@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ClockModel {
 
     private int totalDays;
-    private long hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
+    private int hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
     private Timer timer;
     private int currentDay;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -95,5 +95,13 @@ public class ClockModel {
 
     public int getCurrentDay() {
         return currentDay;
+    }
+
+    public int getHourDuration() {
+        return hourDuration;
+    }
+
+    public void setHourDuration(int hourDuration) {
+        this.hourDuration = hourDuration;
     }
 }

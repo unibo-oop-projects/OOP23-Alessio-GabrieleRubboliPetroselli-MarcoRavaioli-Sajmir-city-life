@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.person;
+/*package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.clock.ClockModel;
@@ -34,5 +34,5 @@ public class PersonFactory {
     private Person createPerson(int money, Business business, Zone residenceZone) {
         return new PersonImpl(money, business, residenceZone, clock, zoneTable);
     }
-}
+}*/
 
