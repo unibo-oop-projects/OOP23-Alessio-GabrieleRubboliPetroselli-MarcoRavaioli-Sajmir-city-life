@@ -23,10 +23,10 @@ public class PersonFactory {
         random = new Random();
     }
 
-    public List<Person> createGroupOfPeople(int numberOfPeople, Pair<Integer, Integer> moneyMinMax, Zone residenceZone) {
+    public List<Person> createGroupOfPeople(int numberOfPeople, Pair<Integer, Integer> moneyMinMax, Business business, Zone residenceZone) {
         List<Person> people = new ArrayList<>();
         for (int i = 0; i < numberOfPeople; i++) {
-            people.add(createPerson("Person" + i, random.nextInt(100) , random.nextInt(moneyMinMax.getSecond()) + moneyMinMax.getFirst(), residenceZone, clock, zoneTable));
+            people.add(createPerson("Person" + i, random.nextInt(100), random.nextInt(moneyMinMax.getSecond()) + moneyMinMax.getFirst(), business, residenceZone, clock, zoneTable));
         }
         return people;
     }
