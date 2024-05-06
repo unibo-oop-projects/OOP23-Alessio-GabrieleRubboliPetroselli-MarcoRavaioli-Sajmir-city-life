@@ -1,12 +1,8 @@
 package unibo.citysimulation.view.sidePanels;
 
-import unibo.citysimulation.controller.ClockUserController;
 import unibo.citysimulation.view.StyledPanel;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 import java.awt.*;
 
@@ -18,7 +14,7 @@ public class ClockPanel extends StyledPanel {
     private int currentSpeedIndex = 0;
     boolean isPaused = false;
 
-    public ClockPanel(Color bgColor, ClockUserController clockUserController) {
+    public ClockPanel(Color bgColor) {
         super(bgColor);
 
         speedButton = new JButton("1x");

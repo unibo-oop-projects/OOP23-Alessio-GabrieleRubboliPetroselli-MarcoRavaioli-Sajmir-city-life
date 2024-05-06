@@ -1,28 +1,17 @@
 package unibo.citysimulation.view;
 
 import unibo.citysimulation.controller.ClockController;
-import unibo.citysimulation.controller.ClockUserController;
 import unibo.citysimulation.controller.MapController;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
-import unibo.citysimulation.model.business.BusinessImpl;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserver;
-import unibo.citysimulation.model.clock.ClockObserverPerson;
-import unibo.citysimulation.model.person.Person;
-import unibo.citysimulation.model.person.PersonImpl;
-import unibo.citysimulation.model.transport.TransportLineImpl;
-import unibo.citysimulation.model.transport.TransportLineImpl;
-import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneImpl;
-import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
 import unibo.citysimulation.view.sidePanels.InputPanel;
 import unibo.citysimulation.view.map.MapPanel;
-import java.time.LocalTime;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,11 +25,7 @@ public class WindowView extends JFrame {
     private MapController mapController;
     private WindowModel windowModel;
     private ClockObserver clockController;
-    private ClockUserController clockUserController;
-    private ClockObserver clockObserverPerson;
     private ClockModel clockModel;
-    private ZoneTable zoneTable = new ZoneTable();
-    private PersonImpl person;
 
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
     private ClockPanel clockPanel;
@@ -58,7 +43,7 @@ public class WindowView extends JFrame {
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
         this.clockModel = new ClockModel(2);
-        this.clockPanel = new ClockPanel(Color.RED, clockUserController);
+        this.clockPanel = new ClockPanel(Color.RED);
         this.inputPanel = new InputPanel(Color.BLUE);
         this.clockController = new ClockController(clockPanel, inputPanel, clockModel);
 
