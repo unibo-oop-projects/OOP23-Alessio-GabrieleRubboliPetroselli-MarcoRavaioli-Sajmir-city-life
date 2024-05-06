@@ -1,12 +1,12 @@
-package unibo.citysimulation.model.transport;
+package unibo.citysimulation.model.zone;
 
 /**
  * A class representing a zone in the city.
  */
-public class Zone {
+public class ZoneImpl implements Zone{
     private String name;
 
-    public Zone(String name) {
+    public ZoneImpl(String name) {
         this.name = name;
     }
 

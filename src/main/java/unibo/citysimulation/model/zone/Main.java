@@ -1,4 +1,6 @@
-package unibo.citysimulation.model.transport;
+package unibo.citysimulation.model.zone;
+
+import unibo.citysimulation.model.transport.TransportLine;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,11 +11,11 @@ public class Main {
         TransportLine Line_Central_BottomRight = new TransportLine("line central-bottomright",400,20);
 
         // Create instances of Zone
-        Zone centralZone = new Zone("Central Zone");
-        Zone topRightZone = new Zone("Top Right Zone");
-        Zone topLeftZone = new Zone("Top Left Zone");
-        Zone bottomRightZone = new Zone("Bottom Right Zone");
-        Zone bottomLeftZone = new Zone("Bottom Left Zone");
+        ZoneImpl centralZone = new ZoneImpl("Central Zone");
+        ZoneImpl topRightZone = new ZoneImpl("Top Right Zone");
+        ZoneImpl topLeftZone = new ZoneImpl("Top Left Zone");
+        ZoneImpl bottomRightZone = new ZoneImpl("Bottom Right Zone");
+        ZoneImpl bottomLeftZone = new ZoneImpl("Bottom Left Zone");
 
         // Create an instance of ZoneTable
         ZoneTable table = new ZoneTable();

@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.transport;
+package unibo.citysimulation.model.zone;
 
 public class Pair<T1, T2> {
     private T1 first;

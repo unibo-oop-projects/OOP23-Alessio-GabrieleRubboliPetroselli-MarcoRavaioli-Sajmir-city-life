@@ -15,21 +15,28 @@ public class InputPanel extends StyledPanel {
     public InputPanel(Color bgColor) {
         super(bgColor);
 
-        // Set the layout manager to BorderLayout
-        setLayout(new BorderLayout());
+        // Set the layout manager to GridBagLayout
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
         // Create a JLabel with the desired text
         JLabel label = new JLabel("INPUTPANEL", SwingConstants.CENTER); // Align the text to the center
         label.setForeground(Color.WHITE); // Set the text color
 
-        // Add the JLabel to the SOUTH region of the panel
-        add(label, BorderLayout.SOUTH);
+        // Add the JLabel to the panel
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        add(label, gbc);
 
-        // Create a new panel for the buttons and the second row with FlowLayout
-        JPanel flowPanel = new JPanel(new FlowLayout());
+        // Create a new panel for the buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout());
 
         // Create the start button
         JButton startButton = new JButton("Start");
+        startButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,8 +44,12 @@ public class InputPanel extends StyledPanel {
             }
         });
 
+        // Add the start button to the button panel
+        buttonPanel.add(startButton);
+
         // Create the stop button
         JButton stopButton = new JButton("Stop");
+        stopButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,15 +57,18 @@ public class InputPanel extends StyledPanel {
             }
         });
 
-        // Add the start and stop buttons to the flowPanel
-        flowPanel.add(startButton);
-        flowPanel.add(stopButton);
+        // Add the stop button to the button panel
+        buttonPanel.add(stopButton);
+
+        // Add the button panel to the main panel
+        gbc.gridy = 1;
+        add(buttonPanel, gbc);
 
         // Create a new panel for the second row
         JPanel secondRowPanel = new JPanel(new FlowLayout());
 
         // Create the label for the number of persons
-        numberOfPersonLabel = new JLabel("Number of Persons:");
+        numberOfPersonLabel = new JLabel("Number of People:");
         numberOfPersonLabel.setForeground(Color.BLACK);
         secondRowPanel.add(numberOfPersonLabel);
 
@@ -78,10 +92,8 @@ public class InputPanel extends StyledPanel {
         });
         secondRowPanel.add(confirmButton);
 
-        // Add the second row panel to the flowPanel
-        flowPanel.add(secondRowPanel);
-
-        // Add the flowPanel to the CENTER region of the inputPanel
-        add(flowPanel, BorderLayout.CENTER);
+        // Add the second row panel to the panel
+        gbc.gridy = 2;
+        add(secondRowPanel, gbc);
     }
 }
