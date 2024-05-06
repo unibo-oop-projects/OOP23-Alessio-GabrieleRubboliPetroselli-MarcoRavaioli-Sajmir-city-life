@@ -62,6 +62,8 @@ public class WindowView extends JFrame {
         configureLayout();
         createComponents();
         setVisible(true);
+
+        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
     }
 
     /**
