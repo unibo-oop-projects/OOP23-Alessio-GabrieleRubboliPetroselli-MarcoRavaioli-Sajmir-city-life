@@ -58,11 +58,9 @@ public class WindowView extends JFrame {
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
         this.clockModel = new ClockModel(2);
-        this.clockUserController = new ClockUserController(clockModel);
         this.clockPanel = new ClockPanel(Color.RED, clockUserController);
-        this.clockController = new ClockController(clockPanel);
-        this.inputPanel = new InputPanel(Color.BLUE, clockUserController);
-        clockModel.addObserver(clockController);
+        this.inputPanel = new InputPanel(Color.BLUE);
+        this.clockController = new ClockController(clockPanel, inputPanel, clockModel);
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

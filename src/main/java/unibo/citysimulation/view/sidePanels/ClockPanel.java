@@ -22,26 +22,9 @@ public class ClockPanel extends StyledPanel {
         super(bgColor);
 
         speedButton = new JButton("1x");
-        speedButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Incrementa l'indice della velocità e riportalo a 0 se arrivi all'ultimo valore
-                currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-                int newSpeed = speeds[currentSpeedIndex];
-                speedButton.setText(newSpeed + "x");
-                clockUserController.setClockSpeed(newSpeed);
-            }
-        });
 
         pauseButton = new JButton("stop");
         pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-        pauseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isPaused = !isPaused;
-                clockUserController.pauseSimulation();
-                updatePauseButtonIcon();
-            }
-        });
 
         // Set up layout
         JPanel speedPanel = new JPanel(new BorderLayout());
@@ -57,8 +40,24 @@ public class ClockPanel extends StyledPanel {
         timeDay.setText(text);
     }
 
-    private void updatePauseButtonIcon() {
+    public void updatePauseButton() {
+        this.isPaused = !isPaused;
         pauseButton.setText(isPaused ? "resume" : "stop");
+    }
+
+    public JButton getPauseButton() {
+        return pauseButton;
+    }
+
+    public JButton getSpeedButton() {
+        return speedButton;
+    }
+
+    public int changeSpeed() {
+        currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
+        int newSpeed = speeds[currentSpeedIndex];
+        speedButton.setText(newSpeed + "x");
+        return newSpeed;
     }
     
 }

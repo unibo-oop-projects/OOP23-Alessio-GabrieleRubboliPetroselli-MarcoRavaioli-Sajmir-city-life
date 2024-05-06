@@ -1,19 +1,47 @@
 package unibo.citysimulation.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
+import unibo.citysimulation.view.sidePanels.InputPanel;
 
 public class ClockController implements ClockObserver{
     private ClockPanel clockPanel;
     private ClockModel clockModel;
+    private InputPanel inputPanel;
 
-    public ClockController(ClockPanel clockPanel, ClockModel clockModel) {
+    public ClockController(ClockPanel clockPanel, InputPanel inputPanel, ClockModel clockModel) {
         this.clockPanel = clockPanel;
         this.clockModel = clockModel;
+        this.inputPanel = inputPanel;
+
+        inputPanel.getStartButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clockModel.restartSimulation();
+            }
+        });
+
+        clockPanel.getPauseButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clockModel.pauseSimulation();
+                clockPanel.updatePauseButton();
+            }
+        });
+
+        clockPanel.getSpeedButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Incrementa l'indice della velocità e riportalo a 0 se arrivi all'ultimo valore
+                int newSpeed = clockPanel.changeSpeed();
+                setClockSpeed(newSpeed);
+            }
+        });
 
         this.clockModel.addObserver(this);
     }
@@ -30,10 +58,6 @@ public class ClockController implements ClockObserver{
 
     public void pauseSimulation() {
         clockModel.pauseSimulation();
-    }
-
-    public void restartSimulation() {
-        clockModel.restartSimulation();
     }
 
     

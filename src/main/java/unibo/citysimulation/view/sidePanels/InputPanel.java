@@ -1,9 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
-import unibo.citysimulation.controller.ClockUserController;
-import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.view.StyledPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,11 +10,10 @@ public class InputPanel extends StyledPanel {
     private JLabel numberOfPersonLabel;
     private JTextField numberOfPersonTextField;
     private JButton confirmButton;
-    private ClockUserController clockUserController;
+    private JButton startButton;
 
-    public InputPanel(Color bgColor, ClockUserController clockUserController) {
+    public InputPanel(Color bgColor) {
         super(bgColor);
-        this.clockUserController = clockUserController;
 
         // Set the layout manager to GridBagLayout
         setLayout(new GridBagLayout());
@@ -39,14 +35,8 @@ public class InputPanel extends StyledPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
         // Create the start button
-        JButton startButton = new JButton("Start");
+        startButton = new JButton("Start");
         startButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clockUserController.restartSimulation();
-            }
-        });
 
         // Add the start button to the button panel
         buttonPanel.add(startButton);
@@ -87,5 +77,9 @@ public class InputPanel extends StyledPanel {
         // Add the second row panel to the panel
         gbc.gridy = 2;
         add(secondRowPanel, gbc);
+    }
+
+    public JButton getStartButton() {
+        return startButton;
     }
 }
