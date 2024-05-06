@@ -43,7 +43,7 @@ public class InputPanel extends StyledPanel {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clockModel.startSimulation();
+                clockModel.restartSimulation();
             }
         });
 

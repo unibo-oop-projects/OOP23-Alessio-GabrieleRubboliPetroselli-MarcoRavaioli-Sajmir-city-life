@@ -35,16 +35,15 @@ public class ClockModel {
         observers.remove(observer);
     }
 
-    public void startSimulation() {
+    public void startSimulation(int hourDuration) {
         if(timer!=null){
             timer.cancel();
             task.cancel();
-        }   
+        }
+        
+        this.hourDuration = hourDuration;
+
         this.timer = new Timer();
-        isPaused=false;
-        currentTime = LocalTime.of(0,0);
-        //currentDay kept int for convenience
-        currentDay = 1;
     
         task = new TimerTask() {
     
@@ -73,6 +72,17 @@ public class ClockModel {
         };
     
         timer.scheduleAtFixedRate(task, 0, hourDuration);
+    }
+
+    public void restartSimulation(){
+        if(timer!=null){
+            timer.cancel();
+            task.cancel();
+        }
+        isPaused=false;
+        currentTime = LocalTime.of(0,0);
+        currentDay = 1;
+        this.startSimulation(hourDuration);
     }
     
     public void pauseSimulation(){

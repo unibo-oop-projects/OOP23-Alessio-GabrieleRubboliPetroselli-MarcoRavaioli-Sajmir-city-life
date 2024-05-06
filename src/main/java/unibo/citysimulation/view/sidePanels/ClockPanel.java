@@ -15,8 +15,8 @@ public class ClockPanel extends StyledPanel {
     public ClockPanel(Color bgColor, ClockSpeedController clockSpeedController) {
         super(bgColor);
 
-        speedSlider = new JSlider(JSlider.HORIZONTAL, 50, 1000, 500);
-        speedSlider.setMajorTickSpacing(4500);
+        speedSlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
+        speedSlider.setMajorTickSpacing(9);
         speedSlider.setPaintTicks(true); // Visualizza le etichette
         speedSlider.setPaintLabels(true); // Visualizza le etichette dei valori
         speedSlider.addChangeListener(new ChangeListener() {

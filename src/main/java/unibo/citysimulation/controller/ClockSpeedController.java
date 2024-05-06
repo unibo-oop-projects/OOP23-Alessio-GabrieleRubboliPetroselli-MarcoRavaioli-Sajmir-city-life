@@ -1,6 +1,7 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.clock.ClockModel;
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 
 public class ClockSpeedController {
     private ClockModel clockModel;
@@ -10,6 +11,6 @@ public class ClockSpeedController {
     }
 
     public void setClockSpeed(int speed) {
-        clockModel.setHourDuration(speed);
+        clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE/speed);
     }
 }
