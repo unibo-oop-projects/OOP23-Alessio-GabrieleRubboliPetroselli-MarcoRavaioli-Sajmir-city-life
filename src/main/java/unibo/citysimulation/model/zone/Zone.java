@@ -1,6 +1,15 @@
 package unibo.citysimulation.model.zone;
 
 public interface Zone {
-    public String getName();
-    public void setName(String name);
+    String getName();
+    void setName(String name);
+
+    float getPersonPercents();
+    void setPersonPercents(float personPercents);
+
+    float getBusinessPercents();
+    void setBusinessPercents(float businessPercents);
+
+    float getWellfare();
+    void setWellfare(float wellfare);
 }
