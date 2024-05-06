@@ -6,6 +6,7 @@ import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.model.person.PersonImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
+import unibo.citysimulation.utilities.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,22 +20,19 @@ public class PersonFactory {
     public PersonFactory(ClockModel clock, ZoneTable zoneTable) {
         this.clock = clock;
         this.zoneTable = zoneTable;
+        random = new Random();
     }
 
-    public List<Person> createGroupOfPeople(int numberOfPeople, int initialMoney, Business business, Zone residenceZone) {
+    public List<Person> createGroupOfPeople(int numberOfPeople, Pair<Integer, Integer> ageMinMax, Pair<Integer, Integer> moneyMinMax, Zone residenceZone) {
         List<Person> people = new ArrayList<>();
         for (int i = 0; i < numberOfPeople; i++) {
-            people.add(createPerson(initialMoney, business, residenceZone));
+            people.add(createPerson("Person" + i, random.nextInt(100) , random.nextInt(moneyMinMax.getSecond()) + moneyMinMax.getFirst(), residenceZone, clock, zoneTable));
         }
         return people;
     }
 
-    public List<Person> createPersonsZone1() {
-        return createGroupOfPeople(numberOfPeople, initialMoney, Business.ZONE1, Zone.ZONE1);
-    }
-
-    private Person createPerson(int money, Business business, Zone residenceZone) {
-        return new PersonImpl(money, business, residenceZone, clock, zoneTable);
+    private Person createPerson(String name, int age, int money, Business business, Zone residenceZone, ClockModel clock, ZoneTable zoneTable) {
+        return new PersonImpl(name, age, money, business, residenceZone, clock, zoneTable);
     }
 }
 
