@@ -13,7 +13,6 @@ public class ZoneImpl implements Zone {
     private float wellfare;
     private Pair<Integer, Integer> wellfareMinMax;
     private Pair<Integer, Integer> ageMinMax;
-    private PersonFactory personFactory;
 
     public ZoneImpl(String name, float personPercents, float businessPercents, float wellfare, Pair<Integer, Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax) {
         this.name = name;
@@ -22,7 +21,6 @@ public class ZoneImpl implements Zone {
         this.wellfare = wellfare;
         this.wellfareMinMax = wellfareMinMax;
         this.ageMinMax = ageMinMax;
-        personFactory.createGroupOfPeople(0, 0, null, null)
     }
 
     // Getter and setter for 'name'
@@ -59,5 +57,9 @@ public class ZoneImpl implements Zone {
 
     public float getWellfare() {
         return wellfare;
+    }
+
+    public Pair<Integer, Integer> getWellfareMinMax() {
+        return wellfareMinMax;
     }
 }
