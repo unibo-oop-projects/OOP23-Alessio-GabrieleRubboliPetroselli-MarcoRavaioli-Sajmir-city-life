@@ -36,6 +36,7 @@ public class WindowView extends JFrame {
     private MapController mapController;
     private WindowModel windowModel;
     private ClockObserver clockController;
+    private ClockUserController clockUserController;
     private ClockObserver clockObserverPerson;
     private ClockModel clockModel;
     private ZoneTable zoneTable = new ZoneTable();
@@ -57,7 +58,8 @@ public class WindowView extends JFrame {
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
         this.clockModel = new ClockModel(2);
-        this.inputPanel = new InputPanel(Color.BLUE, clockModel);
+        this.clockUserController = new ClockUserController(clockModel);
+        this.inputPanel = new InputPanel(Color.BLUE, clockUserController);
         this.clockObserverPerson = new ClockObserverPerson(person);
         clockModel.addObserver(clockObserverPerson);
         clockModel.addObserver(clockController);
