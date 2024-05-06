@@ -1,4 +1,4 @@
-/*package unibo.citysimulation.model.person;
+package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.clock.ClockModel;
@@ -9,10 +9,12 @@ import unibo.citysimulation.model.zone.ZoneTable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PersonFactory {
     private ClockModel clock;
     private ZoneTable zoneTable;
+    private Random random;
 
     public PersonFactory(ClockModel clock, ZoneTable zoneTable) {
         this.clock = clock;
@@ -27,12 +29,12 @@ public class PersonFactory {
         return people;
     }
 
-    public List<Person> createPersonsZone1(int numberOfPeople) {
+    public List<Person> createPersonsZone1() {
         return createGroupOfPeople(numberOfPeople, initialMoney, Business.ZONE1, Zone.ZONE1);
     }
 
     private Person createPerson(int money, Business business, Zone residenceZone) {
         return new PersonImpl(money, business, residenceZone, clock, zoneTable);
     }
-}*/
+}
 
