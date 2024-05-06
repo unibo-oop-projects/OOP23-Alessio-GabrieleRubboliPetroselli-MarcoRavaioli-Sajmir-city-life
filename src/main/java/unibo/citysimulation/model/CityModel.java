@@ -24,11 +24,12 @@ public class CityModel {
     }
 
     private void initializeZones() {
-        Map<String, List<Object>> zonesInfo = getZoneInfoList();
+        //fai solo lista di liste di object
+        List<List<Object>> zonesInfo = getZoneInfoList();
 
         // Itera sulla lista di mappe di informazioni sulle zone e crea le zone corrispondenti
-        for (var entry : zonesInfo.entrySet()) {
-            Zone zone = new ZoneImpl(entry.getKey(), (float) entry.getValue().get(0), (float) entry.getValue().get(1), (float) entry.getValue().get(2));
+        for (var entry : zonesInfo) {
+            Zone zone = new ZoneImpl((String) entry.get(0), (float) entry.get(1), (float) entry.get(2), (float) entry.get(3), (Pair<Integer,Integer>) entry.get(4), (Pair<Integer,Integer>) entry.get(5));
 
             zones.add(zone);
         }
@@ -36,21 +37,27 @@ public class CityModel {
 
 
     // Definisci le informazioni di base per ogni zona utilizzando una lista di mappe
-    private Map<String, List<Object>> getZoneInfoList() {
-        Map<String, List<Object>> zoneInfoList = new HashMap<>();
+    private List<List<Object>> getZoneInfoList() {
+        List<List<Object>> zoneInfoList = new ArrayList<>();
         // Aggiungi le informazioni di base per ciascuna zona utilizzando mappe
         List<Object> infos = new ArrayList<>();
+        infos.add("Centro");
         infos.add(10f);
         infos.add(40f);
         infos.add(50);
-        zoneInfoList.put("Centro", infos);
+        infos.add(new Pair<>(1000, 1500));
+        infos.add(new Pair<>(3, 99));
+        zoneInfoList.add(infos);
 
         infos.clear();
 
+        infos.add("Industrial");
         infos.add(30f);
         infos.add(10f);
         infos.add(20);
-        zoneInfoList.put("Industrial", infos);
+        infos.add(new Pair<>(800, 1300));
+        infos.add(new Pair<>(3, 99));
+        zoneInfoList.add(infos);
         
         // Aggiungi altre zone se necessario
         return zoneInfoList;
