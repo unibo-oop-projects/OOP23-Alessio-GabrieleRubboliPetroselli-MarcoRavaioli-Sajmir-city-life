@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class PersonImpl implements Person {
     private String name;
+    private int age;
     private PersonState state;
     private int money;
     private Business business;
@@ -21,7 +22,10 @@ public class PersonImpl implements Person {
 
 
 
-    public PersonImpl(int money, Business business, Zone residenceZone, ClockModel clock, ZoneTable zonetable) {
+    public PersonImpl(String name, int age, int money, Business business, Zone residenceZone, ClockModel clock,
+    ZoneTable zonetable) {
+        this.age = age;
+        this.name = name;
         this.state = PersonState.AT_HOME;
         this.lastDestination = PersonState.WORKING;
         this.money = money;
@@ -33,6 +37,10 @@ public class PersonImpl implements Person {
 
     public String getName() {
         return name;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     @Override
