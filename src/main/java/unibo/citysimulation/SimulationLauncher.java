@@ -14,28 +14,6 @@ import java.awt.Toolkit;
  */
 public final class SimulationLauncher {
 
-    SimulationLauncher() {
-    }
-
-    /**
-     * The main method.
-     * 
-     *
-     * @param args No arguments should be passed to this program.
-     */
-    public static void main(final String[] args) {
-        // Create the initial window model
-        WindowModel windowModel = createInitialWindowModel();
-        
-        // Create the map model
-        MapModel mapModel = new MapModel();
-        
-        // Create the window view with the window model and map model
-        WindowView windowView = new WindowView(windowModel, mapModel);
-        
-        // Create the window controller with the window model, window view, and map model
-        new WindowController(windowModel, windowView, mapModel);
-    }
     //method for starting the simulation
     public void start(){
         // Start the simulation
