@@ -23,7 +23,7 @@ public interface TransportCreation {
      * @param destinationZone the destination zone of the line
      * @param transports      the list of transports for the predefined line
      */
-    void addPredefinedLine(Zone originZone, Zone destinationZone, List<TransportLine> transports);
+    void addPredefinedLine(Zone originZone, Zone destinationZone, List<TransportLineImpl> transports);
      /**
      * Calculates the congestion of a predefined line between zones.
      *
