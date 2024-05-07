@@ -1,10 +1,13 @@
 package unibo.citysimulation.view.sidePanels;
 
 
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 public class InfoPanel extends StyledPanel {
     private int x;
     private int y;
@@ -12,6 +15,8 @@ public class InfoPanel extends StyledPanel {
     private JLabel numberOfPeople;
     private JLabel numberOfZones;
     private JLabel numberOfTransportLines;
+    private List<Zone> zones;
+    private List<TransportLine> transports;
 
     public InfoPanel(Color bgColor) { 
         super(bgColor);
@@ -60,11 +65,11 @@ public class InfoPanel extends StyledPanel {
         numberOfPeople.setText("Number of People: " + people);
     }
 
-    public void updateNumberOfZones(int zones){
-        numberOfZones.setText("Number of Zones: " + zones);
+    public void updateNumberOfZones(List<Zone> zones){
+        numberOfZones.setText("Number of Zones: " + zones.size());
     }
 
-    public void updateNumberOfTransportLines(int lines){
-        numberOfTransportLines.setText("Number of Transport Lines: " + lines);
+    public void updateNumberOfTransportLines(List<TransportLine> transports){
+        numberOfTransportLines.setText("Number of Transport Lines: " +transports.size());
     }
 }

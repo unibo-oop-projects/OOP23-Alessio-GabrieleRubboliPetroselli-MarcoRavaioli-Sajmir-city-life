@@ -49,7 +49,6 @@ public class ZoneFactory {
      * @param infos a list of information for creating a Zone object
      * @return a Zone object
      */
-    @SuppressWarnings("unchecked")
     private static Zone createZone(List<Object> infos) {
         return new ZoneImpl((String) infos.get(0), (float) infos.get(1), (float) infos.get(2),
                 (float) infos.get(3), (Pair<Integer,Integer>) infos.get(4), (Pair<Integer,Integer>) infos.get(5));

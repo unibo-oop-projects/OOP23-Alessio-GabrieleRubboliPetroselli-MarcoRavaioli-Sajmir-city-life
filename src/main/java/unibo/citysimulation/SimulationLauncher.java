@@ -24,6 +24,8 @@ public final class SimulationLauncher {
         
          // Create the map model
         MapModel mapModel = new MapModel();
+
+        CityModel cityModel = new CityModel();
                 
          // Create the window view with the window model and map model
         WindowView windowView = new WindowView(windowModel, mapModel);
