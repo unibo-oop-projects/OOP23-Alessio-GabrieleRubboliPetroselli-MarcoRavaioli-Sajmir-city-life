@@ -13,6 +13,8 @@ public class CityModel {
 
     public CityModel() {
         this.zones = ZoneFactory.createZones();
+        System.out.println("Zones created. " + zones.size());
         this.transports = TransportFactory.createTransports(zones);
+        System.out.println("Transports created. " + transports.size());
     }
 }
