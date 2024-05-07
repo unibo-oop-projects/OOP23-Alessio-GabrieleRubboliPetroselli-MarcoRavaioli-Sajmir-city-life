@@ -3,10 +3,10 @@ package unibo.citysimulation.view;
 import unibo.citysimulation.controller.ClockController;
 import unibo.citysimulation.controller.MapController;
 import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.model.WindowModel;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
+import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
@@ -21,15 +21,13 @@ import java.awt.event.ComponentAdapter;
  * Represents the main window of the application.
  */
 public class WindowView extends JFrame {
-    private MapModel mapModel;
-    private MapController mapController;
-    private WindowModel windowModel;
-    private ClockObserver clockController;
-    private ClockModel clockModel;
+    private int width;
+    private int height;
 
+    private MapPanel mapPanel = new MapPanel();
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
-    private ClockPanel clockPanel;
-    private InputPanel inputPanel;
+    private ClockPanel clockPanel = new ClockPanel(Color.RED);
+    private InputPanel inputPanel = new InputPanel(Color.BLUE);
     private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
 
     /**
@@ -38,14 +36,11 @@ public class WindowView extends JFrame {
      * @param windowModel The model representing the main window.
      * @param mapModel    The model representing the map.
      */
-    public WindowView(WindowModel windowModel, MapModel mapModel) {
-        this.windowModel = windowModel;
-        this.mapModel = mapModel;
-        this.mapController = new MapController(mapModel, infoPanel);
-        this.clockModel = new ClockModel(2);
-        this.clockPanel = new ClockPanel(Color.RED);
-        this.inputPanel = new InputPanel(Color.BLUE);
-        this.clockController = new ClockController(clockPanel, inputPanel, clockModel);
+    public WindowView() {
+        Pair<Integer,Integer> size = getWindowSize();
+        this.width = size.getFirst();
+        this.height = size.getSecond();
+
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,12 +66,11 @@ public class WindowView extends JFrame {
      * Updates the size of the panels based on the window size.
      */
     public void updatePanelSize() {
-        int panelWidth = windowModel.getWidth() / 4;
 
-        inputPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
-        infoPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
-        clockPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
-        graphicsPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
+        inputPanel.setPreferredSize(new Dimension(width / 4, height));
+        infoPanel.setPreferredSize(new Dimension(width / 4, height));
+        clockPanel.setPreferredSize(new Dimension(width / 4, height));
+        graphicsPanel.setPreferredSize(new Dimension(width / 4, height));
 
         revalidate();
         repaint();
@@ -87,7 +81,7 @@ public class WindowView extends JFrame {
      */
     private void configureLayout() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(windowModel.getWidth(), windowModel.getHeight()));
+        setPreferredSize(new Dimension(width, height));
         pack();
     }
 
@@ -97,7 +91,7 @@ public class WindowView extends JFrame {
     private void createComponents() {
 
         // Add the map panel to the center
-        MapPanel mapPanel = new MapPanel(mapModel, infoPanel);
+        
         add(mapPanel, BorderLayout.CENTER);
 
         // Add the side panels
@@ -146,4 +140,75 @@ public class WindowView extends JFrame {
         add(rightPanel, BorderLayout.EAST);
     }
 
+    private Pair<Integer,Integer> getWindowSize() {
+        // Get the screen size
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Calculate the maximum dimensions based on the screen size and a constant percentage
+        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+
+        // Calculate the frame dimensions based on the maximum dimensions
+        int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
+        int frameWidth = frameHeight * 2;
+
+        // Create and return the window model with the calculated dimensions
+        return new Pair<>(frameWidth, frameHeight);
+    }
+
+    /**
+     * Gets the width of the window.
+     *
+     * @return The width of the window.
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * Gets the height of the window.
+     *
+     * @return The height of the window.
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Sets the width of the window.
+     *
+     * @param width The width of the window.
+     */
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    /**
+     * Sets the height of the window.
+     *
+     * @param height The height of the window.
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public InfoPanel getInfoPanel(){
+        return infoPanel;
+    }
+
+    public ClockPanel getClockPanel(){
+        return clockPanel;
+    }
+
+    public InputPanel getInputPanel(){
+        return inputPanel;
+    }
+
+    public GraphicsPanel getGraphicsPanel(){
+        return graphicsPanel;
+    }
+
+    public MapPanel getMapPanel(){
+        return mapPanel;
+    }
 }

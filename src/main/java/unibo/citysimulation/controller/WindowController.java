@@ -1,6 +1,6 @@
 package unibo.citysimulation.controller;
 
-import unibo.citysimulation.model.WindowModel;
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.view.WindowView;
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
@@ -10,8 +10,8 @@ import java.awt.event.ComponentEvent;
  * Controller class responsible for managing the main window.
  */
 public class WindowController {
-    private WindowModel windowModel;
     private WindowView windowView;
+    private CityModel cityModel;
 
     /**
      * Constructs a WindowController with the specified models and view.
@@ -20,10 +20,13 @@ public class WindowController {
      * @param windowView  The view representing the main window.
      * @param mapModel    The model representing the map.
      */
-    public WindowController(WindowModel windowModel, WindowView windowView) {
-        this.windowModel = windowModel;
+    public WindowController(WindowView windowView, CityModel cityModel) {
         this.windowView = windowView;
+        this.cityModel = cityModel;
         this.windowView.addResizeListener(new ResizeListener());
+
+        new MapController(cityModel.getMapModel(), windowView.getInfoPanel(), windowView.getMapPanel());
+        new ClockController(cityModel.getClockModel(), windowView.getClockPanel(), windowView.getInputPanel());
     }
 
     /**
@@ -42,9 +45,6 @@ public class WindowController {
                 newWidth = newHeight * 2;
             }
 
-            // Update window model and view
-            windowModel.setWidth(newWidth);
-            windowModel.setHeight(newHeight);
             windowView.setPreferredSize(new Dimension(newWidth, newHeight));
             windowView.pack();
             windowView.updatePanelSize();
