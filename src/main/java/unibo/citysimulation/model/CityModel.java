@@ -10,8 +10,10 @@ public class CityModel {
     private List<Zone> zones;
     private List<TransportLine> transports;
     private Integer numPersons;
+    private MapModel mapModel;
 
     public CityModel() {
+        this.mapModel = new MapModel();
         this.zones = ZoneFactory.createZones();
         System.out.println("Zones created. " + zones.size());
         this.transports = TransportFactory.createTransports(zones);

@@ -31,7 +31,7 @@ public final class SimulationLauncher {
         WindowView windowView = new WindowView(windowModel, mapModel);
                 
         // Create the window controller with the window model, window view, and map model
-         new WindowController(windowModel, windowView, mapModel);
+         new WindowController(windowModel, windowView);
     }
 
     /**

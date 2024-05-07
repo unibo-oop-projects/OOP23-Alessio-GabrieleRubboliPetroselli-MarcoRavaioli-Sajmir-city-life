@@ -1,9 +1,7 @@
 package unibo.citysimulation.controller;
 
-import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
 import unibo.citysimulation.view.WindowView;
-
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -14,7 +12,6 @@ import java.awt.event.ComponentEvent;
 public class WindowController {
     private WindowModel windowModel;
     private WindowView windowView;
-    private MapModel mapModel;
 
     /**
      * Constructs a WindowController with the specified models and view.
@@ -23,10 +20,9 @@ public class WindowController {
      * @param windowView  The view representing the main window.
      * @param mapModel    The model representing the map.
      */
-    public WindowController(WindowModel windowModel, WindowView windowView, MapModel mapModel) {
+    public WindowController(WindowModel windowModel, WindowView windowView) {
         this.windowModel = windowModel;
         this.windowView = windowView;
-        this.mapModel = mapModel;
         this.windowView.addResizeListener(new ResizeListener());
     }
 
@@ -52,9 +48,6 @@ public class WindowController {
             windowView.setPreferredSize(new Dimension(newWidth, newHeight));
             windowView.pack();
             windowView.updatePanelSize();
-
-            // Update map model with new maximum coordinates
-            mapModel.setMaxCoordinates(newWidth / 2, newHeight);
         }        
     }    
 }
