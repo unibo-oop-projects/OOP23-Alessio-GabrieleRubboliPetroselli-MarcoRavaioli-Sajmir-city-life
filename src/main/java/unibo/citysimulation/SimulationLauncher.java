@@ -22,11 +22,4 @@ public final class SimulationLauncher {
         // Create the window controller with the window model, window view, and map model
          new WindowController(windowView, cityModel);
     }
-
-    /**
-     * Create the initial window model with dimensions based on the screen size.
-     *
-     * @return The initialized window model.
-     */
-
 }
