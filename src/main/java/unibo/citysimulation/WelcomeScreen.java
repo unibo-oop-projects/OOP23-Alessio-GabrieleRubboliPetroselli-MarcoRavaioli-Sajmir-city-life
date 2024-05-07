@@ -1,5 +1,9 @@
 package unibo.citysimulation;
 import javax.swing.*;
+
+import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.view.sidePanels.InfoPanel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,6 +73,8 @@ public class WelcomeScreen extends JFrame {
     }
 
     public static void main(String[] args) {
+
+        
     // Create and show the welcome screen
     WelcomeScreen welcomeScreen = new WelcomeScreen();
     welcomeScreen.setVisible(true);
