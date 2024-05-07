@@ -1,6 +1,5 @@
 package unibo.citysimulation.model.zone;
 
-import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.utilities.Pair;
 
 /**

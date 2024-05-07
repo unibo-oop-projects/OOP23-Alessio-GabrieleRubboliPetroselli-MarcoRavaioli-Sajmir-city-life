@@ -11,23 +11,9 @@ public class CityModel {
     private List<TransportLine> transports;
 
     public CityModel() {
-        initializeZones();
-        initializeTransports();
-    }
-
-    private void initializeZones() {
-        zones = ZoneFactory.createZones();
-    }
-
-    private void initializeTransports() {
-        transports = TransportFactory.createTransports(zones);
-    }
-
-    public List<Zone> getZones() {
-        return zones;
-    }
-
-    public List<TransportLine> getTransports() {
-        return transports;
+        this.zones = ZoneFactory.createZones();
+        System.out.println("Zones created. " + zones.size());
+        this.transports = TransportFactory.createTransports(zones);
+        System.out.println("Transports created. " + transports.size());
     }
 }

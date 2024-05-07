@@ -29,33 +29,14 @@ public class TransportFactory {
     public static List<TransportLine> createTransports(List<Zone> zones) {
         List<TransportLine> transports = new ArrayList<>();
 
-        List<List<Object>> transportsInfo = getTransportInfoList(zones);
-
-        // Iterates over the list of transport information lists and creates the corresponding transport lines
-        for (var entry : transportsInfo) {
-            TransportLine transport = new TransportLineImpl((String)entry.get(0), (Integer)entry.get(1), (Integer)entry.get(2), (Pair<Zone,Zone>)entry.get(3));
-            transports.add(transport);
-        }
-
-        return transports;
-    }
-
-    /**
-     * Returns a list of transport information lists.
-     * Each transport information list contains the name, capacity, duration, and a pair of origin and destination zones of a transport line.
-     *
-     * @param zones the list of Zone objects
-     * @return a list of transport information lists
-     */
-    private static List<List<Object>> getTransportInfoList(List<Zone> zones) {
-        List<List<Object>> transportsInfo = new ArrayList<>();
         List<Object> infos = new ArrayList<>();
+
         infos.add("Tangenziale");
         infos.add(100);
         infos.add(20);
         infos.add(new Pair<>(zones.get(0), zones.get(1)));
+        transports.add(createTransportLine(infos));
 
-        transportsInfo.add(infos);
         infos.clear();
 
         infos.add("Secante");
@@ -63,9 +44,15 @@ public class TransportFactory {
         infos.add(5);
         infos.add(new Pair<>(zones.get(1), zones.get(2)));
 
-        transportsInfo.add(infos);
+        transports.add(createTransportLine(infos));
+
         infos.clear();
 
-        return transportsInfo;
+        return transports;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static TransportLine createTransportLine(List<Object> infos) {
+        return new TransportLineImpl((String) infos.get(0), (int) infos.get(1), (int) infos.get(2), (Pair<Zone, Zone>) infos.get(3));
     }
 }
