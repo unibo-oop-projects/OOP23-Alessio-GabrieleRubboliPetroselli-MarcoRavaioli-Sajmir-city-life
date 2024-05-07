@@ -15,7 +15,7 @@ public final class SimulationLauncher {
         System.out.println("Simulation started");
         
 
-                
+        CityModel cityModel = new CityModel();        
          // Create the window view with the window model and map model
         WindowView windowView = new WindowView();
                 
