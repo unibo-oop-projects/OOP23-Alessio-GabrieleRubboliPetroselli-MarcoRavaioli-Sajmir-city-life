@@ -1,5 +1,4 @@
 package unibo.citysimulation.model.zone;
-import java.util.List;
 
 /**
  * Represents a zone in the city simulation.

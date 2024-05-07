@@ -1,7 +1,5 @@
 package unibo.citysimulation.model.zone;
 
-import java.util.List;
-
 import unibo.citysimulation.model.transport.TransportLine;
 
 /**
