@@ -21,14 +21,6 @@ public class ClockController implements ClockObserver{
         this.clockPanel = clockPanel;
         this.clockModel = clockModel;
 
-        inputPanel.getStartButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clockModel.restartSimulation();
-                cityModel.createEntities();
-            }
-        });
-
         clockPanel.getPauseButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
