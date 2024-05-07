@@ -14,6 +14,4 @@ public class InfoController {
         infoPanel.updateNumberOfZones(cityModel.getZones().size());
         infoPanel.updateNumberOfTransportLines(cityModel.getTransportLines().size());
     }
-
-
 }
