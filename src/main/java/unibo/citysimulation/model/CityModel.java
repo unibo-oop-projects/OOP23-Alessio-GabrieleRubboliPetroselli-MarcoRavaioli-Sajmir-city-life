@@ -17,6 +17,9 @@ public class CityModel {
     public CityModel() {
         this.mapModel = new MapModel();
         this.clockModel = new ClockModel(365);
+    }
+
+    public void createEntities() {
         this.zones = ZoneFactory.createZones();
         System.out.println("Zones created. " + zones.size());
         this.transports = TransportFactory.createTransports(zones);

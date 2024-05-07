@@ -26,7 +26,7 @@ public class WindowController {
         this.windowView.addResizeListener(new ResizeListener());
 
         new MapController(cityModel.getMapModel(), windowView.getInfoPanel(), windowView.getMapPanel());
-        new ClockController(cityModel.getClockModel(), windowView.getClockPanel(), windowView.getInputPanel());
+        new ClockController(cityModel.getClockModel(), cityModel, windowView.getClockPanel(), windowView.getInputPanel());
         new InfoController(cityModel, windowView.getInfoPanel());
     }
 
