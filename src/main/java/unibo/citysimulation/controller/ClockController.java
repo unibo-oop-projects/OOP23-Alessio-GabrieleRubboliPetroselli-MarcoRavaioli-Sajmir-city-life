@@ -15,7 +15,7 @@ public class ClockController implements ClockObserver{
     private ClockModel clockModel;
 
 
-    public ClockController(ClockPanel clockPanel, InputPanel inputPanel, ClockModel clockModel) {
+    public ClockController(ClockModel clockModel, ClockPanel clockPanel, InputPanel inputPanel) {
         this.clockPanel = clockPanel;
         this.clockModel = clockModel;
 
