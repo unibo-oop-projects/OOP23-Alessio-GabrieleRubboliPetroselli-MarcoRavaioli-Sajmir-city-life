@@ -22,22 +22,30 @@ public class ZoneFactory {
         infos.add("Centro");
         infos.add(10f);
         infos.add(40f);
-        infos.add(50);
+        infos.add(50f);
         infos.add(new Pair<>(1000, 1500));
         infos.add(new Pair<>(3, 99));
-        Zone centerZone = createZone(infos);
-        zones.add(centerZone);
+        zones.add(createZone(infos));
 
         infos.clear();
 
         infos.add("Industrial");
         infos.add(30f);
         infos.add(10f);
-        infos.add(20);
+        infos.add(20f);
         infos.add(new Pair<>(800, 1300));
         infos.add(new Pair<>(3, 99));
-        Zone industrialZone = createZone(infos);
-        zones.add(industrialZone);
+        zones.add(createZone(infos));
+
+        infos.clear();
+
+        infos.add("Periferia");
+        infos.add(20f);
+        infos.add(30f);
+        infos.add(10f);
+        infos.add(new Pair<>(900, 1200));
+        infos.add(new Pair<>(20, 99));
+        zones.add(createZone(infos));
         
         // Aggiungi altre zone se necessario
 
