@@ -61,15 +61,15 @@ public class InfoPanel extends StyledPanel {
         System.out.println("Coordinates: (" + x + ", " + y + ")");
     }
 
-    public void updateNumberOfPeople(int people){
-        numberOfPeople.setText("Number of People: " + people);
+    public void updateNumberOfPeople(int peopleNumber){
+        numberOfPeople.setText("Number of People: " + peopleNumber);
     }
 
-    public void updateNumberOfZones(List<Zone> zones){
-        numberOfZones.setText("Number of Zones: " + zones.size());
+    public void updateNumberOfZones(int zoneNumber){
+        numberOfZones.setText("Number of Zones: " + zoneNumber);
     }
 
-    public void updateNumberOfTransportLines(List<TransportLine> transports){
-        numberOfTransportLines.setText("Number of Transport Lines: " +transports.size());
+    public void updateNumberOfTransportLines(int transportLineNumber){
+        numberOfTransportLines.setText("Number of Transport Lines: " + transportLineNumber);
     }
 }

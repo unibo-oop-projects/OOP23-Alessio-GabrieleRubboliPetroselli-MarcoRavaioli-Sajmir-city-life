@@ -30,4 +30,12 @@ public class CityModel {
     public ClockModel getClockModel() {
         return this.clockModel;
     }
+
+    public List<Zone> getZones() {
+        return this.zones;
+    }
+
+    public List<TransportLine> getTransportLines() {
+        return this.transports;
+    }
 }
