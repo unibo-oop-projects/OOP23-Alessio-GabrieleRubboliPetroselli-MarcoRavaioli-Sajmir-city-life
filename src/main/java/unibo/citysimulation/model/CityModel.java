@@ -35,6 +35,7 @@ public class CityModel {
         this.zoneTable = new ZoneTable();
         zoneTable.addPair(zones.get(0), zones.get(1), transports.get(0));
         zoneTable.addPair(zones.get(1), zones.get(2), transports.get(1));
+        zoneTable.addPair(zones.get(0), zones.get(2),transports.get(2));
         this.businesses = BusinessFactory.createBusinesses(zones);
         System.out.println("Businesses created. " + businesses.size());
 
