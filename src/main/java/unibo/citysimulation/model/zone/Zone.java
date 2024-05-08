@@ -2,62 +2,72 @@ package unibo.citysimulation.model.zone;
 
 import unibo.citysimulation.utilities.Pair;
 
-public interface Zone {
-    String getName();
-    void setName(String name);
-
-    float getPersonPercents();
-    void setPersonPercents(float personPercents);
-
-    float getBusinessPercents();
-    void setBusinessPercents(float businessPercents);
-
-    float getWellfare();
-    void setWellfare(float wellfare);
-
-    Pair<Integer, Integer> getWellfareMinMax();
 /**
- * Represents a zone in the city simulation.
+ * The Zone interface represents a zone in a city simulation.
  */
-public class Zone {
-    private String name;
-    private Boundary boundary;
-
+public interface Zone {
     /**
-     * Constructs a new Zone object with the specified name and boundary.
-     *
-     * @param name     the name of the zone
-     * @param boundary the boundary of the zone
-     */
-    public Zone(String name, Boundary boundary) {
-        this.name = name;
-        this.boundary = boundary;
-    }
-
-    /**
-     * Returns the name of the zone.
+     * Gets the name of the zone.
      *
      * @return the name of the zone
      */
-    public String getName() {
-        return name;
-    }
+    String getName();
 
     /**
      * Sets the name of the zone.
      *
      * @param name the name of the zone
      */
-    public void setName(String name) {
-        this.name = name;
-    }
+    void setName(String name);
 
     /**
-     * Returns the boundary of the zone.
+     * Gets the percentage of people in the zone.
      *
-     * @return the boundary of the zone
+     * @return the percentage of people in the zone
      */
-    public Boundary getBoundary() {
-        return boundary;
-    }
+    float getPersonPercents();
+
+    /**
+     * Sets the percentage of people in the zone.
+     *
+     * @param personPercents the percentage of people in the zone
+     */
+    void setPersonPercents(float personPercents);
+
+    /**
+     * Gets the percentage of businesses in the zone.
+     *
+     * @return the percentage of businesses in the zone
+     */
+    float getBusinessPercents();
+
+    /**
+     * Sets the percentage of businesses in the zone.
+     *
+     * @param businessPercents the percentage of businesses in the zone
+     */
+    void setBusinessPercents(float businessPercents);
+
+    /**
+     * Gets the welfare level of the zone.
+     *
+     * @return the welfare level of the zone
+     */
+    float getWellfare();
+
+    /**
+     * Sets the welfare level of the zone.
+     *
+     * @param wellfare the welfare level of the zone
+     */
+    void setWellfare(float wellfare);
+
+    /**
+     * Gets the minimum and maximum welfare levels of the zone.
+     *
+     * @return a Pair object containing the minimum and maximum welfare levels of the zone
+     */
+    Pair<Integer, Integer> getWellfareMinMax();
+
+    Boundary getBoundary();
 }

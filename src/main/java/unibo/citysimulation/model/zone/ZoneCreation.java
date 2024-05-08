@@ -1,6 +1,9 @@
 package unibo.citysimulation.model.zone;
 
+import java.util.List;
+
 import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.utilities.Pair;
 
 /**
  * The ZoneCreation interface provides methods for creating zones and pairs in a city simulation.
@@ -16,7 +19,7 @@ public interface ZoneCreation {
      * @param x2 the x-coordinate of the bottom-right corner of the zone
      * @param y2 the y-coordinate of the bottom-right corner of the zone
      */
-    void createZone(String name, Boundary boundary);
+    void createZone(List<Object> infos);
     
     /**
      * Creates a pair between two zones with the specified names and a transport line.

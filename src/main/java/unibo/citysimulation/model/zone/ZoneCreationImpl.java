@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.utilities.Pair;
 
 /**
  * Implementation of the ZoneCreation interface that provides methods to create and manage zones.
@@ -50,11 +51,19 @@ public class ZoneCreationImpl implements ZoneCreation {
      * @param y2   the y-coordinate of the second boundary point
      */
     @Override
-    public void createZone(String name, Boundary boundary) {
-        Zone zone = new Zone(name, boundary);
+    public void createZone(List<Object> infos) {
+        String name = (String) infos.get(0);
+        Boundary boundary = (Boundary) infos.get(1);
+        float personPercents = (Float) infos.get(2);
+        float businessPercents = (Float) infos.get(3);
+        float wellfare = (Float) infos.get(4);
+        Pair<Integer, Integer> wellfareMinMax = (Pair<Integer, Integer>) infos.get(5);
+        Pair<Integer, Integer> ageMinMax = (Pair<Integer, Integer>) infos.get(6);
+
+        Zone zone = new ZoneImpl(name, boundary, personPercents, businessPercents, wellfare, wellfareMinMax, ageMinMax);
         zoneMap.put(name, zone);
         zonesInfo.add(zone);
-    }
+}
 
     /**
      * Creates a pair of zones and associates them with the given transport line.
@@ -65,12 +74,12 @@ public class ZoneCreationImpl implements ZoneCreation {
      */
     @Override
     public void createPairs(String name1, String name2, TransportLine transportLine) {
-        Zone zone1 = zoneMap.get(name1);
-        Zone zone2 = zoneMap.get(name2);
+        Zone zone1 = zoneMap.get(name1); // Changed Zone to ZoneImpl
+        Zone zone2 = zoneMap.get(name2); // Changed Zone to ZoneImpl
         if (zone1 != null && zone2 != null) {
             zoneTable.addPair(zone1, zone2, transportLine);
-        }
     }
+}
 
     /**
      * Checks if a given point is inside the specified zone.

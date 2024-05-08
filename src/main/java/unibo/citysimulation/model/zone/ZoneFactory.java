@@ -4,6 +4,8 @@ import unibo.citysimulation.utilities.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+ // Add this import statement
+
 /**
  * Factory for creating Zone objects.
  * This factory creates a list of Zone objects with predefined information.
@@ -20,46 +22,38 @@ public class ZoneFactory {
         // Aggiungi le informazioni di base per ciascuna zona utilizzando mappe
         List<Object> infos = new ArrayList<>();
         infos.add("Centro");
-        infos.add(10f);
-        infos.add(40f);
-        infos.add(50f);
-        infos.add(new Pair<>(1000, 1500));
-        infos.add(new Pair<>(3, 99));
-        zones.add(createZone(infos));
-
-        infos.clear();
-
-        infos.add("Industrial");
-        infos.add(30f);
-        infos.add(10f);
-        infos.add(20f);
-        infos.add(new Pair<>(800, 1300));
-        infos.add(new Pair<>(3, 99));
+        infos.add(new Boundary(0, 0, 100, 100));
+        infos.add(0.5f);
+        infos.add(0.5f);
+        infos.add(0.5f);
+        infos.add(new Pair<>(0, 10));
+        infos.add(new Pair<>(20, 30));
         zones.add(createZone(infos));
 
         infos.clear();
 
         infos.add("Periferia");
-        infos.add(20f);
-        infos.add(30f);
-        infos.add(10f);
-        infos.add(new Pair<>(900, 1200));
-        infos.add(new Pair<>(20, 99));
+        infos.add(new Boundary(100, 100, 200, 200));
+        infos.add(0.3f);
+        infos.add(0.7f);
+        infos.add(0.3f);
+        infos.add(new Pair<>(10, 20));
+        infos.add(new Pair<>(30, 40));
         zones.add(createZone(infos));
-        
-        // Aggiungi altre zone se necessario
 
         return zones;
-    }
-     /**
-     * Creates a Zone object with the given information.
-     *
-     * @param infos a list of information for creating a Zone object
-     * @return a Zone object
-     */
+
+        
+}
+
     private static Zone createZone(List<Object> infos) {
-        return new ZoneImpl((String) infos.get(0), (float) infos.get(1), (float) infos.get(2),
-                (float) infos.get(3), (Pair<Integer,Integer>) infos.get(4),
-                (Pair<Integer,Integer>) infos.get(5));
+        String name = (String) infos.get(0);
+        Boundary boundary = (Boundary) infos.get(1);
+        float personPercents = (float) infos.get(2);
+        float businessPercents = (float) infos.get(3);
+        float wellfare = (float) infos.get(4);
+        Pair<Integer, Integer> wellfareMinMax = (Pair<Integer, Integer>) infos.get(5);
+        Pair<Integer, Integer> ageMinMax = (Pair<Integer, Integer>) infos.get(6);
+        return new ZoneImpl(name, boundary, personPercents, businessPercents, wellfare, wellfareMinMax, ageMinMax);
     }
 }
