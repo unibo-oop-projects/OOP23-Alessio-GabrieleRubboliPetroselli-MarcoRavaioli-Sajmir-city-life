@@ -4,8 +4,6 @@ import unibo.citysimulation.utilities.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
- // Add this import statement
-
 /**
  * Factory for creating Zone objects.
  * This factory creates a list of Zone objects with predefined information.
@@ -16,8 +14,6 @@ public class ZoneFactory {
      *
      * @return a list of Zone objects
      */
-
-    private static ZoneCreationImpl zoneCreation = new ZoneCreationImpl();
     public static List<Zone> createZones() {
         List<Zone> zones = new ArrayList<>();
 
@@ -53,12 +49,17 @@ public class ZoneFactory {
         infos.add(new Pair<>(20, 99));
         infos.add(new Boundary(0, 250, 250, 500));
         zones.add(createZone(infos));
+        
+        // Aggiungi altre zone se necessario
 
         return zones;
-
-        
-}
-
+    }
+     /**
+     * Creates a Zone object with the given information.
+     *
+     * @param infos a list of information for creating a Zone object
+     * @return a Zone object
+     */
     private static Zone createZone(List<Object> infos) {
         return new ZoneImpl((String) infos.get(0), (float) infos.get(1), (float) infos.get(2),
                 (float) infos.get(3), (Pair<Integer,Integer>) infos.get(4),
