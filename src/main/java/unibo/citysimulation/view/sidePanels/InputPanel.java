@@ -52,9 +52,6 @@ public class InputPanel extends StyledPanel {
         gbc.gridy = 1;
         add(buttonPanel, gbc);
 
-        // Create a new panel for the second row
-        JPanel secondRowPanel = new JPanel(new FlowLayout());
-
         // Create the JSlider for input
         peopleSlider = new JSlider(0, 100); // Adjust range as needed
         peopleSlider.setMajorTickSpacing(20);

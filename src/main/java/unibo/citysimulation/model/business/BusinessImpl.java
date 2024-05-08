@@ -9,7 +9,11 @@ import unibo.citysimulation.utilities.Pair;
 
 import java.time.Duration;
 
-public class BusinessImpl implements Business{
+
+/**
+ * Implementation of the {@link Business} interface representing a business entity.
+ */
+public class BusinessImpl implements Business {
 
     private static final int DEFAULT_THRESHOLD = 1000;
 
@@ -23,6 +27,17 @@ public class BusinessImpl implements Business{
     private Pair<Integer,Integer> position;
     
 
+    /**
+     * Constructor for the BusinessImpl class.
+     *
+     * @param name The name of the business.
+     * @param income The income of the business.
+     * @param wageRate The wage rate of the business.
+     * @param openingTime The opening time of the business.
+     * @param closingTime The closing time of the business.
+     * @param zone The zone where the business is located.
+     * @param position The position of the business.
+     */
     public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime, Zone zone, Pair<Integer,Integer> position) {
         this.employees = new ArrayList<>();
         this.name = name;
@@ -32,7 +47,7 @@ public class BusinessImpl implements Business{
         this.closingTime = closingTime;
         this.zone = zone;
 
-        //questo sarebbe da fare random all'interno dei boundaries
+        // This would be randomly assigned within the boundaries
         this.position = position;
 
     }

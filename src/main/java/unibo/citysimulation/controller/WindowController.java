@@ -10,7 +10,6 @@ import java.awt.event.ComponentEvent;
  */
 public class WindowController {
     private WindowView windowView;
-    private CityModel cityModel;
 
     /**
      * Constructs a WindowController with the specified models and view.
@@ -21,11 +20,10 @@ public class WindowController {
      */
     public WindowController(WindowView windowView, CityModel cityModel) {
         this.windowView = windowView;
-        this.cityModel = cityModel;
         this.windowView.addResizeListener(new ResizeListener());
 
         new MapController(cityModel.getMapModel(), windowView.getInfoPanel(), windowView.getMapPanel());
-        new ClockController(cityModel.getClockModel(), cityModel, windowView.getClockPanel(), windowView.getInputPanel());
+        new ClockController(cityModel.getClockModel(), windowView.getClockPanel(), windowView.getInputPanel());
         new InputController(cityModel, windowView.getInputPanel(),windowView.getClockPanel());
     }
 

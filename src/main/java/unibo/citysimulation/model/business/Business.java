@@ -10,8 +10,11 @@ import java.time.LocalTime;
 /**
  * Interface representing a business entity.
  */
-public interface Business extends BusinessEmployee, BusinessFinancial, BusinessGraphic{
+public interface Business extends BusinessEmployee, BusinessFinancial, BusinessGraphic {
 
+    /**
+     * Default income value for a business.
+     */
     public static final int DEFAULT_INCOME = 0;
 
     /**
@@ -24,7 +27,7 @@ public interface Business extends BusinessEmployee, BusinessFinancial, BusinessG
     /**
      * Retrieves the list of all employees.
      *
-     * @return a list of all employees
+     * @return A list of all employees.
      */
     List<Employee> getEmployees();
 
@@ -36,20 +39,38 @@ public interface Business extends BusinessEmployee, BusinessFinancial, BusinessG
     String getName();
 
     /**
-     * Returns the hours of the business.
+     * Returns the business hours of the business.
      *
-     * @return The hours of the business.
+     * @return The business hours of the business.
      */
     Long getBusinessHours();
 
+    /**
+     * Returns the opening time of the business.
+     *
+     * @return The opening time of the business.
+     */
     LocalTime getOpeningTime();
 
+    /**
+     * Returns the closing time of the business.
+     *
+     * @return The closing time of the business.
+     */
     LocalTime getClosingTime();
 
+    /**
+     * Returns the zone where the business is located.
+     *
+     * @return The zone where the business is located.
+     */
     Zone getZone();
 
+    /**
+     * Returns the position of the business.
+     *
+     * @return The position of the business.
+     */
     Pair<Integer, Integer> getPosition();
 
 }
-
-    

@@ -9,36 +9,62 @@ import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.InputPanel;
 
+/**
+ * Controller class responsible for handling user input from the input panel.
+ */
 public class InputController {
     private CityModel cityModel;
     private InputPanel inputPanel;
     private int numberOfPeople;
-    
+
+    /**
+     * Constructs an InputController object.
+     *
+     * @param cityModel   The CityModel object representing the city simulation.
+     * @param inputPanel  The InputPanel object representing the input panel.
+     * @param clockPanel  The ClockPanel object representing the clock panel.
+     */
     public InputController(CityModel cityModel, InputPanel inputPanel, ClockPanel clockPanel) {
         this.cityModel = cityModel;
         this.inputPanel = inputPanel;
         numberOfPeople = inputPanel.getPeopleSlider().getValue();
 
-
+        // Add action listener for the start button
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cityModel.createEntities(numberOfPeople);
-                cityModel.getClockModel().restartSimulation();
-                clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
+                startSimulation(clockPanel);
             }
         });
 
-        inputPanel.getPeopleSlider().addChangeListener(new ChangeListener(){
+        // Add change listener for the people slider
+        inputPanel.getPeopleSlider().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                numberOfPeople = inputPanel.getPeopleSlider().getValue();
-                System.out.println("Selected number of people: " + numberOfPeople);
+                updateNumberOfPeople();
             }
         });
-
-
     }
 
+    /**
+     * Starts the simulation when the start button is clicked.
+     *
+     * @param clockPanel The ClockPanel object representing the clock panel.
+     */
+    private void startSimulation(ClockPanel clockPanel) {
+        // Create entities with the specified number of people
+        cityModel.createEntities(numberOfPeople);
+        // Restart the clock simulation
+        cityModel.getClockModel().restartSimulation();
+        // Update the pause button state on the clock panel
+        clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
+    }
 
+    /**
+     * Updates the number of people when the slider value changes.
+     */
+    private void updateNumberOfPeople() {
+        numberOfPeople = inputPanel.getPeopleSlider().getValue();
+        System.out.println("Selected number of people: " + numberOfPeople);
+    }
 }
