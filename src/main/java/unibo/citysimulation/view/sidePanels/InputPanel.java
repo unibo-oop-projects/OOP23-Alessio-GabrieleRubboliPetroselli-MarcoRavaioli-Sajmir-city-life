@@ -1,16 +1,14 @@
 package unibo.citysimulation.view.sidePanels;
-
 import unibo.citysimulation.view.StyledPanel;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class InputPanel extends StyledPanel {
-    private JLabel numberOfPersonLabel;
-    private JTextField numberOfPersonTextField;
-    private JButton confirmButton;
+    private JButton startButton;
+    private JSlider peopleSlider;
+    private JLabel sliderLabel;
+    private JLabel sliderValueLabel;
 
     public InputPanel(Color bgColor) {
         super(bgColor);
@@ -35,65 +33,53 @@ public class InputPanel extends StyledPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
         // Create the start button
-        JButton startButton = new JButton("Start");
+        startButton = new JButton("Start");
         startButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle the start button click
-            }
-        });
 
         // Add the start button to the button panel
         buttonPanel.add(startButton);
 
-        // Create the stop button
-        JButton stopButton = new JButton("Stop");
-        stopButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-        stopButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle the stop button click
-            }
-        });
-
-        // Add the stop button to the button panel
-        buttonPanel.add(stopButton);
 
         // Add the button panel to the main panel
         gbc.gridy = 1;
         add(buttonPanel, gbc);
 
+
         // Create a new panel for the second row
         JPanel secondRowPanel = new JPanel(new FlowLayout());
 
-        // Create the label for the number of persons
-        numberOfPersonLabel = new JLabel("Number of People:");
-        numberOfPersonLabel.setForeground(Color.BLACK);
-        secondRowPanel.add(numberOfPersonLabel);
 
         // Create the JTextField for input
-        numberOfPersonTextField = new JTextField(10);
-        secondRowPanel.add(numberOfPersonTextField);
+       // Create the JSlider for input
+       peopleSlider = new JSlider(0, 100); // Adjust range as needed
+       peopleSlider.setMajorTickSpacing(20);
+       peopleSlider.setMinorTickSpacing(5);
+       peopleSlider.setPaintTicks(true);
+       peopleSlider.setPaintLabels(true);
 
-        // Create the confirm button
-        confirmButton = new JButton("Confirm");
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String input = numberOfPersonTextField.getText();
-                try {
-                    int numberOfPersons = Integer.parseInt(input);
-                    // TODO: Handle the number of persons (e.g., pass it to a listener)
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(InputPanel.this, "Invalid input! Please enter a valid number.");
-                }
-            }
-        });
-        secondRowPanel.add(confirmButton);
+       // Create a label for the slider
+       sliderLabel = new JLabel("Number of People: ");
+       sliderLabel.setForeground(Color.WHITE);
+       gbc.gridy = 2;
+       add(sliderLabel, gbc);
 
-        // Add the second row panel to the panel
-        gbc.gridy = 2;
-        add(secondRowPanel, gbc);
+       // Add the slider
+       gbc.gridy = 3;
+       add(peopleSlider, gbc);
+
+       // Create a label to display the current slider value
+       sliderValueLabel = new JLabel("Current value: " + peopleSlider.getValue());
+       sliderValueLabel.setForeground(Color.WHITE);
+       gbc.gridy = 4;
+       add(sliderValueLabel, gbc);
     }
+
+    public JButton getStartButton() {
+        return startButton;
+    }
+    public JSlider getPeopleSlider() {
+        return peopleSlider;
+    }
+
+    
 }

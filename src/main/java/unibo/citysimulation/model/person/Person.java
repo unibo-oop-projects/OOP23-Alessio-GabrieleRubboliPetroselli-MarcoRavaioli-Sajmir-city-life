@@ -1,10 +1,15 @@
 package unibo.citysimulation.model.person;
+
+import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.clock.ClockModel;
+import unibo.citysimulation.model.zone.Zone;
+
 /**
  * An interface for modelling a person
  * 
  * @param PersonState, the state of the person
  */
-public interface Person<PersonState> {
+public interface Person {
 
 
     /**
@@ -15,6 +20,11 @@ public interface Person<PersonState> {
         WORKING,
         AT_HOME
     }
+
+    /**
+     * @return the name of the person
+     */
+    String getName();
 
     /**
 	 * @return the state of the person
@@ -35,5 +45,20 @@ public interface Person<PersonState> {
      * @param money the amount of money to sum/sub to the actual amount of money the person has
      */
     void setMoney(int money);
+
+    /**
+     * @return the age of the person
+     */
+    int getAge();
+
+    /**
+     * @return the business the person works for
+     */
+    Business getBusiness();
+
+    /**
+     * @return the zone where the person lives
+     */
+    Zone getResidenceZone();
     
 }

@@ -1,9 +1,7 @@
 package unibo.citysimulation.controller;
 
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.model.WindowModel;
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.view.WindowView;
-
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -12,9 +10,8 @@ import java.awt.event.ComponentEvent;
  * Controller class responsible for managing the main window.
  */
 public class WindowController {
-    private WindowModel windowModel;
     private WindowView windowView;
-    private MapModel mapModel;
+    private CityModel cityModel;
 
     /**
      * Constructs a WindowController with the specified models and view.
@@ -23,11 +20,14 @@ public class WindowController {
      * @param windowView  The view representing the main window.
      * @param mapModel    The model representing the map.
      */
-    public WindowController(WindowModel windowModel, WindowView windowView, MapModel mapModel) {
-        this.windowModel = windowModel;
+    public WindowController(WindowView windowView, CityModel cityModel) {
         this.windowView = windowView;
-        this.mapModel = mapModel;
+        this.cityModel = cityModel;
         this.windowView.addResizeListener(new ResizeListener());
+
+        new MapController(cityModel.getMapModel(), windowView.getInfoPanel(), windowView.getMapPanel());
+        new ClockController(cityModel.getClockModel(), cityModel, windowView.getClockPanel(), windowView.getInputPanel());
+        new InputController(cityModel, windowView.getInputPanel(),windowView.getClockPanel());
     }
 
     /**
@@ -36,25 +36,29 @@ public class WindowController {
     private class ResizeListener extends ComponentAdapter {
         @Override
         public void componentResized(ComponentEvent e) {
-            int newWidth = e.getComponent().getWidth();
-            int newHeight = e.getComponent().getHeight();
+            super.componentResized(e);
 
-            // Adjust the window size based on aspect ratio
-            if (newHeight * 2 > newWidth) {
-                newHeight = newWidth / 2;
+            int newWidth = e.getComponent().getBounds().width;
+            int newHeight = e.getComponent().getBounds().height;
+
+            if (newWidth != windowView.getWidth() && newHeight != windowView.getHeight()) {
+                // Trova la dimensione più piccola tra nuova larghezza e altezza
+                int minSize = Math.min(newWidth, newHeight * 2);
+                // Imposta le nuove dimensioni mantenendo la proporzione 2:1
+                newWidth = minSize;
+                newHeight = minSize / 2;
             } else {
-                newWidth = newHeight * 2;
+                if (newHeight != windowView.getHeight() && newWidth == windowView.getWidth()) {
+                    newWidth = (int) ((double) newHeight * 2);
+                } else {
+                    newHeight = (int) ((double) newWidth / 2);
+                }
             }
 
-            // Update window model and view
-            windowModel.setWidth(newWidth);
-            windowModel.setHeight(newHeight);
-            windowView.setPreferredSize(new Dimension(newWidth, newHeight));
-            windowView.pack();
+            windowView.setWidth(newWidth);
+            windowView.setHeight(newHeight);
             windowView.updatePanelSize();
-
-            // Update map model with new maximum coordinates
-            mapModel.setMaxCoordinates(newWidth / 2, newHeight);
-        }        
-    }    
+            windowView.repaint();
+        }
+    }
 }

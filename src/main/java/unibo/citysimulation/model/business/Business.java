@@ -1,9 +1,17 @@
 package unibo.citysimulation.model.business;
 
+import java.util.List;
+
+import unibo.citysimulation.model.zone.Zone;
+
+import java.time.LocalTime;
+
 /**
  * Interface representing a business entity.
  */
 public interface Business extends BusinessEmployee, BusinessFinancial, BusinessGraphic{
+
+    public static final int DEFAULT_INCOME = 0;
 
     /**
      * Returns the income of the business.
@@ -13,9 +21,32 @@ public interface Business extends BusinessEmployee, BusinessFinancial, BusinessG
     int getIncome();
 
     /**
-     * Returns the number of employers in the business.
+     * Retrieves the list of all employees.
      *
-     * @return The number of employers in the business.
+     * @return a list of all employees
      */
-    int getEmployers();
+    List<Employee> getEmployees();
+
+    /**
+     * Returns the name of the business.
+     *
+     * @return The name of the business.
+     */
+    String getName();
+
+    /**
+     * Returns the hours of the business.
+     *
+     * @return The hours of the business.
+     */
+    Long getBusinessHours();
+
+    LocalTime getOpeningTime();
+
+    LocalTime getClosingTime();
+
+    public Zone getZone();
+
 }
+
+    

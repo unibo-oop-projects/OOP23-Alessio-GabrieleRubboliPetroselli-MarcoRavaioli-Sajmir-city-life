@@ -1,10 +1,13 @@
 package unibo.citysimulation.view.sidePanels;
 
 
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 public class InfoPanel extends StyledPanel {
     private int x;
     private int y;
@@ -12,6 +15,8 @@ public class InfoPanel extends StyledPanel {
     private JLabel numberOfPeople;
     private JLabel numberOfZones;
     private JLabel numberOfTransportLines;
+    private List<Zone> zones;
+    private List<TransportLine> transports;
 
     public InfoPanel(Color bgColor) { 
         super(bgColor);
@@ -39,14 +44,6 @@ public class InfoPanel extends StyledPanel {
         numberOfPeople = new JLabel("Number of People: ");
         gbc.gridy = 2;
         add(numberOfPeople, gbc);
-
-        numberOfZones = new JLabel("Number of Zones: ");
-        gbc.gridy = 3;
-        add(numberOfZones, gbc);
-
-        numberOfTransportLines = new JLabel("Number of Transport Lines: ");
-        gbc.gridy = 4;
-        add(numberOfTransportLines, gbc);
     }
 
     public void updatePositionInfo(int x, int y){
@@ -56,15 +53,7 @@ public class InfoPanel extends StyledPanel {
         System.out.println("Coordinates: (" + x + ", " + y + ")");
     }
 
-    public void updateNumberOfPeople(int people){
-        numberOfPeople.setText("Number of People: " + people);
-    }
-
-    public void updateNumberOfZones(int zones){
-        numberOfZones.setText("Number of Zones: " + zones);
-    }
-
-    public void updateNumberOfTransportLines(int lines){
-        numberOfTransportLines.setText("Number of Transport Lines: " + lines);
+    public void updateNumberOfPeople(int peopleNumber){
+        numberOfPeople.setText("Number of People: " + peopleNumber);
     }
 }

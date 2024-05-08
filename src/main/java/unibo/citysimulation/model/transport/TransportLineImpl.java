@@ -1,18 +1,24 @@
 package unibo.citysimulation.model.transport;
 
+import unibo.citysimulation.utilities.Pair;
+import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.model.clock.*;
+
 /**
  * Represents a transport line within the city simulation.
  */
-public class TransportLine {
+public class TransportLineImpl implements TransportLine {
     private int capacity;
     private String name;
     private int personInLine=0;
     private int duration;
+    private Pair<Zone,Zone> link;
 
-    public TransportLine(String name,int capacity,int duration) {
+    public TransportLineImpl(String name,int capacity,int duration, Pair<Zone,Zone> link) {
         this.name = name;
         this.capacity=capacity;
         this.duration=duration;
+        this.link = link;
     }
 
     // Getter and setter methods for other fields, if needed
@@ -26,7 +32,7 @@ public class TransportLine {
         return duration;
     }
 
-    public int getMinutes() {
-        return duration;
+    public Pair<Zone,Zone> getLinkedZones(){
+        return link;
     }
 }

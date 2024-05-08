@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.zone;
+package unibo.citysimulation.utilities;
 
 /**
  * Represents a generic pair of values.
