@@ -1,9 +1,7 @@
 package unibo.citysimulation.model.transport;
 
-import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +10,6 @@ import java.util.List;
  * This factory creates a list of TransportLine objects based on a list of Zone objects.
  */
 public class TransportFactory {
-    
-
-    /**
-     * Constructs a TransportFactory with the specified ClockModel.
-     *
-     * @param clock the ClockModel to be used
-     */
-
     /**
      * Creates a list of TransportLine objects based on a list of Zone objects.
      *
