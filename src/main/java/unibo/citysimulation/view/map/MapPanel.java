@@ -11,11 +11,18 @@ import java.awt.image.BufferedImage;
 public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
 
-
+    /**
+     * Constructs a MapPanel with the specified background color.
+     */
     public MapPanel() {
         super(bgColor);
     }
 
+    /**
+     * Paints the map image on the panel.
+     *
+     * @param g The Graphics context.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -25,11 +32,21 @@ public class MapPanel extends StyledPanel {
         }
     }
 
+    /**
+     * Sets the image to be displayed on the map panel.
+     *
+     * @param image The BufferedImage to set.
+     */
     public void setImage(BufferedImage image){
         mapImage = image;
         repaint();
     }
 
+    /**
+     * Retrieves the preferred size of the map panel.
+     *
+     * @return The preferred size as a Dimension.
+     */
     @Override
     public Dimension getPreferredSize() {
         if (mapImage != null) {

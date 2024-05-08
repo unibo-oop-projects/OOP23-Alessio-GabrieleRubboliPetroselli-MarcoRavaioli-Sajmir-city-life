@@ -1,6 +1,5 @@
 package unibo.citysimulation.view.sidePanels;
 
-
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.StyledPanel;
@@ -8,6 +7,10 @@ import unibo.citysimulation.view.StyledPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+
+/**
+ * Panel for displaying information.
+ */
 public class InfoPanel extends StyledPanel {
     private int x;
     private int y;
@@ -18,7 +21,12 @@ public class InfoPanel extends StyledPanel {
     private List<Zone> zones;
     private List<TransportLine> transports;
 
-    public InfoPanel(Color bgColor) { 
+    /**
+     * Constructs an InfoPanel with the specified background color.
+     *
+     * @param bgColor The background color of the panel.
+     */
+    public InfoPanel(Color bgColor) {
         super(bgColor);
 
         // Set the layout manager to GridBagLayout
@@ -46,6 +54,12 @@ public class InfoPanel extends StyledPanel {
         add(numberOfPeople, gbc);
     }
 
+    /**
+     * Updates the position information displayed on the panel.
+     *
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     */
     public void updatePositionInfo(int x, int y){
         this.x = x;
         this.y = y;
@@ -53,6 +67,11 @@ public class InfoPanel extends StyledPanel {
         System.out.println("Coordinates: (" + x + ", " + y + ")");
     }
 
+    /**
+     * Updates the number of people displayed on the panel.
+     *
+     * @param peopleNumber The number of people.
+     */
     public void updateNumberOfPeople(int peopleNumber){
         numberOfPeople.setText("Number of People: " + peopleNumber);
     }

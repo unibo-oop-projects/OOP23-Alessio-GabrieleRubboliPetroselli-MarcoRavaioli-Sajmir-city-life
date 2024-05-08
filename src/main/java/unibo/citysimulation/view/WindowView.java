@@ -27,7 +27,6 @@ public class WindowView extends JFrame {
 
     /**
      * Constructs a WindowView with the specified window model and map model.
-     *
      */
     public WindowView() {
         Pair<Integer,Integer> size = getWindowSize();
@@ -61,7 +60,6 @@ public class WindowView extends JFrame {
      * Updates the size of the panels based on the window size.
      */
     public void updatePanelSize() {
-
         setSize(new Dimension(width, height));
 
         inputPanel.setPreferredSize(new Dimension(width / 4, height));
@@ -87,9 +85,7 @@ public class WindowView extends JFrame {
      * Creates the components of the window.
      */
     private void createComponents() {
-
         // Add the map panel to the center
-        
         add(mapPanel, BorderLayout.CENTER);
 
         // Add the side panels
@@ -100,7 +96,6 @@ public class WindowView extends JFrame {
      * Creates the side panels of the window.
      */
     private void createSidePanels() {
-
         int sidePanelWidth = width / 4;
         int sidePanelsHeight = height;
 
@@ -111,7 +106,7 @@ public class WindowView extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1;
 
-
+        // Add input panel and info panel to left panel
         constraints.gridy = 0;
         constraints.weighty = 0.75;
         inputPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 4 * 3));
@@ -122,7 +117,7 @@ public class WindowView extends JFrame {
         infoPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 4));
         leftPanel.add(infoPanel, constraints);
 
-
+        // Add clock panel and graphics panel to right panel
         constraints.gridy = 0;
         constraints.weighty = 0.125;
         clockPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8));
@@ -133,11 +128,16 @@ public class WindowView extends JFrame {
         graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8 * 7));
         rightPanel.add(graphicsPanel, constraints);
 
-
+        // Add left and right panels to the window
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
     }
 
+    /**
+     * Retrieves the size of the window based on screen dimensions.
+     *
+     * @return The pair of width and height.
+     */
     private Pair<Integer,Integer> getWindowSize() {
         // Get the screen size
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -190,22 +190,47 @@ public class WindowView extends JFrame {
         this.height = height;
     }
 
+    /**
+     * Retrieves the info panel.
+     *
+     * @return The info panel.
+     */
     public InfoPanel getInfoPanel(){
         return infoPanel;
     }
 
+    /**
+     * Retrieves the clock panel.
+     *
+     * @return The clock panel.
+     */
     public ClockPanel getClockPanel(){
         return clockPanel;
     }
 
+    /**
+     * Retrieves the input panel.
+     *
+     * @return The input panel.
+     */
     public InputPanel getInputPanel(){
         return inputPanel;
     }
 
+    /**
+     * Retrieves the graphics panel.
+     *
+     * @return The graphics panel.
+     */
     public GraphicsPanel getGraphicsPanel(){
         return graphicsPanel;
     }
 
+    /**
+     * Retrieves the map panel.
+     *
+     * @return The map panel.
+     */
     public MapPanel getMapPanel(){
         return mapPanel;
     }
