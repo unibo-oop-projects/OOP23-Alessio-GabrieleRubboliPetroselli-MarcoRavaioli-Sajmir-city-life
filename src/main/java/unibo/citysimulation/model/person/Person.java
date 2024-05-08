@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.person;
 
+import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.clock.ClockModel;
 
 /**
@@ -43,5 +44,15 @@ public interface Person {
      * @param money the amount of money to sum/sub to the actual amount of money the person has
      */
     void setMoney(int money);
+
+    /**
+     * @return the age of the person
+     */
+    int getAge();
+
+    /**
+     * @return the business the person works for
+     */
+    Business getBusiness();
     
 }

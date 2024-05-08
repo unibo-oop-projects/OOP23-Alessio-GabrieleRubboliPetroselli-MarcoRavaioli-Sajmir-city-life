@@ -46,6 +46,13 @@ public class CityModel {
         for (var group : people) {
             System.out.println("Group size: " + group.size());
         }
+
+        for (var group : people) {
+            for (var person : group) {
+                System.out.println(person.getName() + ", " + person.getAge() + ", " + person.getMoney() + ", " +
+                person.getBusiness().getName());
+            }
+        }
     }
 
     public MapModel getMapModel() {

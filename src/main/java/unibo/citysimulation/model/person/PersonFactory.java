@@ -1,8 +1,6 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.person.Person;
-import unibo.citysimulation.model.person.PersonImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
@@ -13,10 +11,12 @@ import java.util.Random;
 public class PersonFactory {
     private static Random random = new Random();
 
-    public static List<Person> createGroupOfPeople(int numberOfPeople, Pair<Integer, Integer> moneyMinMax,Business business, Zone residenceZone, ZoneTable zoneTable) {
+    public static List<Person> createGroupOfPeople(int numberOfPeople, Pair<Integer, Integer> moneyMinMax,
+    Business business, Zone residenceZone, ZoneTable zoneTable) {
         List<Person> people = new ArrayList<>();
         for (int i = 0; i < numberOfPeople; i++) {
-            people.add(createPerson("Person" + i, random.nextInt(100), random.nextInt(moneyMinMax.getSecond()) + moneyMinMax.getFirst(), business, residenceZone, zoneTable));
+            people.add(createPerson("Person" + i, random.nextInt(62) + 18,
+            random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst(), business, residenceZone, zoneTable));
         }
         return people;
     }
