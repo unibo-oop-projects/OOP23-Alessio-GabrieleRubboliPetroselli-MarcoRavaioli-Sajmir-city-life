@@ -1,9 +1,6 @@
 package unibo.citysimulation;
+
 import javax.swing.*;
-
-import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.view.sidePanels.InfoPanel;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

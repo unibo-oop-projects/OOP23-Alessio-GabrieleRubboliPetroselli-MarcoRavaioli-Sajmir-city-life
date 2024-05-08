@@ -58,22 +58,6 @@ public class InputPanel extends StyledPanel {
         numberOfPersonTextField = new JTextField(10);
         secondRowPanel.add(numberOfPersonTextField);
 
-        // Create the confirm button
-        confirmButton = new JButton("Confirm");
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String input = numberOfPersonTextField.getText();
-                try {
-                    int numberOfPersons = Integer.parseInt(input);
-                    // TODO: Handle the number of persons (e.g., pass it to a listener)
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(InputPanel.this, "Invalid input! Please enter a valid number.");
-                }
-            }
-        });
-        secondRowPanel.add(confirmButton);
-
         // Add the second row panel to the panel
         gbc.gridy = 2;
         add(secondRowPanel, gbc);

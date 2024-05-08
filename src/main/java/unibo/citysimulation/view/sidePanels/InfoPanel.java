@@ -44,14 +44,6 @@ public class InfoPanel extends StyledPanel {
         numberOfPeople = new JLabel("Number of People: ");
         gbc.gridy = 2;
         add(numberOfPeople, gbc);
-
-        numberOfZones = new JLabel("Number of Zones: ");
-        gbc.gridy = 3;
-        add(numberOfZones, gbc);
-
-        numberOfTransportLines = new JLabel("Number of Transport Lines: ");
-        gbc.gridy = 4;
-        add(numberOfTransportLines, gbc);
     }
 
     public void updatePositionInfo(int x, int y){
@@ -63,13 +55,5 @@ public class InfoPanel extends StyledPanel {
 
     public void updateNumberOfPeople(int peopleNumber){
         numberOfPeople.setText("Number of People: " + peopleNumber);
-    }
-
-    public void updateNumberOfZones(int zoneNumber){
-        numberOfZones.setText("Number of Zones: " + zoneNumber);
-    }
-
-    public void updateNumberOfTransportLines(int transportLineNumber){
-        numberOfTransportLines.setText("Number of Transport Lines: " + transportLineNumber);
     }
 }

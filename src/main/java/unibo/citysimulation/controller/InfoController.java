@@ -10,10 +10,5 @@ public class InfoController {
     public InfoController(CityModel cityModel, InfoPanel infoPanel) {
         this.infoPanel = infoPanel;
         this.cityModel = cityModel;
-
-        infoPanel.updateNumberOfZones(cityModel.getZones().size());
-        infoPanel.updateNumberOfTransportLines(cityModel.getTransportLines().size());
     }
-
-
 }

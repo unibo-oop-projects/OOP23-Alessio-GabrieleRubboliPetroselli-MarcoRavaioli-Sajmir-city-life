@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
@@ -13,18 +14,12 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
 public class ClockController implements ClockObserver{
     private ClockPanel clockPanel;
     private ClockModel clockModel;
+    private CityModel cityModel;
 
 
-    public ClockController(ClockModel clockModel, ClockPanel clockPanel, InputPanel inputPanel) {
+    public ClockController(ClockModel clockModel, CityModel cityModel, ClockPanel clockPanel, InputPanel inputPanel) {
         this.clockPanel = clockPanel;
         this.clockModel = clockModel;
-
-        inputPanel.getStartButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clockModel.restartSimulation();
-            }
-        });
 
         clockPanel.getPauseButton().addActionListener(new ActionListener() {
             @Override
