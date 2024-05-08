@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.utilities.Pair;
 
 import java.time.Duration;
 
@@ -19,9 +20,10 @@ public class BusinessImpl implements Business{
     private LocalTime openingTime;
     private LocalTime closingTime;
     private Zone zone;
+    private Pair<Integer,Integer> position;
     
 
-    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime, Zone zone) {
+    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime, Zone zone, Pair<Integer,Integer> position) {
         this.employees = new ArrayList<>();
         this.name = name;
         this.income = income;
@@ -29,6 +31,10 @@ public class BusinessImpl implements Business{
         this.openingTime = openingTime;
         this.closingTime = closingTime;
         this.zone = zone;
+
+        //questo sarebbe da fare random all'interno dei boundaries
+        this.position = position;
+
     }
 
     @Override
@@ -127,6 +133,11 @@ public class BusinessImpl implements Business{
 
     public Zone getZone() {
         return this.zone;
+    }
+
+    @Override
+    public Pair<Integer, Integer> getPosition() {
+        return position;
     }
 
 }

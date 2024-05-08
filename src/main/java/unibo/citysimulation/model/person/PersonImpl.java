@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
@@ -18,7 +19,8 @@ public class PersonImpl implements Person {
     private ZoneTable zoneTable;
     private int lastArrivingTime = 0;
     private PersonState lastDestination;
-    private Pair<Integer, Integer> position;
+    private Optional<Pair<Integer, Integer>> position;
+    private TransportLine transportLine;
 
     public PersonImpl(String name, int age, int money, Business business, Zone residenceZone, ZoneTable zonetable) {
         this.age = age;
@@ -29,7 +31,9 @@ public class PersonImpl implements Person {
         this.business = business;
         this.residenceZone = residenceZone;
         this.zoneTable = zonetable;
-        this.position = new Pair<>(0, 0);
+        this.position = Optional.of(new Pair<>(0, 0));
+        this.transportLine = zonetable.getTransportLine(residenceZone, business.getZone());
+
     }
 
     public String getName() {
@@ -84,9 +88,11 @@ public class PersonImpl implements Person {
 
     public boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
         boolean moveBool = (currentTime == timeToMove);
-        System.out.println("current time: " + currentTime);
-        System.out.println("time to move: " + timeToMove);
+
+
         System.out.println("line duration: " + lineDuration);
+
+
         if (moveBool) {
             this.lastArrivingTime = currentTime + lineDuration;
         }
@@ -98,23 +104,24 @@ public class PersonImpl implements Person {
         if (this.residenceZone == this.business.getZone()) {
             lineDuration = 0;
         } else {
-            lineDuration = zoneTable.getMinutesForPair(residenceZone, business.getZone()) * 60;
+            lineDuration = transportLine.getDuration() * 60;
         }
         if (this.checkTimeToMove(currentTime.toSecondOfDay(),
                 business.getOpeningTime().toSecondOfDay() - lineDuration,
                 lineDuration)) {
-            System.out.println("time to move to work");
+                    
             if (lineDuration == 0) {
                 this.setState(PersonState.WORKING);
-                this.position = new Pair<>(business.getZone().getPosition().getFirst(),
-                        business.getZone().getPosition().getSecond());
+                this.position = Optional.of(business.getPosition()); // così appaiono uno sopra l'altro, serve qualcosa per far vedere che è lì vicino
             } else {
                 this.setState(PersonState.MOVING);
+                this.transportLine.incrementPersonInLine();
+                this.position = Optional.empty();
             }
             this.lastDestination = PersonState.WORKING;
             return true;
         }
-        System.out.println("Not moving");
+        
         return false;
     }
 
@@ -123,15 +130,19 @@ public class PersonImpl implements Person {
         if (this.residenceZone == this.business.getZone()) {
             lineDuration = 0;
         } else {
-            lineDuration = zoneTable.getMinutesForPair(residenceZone, business.getZone()) * 60;
+            lineDuration = transportLine.getDuration() * 60;
         }
         if (this.checkTimeToMove(currentTime.toSecondOfDay(),
                 business.getClosingTime().toSecondOfDay(),
                 lineDuration)) {
             if (lineDuration == 0) {
                 this.setState(PersonState.AT_HOME);
-            } else {
+                this.position = Optional.of(residenceZone.getRandomPosition()); // servirebbe che la posizione random sia solo all'inizio poi una volta che sa doc'è casa tenga quella come posizione
+            } else {                                                            
                 this.setState(PersonState.MOVING);
+                this.transportLine.incrementPersonInLine();
+                this.position = Optional.empty();
+
             }
             this.lastDestination = PersonState.AT_HOME;
             return true;
@@ -146,6 +157,12 @@ public class PersonImpl implements Person {
     public boolean checkArrivingTime(LocalTime currentTime) {
         if (currentTime.toSecondOfDay() == this.lastArrivingTime) {
             this.setState(this.lastDestination);
+            if(this.state == PersonState.AT_HOME) {
+                this.position = Optional.of(residenceZone.getRandomPosition()); // così appaiono uno sopra l'altro, serve qualcosa per far vedere che è lì vicino
+            } else {
+                this.position = Optional.of(business.getPosition()); 
+            }
+            this.transportLine.decrementPersonInLine();
             return true;
         }
         return false;
@@ -164,6 +181,7 @@ public class PersonImpl implements Person {
                 break;
         }
         System.out.println(this.getName() + ", " + this.getState());
+        System.out.println("coordinate position: " + (position.isPresent() ? (position.get().getFirst() + ", " + position.get().getSecond()) : ""));
     }
 
 }

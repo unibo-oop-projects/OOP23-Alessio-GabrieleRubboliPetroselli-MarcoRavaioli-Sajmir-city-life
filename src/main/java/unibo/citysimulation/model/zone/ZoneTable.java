@@ -25,8 +25,8 @@ public class ZoneTable {
         this.zonePairs.put(new Pair<>(zone2, zone1), TransportLine); // to ensure the table works both ways
     }
 
-    public int getMinutesForPair(Zone zone1, Zone zone2) {
-        return this.zonePairs.get(new Pair<>(zone1, zone2)).getDuration();
+    public TransportLine getTransportLine(Zone zone1, Zone zone2) {
+        return this.zonePairs.get(new Pair<>(zone1, zone2));
     }
 }
 

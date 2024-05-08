@@ -26,4 +26,8 @@ public interface TransportLine {
      * @return the duration of the transport line
      */
     int getDuration();
+
+    void incrementPersonInLine();
+
+    void decrementPersonInLine();
 }

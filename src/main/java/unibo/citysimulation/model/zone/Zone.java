@@ -19,4 +19,6 @@ public interface Zone {
      * @return the boundary of the zone
      */
     public Boundary getBoundary();
+
+    public Pair<Integer, Integer> getRandomPosition();
 }

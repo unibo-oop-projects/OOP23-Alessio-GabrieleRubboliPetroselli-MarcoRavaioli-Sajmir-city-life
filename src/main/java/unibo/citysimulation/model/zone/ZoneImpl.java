@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.zone;
 
+import java.util.Random;
+
 import unibo.citysimulation.utilities.Pair;
 
 /**
@@ -12,15 +14,18 @@ public class ZoneImpl implements Zone {
     private float wellfare;
     private Pair<Integer, Integer> wellfareMinMax;
     private Pair<Integer, Integer> ageMinMax;
+    private Random random = new Random();
+    private Boundary boundary;
 
     public ZoneImpl(String name, float personPercents, float businessPercents, float wellfare, Pair<Integer,
-    Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax) {
+    Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax, Boundary boundary) {
         this.name = name;
         this.personPercents = personPercents;
         this.businessPercents = businessPercents;
         this.wellfare = wellfare;
         this.wellfareMinMax = wellfareMinMax;
         this.ageMinMax = ageMinMax;
+        this.boundary = boundary;
     }
 
     // Getter and setter for 'name'
@@ -65,5 +70,16 @@ public class ZoneImpl implements Zone {
 
     @Override
     public Boundary getBoundary() {
+        return null;
+    }
+
+    @Override
+    public Pair<Integer, Integer> getRandomPosition() {
+        int x1 = boundary.getX1();
+        int y1 = boundary.getY1();
+        int x2 = boundary.getX2();
+        int y2 = boundary.getY2();
+
+        return new Pair<>(random.nextInt(x2 - x1) + x1, random.nextInt(y2 - y1) + y1);
     }
 }
