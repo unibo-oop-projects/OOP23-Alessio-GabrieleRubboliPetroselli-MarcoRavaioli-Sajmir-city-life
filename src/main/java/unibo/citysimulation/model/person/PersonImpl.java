@@ -148,15 +148,15 @@ public class PersonImpl implements Person {
     public void checkState(LocalTime currentTime) {
         switch (this.state) {
             case MOVING:
-                System.out.println("state moving");
+                System.out.println(this.getName() + ", state moving");
                 this.checkArrivingTime(currentTime);
                 break;
             case WORKING:
-                System.out.println("state working");
+                System.out.println(this.getName() + ", state working");
                 this.checkTimeToGoHome(currentTime);
                 break;
             case AT_HOME:
-                System.out.println("state at home");
+                System.out.println(this.getName() + ", state at home");
                 this.checkTimeToGoToWork(currentTime);
                 break;
         }
