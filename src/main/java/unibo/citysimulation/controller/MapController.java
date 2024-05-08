@@ -44,6 +44,8 @@ public class MapController {
         int x = e.getX();
         int y = e.getY();
 
+        System.out.println("pressed coordinates: " + x + " " + y);
+
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
