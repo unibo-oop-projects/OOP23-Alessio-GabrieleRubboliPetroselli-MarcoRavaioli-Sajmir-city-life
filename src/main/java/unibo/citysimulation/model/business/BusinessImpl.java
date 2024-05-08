@@ -3,6 +3,9 @@ package unibo.citysimulation.model.business;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import unibo.citysimulation.model.zone.Zone;
+
 import java.time.Duration;
 
 /**
@@ -19,6 +22,7 @@ public class BusinessImpl implements Business {
     private double wageRate;
     private LocalTime openingTime;
     private LocalTime closingTime;
+<<<<<<< HEAD
 
     /**
      * Constructs a new BusinessImpl object with the specified parameters.
@@ -30,12 +34,19 @@ public class BusinessImpl implements Business {
      * @param closingTime  the closing time of the business
      */
     public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime) {
+=======
+    private Zone zone;
+    
+
+    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime, Zone zone) {
+>>>>>>> branch_develop
         this.employees = new ArrayList<>();
         this.name = name;
         this.income = income;
         this.wageRate = wageRate;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
+        this.zone = zone;
     }
 
     /**
@@ -211,4 +222,12 @@ public class BusinessImpl implements Business {
     public LocalTime getClosingTime() {
         return this.closingTime;
     }
+<<<<<<< HEAD
+=======
+
+    public Zone getZone() {
+        return this.zone;
+    }
+
+>>>>>>> branch_develop
 }

@@ -1,8 +1,11 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.controller.ClockController;
 import unibo.citysimulation.controller.MapController;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
+import unibo.citysimulation.model.clock.ClockModel;
+import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
@@ -21,10 +24,12 @@ public class WindowView extends JFrame {
     private MapModel mapModel;
     private MapController mapController;
     private WindowModel windowModel;
+    private ClockObserver clockController;
+    private ClockModel clockModel;
 
     private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
-    private ClockPanel clockPanel = new ClockPanel(Color.RED);
-    private InputPanel inputPanel = new InputPanel(Color.BLUE);
+    private ClockPanel clockPanel;
+    private InputPanel inputPanel;
     private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
 
     /**
@@ -37,6 +42,10 @@ public class WindowView extends JFrame {
         this.windowModel = windowModel;
         this.mapModel = mapModel;
         this.mapController = new MapController(mapModel, infoPanel);
+        this.clockModel = new ClockModel(2);
+        this.clockPanel = new ClockPanel(Color.RED);
+        this.inputPanel = new InputPanel(Color.BLUE);
+        this.clockController = new ClockController(clockPanel, inputPanel, clockModel);
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,6 +54,8 @@ public class WindowView extends JFrame {
         configureLayout();
         createComponents();
         setVisible(true);
+
+        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
     }
 
     /**

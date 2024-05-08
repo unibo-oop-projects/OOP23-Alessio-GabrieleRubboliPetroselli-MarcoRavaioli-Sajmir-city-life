@@ -9,8 +9,8 @@ import unibo.citysimulation.view.sidePanels.InfoPanel;
  * Controller class responsible for handling mouse events on the map.
  */
 public class MapController {
-    private MapModel model;
     private InfoPanel infoPanel;
+    private MapModel model;
 
     /**
      * Constructs a MapController object.

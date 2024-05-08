@@ -1,6 +1,10 @@
 package unibo.citysimulation;
 
 import unibo.citysimulation.controller.WindowController;
+<<<<<<< HEAD
+=======
+import unibo.citysimulation.model.CityModel;
+>>>>>>> branch_develop
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.WindowModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
@@ -14,14 +18,37 @@ import java.awt.Toolkit;
  */
 public final class SimulationLauncher {
 
+<<<<<<< HEAD
     private SimulationLauncher() {
     }
 
     /**
      * The main method.
+=======
+    //method for starting the simulation
+    public void start(){
+        // Start the simulation
+        System.out.println("Simulation started");
+        // Create the initial window model
+        WindowModel windowModel = createInitialWindowModel();
+        
+         // Create the map model
+        MapModel mapModel = new MapModel();
+                
+         // Create the window view with the window model and map model
+        WindowView windowView = new WindowView(windowModel, mapModel);
+                
+        // Create the window controller with the window model, window view, and map model
+         new WindowController(windowModel, windowView, mapModel);
+    }
+
+    /**
+     * Create the initial window model with dimensions based on the screen size.
+>>>>>>> branch_develop
      *
-     * @param args No arguments should be passed to this program.
+     * @return The initialized window model.
      */
+<<<<<<< HEAD
     public static void main(final String[] args) {
         // Create the initial window model
         WindowModel windowModel = createInitialWindowModel();
@@ -41,6 +68,8 @@ public final class SimulationLauncher {
      *
      * @return The initialized window model.
      */
+=======
+>>>>>>> branch_develop
     private static WindowModel createInitialWindowModel() {
         // Get the screen size
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
