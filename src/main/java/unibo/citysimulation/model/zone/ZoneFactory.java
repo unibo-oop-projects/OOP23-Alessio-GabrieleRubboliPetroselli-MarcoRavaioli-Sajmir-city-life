@@ -16,6 +16,8 @@ public class ZoneFactory {
      *
      * @return a list of Zone objects
      */
+
+    private static ZoneCreationImpl zoneCreation = new ZoneCreationImpl();
     public static List<Zone> createZones() {
         List<Zone> zones = new ArrayList<>();
 
@@ -28,7 +30,7 @@ public class ZoneFactory {
         infos.add(0.5f);
         infos.add(new Pair<>(0, 10));
         infos.add(new Pair<>(20, 30));
-        zones.add(createZone(infos));
+        zones.add(zoneCreation.createZone(infos));
 
         infos.clear();
 

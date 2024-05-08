@@ -19,7 +19,7 @@ public interface ZoneCreation {
      * @param x2 the x-coordinate of the bottom-right corner of the zone
      * @param y2 the y-coordinate of the bottom-right corner of the zone
      */
-    void createZone(List<Object> infos);
+    Zone createZone(List<Object> infos);
     
     /**
      * Creates a pair between two zones with the specified names and a transport line.

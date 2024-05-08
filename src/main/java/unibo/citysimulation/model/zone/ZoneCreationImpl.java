@@ -51,7 +51,7 @@ public class ZoneCreationImpl implements ZoneCreation {
      * @param y2   the y-coordinate of the second boundary point
      */
     @Override
-    public void createZone(List<Object> infos) {
+    public Zone createZone(List<Object> infos) {
         String name = (String) infos.get(0);
         Boundary boundary = (Boundary) infos.get(1);
         float personPercents = (Float) infos.get(2);
@@ -63,6 +63,8 @@ public class ZoneCreationImpl implements ZoneCreation {
         Zone zone = new ZoneImpl(name, boundary, personPercents, businessPercents, wellfare, wellfareMinMax, ageMinMax);
         zoneMap.put(name, zone);
         zonesInfo.add(zone);
+
+        return zone;
 }
 
     /**
