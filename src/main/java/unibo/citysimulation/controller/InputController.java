@@ -2,6 +2,8 @@ package unibo.citysimulation.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
@@ -25,6 +27,16 @@ public class InputController {
                 clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
             }
         });
+
+        inputPanel.getPeopleSlider().addChangeListener(new ChangeListener(){
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                numberOfPeople = inputPanel.getPeopleSlider().getValue();
+                System.out.println("Selected number of people: " + numberOfPeople);
+            }
+        });
+
+
     }
 
 

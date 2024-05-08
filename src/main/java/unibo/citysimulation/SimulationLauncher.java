@@ -1,5 +1,4 @@
 package unibo.citysimulation;
-
 import unibo.citysimulation.controller.WindowController;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.view.WindowView;

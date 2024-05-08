@@ -1,16 +1,14 @@
 package unibo.citysimulation.view.sidePanels;
-
 import unibo.citysimulation.view.StyledPanel;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class InputPanel extends StyledPanel {
-    private JLabel numberOfPersonLabel;
-    private JTextField numberOfPersonTextField;
-    private JButton confirmButton;
     private JButton startButton;
+    private JSlider peopleSlider;
+    private JLabel sliderLabel;
+    private JLabel sliderValueLabel;
 
     public InputPanel(Color bgColor) {
         super(bgColor);
@@ -46,24 +44,42 @@ public class InputPanel extends StyledPanel {
         gbc.gridy = 1;
         add(buttonPanel, gbc);
 
+
         // Create a new panel for the second row
         JPanel secondRowPanel = new JPanel(new FlowLayout());
 
-        // Create the label for the number of persons
-        numberOfPersonLabel = new JLabel("Number of People:");
-        numberOfPersonLabel.setForeground(Color.BLACK);
-        secondRowPanel.add(numberOfPersonLabel);
 
         // Create the JTextField for input
-        numberOfPersonTextField = new JTextField(10);
-        secondRowPanel.add(numberOfPersonTextField);
+       // Create the JSlider for input
+       peopleSlider = new JSlider(0, 100); // Adjust range as needed
+       peopleSlider.setMajorTickSpacing(20);
+       peopleSlider.setMinorTickSpacing(5);
+       peopleSlider.setPaintTicks(true);
+       peopleSlider.setPaintLabels(true);
 
-        // Add the second row panel to the panel
-        gbc.gridy = 2;
-        add(secondRowPanel, gbc);
+       // Create a label for the slider
+       sliderLabel = new JLabel("Number of People: ");
+       sliderLabel.setForeground(Color.WHITE);
+       gbc.gridy = 2;
+       add(sliderLabel, gbc);
+
+       // Add the slider
+       gbc.gridy = 3;
+       add(peopleSlider, gbc);
+
+       // Create a label to display the current slider value
+       sliderValueLabel = new JLabel("Current value: " + peopleSlider.getValue());
+       sliderValueLabel.setForeground(Color.WHITE);
+       gbc.gridy = 4;
+       add(sliderValueLabel, gbc);
     }
 
     public JButton getStartButton() {
         return startButton;
     }
+    public JSlider getPeopleSlider() {
+        return peopleSlider;
+    }
+
+    
 }
