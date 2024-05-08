@@ -1,10 +1,5 @@
 package unibo.citysimulation.view;
 
-import unibo.citysimulation.controller.ClockController;
-import unibo.citysimulation.controller.MapController;
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
@@ -16,6 +11,7 @@ import unibo.citysimulation.view.map.MapPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * Represents the main window of the application.
@@ -33,14 +29,16 @@ public class WindowView extends JFrame {
     /**
      * Constructs a WindowView with the specified window model and map model.
      *
-     * @param windowModel The model representing the main window.
-     * @param mapModel    The model representing the map.
      */
     public WindowView() {
         Pair<Integer,Integer> size = getWindowSize();
         this.width = size.getFirst();
         this.height = size.getSecond();
+        System.out.println("dimensioni " + width + ", " + height);
+        System.out.println("dimenisoni minime " + ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL + ", " + ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL);
 
+        setSize(width, height);
+        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
 
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +48,7 @@ public class WindowView extends JFrame {
         createComponents();
         setVisible(true);
 
-        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
+        pack();
     }
 
     /**
@@ -67,10 +65,13 @@ public class WindowView extends JFrame {
      */
     public void updatePanelSize() {
 
+        setSize(new Dimension(width, height));
+
         inputPanel.setPreferredSize(new Dimension(width / 4, height));
         infoPanel.setPreferredSize(new Dimension(width / 4, height));
         clockPanel.setPreferredSize(new Dimension(width / 4, height));
         graphicsPanel.setPreferredSize(new Dimension(width / 4, height));
+        mapPanel.setPreferredSize(new Dimension(width / 2, height));
 
         revalidate();
         repaint();
@@ -103,8 +104,8 @@ public class WindowView extends JFrame {
      */
     private void createSidePanels() {
 
-        int sidePanelWidth = getSize().width / 4;
-        int sidePanelsHeight = getSize().height;
+        int sidePanelWidth = width / 4;
+        int sidePanelsHeight = height;
 
         JPanel leftPanel = new JPanel(new GridBagLayout());
         JPanel rightPanel = new JPanel(new GridBagLayout());

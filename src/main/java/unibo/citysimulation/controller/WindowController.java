@@ -36,19 +36,29 @@ public class WindowController {
     private class ResizeListener extends ComponentAdapter {
         @Override
         public void componentResized(ComponentEvent e) {
-            int newWidth = e.getComponent().getWidth();
-            int newHeight = e.getComponent().getHeight();
+            super.componentResized(e);
 
-            // Adjust the window size based on aspect ratio
-            if (newHeight * 2 > newWidth) {
-                newHeight = newWidth / 2;
+            int newWidth = e.getComponent().getBounds().width;
+            int newHeight = e.getComponent().getBounds().height;
+
+            if (newWidth != windowView.getWidth() && newHeight != windowView.getHeight()) {
+                // Trova la dimensione più piccola tra nuova larghezza e altezza
+                int minSize = Math.min(newWidth, newHeight * 2);
+                // Imposta le nuove dimensioni mantenendo la proporzione 2:1
+                newWidth = minSize;
+                newHeight = minSize / 2;
             } else {
-                newWidth = newHeight * 2;
+                if (newHeight != windowView.getHeight() && newWidth == windowView.getWidth()) {
+                    newWidth = (int) ((double) newHeight * 2);
+                } else {
+                    newHeight = (int) ((double) newWidth / 2);
+                }
             }
 
-            windowView.setPreferredSize(new Dimension(newWidth, newHeight));
-            windowView.pack();
+            windowView.setWidth(newWidth);
+            windowView.setHeight(newHeight);
             windowView.updatePanelSize();
-        }        
-    }    
+            windowView.repaint();
+        }
+    }
 }
