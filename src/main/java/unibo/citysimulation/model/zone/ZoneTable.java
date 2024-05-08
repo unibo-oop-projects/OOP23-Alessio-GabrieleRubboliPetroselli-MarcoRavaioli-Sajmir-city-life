@@ -4,17 +4,17 @@ package unibo.citysimulation.model.zone;
 import java.util.HashMap;
 import java.util.Map;
 
-import unibo.citysimulation.model.transport.TransportLineImpl;
+import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
 public class ZoneTable {
-    private Map<Pair<Zone, Zone>, TransportLineImpl> zonePairs;
+    private Map<Pair<Zone, Zone>, TransportLine> zonePairs;
 
     public ZoneTable() {
         this.zonePairs = new HashMap<>();
     }
 
-    public void addPair(Zone zone1, Zone zone2, TransportLineImpl TransportLine) {
+    public void addPair(Zone zone1, Zone zone2, TransportLine TransportLine) {
         this.zonePairs.put(new Pair<>(zone1, zone2), TransportLine);
         this.zonePairs.put(new Pair<>(zone2, zone1), TransportLine); // to ensure the table works both ways
     }

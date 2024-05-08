@@ -1,8 +1,8 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.zone.Zone;
+import java.time.LocalTime;
 
 /**
  * An interface for modelling a person
@@ -60,5 +60,7 @@ public interface Person {
      * @return the zone where the person lives
      */
     Zone getResidenceZone();
+
+    void checkState(LocalTime currentTime);
     
 }

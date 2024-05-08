@@ -84,33 +84,53 @@ public class PersonImpl implements Person {
         System.out.println("time to move: " + timeToMove);
         System.out.println("line duration: " + lineDuration);
         if (moveBool) {
-            this.setState(PersonState.MOVING);
             this.lastArrivingTime = currentTime + lineDuration;
         }
         return moveBool;
     }
 
     public boolean checkTimeToGoToWork(LocalTime currentTime) {
-        int lineDuration = zoneTable.getMinutesForPair(residenceZone, business.getZone()) * 60;
+        int lineDuration;
+        if (this.residenceZone == this.business.getZone()) {
+            lineDuration = 0;
+        } else {
+            lineDuration = zoneTable.getMinutesForPair(residenceZone, business.getZone()) * 60;
+        }
         if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-            business.getOpeningTime().toSecondOfDay() - lineDuration,
-            lineDuration)) {
+                business.getOpeningTime().toSecondOfDay() - lineDuration,
+                lineDuration)) {
             System.out.println("time to move to work");
+            if (lineDuration == 0) {
+                this.setState(PersonState.WORKING);
+            } else {
+                this.setState(PersonState.MOVING);
+            }
             this.lastDestination = PersonState.WORKING;
             return true;
-            }
+        }
         System.out.println("Not moving");
         return false;
     }
 
     public boolean checkTimeToGoHome(LocalTime currentTime) {
+        int lineDuration;
+        if (this.residenceZone == this.business.getZone()) {
+            lineDuration = 0;
+        } else {
+            lineDuration = zoneTable.getMinutesForPair(residenceZone, business.getZone()) * 60;
+        }
         if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-            business.getClosingTime().toSecondOfDay(),
-            zoneTable.getMinutesForPair(business.getZone(), residenceZone) * 60)) {
+                business.getClosingTime().toSecondOfDay(),
+                lineDuration)) {
+            if (lineDuration == 0) {
+                this.setState(PersonState.AT_HOME);
+            } else {
+                this.setState(PersonState.MOVING);
+            }
             this.lastDestination = PersonState.AT_HOME;
             return true;
-            }
-            return false;
+        }
+        return false;
     }
 
     public void incrementLastArrivingTime(int duration) {
@@ -141,5 +161,5 @@ public class PersonImpl implements Person {
                 break;
         }
     }
-    
+
 }
