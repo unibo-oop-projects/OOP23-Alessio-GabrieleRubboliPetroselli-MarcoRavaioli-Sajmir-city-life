@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.zone;
 
+import unibo.citysimulation.utilities.Pair;
+
 public interface Zone {
     String getName();
     void setName(String name);
@@ -12,4 +14,6 @@ public interface Zone {
 
     float getWellfare();
     void setWellfare(float wellfare);
+
+    Pair<Integer, Integer> getWellfareMinMax();
 }

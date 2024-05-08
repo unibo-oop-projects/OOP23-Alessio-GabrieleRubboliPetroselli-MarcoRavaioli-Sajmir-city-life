@@ -9,7 +9,7 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
 public class InputController {
     private CityModel cityModel;
     private InputPanel inputPanel;
-    private int numberOfPeople;
+    private int numberOfPeople = 1000;
     
     public InputController(CityModel cityModel, InputPanel inputPanel) {
         this.cityModel = cityModel;

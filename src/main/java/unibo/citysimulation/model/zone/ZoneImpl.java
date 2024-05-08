@@ -13,7 +13,8 @@ public class ZoneImpl implements Zone {
     private Pair<Integer, Integer> wellfareMinMax;
     private Pair<Integer, Integer> ageMinMax;
 
-    public ZoneImpl(String name, float personPercents, float businessPercents, float wellfare, Pair<Integer, Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax) {
+    public ZoneImpl(String name, float personPercents, float businessPercents, float wellfare, Pair<Integer,
+    Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax) {
         this.name = name;
         this.personPercents = personPercents;
         this.businessPercents = businessPercents;

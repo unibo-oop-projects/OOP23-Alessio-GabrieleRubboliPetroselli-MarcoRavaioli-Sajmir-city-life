@@ -16,8 +16,8 @@ public class BusinessFactory {
      * @param zones the list of Zone objects
      * @return a list of Business objects
      */
-    public static List<Business> createTransports(List<Zone> zones) {
-        List<Business> transports = new ArrayList<>();
+    public static List<Business> createBusinesses(List<Zone> zones) {
+        List<Business> businesses = new ArrayList<>();
 
         List<Object> infos = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class BusinessFactory {
         infos.add(LocalTime.of(8, 0));
         infos.add(LocalTime.of(18, 0));
         infos.add(zones.get(0));
-        transports.add(createBusiness(infos));
+        businesses.add(createBusiness(infos));
 
         infos.clear();
 
@@ -37,11 +37,11 @@ public class BusinessFactory {
         infos.add(LocalTime.of(11, 0));
         infos.add(LocalTime.of(20, 0));
         infos.add(zones.get(1));
-        transports.add(createBusiness(infos));
+        businesses.add(createBusiness(infos));
 
         infos.clear();
 
-        return transports;
+        return businesses;
     }
 
     private static Business createBusiness(List<Object> infos) {
