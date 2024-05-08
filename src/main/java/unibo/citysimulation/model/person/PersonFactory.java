@@ -12,11 +12,12 @@ public class PersonFactory {
     private static Random random = new Random();
 
     public static List<Person> createGroupOfPeople(int numberOfPeople, Pair<Integer, Integer> moneyMinMax,
-    Business business, Zone residenceZone, ZoneTable zoneTable) {
+    List<Business> businesses, Zone residenceZone, ZoneTable zoneTable) {
         List<Person> people = new ArrayList<>();
         for (int i = 0; i < numberOfPeople; i++) {
             people.add(createPerson("Person" + i, random.nextInt(62) + 18,
-            random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst(), business, residenceZone, zoneTable));
+            random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst(),
+            businesses.get(new Random().nextInt(businesses.size())), residenceZone, zoneTable));
         }
         return people;
     }

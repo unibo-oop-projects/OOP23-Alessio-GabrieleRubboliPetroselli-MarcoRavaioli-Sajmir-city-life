@@ -39,7 +39,7 @@ public class CityModel {
         this.people = new ArrayList<>();
         for (var zone : zones) {
             this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.getBusinessPercents()/100)),
-            zone.getWellfareMinMax(), businesses.get(new Random().nextInt(businesses.size())), zone, zoneTable));
+            zone.getWellfareMinMax(), businesses, zone, zoneTable));
         }
 
         System.out.println("People groups created. " + people.size());
