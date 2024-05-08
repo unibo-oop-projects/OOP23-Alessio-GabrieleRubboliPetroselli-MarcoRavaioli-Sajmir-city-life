@@ -62,4 +62,8 @@ public class ZoneImpl implements Zone {
     public Pair<Integer, Integer> getWellfareMinMax() {
         return wellfareMinMax;
     }
+
+    @Override
+    public Boundary getBoundary() {
+    }
 }

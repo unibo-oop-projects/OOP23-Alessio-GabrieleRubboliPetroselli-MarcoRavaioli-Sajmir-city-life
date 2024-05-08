@@ -1,15 +1,18 @@
-package unibo.citysimulation.model.zone;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import unibo.citysimulation.model.transport.TransportLine;
+/*
+ * package unibo.citysimulation.model.zone;
+ *
+ * import java.util.ArrayList;
+ * import java.util.HashMap;
+ * import java.util.List;
+ * import java.util.Map;
+ *
+ * import unibo.citysimulation.model.transport.TransportLine;
+ */
 
 /**
  * Implementation of the ZoneCreation interface that provides methods to create and manage zones.
  */
+/*
 public class ZoneCreationImpl implements ZoneCreation {
 
     private ZoneTable zoneTable;
@@ -18,6 +21,7 @@ public class ZoneCreationImpl implements ZoneCreation {
     /**
      * Constructs a new ZoneCreationImpl object.
      */
+    /*
     public ZoneCreationImpl() {
         this.zoneTable = new ZoneTable();
         this.zoneMap = new HashMap<>();
@@ -32,6 +36,7 @@ public class ZoneCreationImpl implements ZoneCreation {
      * @param x2   the x-coordinate of the second boundary point
      * @param y2   the y-coordinate of the second boundary point
      */
+    /*
     @Override
     public void createZone(String name, int x1, int y1, int x2, int y2) {
         Boundary boundary = new Boundary(x1, y1, x2, y2);
@@ -46,6 +51,7 @@ public class ZoneCreationImpl implements ZoneCreation {
      * @param name2         the name of the second zone
      * @param transportLine the transport line to associate with the zones
      */
+    /*
     @Override
     public void createPairs(String name1, String name2, TransportLine transportLine) {
         Zone zone1 = zoneMap.get(name1);
@@ -63,6 +69,7 @@ public class ZoneCreationImpl implements ZoneCreation {
      * @param y    the y-coordinate of the point
      * @return true if the point is inside the zone, false otherwise
      */
+    /*
     public boolean isPointInZone(String name, int x, int y) {
         Zone zone = zoneMap.get(name);
         if (zone != null) {
@@ -72,3 +79,4 @@ public class ZoneCreationImpl implements ZoneCreation {
         }
     }
 }
+*/ 
