@@ -1,12 +1,10 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.person.Person.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
-
 import java.time.LocalTime;
 import java.util.Optional;
 
