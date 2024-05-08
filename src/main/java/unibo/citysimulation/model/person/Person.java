@@ -30,16 +30,13 @@ public interface Person {
 	 * @return the state of the person
 	 */
     PersonState getState();
+
+    void setState(PersonState state);
     
     /**
      * @return the amount of money the person has
      */
     int getMoney();
-
-    /**
-     * @param state the new state of the person to set
-     */
-    void setState(PersonState state);
 
     /**
      * @param money the amount of money to sum/sub to the actual amount of money the person has

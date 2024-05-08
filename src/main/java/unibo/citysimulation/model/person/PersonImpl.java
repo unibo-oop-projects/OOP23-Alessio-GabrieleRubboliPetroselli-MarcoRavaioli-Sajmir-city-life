@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.person.Person.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
@@ -21,6 +22,7 @@ public class PersonImpl implements Person {
     private PersonState lastDestination;
     private Optional<Pair<Integer, Integer>> position;
     private TransportLine transportLine;
+    private int tripDuration;
 
     public PersonImpl(String name, int age, int money, Business business, Zone residenceZone, ZoneTable zonetable) {
         this.age = age;
@@ -33,6 +35,7 @@ public class PersonImpl implements Person {
         this.zoneTable = zonetable;
         this.position = Optional.of(new Pair<>(0, 0));
         this.transportLine = zonetable.getTransportLine(residenceZone, business.getZone());
+        this.tripDuration = this.getTripDuration();
 
     }
 
@@ -50,12 +53,13 @@ public class PersonImpl implements Person {
     }
 
     @Override
-    public int getMoney() {
-        return money;
-    }
-
     public void setState(PersonState state) {
         this.state = state;
+    }
+
+    @Override
+    public int getMoney() {
+        return money;
     }
 
     @Override
@@ -71,101 +75,43 @@ public class PersonImpl implements Person {
         return residenceZone;
     }
 
-    public Optional<Zone> getCurrentZone() {
-        switch (this.state) {
-            case WORKING:
-                return Optional.of(business.getZone());
-            case AT_HOME:
-                return Optional.of(residenceZone);
-            default:
-                return Optional.empty();
-        }
-    }
-
     public Zone getBusinessZone() {
         return business.getZone();
     }
 
     public boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
         boolean moveBool = (currentTime == timeToMove);
-
-
         System.out.println("line duration: " + lineDuration);
-
-
         if (moveBool) {
             this.lastArrivingTime = currentTime + lineDuration;
         }
         return moveBool;
     }
 
-    public boolean checkTimeToGoToWork(LocalTime currentTime) {
-        int lineDuration;
-        if (this.residenceZone == this.business.getZone()) {
-            lineDuration = 0;
-        } else {
-            lineDuration = transportLine.getDuration() * 60;
+    public void checkTimeToGoToWork(LocalTime currentTime) {
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), business.getOpeningTime().toSecondOfDay() - tripDuration,
+                tripDuration)) {
+            movePerson(PersonState.WORKING);
         }
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-                business.getOpeningTime().toSecondOfDay() - lineDuration,
-                lineDuration)) {
-                    
-            if (lineDuration == 0) {
-                this.setState(PersonState.WORKING);
-                this.position = Optional.of(business.getPosition()); // così appaiono uno sopra l'altro, serve qualcosa per far vedere che è lì vicino
-            } else {
-                this.setState(PersonState.MOVING);
-                this.transportLine.incrementPersonInLine();
-                this.position = Optional.empty();
-            }
-            this.lastDestination = PersonState.WORKING;
-            return true;
-        }
-        
-        return false;
     }
 
-    public boolean checkTimeToGoHome(LocalTime currentTime) {
-        int lineDuration;
-        if (this.residenceZone == this.business.getZone()) {
-            lineDuration = 0;
-        } else {
-            lineDuration = transportLine.getDuration() * 60;
+    public void checkTimeToGoHome(LocalTime currentTime) {
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), business.getClosingTime().toSecondOfDay(),
+                tripDuration)) {
+            movePerson(PersonState.AT_HOME);
         }
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-                business.getClosingTime().toSecondOfDay(),
-                lineDuration)) {
-            if (lineDuration == 0) {
-                this.setState(PersonState.AT_HOME);
-                this.position = Optional.of(residenceZone.getRandomPosition()); // servirebbe che la posizione random sia solo all'inizio poi una volta che sa doc'è casa tenga quella come posizione
-            } else {                                                            
-                this.setState(PersonState.MOVING);
-                this.transportLine.incrementPersonInLine();
-                this.position = Optional.empty();
-
-            }
-            this.lastDestination = PersonState.AT_HOME;
-            return true;
-        }
-        return false;
     }
 
     public void incrementLastArrivingTime(int duration) {
         this.lastArrivingTime += duration;
     }
 
-    public boolean checkArrivingTime(LocalTime currentTime) {
+    public void checkArrivingTime(LocalTime currentTime) {
         if (currentTime.toSecondOfDay() == this.lastArrivingTime) {
             this.setState(this.lastDestination);
-            if(this.state == PersonState.AT_HOME) {
-                this.position = Optional.of(residenceZone.getRandomPosition()); // così appaiono uno sopra l'altro, serve qualcosa per far vedere che è lì vicino
-            } else {
-                this.position = Optional.of(business.getPosition()); 
-            }
+            updatePosition();
             this.transportLine.decrementPersonInLine();
-            return true;
         }
-        return false;
     }
 
     public void checkState(LocalTime currentTime) {
@@ -184,4 +130,38 @@ public class PersonImpl implements Person {
         System.out.println("coordinate position: " + (position.isPresent() ? (position.get().getFirst() + ", " + position.get().getSecond()) : ""));
     }
 
+    private int getTripDuration() {
+        int lineDuration;
+        if (this.residenceZone == this.business.getZone()) {
+            lineDuration = 0;
+        } else {
+            lineDuration = transportLine.getDuration() * 60;
+        }
+        return lineDuration;
+    }
+
+    private void movePerson(PersonState newState) {
+        if (this.tripDuration == 0) {
+            this.setState(newState);
+        } else {
+            this.setState(PersonState.MOVING);
+            this.transportLine.incrementPersonInLine();
+        }
+        this.lastDestination = newState;
+        this.updatePosition();
+    }
+
+    private void updatePosition() {
+        switch (this.state) {
+            case MOVING:
+                this.position = Optional.empty();
+                break;
+            case WORKING:
+                this.position = Optional.of(business.getPosition());
+                break;
+            case AT_HOME:
+                this.position = Optional.of(residenceZone.getRandomPosition());
+                break;
+        }
+    }
 }
