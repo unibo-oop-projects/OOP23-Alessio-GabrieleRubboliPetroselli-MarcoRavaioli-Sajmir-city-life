@@ -10,7 +10,6 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTable;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.List;
 
 public class CityModel {
