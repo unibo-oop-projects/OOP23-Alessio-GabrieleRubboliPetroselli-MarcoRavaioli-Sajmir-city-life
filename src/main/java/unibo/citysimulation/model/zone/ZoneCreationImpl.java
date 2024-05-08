@@ -1,6 +1,8 @@
 package unibo.citysimulation.model.zone;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import unibo.citysimulation.model.transport.TransportLine;
@@ -12,6 +14,7 @@ public class ZoneCreationImpl implements ZoneCreation {
 
     private ZoneTable zoneTable;
     private Map<String, Zone> zoneMap;
+    private List<Zone> zonesInfo;
 
     /**
      * Constructs a new ZoneCreationImpl object.
@@ -19,7 +22,23 @@ public class ZoneCreationImpl implements ZoneCreation {
     public ZoneCreationImpl() {
         this.zoneTable = new ZoneTable();
         this.zoneMap = new HashMap<>();
+        this.zonesInfo = new LinkedList<>();
+        };
+
+    /**
+     * Creates a new boundary with the given coordinates.
+     * 
+     * @param x1 the x-coordinate of the first boundary point
+     * @param y1 the y-coordinate of the first boundary point
+     * @param x2 the x-coordinate of the second boundary point
+     * @param y2 the y-coordinate of the second boundary point
+     * @return the boundary object
+     */
+    @Override
+    public Boundary createBoundary(int x1, int y1, int x2, int y2) {
+        return new Boundary(x1, y1, x2, y2);
     }
+    
 
     /**
      * Creates a new zone with the given name and boundary coordinates.
@@ -31,10 +50,10 @@ public class ZoneCreationImpl implements ZoneCreation {
      * @param y2   the y-coordinate of the second boundary point
      */
     @Override
-    public void createZone(String name, int x1, int y1, int x2, int y2) {
-        Boundary boundary = new Boundary(x1, y1, x2, y2);
+    public void createZone(String name, Boundary boundary) {
         Zone zone = new Zone(name, boundary);
         zoneMap.put(name, zone);
+        zonesInfo.add(zone);
     }
 
     /**
