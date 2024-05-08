@@ -38,6 +38,14 @@ public class TransportFactory {
 
         infos.clear();
 
+        infos.add("Circolare");
+        infos.add(50);
+        infos.add(10);
+        infos.add(new Pair<>(zones.get(0), zones.get(2)));
+
+        transports.add(createTransportLine(infos));
+        infos.clear();
+
         return transports;
     }
 

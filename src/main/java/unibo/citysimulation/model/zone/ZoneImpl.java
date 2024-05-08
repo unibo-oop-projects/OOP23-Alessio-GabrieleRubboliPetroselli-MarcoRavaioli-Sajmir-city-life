@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.zone;
 
+import java.util.Random;
+
 import unibo.citysimulation.utilities.Pair;
 
 /**
@@ -7,38 +9,26 @@ import unibo.citysimulation.utilities.Pair;
  */
 public class ZoneImpl implements Zone {
     private String name;
-    private Boundary boundary;
     private float personPercents;
     private float businessPercents;
     private float wellfare;
     private Pair<Integer, Integer> wellfareMinMax;
     private Pair<Integer, Integer> ageMinMax;
+    private Random random = new Random();
+    private Boundary boundary;
 
-    /**
-     * Constructs a ZoneImpl object with the specified parameters.
-     *
-     * @param name              the name of the zone
-     * @param personPercents    the percentage of people in the zone
-     * @param businessPercents  the percentage of businesses in the zone
-     * @param wellfare          the wellfare value of the zone
-     * @param wellfareMinMax    the minimum and maximum wellfare values of the zone
-     * @param ageMinMax         the minimum and maximum age values of the zone
-     */
-    public ZoneImpl(String name, Boundary boundary, float personPercents, float businessPercents, float wellfare, Pair<Integer, Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax) {
+    public ZoneImpl(String name, float personPercents, float businessPercents, float wellfare, Pair<Integer,
+    Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax, Boundary boundary) {
         this.name = name;
-        this.boundary = boundary;
         this.personPercents = personPercents;
         this.businessPercents = businessPercents;
         this.wellfare = wellfare;
         this.wellfareMinMax = wellfareMinMax;
         this.ageMinMax = ageMinMax;
+        this.boundary = boundary;
     }
 
-    /**
-     * Sets the name of the zone.
-     *
-     * @param name the name of the zone
-     */
+    // Getter and setter for 'name'
     public void setName(String name) {
         this.name = name;
     }
@@ -52,71 +42,49 @@ public class ZoneImpl implements Zone {
         return name;
     }
 
-    /**
-     * Sets the percentage of people in the zone.
-     *
-     * @param personPercents the percentage of people in the zone
-     */
+    // Getter and setter for 'personPercents'
     public void setPersonPercents(float personPercents) {
         this.personPercents = personPercents;
     }
 
-    /**
-     * Returns the percentage of people in the zone.
-     *
-     * @return the percentage of people in the zone
-     */
     public float getPersonPercents() {
         return personPercents;
     }
 
-    /**
-     * Sets the percentage of businesses in the zone.
-     *
-     * @param businessPercents the percentage of businesses in the zone
-     */
+    // Getter and setter for 'businessPercents'
     public void setBusinessPercents(float businessPercents) {
         this.businessPercents = businessPercents;
     }
 
-    /**
-     * Returns the percentage of businesses in the zone.
-     *
-     * @return the percentage of businesses in the zone
-     */
     public float getBusinessPercents() {
         return businessPercents;
     }
 
-    /**
-     * Sets the wellfare value of the zone.
-     *
-     * @param wellfare the wellfare value of the zone
-     */
+    // Getter and setter for 'wellfare'
     public void setWellfare(float wellfare) {
         this.wellfare = wellfare;
     }
 
-    /**
-     * Returns the wellfare value of the zone.
-     *
-     * @return the wellfare value of the zone
-     */
     public float getWellfare() {
         return wellfare;
     }
 
-    /**
-     * Returns the minimum and maximum wellfare values of the zone.
-     *
-     * @return the minimum and maximum wellfare values of the zone
-     */
     public Pair<Integer, Integer> getWellfareMinMax() {
         return wellfareMinMax;
     }
 
     @Override
     public Boundary getBoundary() {
-        return boundary;
+        return null;
+    }
+
+    @Override
+    public Pair<Integer, Integer> getRandomPosition() {
+        int x1 = boundary.getX1();
+        int y1 = boundary.getY1();
+        int x2 = boundary.getX2();
+        int y2 = boundary.getY2();
+
+        return new Pair<>(random.nextInt(x2 - x1) + x1, random.nextInt(y2 - y1) + y1);
     }
 }

@@ -1,19 +1,25 @@
 package unibo.citysimulation.model.clock;
 
 import java.time.LocalTime;
+import java.util.List;
 
-import unibo.citysimulation.model.person.PersonImpl;
+import unibo.citysimulation.model.person.Person;
 
 public class ClockObserverPerson implements ClockObserver{
-    private PersonImpl person;
+    private List<List<Person>> people;
 
-    public ClockObserverPerson(PersonImpl person) {
-        this.person = person;
+    public ClockObserverPerson(List<List<Person>> people) {
+        this.people = people;
     }
 
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
-        person.checkState(currentTime);
+        for (List<Person> group : people) {
+            for (Person person : group) {
+                person.checkState(currentTime);
+                
+            }
+        }
     }
     
 }

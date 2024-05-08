@@ -5,7 +5,7 @@ package unibo.citysimulation.model.zone;
  * It defines the coordinates of the top-left corner (x1, y1) and the bottom-right corner (x2, y2).
  */
 public class Boundary {
-    private int x1;
+    private int x1;     // TI PREGO FAI 2 PAIR CON LE COORDINATE CHE FARE 4 GETTER PER OGNI CAMPO NON CI STA 
     private int y1;
     private int x2;
     private int y2;
@@ -34,5 +34,21 @@ public class Boundary {
      */
     public boolean isInside(int x, int y) {
         return x >= x1 && x <= x2 && y >= y1 && y <= y2;
+    }
+
+    public int getX1() {
+        return x1;
+    }
+    
+    public int getY1() {
+        return y1;
+    }
+
+    public int getX2() {
+        return x2;
+    }
+
+    public int getY2() {
+        return y2;
     }
 }

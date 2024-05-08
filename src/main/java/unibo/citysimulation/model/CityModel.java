@@ -2,6 +2,7 @@ package unibo.citysimulation.model;
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.clock.ClockModel;
+import unibo.citysimulation.model.clock.ClockObserverPerson;
 import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
@@ -32,6 +33,9 @@ public class CityModel {
         this.transports = TransportFactory.createTransports(zones);
         System.out.println("Transports created. " + transports.size());
         this.zoneTable = new ZoneTable();
+        zoneTable.addPair(zones.get(0), zones.get(1), transports.get(0));
+        zoneTable.addPair(zones.get(1), zones.get(2), transports.get(1));
+        zoneTable.addPair(zones.get(0), zones.get(2),transports.get(2));
         this.businesses = BusinessFactory.createBusinesses(zones);
         System.out.println("Businesses created. " + businesses.size());
 
@@ -40,6 +44,8 @@ public class CityModel {
             this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.getBusinessPercents()/100)),
             zone.getWellfareMinMax(), businesses, zone, zoneTable));
         }
+
+        clockModel.addObserver(new ClockObserverPerson(people));
 
         System.out.println("People groups created. " + people.size());
         for (var group : people) {

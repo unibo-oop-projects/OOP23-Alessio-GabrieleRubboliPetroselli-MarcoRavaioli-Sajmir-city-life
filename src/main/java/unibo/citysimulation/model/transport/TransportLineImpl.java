@@ -35,4 +35,14 @@ public class TransportLineImpl implements TransportLine {
     public Pair<Zone,Zone> getLinkedZones(){
         return link;
     }
+
+    @Override
+    public void incrementPersonInLine() {
+        personInLine++;
+    }
+
+    @Override
+    public void decrementPersonInLine() {
+        personInLine--;
+    }
 }

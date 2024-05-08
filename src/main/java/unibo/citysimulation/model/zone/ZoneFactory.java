@@ -24,23 +24,34 @@ public class ZoneFactory {
         // Aggiungi le informazioni di base per ciascuna zona utilizzando mappe
         List<Object> infos = new ArrayList<>();
         infos.add("Centro");
-        infos.add(new Boundary(0, 0, 100, 100));
-        infos.add(0.5f);
-        infos.add(0.5f);
-        infos.add(0.5f);
-        infos.add(new Pair<>(0, 10));
-        infos.add(new Pair<>(20, 30));
-        zones.add(zoneCreation.createZone(infos));
+        infos.add(10f);
+        infos.add(40f);
+        infos.add(50f);
+        infos.add(new Pair<>(1000, 1500));
+        infos.add(new Pair<>(3, 99));
+        infos.add(new Boundary(0, 0, 250, 250));
+        zones.add(createZone(infos));
+
+        infos.clear();
+
+        infos.add("Industrial");
+        infos.add(30f);
+        infos.add(10f);
+        infos.add(20f);
+        infos.add(new Pair<>(800, 1300));
+        infos.add(new Pair<>(3, 99));
+        infos.add(new Boundary(250, 0, 500, 250));
+        zones.add(createZone(infos));
 
         infos.clear();
 
         infos.add("Periferia");
-        infos.add(new Boundary(100, 100, 200, 200));
-        infos.add(0.3f);
-        infos.add(0.7f);
-        infos.add(0.3f);
-        infos.add(new Pair<>(10, 20));
-        infos.add(new Pair<>(30, 40));
+        infos.add(20f);
+        infos.add(30f);
+        infos.add(10f);
+        infos.add(new Pair<>(900, 1200));
+        infos.add(new Pair<>(20, 99));
+        infos.add(new Boundary(0, 250, 250, 500));
         zones.add(createZone(infos));
 
         return zones;
@@ -49,13 +60,8 @@ public class ZoneFactory {
 }
 
     private static Zone createZone(List<Object> infos) {
-        String name = (String) infos.get(0);
-        Boundary boundary = (Boundary) infos.get(1);
-        float personPercents = (float) infos.get(2);
-        float businessPercents = (float) infos.get(3);
-        float wellfare = (float) infos.get(4);
-        Pair<Integer, Integer> wellfareMinMax = (Pair<Integer, Integer>) infos.get(5);
-        Pair<Integer, Integer> ageMinMax = (Pair<Integer, Integer>) infos.get(6);
-        return new ZoneImpl(name, boundary, personPercents, businessPercents, wellfare, wellfareMinMax, ageMinMax);
+        return new ZoneImpl((String) infos.get(0), (float) infos.get(1), (float) infos.get(2),
+                (float) infos.get(3), (Pair<Integer,Integer>) infos.get(4),
+                (Pair<Integer,Integer>) infos.get(5), (Boundary)infos.get(6));
     }
 }

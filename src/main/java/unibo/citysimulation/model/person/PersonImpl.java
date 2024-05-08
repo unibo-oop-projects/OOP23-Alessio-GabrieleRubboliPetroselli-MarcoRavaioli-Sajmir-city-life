@@ -1,8 +1,10 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
+import unibo.citysimulation.utilities.Pair;
 import java.time.LocalTime;
 import java.util.Optional;
 
@@ -16,6 +18,9 @@ public class PersonImpl implements Person {
     private ZoneTable zoneTable;
     private int lastArrivingTime = 0;
     private PersonState lastDestination;
+    private Optional<Pair<Integer, Integer>> position;
+    private TransportLine transportLine;
+    private int tripDuration;
 
     public PersonImpl(String name, int age, int money, Business business, Zone residenceZone, ZoneTable zonetable) {
         this.age = age;
@@ -26,6 +31,10 @@ public class PersonImpl implements Person {
         this.business = business;
         this.residenceZone = residenceZone;
         this.zoneTable = zonetable;
+        this.position = Optional.of(new Pair<>(0, 0));
+        this.transportLine = zonetable.getTransportLine(residenceZone, business.getZone());
+        this.getTrip();
+
     }
 
     public String getName() {
@@ -42,12 +51,13 @@ public class PersonImpl implements Person {
     }
 
     @Override
-    public int getMoney() {
-        return money;
-    }
-
     public void setState(PersonState state) {
         this.state = state;
+    }
+
+    @Override
+    public int getMoney() {
+        return money;
     }
 
     @Override
@@ -63,83 +73,92 @@ public class PersonImpl implements Person {
         return residenceZone;
     }
 
-    public Optional<Zone> getCurrentZone() {
-        switch (this.state) {
-            case WORKING:
-                return Optional.of(business.getZone());
-            case AT_HOME:
-                return Optional.of(residenceZone);
-            default:
-                return Optional.empty();
-        }
-    }
-
     public Zone getBusinessZone() {
         return business.getZone();
     }
 
     public boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
         boolean moveBool = (currentTime == timeToMove);
-        System.out.println("current time: " + currentTime);
-        System.out.println("time to move: " + timeToMove);
         System.out.println("line duration: " + lineDuration);
         if (moveBool) {
-            this.setState(PersonState.MOVING);
             this.lastArrivingTime = currentTime + lineDuration;
         }
         return moveBool;
     }
 
-    public boolean checkTimeToGoToWork(LocalTime currentTime) {
-        int lineDuration = zoneTable.getMinutesForPair(residenceZone, business.getZone()) * 60;
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-            business.getOpeningTime().toSecondOfDay() - lineDuration,
-            lineDuration)) {
-            System.out.println("time to move to work");
-            this.lastDestination = PersonState.WORKING;
-            return true;
-            }
-        System.out.println("Not moving");
-        return false;
+    public void checkTimeToGoToWork(LocalTime currentTime) {
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), business.getOpeningTime().toSecondOfDay() - tripDuration,
+                tripDuration)) {
+            movePerson(PersonState.WORKING);
+        }
     }
 
-    public boolean checkTimeToGoHome(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-            business.getClosingTime().toSecondOfDay(),
-            zoneTable.getMinutesForPair(business.getZone(), residenceZone) * 60)) {
-            this.lastDestination = PersonState.AT_HOME;
-            return true;
-            }
-            return false;
+    public void checkTimeToGoHome(LocalTime currentTime) {
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), business.getClosingTime().toSecondOfDay(),
+                tripDuration)) {
+            movePerson(PersonState.AT_HOME);
+        }
     }
 
     public void incrementLastArrivingTime(int duration) {
         this.lastArrivingTime += duration;
     }
 
-    public boolean checkArrivingTime(LocalTime currentTime) {
+    public void checkArrivingTime(LocalTime currentTime) {
         if (currentTime.toSecondOfDay() == this.lastArrivingTime) {
             this.setState(this.lastDestination);
-            return true;
+            updatePosition();
+            this.transportLine.decrementPersonInLine();
         }
-        return false;
     }
 
     public void checkState(LocalTime currentTime) {
         switch (this.state) {
             case MOVING:
-                System.out.println("state moving");
                 this.checkArrivingTime(currentTime);
                 break;
             case WORKING:
-                System.out.println("state working");
                 this.checkTimeToGoHome(currentTime);
                 break;
             case AT_HOME:
-                System.out.println("state at home");
                 this.checkTimeToGoToWork(currentTime);
                 break;
         }
+        System.out.println(this.getName() + ", " + this.getState());
+        System.out.println("coordinate position: " + (position.isPresent() ? (position.get().getFirst() + ", " + position.get().getSecond()) : ""));
     }
-    
+
+    private void getTrip() {
+        if (this.residenceZone == this.business.getZone()) {
+            this.tripDuration = 0;
+        } else {
+            this.transportLine = this.zoneTable.getTransportLine(residenceZone, business.getZone());
+            tripDuration = this.transportLine.getDuration() * 60;
+        }
+    }
+
+    private void movePerson(PersonState newState) {
+        if (this.tripDuration == 0) {
+            this.setState(newState);
+        } else {
+            this.setState(PersonState.MOVING);
+            this.transportLine.incrementPersonInLine();
+        }
+        this.lastDestination = newState;
+        this.updatePosition();
+    }
+
+    private void updatePosition() {
+        switch (this.state) {
+            case MOVING:
+                this.position = Optional.empty();
+                break;
+            case WORKING:
+                this.position = Optional.of(business.getPosition());
+                break;
+            case AT_HOME:
+                this.position = Optional.of(residenceZone.getRandomPosition());
+                break;
+        }
+    }
 }

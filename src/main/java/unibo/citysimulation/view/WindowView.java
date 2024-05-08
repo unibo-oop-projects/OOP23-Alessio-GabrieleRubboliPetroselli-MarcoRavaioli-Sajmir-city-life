@@ -11,7 +11,6 @@ import unibo.citysimulation.view.map.MapPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 /**
  * Represents the main window of the application.
@@ -34,8 +33,6 @@ public class WindowView extends JFrame {
         Pair<Integer,Integer> size = getWindowSize();
         this.width = size.getFirst();
         this.height = size.getSecond();
-        System.out.println("dimensioni " + width + ", " + height);
-        System.out.println("dimenisoni minime " + ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL + ", " + ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL);
 
         setSize(width, height);
         setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
