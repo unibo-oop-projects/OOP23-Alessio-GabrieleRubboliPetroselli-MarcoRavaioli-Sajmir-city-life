@@ -33,7 +33,7 @@ public class PersonImpl implements Person {
         this.zoneTable = zonetable;
         this.position = Optional.of(new Pair<>(0, 0));
         this.transportLine = zonetable.getTransportLine(residenceZone, business.getZone());
-        this.tripDuration = this.getTripDuration();
+        this.getTrip();
 
     }
 
@@ -128,14 +128,13 @@ public class PersonImpl implements Person {
         System.out.println("coordinate position: " + (position.isPresent() ? (position.get().getFirst() + ", " + position.get().getSecond()) : ""));
     }
 
-    private int getTripDuration() {
-        int lineDuration;
+    private void getTrip() {
         if (this.residenceZone == this.business.getZone()) {
-            lineDuration = 0;
+            this.tripDuration = 0;
         } else {
-            lineDuration = transportLine.getDuration() * 60;
+            this.transportLine = this.zoneTable.getTransportLine(residenceZone, business.getZone());
+            tripDuration = this.transportLine.getDuration() * 60;
         }
-        return lineDuration;
     }
 
     private void movePerson(PersonState newState) {
