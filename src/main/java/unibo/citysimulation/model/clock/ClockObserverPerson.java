@@ -17,6 +17,7 @@ public class ClockObserverPerson implements ClockObserver{
         for (List<Person> group : people) {
             for (Person person : group) {
                 person.checkState(currentTime);
+                
             }
         }
     }

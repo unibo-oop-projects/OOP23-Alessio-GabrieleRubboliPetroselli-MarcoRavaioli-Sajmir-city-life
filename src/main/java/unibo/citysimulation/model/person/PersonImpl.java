@@ -3,6 +3,8 @@ package unibo.citysimulation.model.person;
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
+import unibo.citysimulation.utilities.Pair;
+
 import java.time.LocalTime;
 import java.util.Optional;
 
@@ -16,6 +18,7 @@ public class PersonImpl implements Person {
     private ZoneTable zoneTable;
     private int lastArrivingTime = 0;
     private PersonState lastDestination;
+    private Pair<Integer, Integer> position;
 
     public PersonImpl(String name, int age, int money, Business business, Zone residenceZone, ZoneTable zonetable) {
         this.age = age;
@@ -26,6 +29,7 @@ public class PersonImpl implements Person {
         this.business = business;
         this.residenceZone = residenceZone;
         this.zoneTable = zonetable;
+        this.position = new Pair<>(0, 0);
     }
 
     public String getName() {
@@ -102,6 +106,8 @@ public class PersonImpl implements Person {
             System.out.println("time to move to work");
             if (lineDuration == 0) {
                 this.setState(PersonState.WORKING);
+                this.position = new Pair<>(business.getZone().getPosition().getFirst(),
+                        business.getZone().getPosition().getSecond());
             } else {
                 this.setState(PersonState.MOVING);
             }
@@ -148,18 +154,16 @@ public class PersonImpl implements Person {
     public void checkState(LocalTime currentTime) {
         switch (this.state) {
             case MOVING:
-                System.out.println(this.getName() + ", state moving");
                 this.checkArrivingTime(currentTime);
                 break;
             case WORKING:
-                System.out.println(this.getName() + ", state working");
                 this.checkTimeToGoHome(currentTime);
                 break;
             case AT_HOME:
-                System.out.println(this.getName() + ", state at home");
                 this.checkTimeToGoToWork(currentTime);
                 break;
         }
+        System.out.println(this.getName() + ", " + this.getState());
     }
 
 }
