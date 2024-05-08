@@ -1,15 +1,10 @@
 package unibo.citysimulation.view.sidePanels;
-
 import unibo.citysimulation.view.StyledPanel;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class InputPanel extends StyledPanel {
-    private JLabel numberOfPersonLabel;
-    private JTextField numberOfPersonTextField;
-    private JButton confirmButton;
     private JButton startButton;
     private JSlider peopleSlider;
     private JLabel sliderLabel;
