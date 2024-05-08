@@ -12,11 +12,12 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
 public class InputController {
     private CityModel cityModel;
     private InputPanel inputPanel;
-    private int numberOfPeople = 100;
+    private int numberOfPeople;
     
     public InputController(CityModel cityModel, InputPanel inputPanel, ClockPanel clockPanel) {
         this.cityModel = cityModel;
         this.inputPanel = inputPanel;
+        numberOfPeople = inputPanel.getPeopleSlider().getValue();
 
 
         inputPanel.getStartButton().addActionListener(new ActionListener() {
