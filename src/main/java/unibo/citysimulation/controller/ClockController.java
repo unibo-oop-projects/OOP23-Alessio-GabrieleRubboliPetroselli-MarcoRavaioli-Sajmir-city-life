@@ -37,7 +37,7 @@ public class ClockController implements ClockObserver{
             }
         });
 
-        this.clockModel.addObserver(this);
+        clockModel.addObserver(this);
     }
 
     @Override

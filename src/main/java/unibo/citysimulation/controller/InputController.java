@@ -19,12 +19,10 @@ public class InputController {
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cityModel.getClockModel().restartSimulation();
                 cityModel.createEntities(numberOfPeople);
+                cityModel.getClockModel().restartSimulation();
             }
         });
-
-
     }
 
 
