@@ -1,12 +1,10 @@
 package unibo.citysimulation.model.business;
-<<<<<<< HEAD
-=======
 
 import java.util.List;
 
->>>>>>> branch_develop
 /**
  * Interface representing employee-related aspects of a business entity.
+ * Provides methods for hiring, firing, counting, and retrieving employees.
  * Provides methods for hiring, firing, counting, and retrieving employees.
  */
 public interface BusinessEmployee {

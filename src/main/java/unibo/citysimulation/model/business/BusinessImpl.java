@@ -22,24 +22,10 @@ public class BusinessImpl implements Business {
     private double wageRate;
     private LocalTime openingTime;
     private LocalTime closingTime;
-<<<<<<< HEAD
-
-    /**
-     * Constructs a new BusinessImpl object with the specified parameters.
-     *
-     * @param name         the name of the business
-     * @param income       the income of the business
-     * @param wageRate     the wage rate of the employees
-     * @param openingTime  the opening time of the business
-     * @param closingTime  the closing time of the business
-     */
-    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime) {
-=======
     private Zone zone;
     
 
     public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime, Zone zone) {
->>>>>>> branch_develop
         this.employees = new ArrayList<>();
         this.name = name;
         this.income = income;
@@ -222,12 +208,9 @@ public class BusinessImpl implements Business {
     public LocalTime getClosingTime() {
         return this.closingTime;
     }
-<<<<<<< HEAD
-=======
 
     public Zone getZone() {
         return this.zone;
     }
 
->>>>>>> branch_develop
 }
