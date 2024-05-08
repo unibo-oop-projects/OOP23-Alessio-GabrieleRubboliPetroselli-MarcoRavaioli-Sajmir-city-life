@@ -2,6 +2,7 @@ package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.clock.ClockModel;
+import unibo.citysimulation.model.zone.Zone;
 
 /**
  * An interface for modelling a person
@@ -54,5 +55,10 @@ public interface Person {
      * @return the business the person works for
      */
     Business getBusiness();
+
+    /**
+     * @return the zone where the person lives
+     */
+    Zone getResidenceZone();
     
 }

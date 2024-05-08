@@ -50,7 +50,7 @@ public class CityModel {
         for (var group : people) {
             for (var person : group) {
                 System.out.println(person.getName() + ", " + person.getAge() + ", " + person.getMoney() + ", " +
-                person.getBusiness().getName());
+                person.getBusiness().getName() + ", " + person.getBusiness().getZone().getName() + ", " + person.getResidenceZone().getName());
             }
         }
     }
