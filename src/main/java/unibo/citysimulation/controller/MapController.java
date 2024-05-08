@@ -2,6 +2,7 @@ package unibo.citysimulation.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.view.map.MapPanel;
@@ -45,9 +46,18 @@ public class MapController {
         int y = e.getY();
 
         System.out.println("pressed coordinates: " + x + " " + y);
+        
+        
+        mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
 
+        System.out.println("max coordinates: " + (int) mapPanel.getSize().getWidth() + " " + (int) mapPanel.getSize().getHeight());
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
+    }
+
+
+    public BufferedImage getImage(){
+        return mapModel.getImage();
     }
 }

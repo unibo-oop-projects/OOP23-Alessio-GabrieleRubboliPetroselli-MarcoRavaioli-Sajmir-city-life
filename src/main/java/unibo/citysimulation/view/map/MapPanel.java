@@ -1,7 +1,6 @@
 package unibo.citysimulation.view.map;
 
 import unibo.citysimulation.view.StyledPanel;
-import unibo.citysimulation.model.MapModel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,7 +9,6 @@ import java.awt.image.BufferedImage;
  * Panel for displaying the map.
  */
 public class MapPanel extends StyledPanel {
-    private MapModel mapModel;
     private BufferedImage mapImage;
 
 
@@ -34,9 +32,8 @@ public class MapPanel extends StyledPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        BufferedImage image = mapModel.getImage();
-        if (image != null) {
-            return new Dimension(image.getWidth(), image.getHeight());
+        if (mapImage != null) {
+            return new Dimension(mapImage.getWidth(), mapImage.getHeight());
         } else {
             return super.getPreferredSize();
         }
