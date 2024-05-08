@@ -12,7 +12,6 @@ public class ClockPanel extends StyledPanel {
     private JButton pauseButton;
     private int[] speeds = {1, 2, 10};
     private int currentSpeedIndex = 0;
-    boolean isPaused = false;
 
     public ClockPanel(Color bgColor) {
         super(bgColor);
@@ -36,8 +35,7 @@ public class ClockPanel extends StyledPanel {
         timeDay.setText(text);
     }
 
-    public void updatePauseButton() {
-        this.isPaused = !isPaused;
+    public void updatePauseButton(boolean isPaused) {
         pauseButton.setText(isPaused ? "resume" : "stop");
     }
 

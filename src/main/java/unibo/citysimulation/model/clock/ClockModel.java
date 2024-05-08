@@ -114,4 +114,8 @@ public class ClockModel {
     public void setHourDuration(int hourDuration) {
         this.hourDuration = hourDuration;
     }
+
+    public boolean getIsPaused(){
+        return isPaused;
+    }
 }

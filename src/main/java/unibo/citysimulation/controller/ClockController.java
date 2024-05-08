@@ -25,7 +25,7 @@ public class ClockController implements ClockObserver{
             @Override
             public void actionPerformed(ActionEvent e) {
                 clockModel.pauseSimulation();
-                clockPanel.updatePauseButton();
+                clockPanel.updatePauseButton(clockModel.getIsPaused());
             }
         });
 
