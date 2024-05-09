@@ -4,53 +4,50 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileReader;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * Factory for creating TransportLine objects.
- * This factory creates a list of TransportLine objects based on a list of Zone objects.
+ * This factory creates a list of TransportLine objects based on a list of Zone
+ * objects.
  */
 public class TransportFactory {
-    /**
-     * Creates a list of TransportLine objects based on a list of Zone objects.
-     *
-     * @param zones the list of Zone objects
-     * @return a list of TransportLine objects
-     */
-    public static List<TransportLine> createTransports(List<Zone> zones) {
-        List<TransportLine> transports = new ArrayList<>();
 
-        List<Object> infos = new ArrayList<>();
 
-        infos.add("Tangenziale");
-        infos.add(100);
-        infos.add(20);
-        infos.add(new Pair<>(zones.get(0), zones.get(1)));
-        transports.add(createTransportLine(infos));
+    public static List<TransportLine> createTransportsFromFile(List<Zone> zones) {
+        List<TransportLine> lines = new ArrayList<>();
 
-        infos.clear();
+        try {
+            Gson gson = new Gson();
 
-        infos.add("Secante");
-        infos.add(20);
-        infos.add(5);
-        infos.add(new Pair<>(zones.get(1), zones.get(2)));
+            JsonArray jsonArray = gson.fromJson(
+                    new FileReader("src/main/resources/unibo/citysimulation/data/TransportInfo.json"), JsonArray.class);
 
-        transports.add(createTransportLine(infos));
+            for (JsonElement jsonElement : jsonArray) {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        infos.clear();
+                lines.add(
+                    new TransportLineImpl(
+                        jsonObject.get("name").getAsString(),
+                        jsonObject.get("capacity").getAsInt(),
+                        jsonObject.get("duration").getAsInt(),
+                        new Pair<Zone, Zone>(
+                                zones.get(jsonObject.get("zone").getAsJsonObject().get("a").getAsInt()),
+                                zones.get(jsonObject.get("zone").getAsJsonObject().get("b").getAsInt())
+                        )
+                    )
+                );
+            }
+            return lines;
 
-        infos.add("Circolare");
-        infos.add(50);
-        infos.add(10);
-        infos.add(new Pair<>(zones.get(0), zones.get(2)));
-
-        transports.add(createTransportLine(infos));
-        infos.clear();
-
-        return transports;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    @SuppressWarnings("unchecked")
-    private static TransportLine createTransportLine(List<Object> infos) {
-        return new TransportLineImpl((String) infos.get(0), (int) infos.get(1), (int) infos.get(2), (Pair<Zone, Zone>) infos.get(3));
-    }
 }

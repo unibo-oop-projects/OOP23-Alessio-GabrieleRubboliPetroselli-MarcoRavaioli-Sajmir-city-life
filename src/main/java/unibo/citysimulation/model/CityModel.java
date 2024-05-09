@@ -44,7 +44,7 @@ public class CityModel {
         System.out.println("Zones created. " + zones.size());
 
         // Create transports
-        this.transports = TransportFactory.createTransports(zones);
+        this.transports = TransportFactory.createTransportsFromFile(zones);
         System.out.println("Transports created. " + transports.size());
 
         // Create zone table
