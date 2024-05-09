@@ -25,7 +25,7 @@ public class ZoneFactory {
         infos.add(50f);
         infos.add(new Pair<>(1000, 1500));
         infos.add(new Pair<>(3, 99));
-        infos.add(new Boundary(0, 0, 250, 250));
+        infos.add(new ZoneBoundary(0, 0, 250, 250));
         zones.add(createZone(infos));
 
         infos.clear();
@@ -36,7 +36,7 @@ public class ZoneFactory {
         infos.add(20f);
         infos.add(new Pair<>(800, 1300));
         infos.add(new Pair<>(3, 99));
-        infos.add(new Boundary(250, 0, 500, 250));
+        infos.add(new ZoneBoundary(250, 0, 500, 250));
         zones.add(createZone(infos));
 
         infos.clear();
@@ -47,7 +47,7 @@ public class ZoneFactory {
         infos.add(10f);
         infos.add(new Pair<>(900, 1200));
         infos.add(new Pair<>(20, 99));
-        infos.add(new Boundary(0, 250, 250, 500));
+        infos.add(new ZoneBoundary(0, 250, 250, 500));
         zones.add(createZone(infos));
         
         // Aggiungi altre zone se necessario
@@ -61,8 +61,7 @@ public class ZoneFactory {
      * @return a Zone object
      */
     private static Zone createZone(List<Object> infos) {
-        return new ZoneImpl((String) infos.get(0), (float) infos.get(1), (float) infos.get(2),
-                (float) infos.get(3), (Pair<Integer,Integer>) infos.get(4),
-                (Pair<Integer,Integer>) infos.get(5), (Boundary)infos.get(6));
+        return new Zone((String) infos.get(0), (float) infos.get(1), (float) infos.get(2), (float) infos.get(3),
+                (Pair<Integer, Integer>) infos.get(4), (Pair<Integer, Integer>) infos.get(5), (ZoneBoundary) infos.get(6));
     }
 }

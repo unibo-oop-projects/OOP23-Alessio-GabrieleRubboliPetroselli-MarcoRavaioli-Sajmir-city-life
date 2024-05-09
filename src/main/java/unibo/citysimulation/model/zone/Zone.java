@@ -1,39 +1,85 @@
 package unibo.citysimulation.model.zone;
 
+import java.util.Random;
+
 import unibo.citysimulation.utilities.Pair;
 
-public interface Zone {
-    String getName();
+/**
+ * A class representing a zone in the city.
+ */
+public class Zone implements ZoneInfo {
+    private String name;
+    private float personPercents;
+    private float businessPercents;
+    private float wellfare;
+    private Pair<Integer, Integer> wellfareMinMax;
+    private Pair<Integer, Integer> ageMinMax;
+    private Random random = new Random();
+    private ZoneBoundary boundary;
 
-    float getPersonPercents();
+    public Zone(String name, float personPercents, float businessPercents, float wellfare, Pair<Integer,
+    Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax, ZoneBoundary boundary) {
+        this.name = name;
+        this.personPercents = personPercents;
+        this.businessPercents = businessPercents;
+        this.wellfare = wellfare;
+        this.wellfareMinMax = wellfareMinMax;
+        this.ageMinMax = ageMinMax;
+        this.boundary = boundary;
+    }
+
+    // Getter and setter for 'name'
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
-     * Gets the percentage of businesses in the zone.
+     * Returns the name of the zone.
      *
-     * @return the percentage of businesses in the zone
+     * @return the name of the zone
      */
-    float getBusinessPercents();
+    public String getName() {
+        return name;
+    }
 
-    /**
-     * Gets the welfare level of the zone.
-     *
-     * @return the welfare level of the zone
-     */
-    float getWellfare();
+    // Getter and setter for 'personPercents'
+    public void setPersonPercents(float personPercents) {
+        this.personPercents = personPercents;
+    }
 
-    /**
-     * Gets the minimum and maximum welfare levels of the zone.
-     *
-     * @return a Pair object containing the minimum and maximum welfare levels of the zone
-     */
-    Pair<Integer, Integer> getWellfareMinMax();
+    public float getPersonPercents() {
+        return personPercents;
+    }
 
-    /**
-     * Returns the boundary of the zone.
-     *
-     * @return the boundary of the zone
-     */
-    public Boundary getBoundary();
+    // Getter and setter for 'businessPercents'
+    public void setBusinessPercents(float businessPercents) {
+        this.businessPercents = businessPercents;
+    }
 
-    public Pair<Integer, Integer> getRandomPosition();
+    public float getBusinessPercents() {
+        return businessPercents;
+    }
+
+    // Getter and setter for 'wellfare'
+    public void setWellfare(float wellfare) {
+        this.wellfare = wellfare;
+    }
+
+    public float getWellfare() {
+        return wellfare;
+    }
+
+    public Pair<Integer, Integer> getWellfareMinMax() {
+        return wellfareMinMax;
+    }
+
+    @Override
+    public ZoneBoundary getZoneBoundary() {
+        return null;
+    }
+
+    @Override
+    public Pair<Integer, Integer> getRandomPosition() {
+        return null;
+    }
 }
