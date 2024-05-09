@@ -70,7 +70,7 @@ public class ZoneImpl implements Zone {
 
     @Override
     public Boundary getBoundary() {
-        return null;
+        return boundary;
     }
 
     @Override
