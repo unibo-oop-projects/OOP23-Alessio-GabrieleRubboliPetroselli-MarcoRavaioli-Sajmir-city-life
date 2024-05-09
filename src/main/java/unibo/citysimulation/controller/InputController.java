@@ -44,7 +44,8 @@ public class InputController {
         inputPanel.getPeopleSlider().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                updateNumberOfPeople();
+                numberOfPeople = inputPanel.getPeopleSlider().getValue();
+                System.out.println("Selected number of people: " + numberOfPeople);
                 int number = inputPanel.getPeopleSlider().getValue();
                 graphicsPanel.updateDataset(number);
             }
@@ -63,13 +64,5 @@ public class InputController {
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
-    }
-
-    /**
-     * Updates the number of people when the slider value changes.
-     */
-    private void updateNumberOfPeople() {
-        numberOfPeople = inputPanel.getPeopleSlider().getValue();
-        System.out.println("Selected number of people: " + numberOfPeople);
-    }
+    }  
 }
