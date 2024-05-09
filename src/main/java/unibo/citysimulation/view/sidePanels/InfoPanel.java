@@ -20,6 +20,7 @@ public class InfoPanel extends StyledPanel {
     private JLabel numberOfTransportLines;
     private List<Zone> zones;
     private List<TransportLine> transports;
+    private JLabel zoneNJLabel;
 
     /**
      * Constructs an InfoPanel with the specified background color.
@@ -52,6 +53,12 @@ public class InfoPanel extends StyledPanel {
         numberOfPeople = new JLabel("Number of People: ");
         gbc.gridy = 2;
         add(numberOfPeople, gbc);
+
+        zoneNJLabel = new JLabel("Zone: ");
+        gbc.gridy = 3;
+        add(zoneNJLabel, gbc);
+
+
     }
 
     /**
@@ -74,5 +81,9 @@ public class InfoPanel extends StyledPanel {
      */
     public void updateNumberOfPeople(int peopleNumber){
         numberOfPeople.setText("Number of People: " + peopleNumber);
+    }
+
+    public void updateZoneName(String zoneName){
+        zoneNJLabel.setText("Zone: " + zoneName);
     }
 }
