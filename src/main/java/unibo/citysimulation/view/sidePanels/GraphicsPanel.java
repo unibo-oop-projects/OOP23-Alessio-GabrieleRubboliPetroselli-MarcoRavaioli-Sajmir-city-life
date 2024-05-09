@@ -1,14 +1,18 @@
 package unibo.citysimulation.view.sidePanels;
-
 import unibo.citysimulation.view.StyledPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
  * Panel for displaying graphics.
  */
 public class GraphicsPanel extends StyledPanel {
+    private DefaultCategoryDataset dataset; // Make dataset a class member
 
     /**
      * Constructs a GraphicsPanel with the specified background color.
@@ -18,11 +22,27 @@ public class GraphicsPanel extends StyledPanel {
     public GraphicsPanel(Color bgColor) {
         super(bgColor);
 
-        // Create a JLabel with the desired text
-        JLabel label = new JLabel("GRAPHICSPANEL", SwingConstants.CENTER); // Align the text to the center
-        label.setForeground(Color.WHITE); // Set the text color
+        dataset = new DefaultCategoryDataset(); // Initialize dataset here
+        dataset.addValue(100, "People", "Selected"); // Add the number of selected people
 
-        // Add the JLabel to the panel at the center
-        add(label, BorderLayout.CENTER);
+        // Create a chart
+        JFreeChart chart = ChartFactory.createBarChart(
+            "People Selected", // chart title
+            "Category", // domain axis label
+            "Number", // range axis label
+            dataset, // data
+            PlotOrientation.VERTICAL,
+            false, // include legend
+            false, // tooltips
+            false // urls
+        );
+
+        // Create a panel and add the chart to it
+        ChartPanel chartPanel = new ChartPanel(chart);
+        add(chartPanel, BorderLayout.CENTER);
+    }
+
+    public void updateDataset(int number) {
+        dataset.addValue(number, "People", "Selected");
     }
 }
