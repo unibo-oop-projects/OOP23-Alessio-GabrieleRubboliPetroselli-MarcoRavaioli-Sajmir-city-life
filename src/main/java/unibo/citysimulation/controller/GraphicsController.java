@@ -9,6 +9,7 @@ import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 public class GraphicsController implements ClockObserver{
     private GraphicsPanel graphicsPanel;
     private CityModel cityModel;
+    private double counter = 0.0;
 
 
     public GraphicsController(CityModel cityModel, GraphicsPanel graphicsPanel){
@@ -21,12 +22,11 @@ public class GraphicsController implements ClockObserver{
 
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
-        String time = cityModel.getClockModel().getFormattedCurrentTime();
 
         graphicsPanel.updateDataset(
             (int)cityModel.getTransportLines().get(0).getCongestion(), 
             (int)cityModel.getTransportLines().get(1).getCongestion(),
-            time);
+            this.counter++);
     
     }
 
