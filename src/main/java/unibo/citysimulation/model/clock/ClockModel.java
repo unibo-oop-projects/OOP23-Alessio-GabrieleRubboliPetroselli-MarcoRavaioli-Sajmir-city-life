@@ -179,4 +179,8 @@ public class ClockModel {
     public boolean getIsPaused(){
         return isPaused;
     }
+
+    public Timer getTimer(){
+        return timer;
+    }
 }
