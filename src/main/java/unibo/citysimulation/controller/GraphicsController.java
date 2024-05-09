@@ -10,6 +10,7 @@ public class GraphicsController implements ClockObserver{
     private GraphicsPanel graphicsPanel;
     private CityModel cityModel;
 
+
     public GraphicsController(CityModel cityModel, GraphicsPanel graphicsPanel){
         this.cityModel = cityModel;
         this.graphicsPanel = graphicsPanel;
@@ -22,7 +23,11 @@ public class GraphicsController implements ClockObserver{
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
         String time = cityModel.getClockModel().getFormattedCurrentTime();
 
-        graphicsPanel.updateDataset((int)cityModel.getTransportLines().get(0).getCongestion(), time);
+        graphicsPanel.updateDataset(
+            (int)cityModel.getTransportLines().get(0).getCongestion(), 
+            (int)cityModel.getTransportLines().get(1).getCongestion(),
+            time);
+    
     }
 
     
