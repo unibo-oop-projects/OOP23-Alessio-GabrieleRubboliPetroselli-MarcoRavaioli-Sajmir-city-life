@@ -1,14 +1,15 @@
 package unibo.citysimulation.model.zone;
 
+import unibo.citysimulation.utilities.Pair;
+
+
 /**
  * The Boundary class represents a rectangular boundary in a city simulation.
  * It defines the coordinates of the top-left corner (x1, y1) and the bottom-right corner (x2, y2).
  */
 public class Boundary {
-    private int x1;     // TI PREGO FAI 2 PAIR CON LE COORDINATE CHE FARE 4 GETTER PER OGNI CAMPO NON CI STA 
-    private int y1;
-    private int x2;
-    private int y2;
+    
+    private Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> coordinates;
 
     /**
      * Constructs a Boundary object with the specified coordinates.
@@ -19,10 +20,7 @@ public class Boundary {
      * @param y2 the y-coordinate of the bottom-right corner
      */
     public Boundary(int x1, int y1, int x2, int y2) {
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
+        coordinates = new Pair<>(new Pair<>(x1, y1), new Pair<>(x2, y2));
     }
 
     /**
@@ -33,22 +31,17 @@ public class Boundary {
      * @return true if the coordinates are inside the boundary, false otherwise
      */
     public boolean isInside(int x, int y) {
-        return x >= x1 && x <= x2 && y >= y1 && y <= y2;
+        return x >= coordinates.getFirst().getFirst() && x <= coordinates.getSecond().getFirst() &&
+                y >= coordinates.getFirst().getSecond() && y <= coordinates.getSecond().getSecond();
     }
 
-    public int getX1() {
-        return x1;
+    public int getHeight() {
+        return coordinates.getSecond().getSecond() - coordinates.getFirst().getSecond();
     }
+
+    public int getWidth() {
+        return coordinates.getSecond().getFirst() - coordinates.getFirst().getFirst();
+    }
+
     
-    public int getY1() {
-        return y1;
-    }
-
-    public int getX2() {
-        return x2;
-    }
-
-    public int getY2() {
-        return y2;
-    }
 }

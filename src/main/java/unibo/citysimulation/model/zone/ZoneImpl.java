@@ -64,11 +64,8 @@ public class ZoneImpl implements Zone {
 
     @Override
     public Pair<Integer, Integer> getRandomPosition() {
-        int x1 = boundary.getX1();
-        int y1 = boundary.getY1();
-        int x2 = boundary.getX2();
-        int y2 = boundary.getY2();
-
-        return new Pair<>(random.nextInt(x2 - x1) + x1, random.nextInt(y2 - y1) + y1);
+        int x = random.nextInt(boundary.getWidth());
+        int y = random.nextInt(boundary.getHeight());
+        return new Pair<>(x, y);
     }
 }
