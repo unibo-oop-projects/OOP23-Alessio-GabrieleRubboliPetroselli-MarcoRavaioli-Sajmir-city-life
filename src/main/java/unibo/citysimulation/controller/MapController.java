@@ -53,13 +53,15 @@ public class MapController {
 
         System.out.println("pressed coordinates: " + x + " " + y);
         List<Zone> zones = cityModel.getZones();
+        String zoneName = ""; // Declare zoneName here
         for (Zone zone : zones) {
             if (zone.getBoundary().isInside(x, y)) {
-                String zoneName = zone.getName();
+                zoneName = zone.getName(); // Assign value here
                 System.out.println("Clicked inside zone: " + zoneName);
-            break;
+                break;
+            }
         }
-    }
+    
         
         mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
 
@@ -67,6 +69,7 @@ public class MapController {
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
+        infoPanel.updateZoneName(zoneName);
     }
 
 
