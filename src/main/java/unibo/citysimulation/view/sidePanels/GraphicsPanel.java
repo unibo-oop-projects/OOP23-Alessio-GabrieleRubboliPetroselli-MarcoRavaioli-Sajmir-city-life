@@ -54,7 +54,7 @@ public class GraphicsPanel extends StyledPanel {
 
         // Method to create a chart
         private JFreeChart createChart(String title, String domainLabel, String rangeLabel, DefaultCategoryDataset dataset) {
-        JFreeChart chart = ChartFactory.createBarChart(
+        JFreeChart chart = ChartFactory.createLineChart(
                 title,
                 domainLabel,
                 rangeLabel,
@@ -76,7 +76,8 @@ public class GraphicsPanel extends StyledPanel {
         return chart;
     }
 
-    public void updateDataset(int number) {
-        peopleDataset.addValue(number, "People", "Selected");
+    public void updateDataset(int number, String time) {
+        System.out.println(time + ": " + number);
+        peopleDataset.addValue(number, "People", time);
     }
 }

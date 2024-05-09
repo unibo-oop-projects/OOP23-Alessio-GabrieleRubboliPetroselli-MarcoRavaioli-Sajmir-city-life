@@ -46,8 +46,6 @@ public class InputController {
             public void stateChanged(ChangeEvent e) {
                 numberOfPeople = inputPanel.getPeopleSlider().getValue();
                 System.out.println("Selected number of people: " + numberOfPeople);
-                int number = inputPanel.getPeopleSlider().getValue();
-                graphicsPanel.updateDataset(number);
             }
         });
     }
