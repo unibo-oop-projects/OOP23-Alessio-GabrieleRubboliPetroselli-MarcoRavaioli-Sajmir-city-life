@@ -65,8 +65,7 @@ public class ClockController implements ClockObserver {
      */
     private void changeSpeed() {
         // Increment the speed index and set the new speed
-        int newSpeed = clockPanel.changeSpeed();
-        setClockSpeed(newSpeed);
+        changeClockSpeed();
     }
 
     /**
@@ -74,7 +73,8 @@ public class ClockController implements ClockObserver {
      *
      * @param speed The new simulation speed.
      */
-    public void setClockSpeed(int speed) {
+    public void changeClockSpeed() {
+        int speed = clockPanel.changeSpeed();
         // Start the simulation with the new speed
         clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
     }
@@ -85,5 +85,6 @@ public class ClockController implements ClockObserver {
     public void pauseSimulation() {
         // Pause the simulation
         clockModel.pauseSimulation();
+        clockPanel.updatePauseButton(clockModel.getIsPaused());
     }
 }
