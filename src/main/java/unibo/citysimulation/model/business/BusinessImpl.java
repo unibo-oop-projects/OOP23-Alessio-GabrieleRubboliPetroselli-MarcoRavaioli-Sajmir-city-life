@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 
@@ -17,7 +18,7 @@ public class BusinessImpl implements Business {
 
     private static final int DEFAULT_THRESHOLD = 1000;
 
-    private List<Employee> employees;
+    private List<Person> employees;
     private String name;
     private int income;
     private double wageRate;
@@ -53,7 +54,7 @@ public class BusinessImpl implements Business {
     }
 
     @Override
-    public void hire(Employee employee) {
+    public void hire(Person employee) {
         this.employees.add(employee);
     }
 
@@ -73,25 +74,6 @@ public class BusinessImpl implements Business {
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
-        for (Employee employee : this.employees) {
-            if (employee.getId() == id) {
-                return (EmployeeImpl) employee;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void updateEmployee(Employee employee) {
-        for (Employee e : this.employees) {
-            if (e.getId() == employee.getId()) {
-                e = employee;
-            }
-        }
-    }
-
-    @Override
     public double calculateIncome() {
         int rate = this.employees.size() / DEFAULT_THRESHOLD;
         return this.income * Math.pow(2, rate);
@@ -101,7 +83,7 @@ public class BusinessImpl implements Business {
     @Override
     public double calculatePersonnelCost() {
         double totalCost = 0;
-        for (Employee employee : this.employees) {
+        for (Person employee : this.employees) {
             totalCost += this.wageRate * getBusinessHours();
         }
         return totalCost;
@@ -123,7 +105,7 @@ public class BusinessImpl implements Business {
     }
 
     @Override
-    public List<Employee> getEmployees() {
+    public List<Person> getEmployees() {
         return new ArrayList<>(this.employees);
     }
 
