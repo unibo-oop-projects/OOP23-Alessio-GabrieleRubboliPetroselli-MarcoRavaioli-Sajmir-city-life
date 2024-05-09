@@ -9,8 +9,6 @@ public interface Zone {
 
     float getBusinessPercents();
 
-    float getWellfare();
-
     Pair<Integer, Integer> getWellfareMinMax();
 
     /**

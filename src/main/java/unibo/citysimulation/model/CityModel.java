@@ -40,7 +40,7 @@ public class CityModel {
      */
     public void createEntities(int numberOfPeople) {
         // Create zones
-        this.zones = ZoneFactory.createZones();
+        this.zones = ZoneFactory.createZonesFromFile();
         System.out.println("Zones created. " + zones.size());
 
         // Create transports

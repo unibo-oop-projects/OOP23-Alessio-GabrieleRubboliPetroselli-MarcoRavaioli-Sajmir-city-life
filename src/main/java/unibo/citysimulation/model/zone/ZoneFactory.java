@@ -1,68 +1,57 @@
 package unibo.citysimulation.model.zone;
 
 import unibo.citysimulation.utilities.Pair;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+
+
 /**
  * Factory for creating Zone objects.
  * This factory creates a list of Zone objects with predefined information.
  */
 public class ZoneFactory {
-    /**
-     * Creates a list of Zone objects with predefined information.
-     *
-     * @return a list of Zone objects
-     */
-    public static List<Zone> createZones() {
-        List<Zone> zones = new ArrayList<>();
 
-        // Aggiungi le informazioni di base per ciascuna zona utilizzando mappe
-        List<Object> infos = new ArrayList<>();
-        infos.add("Centro");
-        infos.add(10f);
-        infos.add(40f);
-        infos.add(50f);
-        infos.add(new Pair<>(1000, 1500));
-        infos.add(new Pair<>(3, 99));
-        infos.add(new Boundary(0, 0, 250, 250));
-        zones.add(createZone(infos));
+    public static List<Zone> createZonesFromFile() {
+        List<Zone> zones = new ArrayList<Zone>();
 
-        infos.clear();
+        try {
+            Gson gson = new Gson();
 
-        infos.add("Industrial");
-        infos.add(30f);
-        infos.add(10f);
-        infos.add(20f);
-        infos.add(new Pair<>(800, 1300));
-        infos.add(new Pair<>(3, 99));
-        infos.add(new Boundary(250, 0, 500, 250));
-        zones.add(createZone(infos));
+            JsonArray jsonArray = gson.fromJson(
+                    new FileReader("src/main/resources/unibo/citysimulation/data/ZoneInfo.json"), JsonArray.class);
 
-        infos.clear();
+            for (JsonElement jsonElement : jsonArray) {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        infos.add("Periferia");
-        infos.add(20f);
-        infos.add(30f);
-        infos.add(10f);
-        infos.add(new Pair<>(900, 1200));
-        infos.add(new Pair<>(20, 99));
-        infos.add(new Boundary(0, 250, 250, 500));
-        zones.add(createZone(infos));
-        
-        // Aggiungi altre zone se necessario
+                zones.add(createZone(jsonObject));
+            }
+            return zones;
 
-        return zones;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-     /**
-     * Creates a Zone object with the given information.
-     *
-     * @param infos a list of information for creating a Zone object
-     * @return a Zone object
-     */
-    private static Zone createZone(List<Object> infos) {
-        return new ZoneImpl((String) infos.get(0), (float) infos.get(1), (float) infos.get(2),
-                (float) infos.get(3), (Pair<Integer,Integer>) infos.get(4),
-                (Pair<Integer,Integer>) infos.get(5), (Boundary)infos.get(6));
+
+    private static Zone createZone(JsonObject jsonObject) {
+        return new ZoneImpl(
+                jsonObject.get("name").getAsString(),
+                jsonObject.get("personPercents").getAsFloat(),
+                jsonObject.get("businessPercents").getAsFloat(),
+                new Pair<Integer, Integer>(
+                        jsonObject.get("wellfareMinMax").getAsJsonObject().get("min").getAsInt(),
+                        jsonObject.get("wellfareMinMax").getAsJsonObject().get("max").getAsInt()),
+                new Pair<Integer, Integer>(
+                        jsonObject.get("ageMinMax").getAsJsonObject().get("min").getAsInt(),
+                        jsonObject.get("ageMinMax").getAsJsonObject().get("max").getAsInt()),
+                new Boundary(jsonObject.get("boundary").getAsJsonObject().get("x1").getAsInt(),
+                        jsonObject.get("boundary").getAsJsonObject().get("y1").getAsInt(),
+                        jsonObject.get("boundary").getAsJsonObject().get("x2").getAsInt(),
+                        jsonObject.get("boundary").getAsJsonObject().get("y2").getAsInt()));
     }
 }
