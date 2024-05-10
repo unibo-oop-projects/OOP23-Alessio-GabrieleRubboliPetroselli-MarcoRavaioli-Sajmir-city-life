@@ -1,6 +1,7 @@
 package unibo.citysimulation.view.map;
 
 import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
@@ -8,12 +9,15 @@ import unibo.citysimulation.view.StyledPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Random;
 /**
  * Panel for displaying the map.
  */
 public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
     private List<Zone> zones; // List of zones
+    private int originalWidth; 
+    private int originalHeight; 
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -48,6 +52,8 @@ public class MapPanel extends StyledPanel {
      */
     public void setImage(BufferedImage image){
         mapImage = image;
+        originalWidth = image.getWidth();
+        originalHeight = image.getHeight();
         repaint();
     }
 
@@ -72,16 +78,30 @@ public class MapPanel extends StyledPanel {
      * @param g The Graphics context.
      */
     private void drawTransportLines(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+        g2.setColor(Color.RED);
+    
         for (int i = 0; i < zones.size() - 1; i++) {
             for (int j = i + 1; j < zones.size(); j++) {
                 Zone zone1 = zones.get(i);
                 Zone zone2 = zones.get(j);
-
-                Pair<Integer, Integer> startPoint = zone1.getRandomPosition();
-                Pair<Integer, Integer> endPoint = zone2.getRandomPosition();
-
-                g.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
+    
+                Pair<Integer, Integer> startPoint = getRandomPositionWithinZone(zone1);
+                Pair<Integer, Integer> endPoint = getRandomPositionWithinZone(zone2);
+    
+                g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
             }
         }
+    }
+    
+    private Pair<Integer, Integer> getRandomPositionWithinZone(Zone zone) {
+        Boundary bounds = zone.getBoundary();
+        Random random = new Random();
+    
+        int randomX = bounds.getX() + random.nextInt(bounds.getWidth());
+        int randomY = bounds.getY() + random.nextInt(bounds.getHeight());
+    
+        return new Pair<>(randomX, randomY);
     }
 }
