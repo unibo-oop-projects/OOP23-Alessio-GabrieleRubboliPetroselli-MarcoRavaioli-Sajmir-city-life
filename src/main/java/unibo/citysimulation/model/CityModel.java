@@ -112,4 +112,11 @@ public class CityModel {
     public List<TransportLine> getTransportLines() {
         return this.transports;
     }
+    public List<Person> getAllPeople() {
+        List<Person> allPeople = new ArrayList<>();
+        for (List<Person> group : this.people) {
+            allPeople.addAll(group);
+        }
+        return allPeople;
+    }
 }
