@@ -28,9 +28,11 @@ public class BusinessFactory {
 
             JsonArray jsonArray = gson.fromJson(
                     new FileReader("src/main/resources/unibo/citysimulation/data/BusinessInfo.json"), JsonArray.class);
-
+                    
                     
                     for (int i = 0; i < n; i++){
+                        for (JsonElement jsonElement : jsonArray) {
+                            JsonObject jsonObject = jsonElement.getAsJsonObject();
                         String name = jsonObject.get("name").getAsString();
                         double wageRate = jsonObject.get("wageRate").getAsDouble();
                         LocalTime openingTime = LocalTime.parse(jsonObject.get("openingTime").getAsString());
@@ -55,6 +57,7 @@ public class BusinessFactory {
 
 
                         businesses.add(new BusinessImpl(name, zone, wageRate, openingTime, closingTime, position));
+                    }
                     }
 
                     
