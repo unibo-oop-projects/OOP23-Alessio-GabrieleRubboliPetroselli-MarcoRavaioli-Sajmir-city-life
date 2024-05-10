@@ -1,8 +1,8 @@
 package unibo.citysimulation.model.person;
 
-import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.zone.Zone;
 import java.time.LocalTime;
+
+import unibo.citysimulation.model.person.PersonImpl.PersonData;
 
 /**
  * An interface for modelling a person
@@ -22,41 +22,13 @@ public interface Person {
     }
 
     /**
-     * @return the name of the person
-     */
-    String getName();
-
-    /**
 	 * @return the state of the person
 	 */
     PersonState getState();
 
+    PersonData getPersonData();
+
     void setState(PersonState state);
-    
-    /**
-     * @return the amount of money the person has
-     */
-    int getMoney();
-
-    /**
-     * @param money the amount of money to sum/sub to the actual amount of money the person has
-     */
-    void setMoney(int money);
-
-    /**
-     * @return the age of the person
-     */
-    int getAge();
-
-    /**
-     * @return the business the person works for
-     */
-    Business getBusiness();
-
-    /**
-     * @return the zone where the person lives
-     */
-    Zone getResidenceZone();
 
     void checkState(LocalTime currentTime);
     

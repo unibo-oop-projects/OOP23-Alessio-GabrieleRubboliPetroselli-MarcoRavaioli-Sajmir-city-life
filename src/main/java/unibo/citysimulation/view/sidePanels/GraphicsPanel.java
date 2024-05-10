@@ -129,22 +129,20 @@ public class GraphicsPanel extends StyledPanel {
         graphicDimensionControl(stateDataset);
     }
 
-    private void graphicDimensionControl(XYSeriesCollection dataset){
+    private void graphicDimensionControl(XYSeriesCollection dataset) {
         columnCount++;
-
+    
         if (columnCount > 200) {
-
             int columnsToRemove = columnCount - 200;
-
+    
             // Rimuovi le colonne in eccesso dal dataset
-            for (int i = 0; i < columnsToRemove; i++) {
+            for (int i = 0; i < columnsToRemove && dataset.getSeries(0).getItemCount() > 0; i++) {
                 for (int j = 0; j < dataset.getSeriesCount(); j++) {
                     dataset.getSeries(j).remove(0);
                 }
             }
-
-            columnCount = 200;
+    
+            columnCount -= columnsToRemove; // Aggiorna il conteggio delle colonne
         }
-
     }
 }

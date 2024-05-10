@@ -75,8 +75,8 @@ public class CityModel {
         // Print details of each person
         for (var group : people) {
             for (var person : group) {
-                System.out.println(person.getName() + ", " + person.getAge() + ", " + person.getMoney() + ", " +
-                person.getBusiness().getName() + ", " + person.getBusiness().getZone().getName() + ", " + person.getResidenceZone().getName());
+                System.out.println(person.getPersonData().name() + ", " + person.getPersonData().age() + ", " + person.getPersonData().money() + ", " +
+                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().getName() + ", " + person.getPersonData().residenceZone().getName());
             }
         }
     }
