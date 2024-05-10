@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class ClockPanel extends StyledPanel {
     private JLabel timeDay = new JLabel("Day: 1 Hour: 00:00", SwingConstants.CENTER);
     private JButton speedButton;
     private JButton pauseButton;
-    private int[] speeds = {1, 2, 10};
+    private int[] speeds = ConstantAndResourceLoader.SPEEDS;
     private int currentSpeedIndex = 0;
 
     /**

@@ -8,7 +8,6 @@ import java.util.List;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
 
@@ -65,7 +64,6 @@ public class MapController {
         
         mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
 
-        System.out.println("max coordinates: " + (int) mapPanel.getSize().getWidth() + " " + (int) mapPanel.getSize().getHeight());
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
