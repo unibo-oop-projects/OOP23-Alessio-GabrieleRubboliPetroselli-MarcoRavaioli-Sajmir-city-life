@@ -19,6 +19,7 @@ public class PersonFactory {
             people.add(createPerson("Person" + i, random.nextInt(62) + 18,
             random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst(),
             businesses.get(new Random().nextInt(businesses.size())), residenceZone, zoneTable));
+            people.get(i).getBusiness().hire(people.get(i));
         }
         return people;
     }

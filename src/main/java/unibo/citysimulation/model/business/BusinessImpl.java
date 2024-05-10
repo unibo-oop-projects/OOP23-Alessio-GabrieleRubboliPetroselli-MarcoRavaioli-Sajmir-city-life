@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 
@@ -17,14 +18,14 @@ public class BusinessImpl implements Business {
 
     private static final int DEFAULT_THRESHOLD = 1000;
 
-    private List<Employee> employees;
+    
     private String name;
-    private int income;
+    Zone zone;
     private double wageRate;
     private LocalTime openingTime;
     private LocalTime closingTime;
-    private Zone zone;
-    private Pair<Integer,Integer> position;
+    Pair<Integer, Integer> position;
+    
     
 
     /**
@@ -38,22 +39,20 @@ public class BusinessImpl implements Business {
      * @param zone The zone where the business is located.
      * @param position The position of the business.
      */
-    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime, Zone zone, Pair<Integer,Integer> position) {
-        this.employees = new ArrayList<>();
+    public BusinessImpl(String name, Zone zone, double wageRate, LocalTime openingTime, LocalTime closingTime, Pair<Integer, Integer> position) {
         this.name = name;
-        this.income = income;
+        this.zone = zone;
         this.wageRate = wageRate;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
-        this.zone = zone;
+        this.position = position;
 
         // This would be randomly assigned within the boundaries
-        this.position = position;
 
     }
 
     @Override
-    public void hire(Employee employee) {
+    public void hire(Person employee) {
         this.employees.add(employee);
     }
 
@@ -73,25 +72,6 @@ public class BusinessImpl implements Business {
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
-        for (Employee employee : this.employees) {
-            if (employee.getId() == id) {
-                return (EmployeeImpl) employee;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void updateEmployee(Employee employee) {
-        for (Employee e : this.employees) {
-            if (e.getId() == employee.getId()) {
-                e = employee;
-            }
-        }
-    }
-
-    @Override
     public double calculateIncome() {
         int rate = this.employees.size() / DEFAULT_THRESHOLD;
         return this.income * Math.pow(2, rate);
@@ -101,7 +81,7 @@ public class BusinessImpl implements Business {
     @Override
     public double calculatePersonnelCost() {
         double totalCost = 0;
-        for (Employee employee : this.employees) {
+        for (Person employee : this.employees) {
             totalCost += this.wageRate * getBusinessHours();
         }
         return totalCost;
@@ -123,7 +103,7 @@ public class BusinessImpl implements Business {
     }
 
     @Override
-    public List<Employee> getEmployees() {
+    public List<Person> getEmployees() {
         return new ArrayList<>(this.employees);
     }
 

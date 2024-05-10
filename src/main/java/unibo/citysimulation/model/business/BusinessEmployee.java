@@ -2,6 +2,8 @@ package unibo.citysimulation.model.business;
 
 import java.util.List;
 
+import unibo.citysimulation.model.person.Person;
+
 /**
  * Interface representing employee-related aspects of a business entity.
  * Provides methods for hiring, firing, counting, and retrieving employees.
@@ -13,7 +15,7 @@ public interface BusinessEmployee {
      *
      * @param employee the employee to be hired
      */
-    void hire(Employee employee);
+    void hire(Person employee);
 
     /**
      * Fires an existing employee.
@@ -37,19 +39,8 @@ public interface BusinessEmployee {
     int countEmployees();
 
 
-    /**
-     * Retrieves an employee by their ID.
-     *
-     * @param id the ID of the employee
-     * @return the employee with the given ID, or null if no such employee exists
-     */
-    Employee getEmployeeById(int id);
+   
 
-    /**
-     * Updates an employee's information.
-     *
-     * @param employee the employee to be updated
-     */
-    void updateEmployee(Employee employee);
+   
     
 }

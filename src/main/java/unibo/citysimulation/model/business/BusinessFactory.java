@@ -5,52 +5,68 @@ import unibo.citysimulation.utilities.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.io.FileReader;
 import java.time.LocalTime;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 /**
  * Factory for creating Business objects.
  * This factory creates a list of Business objects based on a list of Zone objects.
  */
 public class BusinessFactory {
-    /**
-     * Creates a list of Business objects based on a list of Zone objects.
-     *
-     * @param zones the list of Zone objects
-     * @return a list of Business objects
-     */
-    public static List<Business> createBusinesses(List<Zone> zones) {
+    
+    private static final Random random = new Random();
+    public static List<Business> createBusinesses(List<Zone> zones){
         List<Business> businesses = new ArrayList<>();
+        int n = 1000;
 
-        List<Object> infos = new ArrayList<>();
+        try {
+            Gson gson = new Gson();
 
-        infos.add("ProjectSRL");
-        infos.add(1500);
-        infos.add(20.0);
-        infos.add(LocalTime.of(8, 0));
-        infos.add(LocalTime.of(18, 0));
-        infos.add(zones.get(0));
-        infos.add(new Pair<Integer,Integer>(250,250));
-        businesses.add(createBusiness(infos));
+            JsonArray jsonArray = gson.fromJson(
+                    new FileReader("src/main/resources/unibo/citysimulation/data/BusinessInfo.json"), JsonArray.class);
+                    
+                    
+                    for (int i = 0; i < n; i++){
+                        for (JsonElement jsonElement : jsonArray) {
+                            JsonObject jsonObject = jsonElement.getAsJsonObject();
+                        String name = jsonObject.get("name").getAsString();
+                        double wageRate = jsonObject.get("wageRate").getAsDouble();
+                        LocalTime openingTime = LocalTime.parse(jsonObject.get("openingTime").getAsString());
+                        LocalTime closingTime = LocalTime.parse(jsonObject.get("closingTime").getAsString());
 
-        infos.clear();
+                        Zone zone = zones.get(random.nextInt(zones.size()));
 
-        infos.add("Golden Gym");
-        infos.add(1100);
-        infos.add(10.0);
-        infos.add(LocalTime.of(11, 0));
-        infos.add(LocalTime.of(20, 0));
-        infos.add(zones.get(1));
-        infos.add(new Pair<Integer,Integer>(750,750));
-        businesses.add(createBusiness(infos));
+                        Pair<Integer, Integer> position = zone.getRandomPosition();
 
-        infos.clear();
+                        boolean isOccupied = businesses
+                                .stream()
+                                .anyMatch(business -> business.getPosition().equals(position)); // Check if the position is already occupied
 
-        return businesses;
-    }
+                        while (isOccupied) {
+                            zone = zones.get(random.nextInt(zones.size()));
+                            position = zone.getRandomPosition();
+                            isOccupied = businesses
+                                    .stream()
+                                    .anyMatch(business -> business.getPosition().equals(position));
+                        }
 
-    private static Business createBusiness(List<Object> infos) {
-        return new BusinessImpl((String) infos.get(0), (int) infos.get(1), (double) infos.get(2),
-        (LocalTime) infos.get(3), (LocalTime) infos.get(4), (Zone) infos.get(5), (Pair<Integer,Integer>) infos.get(6));
+
+
+                        businesses.add(new BusinessImpl(name, zone, wageRate, openingTime, closingTime, position));
+                    }
+                    }
+
+                    
+                    return businesses;
+        }   catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
 
