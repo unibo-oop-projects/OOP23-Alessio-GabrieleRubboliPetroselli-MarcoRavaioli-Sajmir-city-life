@@ -21,6 +21,7 @@ public class GraphicsPanel extends StyledPanel {
     private XYSeriesCollection congestionDataset; // Make dataset a class member
     private XYSeriesCollection line1dataset;
     private XYSeriesCollection businessDataset;
+    private XYSeriesCollection stateDataset;
 
     private int columnCount = 0;
 
@@ -36,10 +37,11 @@ public class GraphicsPanel extends StyledPanel {
         congestionDataset = createDataset();
         line1dataset = createDataset();
         businessDataset = createDataset();
+        stateDataset = createStateDataset();
 
         // Initialize charts
         JFreeChart peopleChart = createChart("Transport Congestion", "", "", congestionDataset);
-        JFreeChart transportChart = createChart("Transport", "", "", null);
+        JFreeChart transportChart = createChart("People State", "", "", stateDataset);
         JFreeChart businessChart = createChart("Business", "", "", businessDataset);
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
@@ -100,6 +102,19 @@ public class GraphicsPanel extends StyledPanel {
         return dataset;
     }
 
+    private XYSeriesCollection createStateDataset() {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries movingSeries = new XYSeries("Moving", false);
+        XYSeries workingSeries = new XYSeries("Working", false);
+        XYSeries atHomeSeries = new XYSeries("At Home", false);
+
+        dataset.addSeries(movingSeries);
+        dataset.addSeries(workingSeries);
+        dataset.addSeries(atHomeSeries);
+
+        return dataset;
+    }
+
     public void updateDataset(int series0, int series1, double counter) {
 
         congestionDataset.getSeries(0).add(counter, (double) series0);
@@ -120,6 +135,10 @@ public class GraphicsPanel extends StyledPanel {
 
             columnCount = 200;
         }
-
+    }
+    public void updateStateDataset(int movingCount, int workingCount, int atHomeCount, double counter) {
+        stateDataset.getSeries("Moving").add(counter, movingCount);
+        stateDataset.getSeries("Working").add(counter, workingCount);
+        stateDataset.getSeries("At Home").add(counter, atHomeCount);
     }
 }
