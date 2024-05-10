@@ -18,14 +18,14 @@ public class BusinessImpl implements Business {
 
     private static final int DEFAULT_THRESHOLD = 1000;
 
-    private List<Person> employees;
+    
     private String name;
-    private int income;
+    Zone zone;
     private double wageRate;
     private LocalTime openingTime;
     private LocalTime closingTime;
-    private Zone zone;
-    private Pair<Integer,Integer> position;
+    Pair<Integer, Integer> position;
+    
     
 
     /**
@@ -39,17 +39,15 @@ public class BusinessImpl implements Business {
      * @param zone The zone where the business is located.
      * @param position The position of the business.
      */
-    public BusinessImpl(String name, int income, double wageRate, LocalTime openingTime, LocalTime closingTime, Zone zone, Pair<Integer,Integer> position) {
-        this.employees = new ArrayList<>();
+    public BusinessImpl(String name, Zone zone, double wageRate, LocalTime openingTime, LocalTime closingTime, Pair<Integer, Integer> position) {
         this.name = name;
-        this.income = income;
+        this.zone = zone;
         this.wageRate = wageRate;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
-        this.zone = zone;
+        this.position = position;
 
         // This would be randomly assigned within the boundaries
-        this.position = position;
 
     }
 
