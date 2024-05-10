@@ -79,8 +79,6 @@ public class ClockModel {
                             currentDay++;
                         }
     
-                        System.out.println("Current time: " + currentTime.format(formatter) + " Day: " + currentDay);
-                        System.out.println("hour duration : "+ hourDuration);
                         
                         notifyObservers();
     

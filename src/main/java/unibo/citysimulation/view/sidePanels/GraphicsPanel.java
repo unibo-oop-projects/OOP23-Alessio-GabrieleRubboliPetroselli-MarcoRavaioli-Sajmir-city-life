@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
+import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.view.StyledPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -12,6 +13,9 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.awt.*;
 
 /**
@@ -19,8 +23,11 @@ import java.awt.*;
  */
 public class GraphicsPanel extends StyledPanel {
     private XYSeriesCollection congestionDataset; // Make dataset a class member
-    private XYSeriesCollection line1dataset;
+    private XYSeriesCollection peopleStateDataset;
     private XYSeriesCollection businessDataset;
+    private List<XYSeriesCollection> datasets;
+    private List<String> names;
+    private Random random = new Random();
 
     private int columnCount = 0;
 
@@ -31,37 +38,66 @@ public class GraphicsPanel extends StyledPanel {
      */
     public GraphicsPanel(Color bgColor) {
         super(bgColor);
+        names = new ArrayList<>();
+        names.add("Transport Congestion");
+        names.add("Transport");
+        names.add("Business");
 
-        // Initialize datasets
-        congestionDataset = createDataset();
-        line1dataset = createDataset();
-        businessDataset = createDataset();
+        datasets = new ArrayList<>();
 
-        // Initialize charts
-        JFreeChart peopleChart = createChart("Transport Congestion", "", "", congestionDataset);
-        JFreeChart transportChart = createChart("Transport", "", "", null);
-        JFreeChart businessChart = createChart("Business", "", "", businessDataset);
+        datasets = createDatasets(names);
 
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.BLUE);
-        renderer.setSeriesPaint(1, Color.RED);
-        renderer.setSeriesShapesVisible(0, false);
-        renderer.setSeriesShapesVisible(1, false);
-        XYPlot plot = peopleChart.getXYPlot();
-        plot.setRenderer(renderer);
+        List<JFreeChart> charts = createCharts(names, datasets);
 
-        // Create chart panels
-        ChartPanel peopleChartPanel = new ChartPanel(peopleChart);
-        ChartPanel transportChartPanel = new ChartPanel(transportChart);
-        ChartPanel businessChartPanel = new ChartPanel(businessChart);
 
-        // Add chart panels to the panel
-        add(transportChartPanel);
-        add(businessChartPanel);
-        add(peopleChartPanel);
+        List<XYPlot> plots = new ArrayList<>();
 
+        for (int i = 0; i < charts.size(); i++) {
+            XYPlot plot = charts.get(i).getXYPlot();
+            plot.setRenderer(createRenderer(plot.getSeriesCount()));
+            plots.add(plot);
+
+            add(new ChartPanel(charts.get(i)));
+        }
         // Set layout to arrange charts horizontally
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(names.size(), 1));
+    }
+
+    private List<XYSeriesCollection> createDatasets(List<String> names) {
+        List<XYSeriesCollection> datasets = new ArrayList<XYSeriesCollection>();
+
+        for (String name : names) {
+            XYSeriesCollection dataset = createDataset(3);
+
+            datasets.add(dataset);
+        }
+
+        return datasets;
+    }
+
+    private List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
+        List<JFreeChart> charts = new ArrayList<JFreeChart>();
+
+        for (int i = 0; i < names.size(); i++) {
+            XYSeriesCollection dataset = datasets.get(i);
+            String name = names.get(i);
+            JFreeChart chart = createChart(name, null, null, dataset);
+            charts.add(chart);
+        }
+
+        return charts;
+    }
+
+    private XYLineAndShapeRenderer createRenderer(int num) {
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+
+        for(int i = 0; i < num; i++){
+            Color color = new Color(random.nextInt(4) * 64, random.nextInt(4) * 64, random.nextInt(4) * 64);
+            renderer.setSeriesPaint(i, color);
+            renderer.setSeriesShapesVisible(i, false);
+        }
+
+        return renderer;
     }
 
     // Method to create a chart
@@ -89,37 +125,44 @@ public class GraphicsPanel extends StyledPanel {
         return chart;
     }
 
-    private XYSeriesCollection createDataset() {
+    private XYSeriesCollection createDataset(int numObjects) {
         XYSeriesCollection dataset = new XYSeriesCollection();
-        XYSeries series1 = new XYSeries("Object 1", false);
-        XYSeries series2 = new XYSeries("Object 2", false);
 
-        dataset.addSeries(series1);
-        dataset.addSeries(series2);
+        for (int i = 0; i < numObjects; i++) {
+            XYSeries series = new XYSeries("Object " + String.valueOf(i), false);
+
+            dataset.addSeries(series);
+        }
 
         return dataset;
     }
 
-    public void updateDataset(int series0, int series1, double counter) {
+    public void updateDataset(List<TransportLine> lines, int people, int business, double counter) {
 
-        congestionDataset.getSeries(0).add(counter, (double) series0);
-        congestionDataset.getSeries(1).add(counter, (double) series1);
+        if (columnCount > 150) {
 
-        columnCount++;
-
-        if (columnCount > 200) {
-
-            int columnsToRemove = columnCount - 200;
+            int columnsToRemove = columnCount - 150;
 
             // Rimuovi le colonne in eccesso dal dataset
-            for (int i = 0; i < columnsToRemove; i++) {
-                for (int j = 0; j < congestionDataset.getSeriesCount(); j++) {
-                    congestionDataset.getSeries(j).remove(0);
+            for (int k = 0; k < datasets.size(); k++) {
+                for (int i = 0; i < columnsToRemove; i++) {
+                    for (int j = 0; j < datasets.get(k).getSeriesCount(); j++) {
+                        datasets.get(k).getSeries(j).remove(0);
+                    }
                 }
             }
 
-            columnCount = 200;
+            columnCount = 150;
         }
 
+        // Transport line update
+        for (int i = 0; i < lines.size(); i++) {
+            datasets.get(0).getSeries(i).add(counter, lines.get(i).getCongestion());
+            datasets.get(1).getSeries(i).add(counter, people);
+            datasets.get(2).getSeries(i).add(counter, business);
+        }
+
+        columnCount++;
+        System.out.println(columnCount);
     }
 }
