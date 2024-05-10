@@ -120,6 +120,16 @@ public class GraphicsPanel extends StyledPanel {
         congestionDataset.getSeries(0).add(counter, (double) series0);
         congestionDataset.getSeries(1).add(counter, (double) series1);
 
+        graphicDimensionControl(congestionDataset);
+    }
+    public void updateStateDataset(int movingCount, int workingCount, int atHomeCount, double counter) {
+        stateDataset.getSeries("Moving").add(counter, movingCount);
+        stateDataset.getSeries("Working").add(counter, workingCount);
+        stateDataset.getSeries("At Home").add(counter, atHomeCount);
+        graphicDimensionControl(stateDataset);
+    }
+
+    private void graphicDimensionControl(XYSeriesCollection dataset){
         columnCount++;
 
         if (columnCount > 200) {
@@ -128,17 +138,13 @@ public class GraphicsPanel extends StyledPanel {
 
             // Rimuovi le colonne in eccesso dal dataset
             for (int i = 0; i < columnsToRemove; i++) {
-                for (int j = 0; j < congestionDataset.getSeriesCount(); j++) {
-                    congestionDataset.getSeries(j).remove(0);
+                for (int j = 0; j < dataset.getSeriesCount(); j++) {
+                    dataset.getSeries(j).remove(0);
                 }
             }
 
             columnCount = 200;
         }
-    }
-    public void updateStateDataset(int movingCount, int workingCount, int atHomeCount, double counter) {
-        stateDataset.getSeries("Moving").add(counter, movingCount);
-        stateDataset.getSeries("Working").add(counter, workingCount);
-        stateDataset.getSeries("At Home").add(counter, atHomeCount);
+
     }
 }
