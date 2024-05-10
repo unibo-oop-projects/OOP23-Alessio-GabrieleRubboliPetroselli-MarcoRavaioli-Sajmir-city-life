@@ -8,7 +8,6 @@ import java.util.List;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
 
@@ -53,20 +52,22 @@ public class MapController {
 
         System.out.println("pressed coordinates: " + x + " " + y);
         List<Zone> zones = cityModel.getZones();
+        String zoneName = ""; // Declare zoneName here
         for (Zone zone : zones) {
             if (zone.getBoundary().isInside(x, y)) {
-                String zoneName = zone.getName();
+                zoneName = zone.getName(); // Assign value here
                 System.out.println("Clicked inside zone: " + zoneName);
-            break;
+                break;
+            }
         }
-    }
+    
         
         mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
 
-        System.out.println("max coordinates: " + (int) mapPanel.getSize().getWidth() + " " + (int) mapPanel.getSize().getHeight());
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
+        infoPanel.updateZoneName(zoneName);
     }
 
 

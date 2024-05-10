@@ -144,6 +144,10 @@ public class ClockModel {
         return currentTime.format(formatter);
     }
 
+    public double getDoubleCurrentTime() {
+        return (double) currentTime.toSecondOfDay();
+    }
+
     /**
      * Gets the current day of the simulation.
      * 
@@ -178,5 +182,9 @@ public class ClockModel {
      */
     public boolean getIsPaused(){
         return isPaused;
+    }
+
+    public Timer getTimer(){
+        return timer;
     }
 }

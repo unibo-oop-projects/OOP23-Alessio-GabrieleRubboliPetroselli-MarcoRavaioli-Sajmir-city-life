@@ -79,7 +79,6 @@ public class PersonImpl implements Person {
 
     public boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
         boolean moveBool = (currentTime == timeToMove);
-        System.out.println("line duration: " + lineDuration);
         if (moveBool) {
             this.lastArrivingTime = currentTime + lineDuration;
         }
@@ -124,8 +123,6 @@ public class PersonImpl implements Person {
                 this.checkTimeToGoToWork(currentTime);
                 break;
         }
-        System.out.println(this.getName() + ", " + this.getState());
-        System.out.println("coordinate position: " + (position.isPresent() ? (position.get().getFirst() + ", " + position.get().getSecond()) : ""));
     }
 
     private void getTrip() {

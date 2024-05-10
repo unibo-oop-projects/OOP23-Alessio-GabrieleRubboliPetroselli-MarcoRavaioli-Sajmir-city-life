@@ -1,0 +1,29 @@
+[
+    {
+        "name": "Tangenziale",
+        "capacity": 100,
+        "duration": 20,
+        "zone": {
+            "a": 0,
+            "b": 1
+        }
+    },
+    {
+        "name": "Secante",
+        "capacity": 20,
+        "duration": 5,
+        "zone": {
+            "a": 1,
+            "b": 2
+        }
+    },
+    {
+        "name": "Circolare",
+        "capacity": 50,
+        "duration": 50,
+        "zone": {
+            "a": 0,
+            "b": 2
+        }
+    }
+]

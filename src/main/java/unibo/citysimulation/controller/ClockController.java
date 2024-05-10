@@ -76,7 +76,11 @@ public class ClockController implements ClockObserver {
     public void changeClockSpeed() {
         int speed = clockPanel.changeSpeed();
         // Start the simulation with the new speed
-        clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
+        if (clockModel.getTimer() != null) {
+            clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
+        } else {
+            clockModel.setHourDuration(speed);
+        }
     }
 
     /**

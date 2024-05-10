@@ -17,6 +17,8 @@ public final class ConstantAndResourceLoader extends ClassLoader{
     public static final int MINUTES_IN_A_SECOND = 5;
 
     public static final int TIME_UPDATE_RATE = 500;
+
+    public static final int[] SPEEDS = {1, 2, 10, 50};
     /**
      * Screen minimum size pixel
      */
