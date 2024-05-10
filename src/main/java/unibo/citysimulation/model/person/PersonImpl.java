@@ -1,17 +1,12 @@
 package unibo.citysimulation.model.person;
 
-import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
 import java.time.LocalTime;
 import java.util.Optional;
 
 public class PersonImpl implements Person {
-    public record PersonData(String name, int age, int money, Business business, Zone residenceZone, ZoneTable zoneTable) {
-    }
-
     private final PersonData personData;
     private PersonState state;
     private int lastArrivingTime = 0;
@@ -25,9 +20,9 @@ public class PersonImpl implements Person {
         this.personData = personData;
         this.state = PersonState.AT_HOME;
         this.lastDestination = PersonState.WORKING;
-        this.homePosition = Optional.of(personData.residenceZone.getRandomPosition());
+        this.homePosition = Optional.of(personData.residenceZone().getRandomPosition());
         this.position = homePosition;
-        this.transportLine = personData.zoneTable.getTransportLine(personData.residenceZone, personData.business.getZone());
+        this.transportLine = personData.zoneTable().getTransportLine(personData.residenceZone(), personData.business().getZone());
         this.getTrip();
     }
 
@@ -46,7 +41,7 @@ public class PersonImpl implements Person {
     }
 
     public  Zone getBusinessZone() {
-        return personData.business.getZone();
+        return personData.business().getZone();
     }
 
     public boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
@@ -58,14 +53,14 @@ public class PersonImpl implements Person {
     }
 
     public void checkTimeToGoToWork(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(), personData.business.getOpeningTime().toSecondOfDay() - tripDuration,
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), personData.business().getOpeningTime().toSecondOfDay() - tripDuration,
                 tripDuration)) {
             movePerson(PersonState.WORKING);
         }
     }
 
     public void checkTimeToGoHome(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(), personData.business.getClosingTime().toSecondOfDay(),
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), personData.business().getClosingTime().toSecondOfDay(),
                 tripDuration)) {
             movePerson(PersonState.AT_HOME);
         }
@@ -98,10 +93,10 @@ public class PersonImpl implements Person {
     }
 
     private void getTrip() {
-        if (personData.residenceZone == personData.business.getZone()) {
+        if (personData.residenceZone() == personData.business().getZone()) {
             this.tripDuration = 0;
         } else {
-            this.transportLine = personData.zoneTable.getTransportLine(personData.residenceZone, personData.business.getZone());
+            this.transportLine = personData.zoneTable().getTransportLine(personData.residenceZone(), personData.business().getZone());
             tripDuration = this.transportLine.getDuration() * 60;
         }
     }
@@ -123,7 +118,7 @@ public class PersonImpl implements Person {
                 this.position = Optional.empty();
                 break;
             case WORKING:
-                this.position = Optional.of(personData.business.getPosition());
+                this.position = Optional.of(personData.business().getPosition());
                 break;
             case AT_HOME:
                 this.position = homePosition;

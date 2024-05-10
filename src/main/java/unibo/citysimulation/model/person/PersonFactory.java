@@ -1,7 +1,7 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.person.PersonImpl.PersonData;
+import unibo.citysimulation.model.person.PersonData;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
@@ -19,7 +19,7 @@ public class PersonFactory {
             people.add(createPerson("Person" + i, random.nextInt(62) + 18,
             random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst(),
             businesses.get(new Random().nextInt(businesses.size())), residenceZone, zoneTable));
-            people.get(i).getBusiness().hire(people.get(i));
+            people.get(i).getPersonData().business().hire(people.get(i));
         }
         return people;
     }

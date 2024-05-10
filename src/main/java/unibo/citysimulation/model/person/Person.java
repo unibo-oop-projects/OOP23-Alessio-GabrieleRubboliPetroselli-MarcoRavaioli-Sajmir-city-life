@@ -2,8 +2,6 @@ package unibo.citysimulation.model.person;
 
 import java.time.LocalTime;
 
-import unibo.citysimulation.model.person.PersonImpl.PersonData;
-
 /**
  * An interface for modelling a person
  * 
