@@ -139,15 +139,6 @@ public class GraphicsPanel extends StyledPanel {
 
     public void updateDataset(List<TransportLine> lines, int people, int business, double counter) {
 
-        // Transport line update
-        for (int i = 0; i < lines.size(); i++) {
-            datasets.get(0).getSeries(i).add(counter, lines.get(i).getCongestion());
-            datasets.get(1).getSeries(i).add(counter, people);
-            datasets.get(2).getSeries(i).add(counter, business);
-        }
-
-        columnCount++;
-
         if (columnCount > 150) {
 
             int columnsToRemove = columnCount - 150;
@@ -164,5 +155,14 @@ public class GraphicsPanel extends StyledPanel {
             columnCount = 150;
         }
 
+        // Transport line update
+        for (int i = 0; i < lines.size(); i++) {
+            datasets.get(0).getSeries(i).add(counter, lines.get(i).getCongestion());
+            datasets.get(1).getSeries(i).add(counter, people);
+            datasets.get(2).getSeries(i).add(counter, business);
+        }
+
+        columnCount++;
+        System.out.println(columnCount);
     }
 }

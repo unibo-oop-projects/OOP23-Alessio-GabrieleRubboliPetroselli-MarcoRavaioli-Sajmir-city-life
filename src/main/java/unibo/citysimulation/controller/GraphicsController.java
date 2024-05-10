@@ -23,8 +23,6 @@ public class GraphicsController implements ClockObserver{
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
 
-        System.out.println("dentro al onTimeUpdate di GraphicsController");
-
         graphicsPanel.updateDataset(
             cityModel.getTransportLines(),
             50,
