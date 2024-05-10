@@ -22,9 +22,6 @@ import java.awt.*;
  * Panel for displaying graphics.
  */
 public class GraphicsPanel extends StyledPanel {
-    private XYSeriesCollection congestionDataset; // Make dataset a class member
-    private XYSeriesCollection peopleStateDataset;
-    private XYSeriesCollection businessDataset;
     private List<XYSeriesCollection> datasets;
     private List<String> names;
     private Random random = new Random();
@@ -100,6 +97,15 @@ public class GraphicsPanel extends StyledPanel {
         return renderer;
     }
 
+    public void clearDatasets() {
+        columnCount = 0; // Resetta anche il contatore delle colonne
+        for (XYSeriesCollection dataset : datasets) {
+            for (int i = 0; i < dataset.getSeriesCount(); i++) {
+                dataset.getSeries(i).clear();
+            }
+        }
+    }
+
     // Method to create a chart
     private JFreeChart createChart(String title, String domainLabel, String rangeLabel,
             XYDataset dataset) {
@@ -138,10 +144,9 @@ public class GraphicsPanel extends StyledPanel {
     }
 
     public void updateDataset(List<TransportLine> lines, int people, int business, double counter) {
+        int columnsToRemove = columnCount - 150;
 
-        if (columnCount > 150) {
-
-            int columnsToRemove = columnCount - 150;
+        if (columnsToRemove > 0) {
 
             // Rimuovi le colonne in eccesso dal dataset
             for (int k = 0; k < datasets.size(); k++) {
@@ -155,7 +160,6 @@ public class GraphicsPanel extends StyledPanel {
             columnCount = 150;
         }
 
-        // Transport line update
         for (int i = 0; i < lines.size(); i++) {
             datasets.get(0).getSeries(i).add(counter, lines.get(i).getCongestion());
             datasets.get(1).getSeries(i).add(counter, people);
@@ -163,6 +167,5 @@ public class GraphicsPanel extends StyledPanel {
         }
 
         columnCount++;
-        System.out.println(columnCount);
     }
 }

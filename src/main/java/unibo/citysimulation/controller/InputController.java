@@ -61,5 +61,7 @@ public class InputController {
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
+
+        graphicsPanel.clearDatasets();
     }  
 }
