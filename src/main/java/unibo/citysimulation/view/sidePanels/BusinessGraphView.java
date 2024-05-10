@@ -1,24 +1,23 @@
-package unibo.citysimulation.model.view;
+package unibo.citysimulation.view.sidePanels;
+
 import javax.swing.*;
 import java.awt.*;
-import org.jfree.data.xy.XYSeries; // Import the XYSeries class
 import org.jfree.chart.ChartFactory;
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 
-public class TransportLineGraphsView extends JFrame {
+public class BusinessGraphView extends JFrame {
     private JPanel leftPanel;
     private JPanel rightPanel;
     private JPanel centerPanel;
 
-    public TransportLineGraphsView() {
+    public BusinessGraphView() {
         setTitle("Transport Line Graphs");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setFocusable(true);
-        setSize(1000, 600); // Imposta la dimensione della finestra
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Make the window full screen
         configureLayout();
         createComponents();
         setVisible(true);
@@ -40,53 +39,32 @@ public class TransportLineGraphsView extends JFrame {
         gbc.gridy = 0;
         gbc.weighty = 1.0; // Set the weight to 100% of the total height
 
-        // Left panel with capacity plot and info
+        // Left panel with "Capacity" and "Data" panels
         leftPanel = new JPanel(new GridBagLayout());
         leftPanel.setBackground(Color.RED);
 
-        // Create the XYSeries and add data (for demonstration purposes)
-        XYSeries series = new XYSeries("Capacity");
-        series.add(1, 1);
-        series.add(2, 2);
-        series.add(3, 3);
-
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Capacity Plot",
-                "X-Axis",
-                "Y-Axis",
-                null,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
+            "Title",
+            "X-Axis",
+            "Y-Axis",
+            null,
+            PlotOrientation.VERTICAL,
+            true,
+            true,
+            false
         );
-
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(300, 300));
 
-        // Create the capacity panel and add the chart panel
+        leftPanel.add(chartPanel, gbc);
+
         JPanel capacityPanel = new JPanel();
-        capacityPanel.setBackground(Color.BLUE);
+        capacityPanel.setBackground(Color.GREEN);
         capacityPanel.setBorder(BorderFactory.createTitledBorder("Capacity"));
-        capacityPanel.add(chartPanel);
-
-        // Add the capacity panel to the left panel
+        gbc.weightx = 0.2;  // Set the weight to 20% of the total width
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 0.5;
-        gbc.weighty = 0.5;
         leftPanel.add(capacityPanel, gbc);
 
-        // Create the info panel and add it to the left panel
-        JPanel infoPanel = new JPanel();
-        infoPanel.setBackground(Color.YELLOW);
-        infoPanel.setBorder(BorderFactory.createTitledBorder("Info"));
-        gbc.gridy = 1;
-        leftPanel.add(infoPanel, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 0.25;  // Set the weight to 25% of the total width
-        gbc.weighty = 1.0;
+        gbc.weightx = 0.2;  // Reset the weight
         gbc.fill = GridBagConstraints.BOTH;
         add(leftPanel, gbc);
 
@@ -94,7 +72,7 @@ public class TransportLineGraphsView extends JFrame {
         centerPanel = new JPanel(); // Empty panel for white space
         centerPanel.setBackground(Color.WHITE);
         gbc.gridx = 1;
-        gbc.weightx = 0.5;  // Set the weight to 50% of the total width
+        gbc.weightx = 0.6;  // Set the weight to 60% of the total width
         add(centerPanel, gbc);
 
         // Right panel with "Congestion" and "Time" panels
@@ -112,7 +90,7 @@ public class TransportLineGraphsView extends JFrame {
         rightPanel.add(timePanel);
 
         gbc.gridx = 2;
-        gbc.weightx = 0.25;  // Set the weight to 25% of the total width
+        gbc.weightx = 0.2;  // Set the weight to 20% of the total width
         add(rightPanel, gbc);
     }
 
@@ -120,11 +98,8 @@ public class TransportLineGraphsView extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new TransportLineGraphsView();
+                new BusinessGraphView();
             }
         });
     }
 }
-
-
-

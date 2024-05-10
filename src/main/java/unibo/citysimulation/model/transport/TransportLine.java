@@ -1,38 +1,33 @@
 package unibo.citysimulation.model.transport;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents a transport line within the city simulation.
+ * Each transport line has a name, capacity, and duration.
+ * It also maintains the number of people in line and can calculate the congestion.
  */
-public class TransportLine {
-    private int capacity;
-    private String name;
-    private int startHour; // Starting hour of service
-    private int endHour; // Ending hour of service
-    private int personInLine=0;
+public interface TransportLine {
+    /**
+     * Returns the name of the transport line.
+     *
+     * @return the name of the transport line
+     */
+    String getName();
 
-    public TransportLine(String name, int serviceFrequency, int startHour, int endHour,int capacity) {
-        this.name = name;
-        this.startHour = startHour;
-        this.endHour = endHour;
-        this.capacity=capacity;
-    
-    }
+    /**
+     * Returns the congestion of the transport line as a percentage of the capacity.
+     *
+     * @return the congestion of the transport line
+     */
+    double getCongestion();
 
-    // Getter and setter methods for other fields, if needed
-    public String getName() {
-        return name;
-    }
-    public int getStartHour() {
-        return startHour;
-    }
-    public int getEndHour() {
-        return endHour;
-    }
+    /**
+     * Returns the duration of the transport line.
+     *
+     * @return the duration of the transport line
+     */
+    int getDuration();
 
-    public double getCongestion(){
-        return (double)(personInLine*100/capacity);
-    }
+    void incrementPersonInLine();
+
+    void decrementPersonInLine();
 }

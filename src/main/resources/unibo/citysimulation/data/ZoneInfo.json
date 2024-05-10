@@ -1,0 +1,60 @@
+[
+    {
+      "name": "Centro",
+      "personPercents": 10,
+      "businessPercents": 40,
+      "wellfareMinMax": {
+        "min": 1000,
+        "max": 1500
+      },
+      "ageMinMax": {
+        "min": 3,
+        "max": 99
+      },
+      "boundary": {
+        "x1": 0,
+        "y1": 0,
+        "x2": 250,
+        "y2": 250
+      }
+    },
+    {
+      "name": "Industrial",
+      "personPercents": 30,
+      "businessPercents": 10,
+      "wellfareMinMax": {
+        "min": 800,
+        "max": 1600
+      },
+      "ageMinMax": {
+        "min": 3,
+        "max": 99
+      },
+      "boundary": {
+        "x1": 250,
+        "y1": 0,
+        "x2": 500,
+        "y2": 250
+      }
+    },
+    {
+      "name": "Periferia",
+      "personPercents": 20,
+      "businessPercents": 30,
+      "wellfareMinMax": {
+        "min": 500,
+        "max": 1000
+      },
+      "ageMinMax": {
+        "min": 20,
+        "max": 99
+      },
+      "boundary": {
+        "x1": 0,
+        "y1": 250,
+        "x2": 250,
+        "y2": 500
+      }
+    }
+  ]
+  
