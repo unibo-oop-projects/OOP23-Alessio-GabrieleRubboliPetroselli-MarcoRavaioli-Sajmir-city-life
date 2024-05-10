@@ -26,6 +26,7 @@ public class GraphicsController implements ClockObserver{
         graphicsPanel.updateDataset(
             (int)cityModel.getTransportLines().get(0).getCongestion(), 
             (int)cityModel.getTransportLines().get(1).getCongestion(),
+            
             this.counter++);
     
     }
