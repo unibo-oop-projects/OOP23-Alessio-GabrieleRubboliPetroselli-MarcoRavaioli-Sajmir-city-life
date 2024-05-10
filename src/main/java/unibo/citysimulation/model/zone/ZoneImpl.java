@@ -1,7 +1,10 @@
 package unibo.citysimulation.model.zone;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.utilities.Pair;
 
 /**

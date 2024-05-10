@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.zone;
 
+import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.utilities.Pair;
 
 public interface Zone {
@@ -19,4 +20,5 @@ public interface Zone {
     public Boundary getBoundary();
 
     public Pair<Integer, Integer> getRandomPosition();
+
 }
