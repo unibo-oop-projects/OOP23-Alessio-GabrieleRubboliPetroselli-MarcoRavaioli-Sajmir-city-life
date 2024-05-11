@@ -87,21 +87,20 @@ public class MapPanel extends StyledPanel {
                 Zone zone1 = zones.get(i);
                 Zone zone2 = zones.get(j);
     
-                Pair<Integer, Integer> startPoint = getRandomPositionWithinZone(zone1);
-                Pair<Integer, Integer> endPoint = getRandomPositionWithinZone(zone2);
+                Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
+                Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
     
                 g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
             }
         }
     }
     
-    private Pair<Integer, Integer> getRandomPositionWithinZone(Zone zone) {
+    private Pair<Integer, Integer> getCenterOfZone(Zone zone) {
         Boundary bounds = zone.getBoundary();
-        Random random = new Random();
     
-        int randomX = bounds.getX() + random.nextInt(bounds.getWidth());
-        int randomY = bounds.getY() + random.nextInt(bounds.getHeight());
+        int centerX = bounds.getX() + bounds.getWidth() / 2;
+        int centerY = bounds.getY() + bounds.getHeight() / 2;
     
-        return new Pair<>(randomX, randomY);
+        return new Pair<>(centerX, centerY);
     }
 }
