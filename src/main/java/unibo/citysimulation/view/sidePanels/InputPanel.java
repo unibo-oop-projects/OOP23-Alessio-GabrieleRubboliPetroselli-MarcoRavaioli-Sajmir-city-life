@@ -70,11 +70,14 @@ public class InputPanel extends StyledPanel {
         add(peopleSlider, gbc);
 
         // Create a label to display the current slider value
-        sliderValueLabel = new JLabel("Current value: " + peopleSlider.getValue());
+        sliderValueLabel = new JLabel("Current value: " +peopleSlider.getValue());
         sliderValueLabel.setForeground(Color.WHITE);
         gbc.gridy = 4;
         add(sliderValueLabel, gbc);
+        // Add a ChangeListener to the slider
+        peopleSlider.addChangeListener(e -> sliderValueLabel.setText("Current value: " + peopleSlider.getValue()));
     }
+
 
     /**
      * Retrieves the start button.
