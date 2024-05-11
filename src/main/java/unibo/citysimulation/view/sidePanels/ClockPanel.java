@@ -23,19 +23,23 @@ public class ClockPanel extends StyledPanel {
      */
     public ClockPanel(Color bgColor) {
         super(bgColor);
-
         speedButton = new JButton("1x");
+    speedButton.setForeground(Color.black);
+    speedButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
 
-        pauseButton = new JButton("Stop");
-        pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+    pauseButton = new JButton("Stop");
+    pauseButton.setForeground(Color.black);
+    pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
 
-        // Set up layout
-        JPanel speedPanel = new JPanel(new BorderLayout());
-        speedPanel.add(speedButton, BorderLayout.WEST);
-        speedPanel.add(pauseButton, BorderLayout.EAST);
+    this.setBackground(Color.RED);
+    // Set up layout
+    JPanel speedPanel = new JPanel(new FlowLayout());
+    speedPanel.setBackground(Color.RED); // Set the background color of speedPanel
+    speedPanel.add(speedButton);
+    speedPanel.add(pauseButton);
 
-        add(timeDay, BorderLayout.SOUTH);
-        add(speedPanel);
+    add(speedPanel, BorderLayout.NORTH);
+    add(timeDay, BorderLayout.SOUTH);
     }
 
     /**
