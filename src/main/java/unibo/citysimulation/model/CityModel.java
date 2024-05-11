@@ -61,8 +61,8 @@ public class CityModel {
         // Create people
         this.people = new ArrayList<>();
         for (var zone : zones) {
-            this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.getBusinessPercents()/100)),
-            zone.getWellfareMinMax(), businesses, zone, zoneTable));
+            this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.businessPercents()/100)),
+            zone.wellfareMinMax(), businesses, zone, zoneTable));
         }
 
         // Add people as observers to clock model
@@ -77,7 +77,7 @@ public class CityModel {
         for (var group : people) {
             for (var person : group) {
                 System.out.println(person.getPersonData().name() + ", " + person.getPersonData().age() + ", " + person.getPersonData().money() + ", " +
-                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().getName() + ", " + person.getPersonData().residenceZone().getName());
+                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().name() + ", " + person.getPersonData().residenceZone().name());
             }
         }
     }

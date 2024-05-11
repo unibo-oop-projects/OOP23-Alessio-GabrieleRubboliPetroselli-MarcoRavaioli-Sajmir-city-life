@@ -55,8 +55,8 @@ public class MapController {
         List<Zone> zones = cityModel.getZones();
         String zoneName = ""; // Declare zoneName here
         for (Zone zone : zones) {
-            if (zone.getBoundary().isInside(x, y)) {
-                zoneName = zone.getName(); // Assign value here
+            if (zone.boundary().isInside(x, y)) {
+                zoneName = zone.name(); // Assign value here
                 System.out.println("Clicked inside zone: " + zoneName);
                 break;
             }
