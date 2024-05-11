@@ -14,8 +14,11 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.awt.*;
 
 /**
@@ -25,10 +28,6 @@ public class GraphicsPanel extends StyledPanel {
     private List<XYSeriesCollection> datasets;
     private List<String> names;
     private Random random = new Random();
-    private XYSeriesCollection congestionDataset; // Make dataset a class member
-    private XYSeriesCollection line1dataset;
-    private XYSeriesCollection businessDataset;
-    private XYSeriesCollection stateDataset;
 
     private int columnCount = 0;
 
@@ -39,42 +38,52 @@ public class GraphicsPanel extends StyledPanel {
      */
     public GraphicsPanel(Color bgColor) {
         super(bgColor);
-        names = new ArrayList<>();
-        names.add("Transport Congestion");
-        names.add("Transport");
-        names.add("Business");
 
-        datasets = new ArrayList<>();
+        names = Arrays.asList("Person State", "Transport Congestion", "Business");
 
-        datasets = createDatasets(names);
-
+        datasets = createDatasets(names.size());
         List<JFreeChart> charts = createCharts(names, datasets);
 
+        List<XYPlot> plots = charts.stream()
+                .map(JFreeChart::getXYPlot)
+                .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
+                .collect(Collectors.toList());
 
-        List<XYPlot> plots = new ArrayList<>();
+        plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
 
-        for (int i = 0; i < charts.size(); i++) {
-            XYPlot plot = charts.get(i).getXYPlot();
-            plot.setRenderer(createRenderer(plot.getSeriesCount()));
-            plots.add(plot);
-
-            add(new ChartPanel(charts.get(i)));
-        }
         // Set layout to arrange charts horizontally
         setLayout(new GridLayout(names.size(), 1));
     }
 
-    private List<XYSeriesCollection> createDatasets(List<String> names) {
-        List<XYSeriesCollection> datasets = new ArrayList<XYSeriesCollection>();
-
-        for (String name : names) {
-            XYSeriesCollection dataset = createDataset(3);
-
-            datasets.add(dataset);
-        }
-
-        return datasets;
+    private List<XYSeriesCollection> createDatasets(int num) {
+        return IntStream.range(0, num)
+                .mapToObj(i -> createDataset(3))
+                .collect(Collectors.toList());
     }
+
+    private XYSeriesCollection createDataset(int numObjects) {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+
+        IntStream.range(0, numObjects)
+                .mapToObj(i -> new XYSeries("Object " + i, false))
+                .forEach(dataset::addSeries);
+
+        return dataset;
+    }
+
+    /*
+     * private XYSeriesCollection createDataset(int numObjects) {
+     * XYSeriesCollection dataset = new XYSeriesCollection();
+     * 
+     * for (int i = 0; i < numObjects; i++) {
+     * XYSeries series = new XYSeries("Object " + String.valueOf(i), false);
+     * 
+     * dataset.addSeries(series);
+     * }
+     * 
+     * return dataset;
+     * }
+     */
 
     private List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
         List<JFreeChart> charts = new ArrayList<JFreeChart>();
@@ -92,10 +101,11 @@ public class GraphicsPanel extends StyledPanel {
     private XYLineAndShapeRenderer createRenderer(int num) {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 
-        for(int i = 0; i < num; i++){
+        for (int i = 0; i < num; i++) {
             Color color = new Color(random.nextInt(4) * 64, random.nextInt(4) * 64, random.nextInt(4) * 64);
             renderer.setSeriesPaint(i, color);
             renderer.setSeriesShapesVisible(i, false);
+            renderer.setSeriesStroke(i, new BasicStroke(2.0f));
         }
 
         return renderer;
@@ -129,47 +139,44 @@ public class GraphicsPanel extends StyledPanel {
         domainAxis.setTickLabelsVisible(false);
         domainAxis.setLowerMargin(0.01);
         domainAxis.setUpperMargin(0.01);
+        rangeAxis.setTickLabelsVisible(false);
         rangeAxis.setAutoRange(false);
         rangeAxis.setRange(0, 100);
 
         return chart;
     }
 
-    private XYSeriesCollection createDataset(int numObjects) {
-        XYSeriesCollection dataset = new XYSeriesCollection();
+    public void updateDataset(List<Integer> states, List<Double> congestions, int business, double counter) {
 
-        for (int i = 0; i < numObjects; i++) {
-            XYSeries series = new XYSeries("Object " + String.valueOf(i), false);
-
-            dataset.addSeries(series);
-        }
-
-        return dataset;
-    }
-
-    public void updateDataset(List<TransportLine> lines, int people, int business, double counter) {
-        int columnsToRemove = columnCount - 150;
-
-        if (columnsToRemove > 0) {
-
+        if (columnCount > 150) {
+    
+            int columnsToRemove = columnCount - 150;
+    
             // Rimuovi le colonne in eccesso dal dataset
             for (int k = 0; k < datasets.size(); k++) {
                 for (int i = 0; i < columnsToRemove; i++) {
                     for (int j = 0; j < datasets.get(k).getSeriesCount(); j++) {
-                        datasets.get(k).getSeries(j).remove(0);
+                        XYSeries series = datasets.get(k).getSeries(j);
+                        if (!series.isEmpty()) {
+                            series.remove(0);
+                        }
                     }
                 }
             }
-
+    
             columnCount = 150;
         }
-
-        for (int i = 0; i < lines.size(); i++) {
-            datasets.get(0).getSeries(i).add(counter, lines.get(i).getCongestion());
-            datasets.get(1).getSeries(i).add(counter, people);
-            datasets.get(2).getSeries(i).add(counter, business);
-        }
-
+        
         columnCount++;
+    
+        for (int i = 0; i < datasets.get(0).getSeriesCount(); i++) {
+            datasets.get(0).getSeries(i).add(counter, states.get(i));
+        }
+        for (int i = 0; i < datasets.get(1).getSeriesCount(); i++) {
+            datasets.get(1).getSeries(i).add(counter, congestions.get(i));
+        }
+    
+        datasets.get(2).getSeries(0).add(counter, business);   
     }
+    
 }
