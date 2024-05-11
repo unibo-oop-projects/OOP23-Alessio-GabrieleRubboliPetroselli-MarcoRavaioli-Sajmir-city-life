@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.model.person.DynamicPerson;
+import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 
