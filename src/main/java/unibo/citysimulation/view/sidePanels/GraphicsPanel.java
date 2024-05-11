@@ -5,6 +5,7 @@ import unibo.citysimulation.view.StyledPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
@@ -28,8 +29,11 @@ public class GraphicsPanel extends StyledPanel {
     private List<XYSeriesCollection> datasets;
     private List<String> names;
     private Random random = new Random();
-
+    private List<XYPlot> plots;
     private int columnCount = 0;
+
+    private int maxStateHeight = 1;
+    private double maxCongestionHeight = 1;
 
     /**
      * Constructs a GraphicsPanel with the specified background color.
@@ -44,7 +48,7 @@ public class GraphicsPanel extends StyledPanel {
         datasets = createDatasets(names.size());
         List<JFreeChart> charts = createCharts(names, datasets);
 
-        List<XYPlot> plots = charts.stream()
+        plots = charts.stream()
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
                 .collect(Collectors.toList());
@@ -149,34 +153,47 @@ public class GraphicsPanel extends StyledPanel {
     public void updateDataset(List<Integer> states, List<Double> congestions, int business, double counter) {
 
         if (columnCount > 150) {
-    
+
             int columnsToRemove = columnCount - 150;
-    
+
             // Rimuovi le colonne in eccesso dal dataset
-            for (int k = 0; k < datasets.size(); k++) {
+            for (var dataset : datasets) {
                 for (int i = 0; i < columnsToRemove; i++) {
-                    for (int j = 0; j < datasets.get(k).getSeriesCount(); j++) {
-                        XYSeries series = datasets.get(k).getSeries(j);
+                    for (int j = 0; j < dataset.getSeriesCount(); j++) {
+                        XYSeries series = dataset.getSeries(j);
                         if (!series.isEmpty()) {
                             series.remove(0);
                         }
                     }
                 }
             }
-    
+
             columnCount = 150;
         }
-        
+
         columnCount++;
-    
+
         for (int i = 0; i < datasets.get(0).getSeriesCount(); i++) {
             datasets.get(0).getSeries(i).add(counter, states.get(i));
+            maxStateHeight = states.get(i) > maxStateHeight ? states.get(i) : maxStateHeight;
         }
+
         for (int i = 0; i < datasets.get(1).getSeriesCount(); i++) {
             datasets.get(1).getSeries(i).add(counter, congestions.get(i));
+            maxCongestionHeight = congestions.get(i) > maxCongestionHeight ? congestions.get(i) : maxCongestionHeight;
         }
-    
-        datasets.get(2).getSeries(0).add(counter, business);   
+
+        datasets.get(2).getSeries(0).add(counter, business);
+
+        NumberAxis stateAxis = new NumberAxis();
+        stateAxis.setRange(0, maxStateHeight * 1.15);
+        plots.get(0).setRangeAxis(stateAxis);
+        plots.get(0).getRangeAxis().setTickLabelsVisible(false);
+
+        NumberAxis congestionAxis = new NumberAxis();
+        congestionAxis.setRange(0, maxCongestionHeight * 1.15);
+        plots.get(1).setRangeAxis(congestionAxis);
+        plots.get(1).getRangeAxis().setTickLabelsVisible(false);
     }
-    
+
 }
