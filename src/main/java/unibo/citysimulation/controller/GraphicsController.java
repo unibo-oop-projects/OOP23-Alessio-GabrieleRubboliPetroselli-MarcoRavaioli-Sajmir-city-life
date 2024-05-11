@@ -1,11 +1,14 @@
 package unibo.citysimulation.controller;
 
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.model.person.DynamicPerson;
+import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 
 public class GraphicsController implements ClockObserver {
@@ -24,37 +27,22 @@ public class GraphicsController implements ClockObserver {
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
 
-        graphicsPanel.updateDataset(
-                (int) cityModel.getTransportLines().get(0).getCongestion(),
-                (int) cityModel.getTransportLines().get(1).getCongestion(),
+        List<Double> transportLinesCongestion = cityModel.getTransportLines().stream()
+                .map(TransportLine::getCongestion)
+                .collect(Collectors.toList());
 
-                this.counter++);
-
-        int atHomeCount = 0;
-        int movingCount = 0;
-        int workingCount = 0;
-
-        // Ottieni tutte le persone dal CityModel
         List<DynamicPerson> allPeople = cityModel.getAllPeople();
 
-        // Itera su tutte le persone e controlla lo stato di ciascuna di esse
-        for (var person : allPeople) {
-            switch (person.getState()) {
-                case AT_HOME:
-                    atHomeCount++;
-                    break;
-                case MOVING:
-                    movingCount++;
-                    break;
-                case WORKING:
-                    workingCount++;
-                    break;
-                default:
-                    break;
-            }
-        }
+        List<Integer> peopleStateCounts = Arrays.asList(
+                (int) allPeople.stream().filter(person -> person.getState() == PersonState.AT_HOME).count(),
+                (int) allPeople.stream().filter(person -> person.getState() == PersonState.MOVING).count(),
+                (int) allPeople.stream().filter(person -> person.getState() == PersonState.WORKING).count());
 
-        graphicsPanel.updateStateDataset(atHomeCount, movingCount, workingCount, this.counter++);
+        graphicsPanel.updateDataset(
+                peopleStateCounts,
+                transportLinesCongestion,
+                50,
+                this.counter++);
 
     }
 }

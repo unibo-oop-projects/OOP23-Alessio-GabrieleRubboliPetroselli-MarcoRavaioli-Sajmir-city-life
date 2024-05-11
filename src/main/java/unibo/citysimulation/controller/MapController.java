@@ -34,7 +34,7 @@ public class MapController {
         mapPanel.setZones(cityModel.getZones());
 
         mapPanel.setImage(mapModel.getImage());
-        
+
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -42,6 +42,7 @@ public class MapController {
             }
         });
     }
+
     /**
      * Handles mouse click events.
      *
@@ -60,19 +61,18 @@ public class MapController {
                 System.out.println("Clicked inside zone: " + zoneName);
                 break;
             }
+            infoPanel.updateZoneName(zoneName);
         }
-    
-        
+
         mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
 
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
-        infoPanel.updateZoneName(zoneName);
+
     }
 
-
-    public BufferedImage getImage(){
+    public BufferedImage getImage() {
         return mapModel.getImage();
     }
 }
