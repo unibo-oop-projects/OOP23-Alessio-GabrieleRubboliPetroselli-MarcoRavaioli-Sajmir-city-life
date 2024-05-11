@@ -1,5 +1,6 @@
 package unibo.citysimulation.view;
 
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
@@ -32,6 +33,7 @@ public class WindowView extends JFrame {
         Pair<Integer,Integer> size = getWindowSize();
         this.width = size.getFirst();
         this.height = size.getSecond();
+        
 
         setSize(width, height);
         setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));

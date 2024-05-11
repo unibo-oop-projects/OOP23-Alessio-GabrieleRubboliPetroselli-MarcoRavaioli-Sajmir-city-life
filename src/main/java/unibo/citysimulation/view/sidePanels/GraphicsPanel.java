@@ -25,9 +25,7 @@ public class GraphicsPanel extends StyledPanel {
     private XYSeriesCollection congestionDataset; // Make dataset a class member
     private XYSeriesCollection peopleStateDataset;
     private XYSeriesCollection businessDataset;
-    private List<XYSeriesCollection> datasets;
-    private List<String> names;
-    private Random random = new Random();
+    private XYSeriesCollection stateDataset;
 
     private int columnCount = 0;
 
@@ -43,9 +41,16 @@ public class GraphicsPanel extends StyledPanel {
         names.add("Transport");
         names.add("Business");
 
-        datasets = new ArrayList<>();
+        // Initialize datasets
+        congestionDataset = createDataset();
+        line1dataset = createDataset();
+        businessDataset = createDataset();
+        stateDataset = createStateDataset();
 
-        datasets = createDatasets(names);
+        // Initialize charts
+        JFreeChart peopleChart = createChart("Transport Congestion", "", "", congestionDataset);
+        JFreeChart transportChart = createChart("People State", "", "", stateDataset);
+        JFreeChart businessChart = createChart("Business", "", "", businessDataset);
 
         List<JFreeChart> charts = createCharts(names, datasets);
 
@@ -137,32 +142,46 @@ public class GraphicsPanel extends StyledPanel {
         return dataset;
     }
 
-    public void updateDataset(List<TransportLine> lines, int people, int business, double counter) {
+    private XYSeriesCollection createStateDataset() {
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries movingSeries = new XYSeries("Moving", false);
+        XYSeries workingSeries = new XYSeries("Working", false);
+        XYSeries atHomeSeries = new XYSeries("At Home", false);
+
+        dataset.addSeries(movingSeries);
+        dataset.addSeries(workingSeries);
+        dataset.addSeries(atHomeSeries);
+
+        return dataset;
+    }
+
+    public void updateDataset(int series0, int series1, double counter) {
 
         if (columnCount > 150) {
 
-            int columnsToRemove = columnCount - 150;
+        graphicDimensionControl(congestionDataset);
+    }
+    public void updateStateDataset(int movingCount, int workingCount, int atHomeCount, double counter) {
+        stateDataset.getSeries("Moving").add(counter, movingCount);
+        stateDataset.getSeries("Working").add(counter, workingCount);
+        stateDataset.getSeries("At Home").add(counter, atHomeCount);
+        graphicDimensionControl(stateDataset);
+    }
 
+    private void graphicDimensionControl(XYSeriesCollection dataset) {
+        columnCount++;
+    
+        if (columnCount > 200) {
+            int columnsToRemove = columnCount - 200;
+    
             // Rimuovi le colonne in eccesso dal dataset
-            for (int k = 0; k < datasets.size(); k++) {
-                for (int i = 0; i < columnsToRemove; i++) {
-                    for (int j = 0; j < datasets.get(k).getSeriesCount(); j++) {
-                        datasets.get(k).getSeries(j).remove(0);
-                    }
+            for (int i = 0; i < columnsToRemove && dataset.getSeries(0).getItemCount() > 0; i++) {
+                for (int j = 0; j < dataset.getSeriesCount(); j++) {
+                    dataset.getSeries(j).remove(0);
                 }
             }
-
-            columnCount = 150;
+    
+            columnCount -= columnsToRemove; // Aggiorna il conteggio delle colonne
         }
-
-        // Transport line update
-        for (int i = 0; i < lines.size(); i++) {
-            datasets.get(0).getSeries(i).add(counter, lines.get(i).getCongestion());
-            datasets.get(1).getSeries(i).add(counter, people);
-            datasets.get(2).getSeries(i).add(counter, business);
-        }
-
-        columnCount++;
-        System.out.println(columnCount);
     }
 }

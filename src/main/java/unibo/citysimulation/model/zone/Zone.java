@@ -1,22 +1,16 @@
 package unibo.citysimulation.model.zone;
 
+import java.util.Random;
+
 import unibo.citysimulation.utilities.Pair;
 
-public interface Zone {
-    String getName();
+public record Zone(String name, float personPercents, float businessPercents, Pair<Integer, Integer> wellfareMinMax,
+        Pair<Integer, Integer> ageMinMax, Boundary boundary) {
+            static Random random = new Random();
 
-    float getPersonPercents();
-
-    float getBusinessPercents();
-
-    Pair<Integer, Integer> getWellfareMinMax();
-
-    /**
-     * Returns the boundary of the zone.
-     *
-     * @return the boundary of the zone
-     */
-    public Boundary getBoundary();
-
-    public Pair<Integer, Integer> getRandomPosition();
+            public Pair<Integer, Integer> getRandomPosition() {
+                int x = random.nextInt(boundary.getWidth());
+                int y = random.nextInt(boundary.getHeight());
+                return new Pair<>(x, y);
+            }
 }
