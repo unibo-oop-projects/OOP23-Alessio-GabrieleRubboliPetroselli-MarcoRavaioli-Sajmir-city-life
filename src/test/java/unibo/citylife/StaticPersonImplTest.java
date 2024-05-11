@@ -1,5 +1,6 @@
 package unibo.citylife;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import unibo.citysimulation.model.business.Business;

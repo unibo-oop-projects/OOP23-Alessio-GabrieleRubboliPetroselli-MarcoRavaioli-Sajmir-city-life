@@ -47,6 +47,10 @@ public class StaticPersonImpl implements StaticPerson {
         this.state = state;
     }
 
+    public TransportLine getTransportLine() {
+        return transportLine;
+    }
+
     public int getTripDuration() {
         return tripDuration;
     }
