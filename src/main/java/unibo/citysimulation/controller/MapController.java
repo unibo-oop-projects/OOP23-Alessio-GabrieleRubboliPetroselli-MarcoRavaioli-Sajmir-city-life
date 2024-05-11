@@ -61,7 +61,6 @@ public class MapController {
                 System.out.println("Clicked inside zone: " + zoneName);
                 break;
             }
-            infoPanel.updateZoneName(zoneName);
         }
 
         mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
@@ -69,6 +68,8 @@ public class MapController {
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
+
+        infoPanel.updateZoneName(zoneName);
 
     }
 
