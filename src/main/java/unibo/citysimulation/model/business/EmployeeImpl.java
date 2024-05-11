@@ -1,15 +1,15 @@
 package unibo.citysimulation.model.business;
-
+ 
 /**
- * EmployeeImpl is a class that implements the Employee interface.
- * It represents an employee with a name and an ID.
- */
+* EmployeeImpl is a class that implements the Employee interface.
+* It represents an employee with a name and an ID.
+*/
 public class EmployeeImpl implements Employee{
     
     private String name;
     private int id;
     
-
+ 
     /**
      * Constructs a new EmployeeImpl with the given name and ID.
      *
@@ -20,7 +20,7 @@ public class EmployeeImpl implements Employee{
         this.name = name;
         this.id = id;
     }
-
+ 
     /**
      * Returns the name of the employee.
      *
@@ -30,7 +30,7 @@ public class EmployeeImpl implements Employee{
     public String getName() {
         return name;
     }
-
+ 
     /**
      * Returns the ID of the employee.
      *
@@ -40,5 +40,5 @@ public class EmployeeImpl implements Employee{
     public int getId() {
         return id;
     }
-
+ 
 }

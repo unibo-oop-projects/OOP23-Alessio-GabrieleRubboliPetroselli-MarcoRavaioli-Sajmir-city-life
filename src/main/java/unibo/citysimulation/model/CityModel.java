@@ -32,6 +32,7 @@ public class CityModel {
     public CityModel() {
         this.mapModel = new MapModel();
         this.clockModel = new ClockModel(365);
+        this.zones = ZoneFactory.createZonesFromFile();
     }
 
     /**
@@ -40,7 +41,7 @@ public class CityModel {
      */
     public void createEntities(int numberOfPeople) {
         // Create zones
-        this.zones = ZoneFactory.createZonesFromFile();
+        //this.zones = ZoneFactory.createZonesFromFile();
         System.out.println("Zones created. " + zones.size());
 
         // Create transports
@@ -75,8 +76,8 @@ public class CityModel {
         // Print details of each person
         for (var group : people) {
             for (var person : group) {
-                System.out.println(person.getName() + ", " + person.getAge() + ", " + person.getMoney() + ", " +
-                person.getBusiness().getName() + ", " + person.getBusiness().getZone().getName() + ", " + person.getResidenceZone().getName());
+                System.out.println(person.getPersonData().name() + ", " + person.getPersonData().age() + ", " + person.getPersonData().money() + ", " +
+                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().getName() + ", " + person.getPersonData().residenceZone().getName());
             }
         }
     }
@@ -111,5 +112,12 @@ public class CityModel {
      */
     public List<TransportLine> getTransportLines() {
         return this.transports;
+    }
+    public List<Person> getAllPeople() {
+        List<Person> allPeople = new ArrayList<>();
+        for (List<Person> group : this.people) {
+            allPeople.addAll(group);
+        }
+        return allPeople;
     }
 }

@@ -25,6 +25,10 @@ public class GraphicsPanel extends StyledPanel {
     private List<XYSeriesCollection> datasets;
     private List<String> names;
     private Random random = new Random();
+    private XYSeriesCollection congestionDataset; // Make dataset a class member
+    private XYSeriesCollection line1dataset;
+    private XYSeriesCollection businessDataset;
+    private XYSeriesCollection stateDataset;
 
     private int columnCount = 0;
 

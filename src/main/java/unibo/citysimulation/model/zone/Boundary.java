@@ -43,5 +43,12 @@ public class Boundary {
         return coordinates.getSecond().getFirst() - coordinates.getFirst().getFirst();
     }
 
+    public int getX() {
+        return coordinates.getFirst().getFirst();
+    }
+    public int getY() {
+        return coordinates.getFirst().getSecond();
+    }
+
     
 }

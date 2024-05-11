@@ -1,48 +1,29 @@
 package unibo.citysimulation.model.person;
 
-import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
 import java.time.LocalTime;
 import java.util.Optional;
 
 public class PersonImpl implements Person {
-    private String name;
-    private int age;
+    private final PersonData personData;
     private PersonState state;
-    private int money;
-    private Business business;
-    private Zone residenceZone;
-    private ZoneTable zoneTable;
     private int lastArrivingTime = 0;
     private PersonState lastDestination;
+    private Optional<Pair<Integer, Integer>> homePosition;
     private Optional<Pair<Integer, Integer>> position;
     private TransportLine transportLine;
     private int tripDuration;
 
-    public PersonImpl(String name, int age, int money, Business business, Zone residenceZone, ZoneTable zonetable) {
-        this.age = age;
-        this.name = name;
+    public PersonImpl(PersonData personData) {
+        this.personData = personData;
         this.state = PersonState.AT_HOME;
         this.lastDestination = PersonState.WORKING;
-        this.money = money;
-        this.business = business;
-        this.residenceZone = residenceZone;
-        this.zoneTable = zonetable;
-        this.position = Optional.of(new Pair<>(0, 0));
-        this.transportLine = zonetable.getTransportLine(residenceZone, business.getZone());
+        this.homePosition = Optional.of(personData.residenceZone().getRandomPosition());
+        this.position = homePosition;
+        this.transportLine = personData.zoneTable().getTransportLine(personData.residenceZone(), personData.business().getZone());
         this.getTrip();
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
     }
 
     @Override
@@ -50,31 +31,17 @@ public class PersonImpl implements Person {
         return state;
     }
 
+    public PersonData getPersonData() {
+        return personData;
+    }
+
     @Override
     public void setState(PersonState state) {
         this.state = state;
     }
 
-    @Override
-    public int getMoney() {
-        return money;
-    }
-
-    @Override
-    public void setMoney(int amount) {
-        this.money = this.money + amount;
-    }
-
-    public Business getBusiness() {
-        return business;
-    }
-
-    public Zone getResidenceZone() {
-        return residenceZone;
-    }
-
-    public Zone getBusinessZone() {
-        return business.getZone();
+    public  Zone getBusinessZone() {
+        return personData.business().getZone();
     }
 
     public boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
@@ -86,14 +53,14 @@ public class PersonImpl implements Person {
     }
 
     public void checkTimeToGoToWork(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(), business.getOpeningTime().toSecondOfDay() - tripDuration,
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), personData.business().getOpeningTime().toSecondOfDay() - tripDuration,
                 tripDuration)) {
             movePerson(PersonState.WORKING);
         }
     }
 
     public void checkTimeToGoHome(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(), business.getClosingTime().toSecondOfDay(),
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), personData.business().getClosingTime().toSecondOfDay(),
                 tripDuration)) {
             movePerson(PersonState.AT_HOME);
         }
@@ -126,10 +93,10 @@ public class PersonImpl implements Person {
     }
 
     private void getTrip() {
-        if (this.residenceZone == this.business.getZone()) {
+        if (personData.residenceZone() == personData.business().getZone()) {
             this.tripDuration = 0;
         } else {
-            this.transportLine = this.zoneTable.getTransportLine(residenceZone, business.getZone());
+            this.transportLine = personData.zoneTable().getTransportLine(personData.residenceZone(), personData.business().getZone());
             tripDuration = this.transportLine.getDuration() * 60;
         }
     }
@@ -151,10 +118,10 @@ public class PersonImpl implements Person {
                 this.position = Optional.empty();
                 break;
             case WORKING:
-                this.position = Optional.of(business.getPosition());
+                this.position = Optional.of(personData.business().getPosition());
                 break;
             case AT_HOME:
-                this.position = Optional.of(residenceZone.getRandomPosition());
+                this.position = homePosition;
                 break;
         }
     }

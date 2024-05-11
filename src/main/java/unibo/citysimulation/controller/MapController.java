@@ -31,6 +31,7 @@ public class MapController {
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;
         this.mapModel = cityModel.getMapModel();
+        mapPanel.setZones(cityModel.getZones());
 
         mapPanel.setImage(mapModel.getImage());
 
