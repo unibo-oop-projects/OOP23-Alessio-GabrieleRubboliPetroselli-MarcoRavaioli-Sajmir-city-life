@@ -53,6 +53,8 @@ public class StaticPersonImplTest {
     void testGetPosition() {
         Optional<Pair<Integer, Integer>> position = staticPerson.getPosition();
         assertTrue(position.isPresent());
+        assertTrue(staticPerson.getPersonData().residenceZone().boundary().isInside(position.get().getFirst(),
+            position.get().getSecond()));
     }
 
     @Test
