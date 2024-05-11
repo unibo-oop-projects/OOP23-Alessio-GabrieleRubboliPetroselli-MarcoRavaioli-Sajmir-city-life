@@ -2,7 +2,7 @@ package unibo.citysimulation.model.person;
 
 import java.time.LocalTime;
 
-public interface Person extends StaticPerson {
+public interface DynamicPerson extends StaticPerson {
     
     void incrementLastArrivingTime(int duration);
 

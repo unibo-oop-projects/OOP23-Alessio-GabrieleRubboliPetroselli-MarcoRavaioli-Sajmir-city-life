@@ -1,20 +1,14 @@
 package unibo.citysimulation.model.person;
 
-import unibo.citysimulation.model.zone.ZoneTable;
-import unibo.citysimulation.utilities.Pair;
-import java.util.Optional;
 import java.time.LocalTime;
 
-public class PersonImpl extends StaticPersonImpl implements Person{
+public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
     private int lastArrivingTime;
     private PersonState lastDestination;
-    private Optional<Pair<Integer, Integer>> position;
 
-    public PersonImpl(PersonData personData) {
-        super(personData);
+    public DynamicPersonImpl(PersonData personData, int money) {
+        super(personData, money);
         this.lastDestination = PersonState.WORKING;
-        this.position = homePosition;
-        this.transportLine = ZoneTable.getTransportLine(getPersonData().residenceZone(), personData.business().getZone());
     }
 
     private boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
@@ -74,19 +68,5 @@ public class PersonImpl extends StaticPersonImpl implements Person{
         }
         this.lastDestination = newState;
         this.updatePosition();
-    }
-
-    private void updatePosition() {
-        switch (this.state) {
-            case MOVING:
-                this.position = Optional.empty();
-                break;
-            case WORKING:
-                this.position = Optional.of(personData.business().getPosition());
-                break;
-            case AT_HOME:
-                this.position = homePosition;
-                break;
-        }
     }
 }

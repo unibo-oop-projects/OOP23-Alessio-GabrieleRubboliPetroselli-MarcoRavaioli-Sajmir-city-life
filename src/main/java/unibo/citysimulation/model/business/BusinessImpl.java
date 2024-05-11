@@ -3,8 +3,6 @@ package unibo.citysimulation.model.business;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 

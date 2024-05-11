@@ -22,5 +22,11 @@ public interface StaticPerson {
     PersonState getState();
 
     PersonData getPersonData();
+
+    int getMoney();
+
+    void addMoney(int amount);
+
+    int getTripDuration();
     
 }
