@@ -10,7 +10,7 @@ public class StaticPersonImpl implements StaticPerson {
     private Optional<Pair<Integer, Integer>> position;
     protected final PersonData personData;
     protected PersonState state;
-    protected Optional<Pair<Integer, Integer>> homePosition;
+    protected Pair<Integer, Integer> homePosition;
     protected TransportLine transportLine;
     protected int tripDuration;
 
@@ -18,8 +18,8 @@ public class StaticPersonImpl implements StaticPerson {
         this.personData = personData;
         this.money = money;
         this.state = PersonState.AT_HOME;
-        this.homePosition = Optional.of(personData.residenceZone().getRandomPosition());
-        this.position = homePosition;
+        this.homePosition = personData.residenceZone().getRandomPosition();
+        this.position = Optional.of(homePosition);
         this.getTrip();
     }
 
@@ -47,6 +47,10 @@ public class StaticPersonImpl implements StaticPerson {
         this.state = state;
     }
 
+    public int getTripDuration() {
+        return tripDuration;
+    }
+
     protected void updatePosition() {
         switch (this.state) {
             case MOVING:
@@ -56,7 +60,7 @@ public class StaticPersonImpl implements StaticPerson {
                 this.position = Optional.of(personData.business().getPosition());
                 break;
             case AT_HOME:
-                this.position = homePosition;
+                this.position = Optional.of(homePosition);
                 break;
         }
     }
@@ -68,9 +72,5 @@ public class StaticPersonImpl implements StaticPerson {
             this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(), personData.business().getZone());
             tripDuration = this.transportLine.getDuration() * 60;
         }
-    }
-    
-    public int getTripDuration() {
-        return tripDuration;
     }
 }

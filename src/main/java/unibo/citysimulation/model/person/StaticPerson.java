@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.person;
 
+import java.util.Optional;
+import unibo.citysimulation.utilities.Pair;
 /**
  * An interface for modelling a person
  * 
@@ -28,5 +30,7 @@ public interface StaticPerson {
     void addMoney(int amount);
 
     int getTripDuration();
+
+    Optional<Pair<Integer, Integer>> getPosition();
     
 }
