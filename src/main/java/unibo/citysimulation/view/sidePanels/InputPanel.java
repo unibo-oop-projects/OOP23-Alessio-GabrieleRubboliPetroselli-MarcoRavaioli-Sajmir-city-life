@@ -76,6 +76,7 @@ public class InputPanel extends StyledPanel {
         add(sliderValueLabel, gbc);
         // Add a ChangeListener to the slider
         peopleSlider.addChangeListener(e -> sliderValueLabel.setText("Current value: " + peopleSlider.getValue()));
+        startButton.addActionListener(e -> peopleSlider.setEnabled(false));
     }
 
 
