@@ -11,22 +11,22 @@ import unibo.citysimulation.utilities.Pair;
  * The ZoneTable class represents a table that stores pairs of zones and their corresponding transport lines in a city simulation.
  */
 public class ZoneTable {
-    private Map<Pair<Zone, Zone>, TransportLine> zonePairs;
+    private static Map<Pair<Zone, Zone>, TransportLine> zonePairs;
 
     /**
      * Constructs an empty ZoneTable.
      */
     public ZoneTable() {
-        this.zonePairs = new HashMap<>();
+        zonePairs = new HashMap<>();
     }
 
-    public void addPair(Zone zone1, Zone zone2, TransportLine TransportLine) {
-        this.zonePairs.put(new Pair<>(zone1, zone2), TransportLine);
-        this.zonePairs.put(new Pair<>(zone2, zone1), TransportLine); // to ensure the table works both ways
+    public static void addPair(Zone zone1, Zone zone2, TransportLine TransportLine) {
+        zonePairs.put(new Pair<>(zone1, zone2), TransportLine);
+        zonePairs.put(new Pair<>(zone2, zone1), TransportLine); // to ensure the table works both ways
     }
 
-    public TransportLine getTransportLine(Zone zone1, Zone zone2) {
-        return this.zonePairs.get(new Pair<>(zone1, zone2));
+    public static TransportLine getTransportLine(Zone zone1, Zone zone2) {
+        return zonePairs.get(new Pair<>(zone1, zone2));
     }
 }
 

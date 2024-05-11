@@ -1,7 +1,6 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.person.PersonData;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
@@ -25,7 +24,7 @@ public class PersonFactory {
     }
 
     private static Person createPerson(String name, int age, int money, Business business, Zone residenceZone, ZoneTable zoneTable) {
-        return new PersonImpl(new PersonData(name, age, money, business, residenceZone, zoneTable));
+        return new PersonImpl(new PersonData(name, age, money, business, residenceZone));
     }
 }
 
