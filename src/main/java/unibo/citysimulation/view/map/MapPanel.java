@@ -88,27 +88,21 @@ public class MapPanel extends StyledPanel {
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
-
+    
         for (TransportLine line : transportLines) {
             Zone zone1 = line.getLink().getFirst();
             Zone zone2 = line.getLink().getSecond();
-
+    
             Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
             Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
-
-            // Determine the color based on the capacity
-            int capacity = line.getCapacity();
-            if (capacity < 50) {
-                g2.setColor(Color.GREEN);
-            } else if (capacity < 100) {
-                g2.setColor(Color.YELLOW);
-            } else {
-                g2.setColor(Color.ORANGE);
-            }
-
+    
+            // Set the color based on the color of the line
+            g2.setColor(line.getColor());
+    
             g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
         }
     }
+    
 
     
     private Pair<Integer, Integer> getCenterOfZone(Zone zone) {
