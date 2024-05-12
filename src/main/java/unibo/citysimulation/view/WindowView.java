@@ -1,7 +1,6 @@
 package unibo.citysimulation.view;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
-import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
@@ -19,32 +18,51 @@ public class WindowView extends JFrame {
     private int width;
     private int height;
 
-    private MapPanel mapPanel = new MapPanel();
-    private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
-    private ClockPanel clockPanel = new ClockPanel(Color.RED);
-    private InputPanel inputPanel = new InputPanel(Color.BLUE);
-    private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
+    private MapPanel mapPanel;
+    private InfoPanel infoPanel;
+    private ClockPanel clockPanel;
+    private InputPanel inputPanel;
+    private GraphicsPanel graphicsPanel;
+
 
     /**
      * Constructs a WindowView with the specified window model and map model.
      */
     public WindowView() {
-        Pair<Integer,Integer> size = getWindowSize();
-        this.width = size.getFirst();
-        this.height = size.getSecond();
-        
-
-        setSize(width, height);
-        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
-
+        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL,
+                ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
+    
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setFocusable(true);
+    
+        // Creiamo i componenti
+        mapPanel = new MapPanel();
+        infoPanel = new InfoPanel(Color.GREEN);
+        clockPanel = new ClockPanel(Color.RED);
+        inputPanel = new InputPanel(Color.BLUE);
+        graphicsPanel = new GraphicsPanel(Color.YELLOW);
+    
+    
         configureLayout();
+        // Creiamo i componenti prima di aggiungerli al frame
         createComponents();
+
+        updatePanelSize();
+    
+        // Aggiungiamo un ComponentAdapter per gestire il ridimensionamento del frame
+        addResizeListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                updatePanelSize();
+            }
+        });
+    
+        // Impostiamo il frame visibile e ridimensionabile
         setVisible(true);
 
+        validate();
         pack();
     }
 
@@ -139,21 +157,26 @@ public class WindowView extends JFrame {
      *
      * @return The pair of width and height.
      */
-    private Pair<Integer,Integer> getWindowSize() {
-        // Get the screen size
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Calculate the maximum dimensions based on the screen size and a constant percentage
-        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-
-        // Calculate the frame dimensions based on the maximum dimensions
-        int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
-        int frameWidth = frameHeight * 2;
-
-        // Create and return the window model with the calculated dimensions
-        return new Pair<>(frameWidth, frameHeight);
-    }
+    /*
+     * private Pair<Integer,Integer> getWindowSize() {
+     * // Get the screen size
+     * Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+     * 
+     * // Calculate the maximum dimensions based on the screen size and a constant
+     * percentage
+     * int maxWidth = (int) (screenSize.getWidth() *
+     * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+     * int maxHeight = (int) (screenSize.getHeight() *
+     * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+     * 
+     * // Calculate the frame dimensions based on the maximum dimensions
+     * int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
+     * int frameWidth = frameHeight * 2;
+     * 
+     * // Create and return the window model with the calculated dimensions
+     * return new Pair<>(frameWidth, frameHeight);
+     * }
+     */
 
     /**
      * Gets the width of the window.
@@ -196,7 +219,7 @@ public class WindowView extends JFrame {
      *
      * @return The info panel.
      */
-    public InfoPanel getInfoPanel(){
+    public InfoPanel getInfoPanel() {
         return infoPanel;
     }
 
@@ -205,7 +228,7 @@ public class WindowView extends JFrame {
      *
      * @return The clock panel.
      */
-    public ClockPanel getClockPanel(){
+    public ClockPanel getClockPanel() {
         return clockPanel;
     }
 
@@ -214,7 +237,7 @@ public class WindowView extends JFrame {
      *
      * @return The input panel.
      */
-    public InputPanel getInputPanel(){
+    public InputPanel getInputPanel() {
         return inputPanel;
     }
 
@@ -223,7 +246,7 @@ public class WindowView extends JFrame {
      *
      * @return The graphics panel.
      */
-    public GraphicsPanel getGraphicsPanel(){
+    public GraphicsPanel getGraphicsPanel() {
         return graphicsPanel;
     }
 
@@ -232,7 +255,7 @@ public class WindowView extends JFrame {
      *
      * @return The map panel.
      */
-    public MapPanel getMapPanel(){
+    public MapPanel getMapPanel() {
         return mapPanel;
     }
 }

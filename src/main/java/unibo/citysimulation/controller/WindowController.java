@@ -2,6 +2,7 @@ package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.view.WindowView;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -20,6 +21,9 @@ public class WindowController {
      */
     public WindowController(WindowView windowView, CityModel cityModel) {
         this.windowView = windowView;
+        
+        var size = cityModel.getFrameSize();
+        this.windowView.setSize(size.getFirst(), size.getSecond());
 
         this.windowView.addResizeListener(new ResizeListener());
 
