@@ -13,6 +13,8 @@ public class WelcomeScreen extends JFrame {
     // Set the layout manager to BorderLayout
     setLayout(new BorderLayout());
 
+    setMinimumSize(new Dimension(400, 200));
+
     // Create a JLabel with the welcome message
     JLabel welcomeLabel = new JLabel("Welcome to city-simulation", SwingConstants.CENTER);
     add(welcomeLabel, BorderLayout.CENTER);

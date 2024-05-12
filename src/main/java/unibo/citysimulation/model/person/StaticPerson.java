@@ -1,14 +1,15 @@
 package unibo.citysimulation.model.person;
 
-import java.time.LocalTime;
+import java.util.Optional;
 
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.utilities.Pair;
 /**
  * An interface for modelling a person
  * 
  * @param PersonState, the state of the person
  */
-public interface Person {
-
+public interface StaticPerson {
 
     /**
 	 * The three standard states of a person
@@ -26,8 +27,14 @@ public interface Person {
 
     PersonData getPersonData();
 
-    void setState(PersonState state);
+    int getMoney();
 
-    void checkState(LocalTime currentTime);
+    void addMoney(int amount);
+
+    int getTripDuration();
+
+    TransportLine getTransportLine();
+
+    Optional<Pair<Integer, Integer>> getPosition();
     
 }

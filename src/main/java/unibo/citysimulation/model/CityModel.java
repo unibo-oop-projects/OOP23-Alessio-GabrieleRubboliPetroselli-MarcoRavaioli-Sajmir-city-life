@@ -4,7 +4,7 @@ import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
-import unibo.citysimulation.model.person.Person;
+import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
@@ -22,7 +22,7 @@ public class CityModel {
     private List<TransportLine> transports;
     private ZoneTable zoneTable;
     private List<Business> businesses;
-    private List<List<Person>> people;
+    private List<List<DynamicPerson>> people;
     private MapModel mapModel;
     private ClockModel clockModel;
 
@@ -49,10 +49,9 @@ public class CityModel {
         System.out.println("Transports created. " + transports.size());
 
         // Create zone table
-        this.zoneTable = new ZoneTable();
-        zoneTable.addPair(zones.get(0), zones.get(1), transports.get(0));
-        zoneTable.addPair(zones.get(1), zones.get(2), transports.get(1));
-        zoneTable.addPair(zones.get(0), zones.get(2),transports.get(2));
+        ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
+        ZoneTable.getInstance().addPair(zones.get(1), zones.get(2), transports.get(1));
+        ZoneTable.getInstance().addPair(zones.get(0), zones.get(2),transports.get(2));
 
         // Create businesses
         this.businesses = BusinessFactory.createBusinesses(zones);
@@ -61,8 +60,8 @@ public class CityModel {
         // Create people
         this.people = new ArrayList<>();
         for (var zone : zones) {
-            this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.getBusinessPercents()/100)),
-            zone.getWellfareMinMax(), businesses, zone, zoneTable));
+            this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.businessPercents()/100)),
+            zone.wellfareMinMax(), businesses, zone, zoneTable));
         }
 
         // Add people as observers to clock model
@@ -76,8 +75,9 @@ public class CityModel {
         // Print details of each person
         for (var group : people) {
             for (var person : group) {
-                System.out.println(person.getPersonData().name() + ", " + person.getPersonData().age() + ", " + person.getPersonData().money() + ", " +
-                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().getName() + ", " + person.getPersonData().residenceZone().getName());
+                System.out.println(person.getPersonData().name() + ", " + person.getPersonData().age() + ", " + person.getMoney() + ", " +
+                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().name() + ", " + person.getPersonData().residenceZone().name()
+                + ", " + person.getTripDuration());
             }
         }
     }
@@ -113,9 +113,9 @@ public class CityModel {
     public List<TransportLine> getTransportLines() {
         return this.transports;
     }
-    public List<Person> getAllPeople() {
-        List<Person> allPeople = new ArrayList<>();
-        for (List<Person> group : this.people) {
+    public List<DynamicPerson> getAllPeople() {
+        List<DynamicPerson> allPeople = new ArrayList<>();
+        for (var group : this.people) {
             allPeople.addAll(group);
         }
         return allPeople;

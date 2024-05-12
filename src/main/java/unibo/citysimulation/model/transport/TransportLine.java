@@ -30,4 +30,6 @@ public interface TransportLine {
     void incrementPersonInLine();
 
     void decrementPersonInLine();
+
+    int getPersonInLine();
 }

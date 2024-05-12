@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import unibo.citysimulation.model.transport.TransportLineImpl;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneImpl;
+//import unibo.citysimulation.model.zone.ZoneImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
