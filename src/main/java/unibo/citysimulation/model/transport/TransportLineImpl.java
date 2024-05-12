@@ -12,6 +12,7 @@ public class TransportLineImpl implements TransportLine {
     private int personInLine=0;
     private int duration;
     private Pair<Zone,Zone> link;
+    private double newCongestion;
 
     public TransportLineImpl(String name,int capacity,int duration, Pair<Zone,Zone> link) {
         this.name = name;
@@ -50,4 +51,9 @@ public class TransportLineImpl implements TransportLine {
     public void decrementPersonInLine() {
         personInLine--;
     }
+    @Override
+    public void setCongestion(double newCongestion) {
+        newCongestion = this.newCongestion;
+    }
+    
 }

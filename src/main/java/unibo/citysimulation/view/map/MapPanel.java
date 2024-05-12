@@ -21,22 +21,17 @@ public class MapPanel extends StyledPanel {
     private List<Zone> zones; // List of zones
     private int originalWidth; 
     private int originalHeight; 
-    private List<TransportLine> transportLines;
 
     /**
      * Constructs a MapPanel with the specified background color.
      */
     public MapPanel() {
         super(bgColor);
-        this.transportLines=new ArrayList<>();
     }
 
     public void setZones(List<Zone> zones) {
         this.zones = zones;
     }
-    public void setTransportLines(List<TransportLine> transportLines) {
-    this.transportLines = transportLines;
-}
 
     /**
      * Paints the map image on the panel.
@@ -97,10 +92,11 @@ public class MapPanel extends StyledPanel {
             Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
 
             // Determine the color based on the capacity
-            int capacity = line.getCapacity();
-            if (capacity < 50) {
+            double capacity = line.getCongestion();
+            System.out.println("congestion: "+capacity);
+            if (capacity < 10) {
                 g2.setColor(Color.GREEN);
-            } else if (capacity < 100) {
+            } else if (capacity < 30) {
                 g2.setColor(Color.YELLOW);
             } else {
                 g2.setColor(Color.ORANGE);
