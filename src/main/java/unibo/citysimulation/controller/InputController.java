@@ -67,6 +67,8 @@ public class InputController {
         clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
  
         mapPanel.setZones(cityModel.getZones());
+        mapPanel.setTransportLines(cityModel.getTransportLines());
+        mapPanel.repaint();
     }  
 }
  

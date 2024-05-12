@@ -1,6 +1,8 @@
 package unibo.citysimulation.view.map;
 
 import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.TransportLineImpl;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
@@ -8,6 +10,7 @@ import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 /**
@@ -18,17 +21,22 @@ public class MapPanel extends StyledPanel {
     private List<Zone> zones; // List of zones
     private int originalWidth; 
     private int originalHeight; 
+    private List<TransportLine> transportLines;
 
     /**
      * Constructs a MapPanel with the specified background color.
      */
     public MapPanel() {
         super(bgColor);
+        this.transportLines=new ArrayList<>();
     }
 
     public void setZones(List<Zone> zones) {
         this.zones = zones;
     }
+    public void setTransportLines(List<TransportLine> transportLines) {
+    this.transportLines = transportLines;
+}
 
     /**
      * Paints the map image on the panel.
@@ -80,20 +88,28 @@ public class MapPanel extends StyledPanel {
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
-        g2.setColor(Color.RED);
-    
-        for (int i = 0; i < zones.size() - 1; i++) {
-            for (int j = i + 1; j < zones.size(); j++) {
-                Zone zone1 = zones.get(i);
-                Zone zone2 = zones.get(j);
-    
-                Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
-                Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
-    
-                g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
+
+        for (TransportLine line : transportLines) {
+            Zone zone1 = line.getLink().getFirst();
+            Zone zone2 = line.getLink().getSecond();
+
+            Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
+            Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
+
+            // Determine the color based on the capacity
+            int capacity = line.getCapacity();
+            if (capacity < 50) {
+                g2.setColor(Color.GREEN);
+            } else if (capacity < 100) {
+                g2.setColor(Color.YELLOW);
+            } else {
+                g2.setColor(Color.ORANGE);
             }
+
+            g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
         }
     }
+
     
     private Pair<Integer, Integer> getCenterOfZone(Zone zone) {
         Boundary bounds = zone.getBoundary();

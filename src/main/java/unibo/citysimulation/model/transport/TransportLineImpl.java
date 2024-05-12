@@ -19,6 +19,12 @@ public class TransportLineImpl implements TransportLine {
         this.duration=duration;
         this.link = link;
     }
+    public Pair<Zone,Zone> getLink(){
+        return link;
+    }
+    public int getCapacity(){
+        return capacity;
+    }
 
     // Getter and setter methods for other fields, if needed
     public String getName() {
