@@ -20,11 +20,15 @@ public class WindowController {
      */
     public WindowController(WindowView windowView, CityModel cityModel) {
         this.windowView = windowView;
+
         this.windowView.addResizeListener(new ResizeListener());
 
         new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
+
         new ClockController(cityModel.getClockModel(), windowView.getClockPanel(), windowView.getInputPanel());
+
         new InputController(cityModel, windowView.getInputPanel(),windowView.getClockPanel(),windowView.getGraphicsPanel(),windowView.getMapPanel());
+
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
     }
 
