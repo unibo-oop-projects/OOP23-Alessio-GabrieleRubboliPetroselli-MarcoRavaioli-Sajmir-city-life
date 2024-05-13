@@ -27,7 +27,7 @@ public class GraphicsController implements ClockObserver {
 
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
-
+        
         List<Double> transportLinesCongestion = cityModel.getTransportLines().stream()
                 .map(TransportLine::getCongestion)
                 .collect(Collectors.toList());

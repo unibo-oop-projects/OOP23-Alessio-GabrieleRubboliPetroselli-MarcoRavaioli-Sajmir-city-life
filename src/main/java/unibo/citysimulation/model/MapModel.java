@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.awt.Color;
 
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
@@ -23,7 +24,7 @@ public class MapModel {
     private int maxY = -1;
 
     private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();
-    private List<Double> congestionsList;
+    private List<Double> congestionsList = new ArrayList<>();
 
     /**
      * Constructs a MapModel object and loads the map image.
@@ -32,7 +33,7 @@ public class MapModel {
         loadMapImage();
     }
 
-    public void setTransportLinesPoints(List<TransportLine> lines) {
+    public void setTransportInfos(List<TransportLine> lines) {
         linesPointsCoordinates = lines.stream()
                 .map(line -> {
                     Pair<Integer, Integer> startPoint = line.getLinkedZones().getFirst().boundary().getCenter();
@@ -40,6 +41,31 @@ public class MapModel {
                     return new Pair<>(startPoint, endPoint);
                 })
                 .collect(Collectors.toList());
+
+        congestionsList = lines.stream()
+                .map(line -> line.getCongestion())
+                .collect(Collectors.toList());
+    }
+
+    public List<Color> getColorList() {
+        return congestionsList.stream()
+                .map(this::getColor)
+                .collect(Collectors.toList());
+    }
+
+    public Color getColor(Double perc) {
+        // Calcola il valore interpolato tra il verde e il rosso in base alla percentuale
+        int red = (int) (255 * perc);
+        int green = (int) (255 * (1 - perc));
+        int blue = 0; // Nessun blu, altrimenti otterremmo un colore viola
+
+        // Assicurati che i valori siano compresi tra 0 e 255
+        red = Math.min(Math.max(red, 0), 255);
+        green = Math.min(Math.max(green, 0), 255);
+        blue = Math.min(Math.max(blue, 0), 255);
+
+        // Restituisci il colore RGB
+        return new Color(red, green, blue);
     }
     
 

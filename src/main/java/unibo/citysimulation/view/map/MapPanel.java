@@ -1,15 +1,11 @@
 package unibo.citysimulation.view.map;
 
-import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.zone.Boundary;
-import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Panel for displaying the map.
@@ -20,7 +16,7 @@ public class MapPanel extends StyledPanel {
     private int originalHeight;
 
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
-    private List<Double> congestionsList;
+    private List<Color> congestionsColorList;
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -34,19 +30,26 @@ public class MapPanel extends StyledPanel {
         repaint();
     }
 
+    public void setCongestionsList(List<Color> ColorList) {
+        this.congestionsColorList = ColorList;
+        repaint();
+    }
+
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.GREEN);
         g2.setStroke(new BasicStroke(4));
 
-        linesPointsCoordinates.forEach(line -> {
-            int x1 = line.getFirst().getFirst();
-            int y1 = line.getFirst().getSecond();
-            int x2 = line.getSecond().getFirst();
-            int y2 = line.getSecond().getSecond();
+        for(int i = 0; i < linesPointsCoordinates.size(); i++) {
+            int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
+            int y1 = linesPointsCoordinates.get(i).getFirst().getSecond();
+            int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
+            int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
+
+            g2.setColor(congestionsColorList.get(i));
 
             g2.drawLine(x1, y1, x2, y2);
-        });
+        }
 
     }
 

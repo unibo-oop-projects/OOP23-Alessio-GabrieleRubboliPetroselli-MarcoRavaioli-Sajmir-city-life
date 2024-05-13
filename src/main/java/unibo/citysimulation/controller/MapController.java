@@ -35,6 +35,8 @@ public class MapController implements ClockObserver{
         this.mapModel = cityModel.getMapModel();
         //mapPanel.setZones(cityModel.getZones());
 
+        cityModel.getClockModel().addObserver(this);
+
         mapPanel.setImage(mapModel.getImage());
 
         mapPanel.addMouseListener(new MouseAdapter() {
@@ -44,8 +46,9 @@ public class MapController implements ClockObserver{
             }
         });
 
-        mapModel.setTransportLinesPoints(cityModel.getTransportLines());
+        mapModel.setTransportInfos(cityModel.getTransportLines());
         mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
+        mapPanel.setCongestionsList(mapModel.getColorList());
     }
 
     /**
@@ -81,8 +84,15 @@ public class MapController implements ClockObserver{
     public BufferedImage getImage() {
         return mapModel.getImage();
     }
+
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
         
+        mapModel.setTransportInfos(cityModel.getTransportLines());
+        mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
+        mapPanel.setCongestionsList(mapModel.getColorList());
+        
+
+        mapPanel.repaint();
     }
 }
