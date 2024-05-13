@@ -10,14 +10,17 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Random;
+
 /**
  * Panel for displaying the map.
  */
 public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
-    private List<Zone> zones; // List of zones
-    private int originalWidth; 
-    private int originalHeight; 
+    private int originalWidth;
+    private int originalHeight;
+
+    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
+    private List<Double> congestionsList;
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -26,8 +29,25 @@ public class MapPanel extends StyledPanel {
         super(bgColor);
     }
 
-    public void setZones(List<Zone> zones) {
-        this.zones = zones;
+    public void setLinesPoints(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points) {
+        this.linesPointsCoordinates = points;
+        repaint();
+    }
+
+    private void drawTransportLines(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.GREEN);
+        g2.setStroke(new BasicStroke(4));
+
+        linesPointsCoordinates.forEach(line -> {
+            int x1 = line.getFirst().getFirst();
+            int y1 = line.getFirst().getSecond();
+            int x2 = line.getSecond().getFirst();
+            int y2 = line.getSecond().getSecond();
+
+            g2.drawLine(x1, y1, x2, y2);
+        });
+
     }
 
     /**
@@ -42,7 +62,10 @@ public class MapPanel extends StyledPanel {
         if (mapImage != null) {
             g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
         }
-        drawTransportLines(g);
+
+        if (linesPointsCoordinates != null) {
+            drawTransportLines(g);
+        }
     }
 
     /**
@@ -50,7 +73,7 @@ public class MapPanel extends StyledPanel {
      *
      * @param image The BufferedImage to set.
      */
-    public void setImage(BufferedImage image){
+    public void setImage(BufferedImage image) {
         mapImage = image;
         originalWidth = image.getWidth();
         originalHeight = image.getHeight();
@@ -71,36 +94,38 @@ public class MapPanel extends StyledPanel {
         }
     }
 
-
-     /**
+    /**
      * Draws the transport lines between zones.
      *
      * @param g The Graphics context.
      */
-    private void drawTransportLines(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
-        g2.setColor(Color.RED);
-    
-        for (int i = 0; i < zones.size() - 1; i++) {
-            for (int j = i + 1; j < zones.size(); j++) {
-                Zone zone1 = zones.get(i);
-                Zone zone2 = zones.get(j);
-    
-                Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
-                Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
-    
-                g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
-            }
-        }
-    }
-    
-    private Pair<Integer, Integer> getCenterOfZone(Zone zone) {
-        Boundary bounds = zone.boundary();
-    
-        int centerX = bounds.getX() + bounds.getWidth() / 2;
-        int centerY = bounds.getY() + bounds.getHeight() / 2;
-    
-        return new Pair<>(centerX, centerY);
-    }
+    /*
+     * private void drawTransportLines(Graphics g) {
+     * Graphics2D g2 = (Graphics2D) g;
+     * g2.setStroke(new BasicStroke(4));
+     * 
+     * for (TransportLine line : transportLines) { // invece che le linee di
+     * trasporto io qui posso avere direttamente la congestione
+     * Zone zone1 = line.getLink().getFirst();
+     * Zone zone2 = line.getLink().getSecond();
+     * 
+     * Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
+     * Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
+     * 
+     * // Determine the color based on the capacity
+     * double capacity = line.getCongestion();
+     * System.out.println("congestion: "+capacity);
+     * if (capacity < 10) {
+     * g2.setColor(Color.GREEN);
+     * } else if (capacity < 30) {
+     * g2.setColor(Color.YELLOW);
+     * } else {
+     * g2.setColor(Color.ORANGE);
+     * }
+     * 
+     * g2.drawLine(startPoint.getFirst(), startPoint.getSecond(),
+     * endPoint.getFirst(), endPoint.getSecond());
+     * }
+     * }
+     */
 }

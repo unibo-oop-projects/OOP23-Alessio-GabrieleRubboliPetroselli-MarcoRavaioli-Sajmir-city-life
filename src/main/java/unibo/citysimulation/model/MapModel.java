@@ -5,6 +5,12 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.utilities.Pair;
 
 /**
  * Model class representing the map.
@@ -16,12 +22,39 @@ public class MapModel {
     private int maxX = -1;
     private int maxY = -1;
 
+    private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();
+    private List<Double> congestionsList;
+
     /**
      * Constructs a MapModel object and loads the map image.
      */
     public MapModel() {
         loadMapImage();
     }
+
+    public void setTransportLinesPoints(List<TransportLine> lines) {
+        linesPointsCoordinates = lines.stream()
+                .map(line -> {
+                    Pair<Integer, Integer> startPoint = line.getLink().getFirst().getBoundary().getCenter();
+                    Pair<Integer, Integer> endPoint = line.getLink().getSecond().getBoundary().getCenter();
+                    return new Pair<>(startPoint, endPoint);
+                })
+                .collect(Collectors.toList());
+    }
+    
+
+    public List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> getLinesPointsCoordinates(){
+        return linesPointsCoordinates;
+    }
+
+    public void setCongestionsList(List<Double> congestionList) {
+        this.congestionsList = congestionList;
+    }
+
+    public List<Double> getCongestionsList() {
+        return congestionsList;
+    }
+
 
     /**
      * Sets the last clicked coordinates after normalization.
