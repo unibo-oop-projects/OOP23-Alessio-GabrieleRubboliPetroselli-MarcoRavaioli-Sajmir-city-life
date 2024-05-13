@@ -27,7 +27,7 @@ public class ClockPanel extends StyledPanel {
     speedButton.setForeground(Color.black);
     speedButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
 
-    pauseButton = new JButton("Stop");
+    pauseButton = new JButton("Pause");
     pauseButton.setForeground(Color.black);
     pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
 
@@ -57,7 +57,7 @@ public class ClockPanel extends StyledPanel {
      * @param isPaused Boolean indicating if simulation is paused.
      */
     public void updatePauseButton(boolean isPaused) {
-        pauseButton.setText(isPaused ? "Resume" : "Stop");
+        pauseButton.setText(isPaused ? "Resume" : "Pause");
     }
 
     /**

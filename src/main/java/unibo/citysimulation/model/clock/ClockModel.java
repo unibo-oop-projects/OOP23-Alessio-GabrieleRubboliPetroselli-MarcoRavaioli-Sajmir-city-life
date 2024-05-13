@@ -60,7 +60,6 @@ public class ClockModel {
         System.out.println("Simulation started");
         if(timer!=null){
             timer.cancel();
-            task.cancel();
         }
         
         this.hourDuration = hourDuration;
@@ -113,6 +112,13 @@ public class ClockModel {
      */
     public void pauseSimulation(){
         isPaused=!isPaused;
+    }
+
+    public void stopSimulation(){
+        if(timer!=null){
+            timer.cancel();
+        }
+        isPaused=true;
     }
 
     /**

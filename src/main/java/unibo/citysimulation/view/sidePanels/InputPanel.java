@@ -9,6 +9,7 @@ import java.awt.*;
 
 public class InputPanel extends StyledPanel {
     private JButton startButton;
+    private JButton stopButton;
     private JSlider peopleSlider;
     private JSlider businessSlider;
     private JSlider richnessSlider;
@@ -53,6 +54,10 @@ public class InputPanel extends StyledPanel {
         startButton = new JButton("Start");
         startButton.setPreferredSize(new Dimension(100, 50));
         buttonPanel.add(startButton);
+
+        stopButton = new JButton("Stop");
+        stopButton.setPreferredSize(new Dimension(100, 50));
+        buttonPanel.add(stopButton);
     
         gbc.gridy = 4;
         gbc.gridwidth = 2; // Occupa due colonne
@@ -61,6 +66,10 @@ public class InputPanel extends StyledPanel {
 
     public JButton getStartButton() {
         return startButton;
+    }
+
+    public JButton getStopButton() {
+        return stopButton;
     }
 
     public int getPeopleSliderValue() {

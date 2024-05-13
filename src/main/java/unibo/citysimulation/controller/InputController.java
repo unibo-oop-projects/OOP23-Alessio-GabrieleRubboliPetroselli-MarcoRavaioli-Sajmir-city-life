@@ -50,6 +50,18 @@ public class InputController {
             }
         });
 
+        inputPanel.getStopButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("PREMUTO IL TASTO STOP SIMULATION");
+                //cityModel.getClockModel().stopSimulation();
+
+                inputPanel.getPeopleSlider().setEnabled(true);
+                inputPanel.getBusinessSlider().setEnabled(true);
+                inputPanel.getRichnessSlider().setEnabled(true);
+            }
+        });
+
  
         // Add change listener for the people slider
         inputPanel.getPeopleSlider().addChangeListener(new ChangeListener() {
