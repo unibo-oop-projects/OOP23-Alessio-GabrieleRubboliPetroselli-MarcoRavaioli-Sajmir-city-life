@@ -1,6 +1,7 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 
@@ -29,7 +30,8 @@ public class WindowController {
         this.windowView.addResizeListener(new ResizeListener());
 
         cityModel.setFrameSize(cityModel.getScreenSize());      //questo comando è inutile se non si vogliono salvare le dimensioni nel cityModel
-
+       
+        //MapModel mapModel = cityModel.getMapModel();
 
         new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
 

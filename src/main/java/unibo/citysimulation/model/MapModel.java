@@ -22,6 +22,7 @@ public class MapModel {
     private int normClickedY = -1;
     private int maxX = -1;
     private int maxY = -1;
+    private boolean simulationStarted = false;
 
     private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();
     private List<Double> congestionsList = new ArrayList<>();
@@ -31,6 +32,10 @@ public class MapModel {
      */
     public MapModel() {
         loadMapImage();
+    }
+
+    public void startSimulation() {
+        simulationStarted = true;
     }
 
     public void setTransportInfos(List<TransportLine> lines) {
@@ -55,6 +60,10 @@ public class MapModel {
 
     public Color getColor(Double perc) {
         // Se la percentuale è inferiore al 50%, restituisci un colore verde
+        if(!simulationStarted){
+            return Color.GRAY;
+        }
+
         if (perc <= 50) {
             int green = (int) (255 * perc / 50);
             return new Color(0, green, 0);

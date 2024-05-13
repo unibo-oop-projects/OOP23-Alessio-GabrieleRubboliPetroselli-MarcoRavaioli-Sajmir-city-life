@@ -6,6 +6,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
  
 import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
@@ -20,6 +21,7 @@ public class InputController {
     private int numberOfPeople = 0;
     private GraphicsPanel graphicsPanel;
     private MapPanel mapPanel;
+    private MapModel mapModel;
  
     /**
      * Constructs an InputController object.
@@ -36,14 +38,17 @@ public class InputController {
         this.graphicsPanel = graphicsPanel;
 
         this.mapPanel = mapPanel;
- 
+
+        numberOfPeople = inputPanel.getPeopleSlider().getValue();
+
+        //cityModel.getMapModel().startSimulation();
         // Add action listener for the start button
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("PREMUTO IL TASTO START SIMULATION");
                 startSimulation(clockPanel);
-
+                cityModel.getMapModel().startSimulation();
                 inputPanel.getPeopleSlider().setEnabled(false);
                 inputPanel.getBusinessSlider().setEnabled(false);
                 inputPanel.getRichnessSlider().setEnabled(false);
