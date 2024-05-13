@@ -6,10 +6,8 @@ import java.awt.event.ActionListener;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
 import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
-import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 import unibo.citysimulation.view.sidePanels.InputPanel;
  
 /**
@@ -17,12 +15,9 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
 */
 public class InputController {
     private CityModel cityModel;
+    private InputModel inputModel;
+
     private InputPanel inputPanel;
-    private int numberOfPeople = 0; //da mettere in inputModel
-    private int numberOfBusiness = 0; //da mettere
-    private int capacity = 0; //da mettere
-    private int richness = 0; //da mettere
-    private GraphicsPanel graphicsPanel;
     private MapPanel mapPanel;
     private MapModel mapModel;
  
@@ -33,16 +28,12 @@ public class InputController {
      * @param inputPanel  The InputPanel object representing the input panel.
      * @param clockPanel  The ClockPanel object representing the clock panel.
      */
-    public InputController(CityModel cityModel, InputModel inputModel, InputPanel inputPanel, ClockPanel clockPanel, GraphicsPanel graphicsPanel, MapPanel mapPanel) {
+    public InputController(CityModel cityModel, InputModel inputModel, InputPanel inputPanel, ClockPanel clockPanel) {
         this.cityModel = cityModel;
 
+        this.inputModel = inputModel;
+
         this.inputPanel = inputPanel;
-
-        this.graphicsPanel = graphicsPanel;
-
-        this.mapPanel = mapPanel;
-
-        numberOfPeople = inputPanel.getPeopleSlider().getValue();
 
         //cityModel.getMapModel().startSimulation();
         // Add action listener for the start button
@@ -57,9 +48,6 @@ public class InputController {
                 inputPanel.getRichnessSlider().setEnabled(false);
             }
         });
-
- 
-
     }
  
     /**
@@ -69,13 +57,13 @@ public class InputController {
      */
     private void startSimulation(ClockPanel clockPanel) {
 
-        numberOfPeople = inputPanel.getPeopleSlider().getValue() * (ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE) + ConstantAndResourceLoader.MIN_PEOPLE;
-        numberOfBusiness = inputPanel.getBusinessSlider().getValue();
-        capacity = inputPanel.getCapacitySlider().getValue();
-        richness = inputPanel.getRichnessSlider().getValue();
-
+        inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue()); 
+        inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());
+        inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
+        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());
+        
         // Create entities with the specified number of people
-        cityModel.createEntities(numberOfPeople);
+        cityModel.createEntities(inputModel.getNumberOfPeople());
         // Restart the clock simulation
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel

@@ -1,5 +1,7 @@
 package unibo.citysimulation.model;
 
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
+
 public class InputModel {
     private int numberOfPeople = 0;
     private int numberOfBusiness = 0;
@@ -11,7 +13,7 @@ public class InputModel {
     }
 
     public void setNumberOfPeople(int numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
+        this.numberOfPeople = numberOfPeople * (ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE) + ConstantAndResourceLoader.MIN_PEOPLE;
     }
 
     public int getNumberOfBusiness() {
