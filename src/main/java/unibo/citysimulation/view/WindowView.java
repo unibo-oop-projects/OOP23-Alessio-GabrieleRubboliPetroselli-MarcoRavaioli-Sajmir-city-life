@@ -78,6 +78,9 @@ public class WindowView extends JFrame {
      * Updates the size of the panels based on the window size.
      */
     public void updateFrame(int width, int height) {
+        this.width = width;
+        this.height = height;
+
         setSize(new Dimension(width, height));
 
         inputPanel.setPreferredSize(new Dimension(width / 4, height));
@@ -149,68 +152,6 @@ public class WindowView extends JFrame {
         // Add left and right panels to the window
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
-    }
-
-    /**
-     * Retrieves the size of the window based on screen dimensions.
-     *
-     * @return The pair of width and height.
-     */
-    /*
-     * private Pair<Integer,Integer> getWindowSize() {
-     * // Get the screen size
-     * Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-     * 
-     * // Calculate the maximum dimensions based on the screen size and a constant
-     * percentage
-     * int maxWidth = (int) (screenSize.getWidth() *
-     * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-     * int maxHeight = (int) (screenSize.getHeight() *
-     * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-     * 
-     * // Calculate the frame dimensions based on the maximum dimensions
-     * int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
-     * int frameWidth = frameHeight * 2;
-     * 
-     * // Create and return the window model with the calculated dimensions
-     * return new Pair<>(frameWidth, frameHeight);
-     * }
-     */
-
-    /**
-     * Gets the width of the window.
-     *
-     * @return The width of the window.
-     */
-    public int getWidth() {
-        return width;
-    }
-
-    /**
-     * Gets the height of the window.
-     *
-     * @return The height of the window.
-     */
-    public int getHeight() {
-        return height;
-    }
-
-    /**
-     * Sets the width of the window.
-     *
-     * @param width The width of the window.
-     */
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    /**
-     * Sets the height of the window.
-     *
-     * @param height The height of the window.
-     */
-    public void setHeight(int height) {
-        this.height = height;
     }
 
 
