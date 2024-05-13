@@ -157,7 +157,7 @@ public class MapModel {
     private void loadMapImage() {
         try {
             // Load the image using a relative path within the classpath
-            URL imageUrl = getClass().getResource("/unibo/citysimulation/mapImage.jpeg");
+            URL imageUrl = getClass().getResource("/unibo/citysimulation/image2.jpg");
             if (imageUrl != null) {
                 image = ImageIO.read(imageUrl);
             } else {
