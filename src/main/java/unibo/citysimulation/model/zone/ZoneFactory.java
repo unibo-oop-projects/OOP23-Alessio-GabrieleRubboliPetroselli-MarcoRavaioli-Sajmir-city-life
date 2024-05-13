@@ -39,7 +39,7 @@ public class ZoneFactory {
     }
 
     private static Zone createZone(JsonObject jsonObject) {
-        return new ZoneImpl(
+        return new Zone(
                 jsonObject.get("name").getAsString(),
                 jsonObject.get("personPercents").getAsFloat(),
                 jsonObject.get("businessPercents").getAsFloat(),

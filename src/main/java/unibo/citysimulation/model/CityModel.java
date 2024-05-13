@@ -4,13 +4,18 @@ import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
-import unibo.citysimulation.model.person.Person;
+import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTable;
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
+import unibo.citysimulation.utilities.Pair;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +27,12 @@ public class CityModel {
     private List<TransportLine> transports;
     private ZoneTable zoneTable;
     private List<Business> businesses;
-    private List<List<Person>> people;
+    private List<List<DynamicPerson>> people;
     private MapModel mapModel;
     private ClockModel clockModel;
+
+    private int frameWidth;
+    private int frameHeight;
 
     /**
      * Constructs a CityModel object with default settings.
@@ -33,6 +41,9 @@ public class CityModel {
         this.mapModel = new MapModel();
         this.clockModel = new ClockModel(365);
         this.zones = ZoneFactory.createZonesFromFile();
+        System.out.println("Zones created. " + zones.size());
+        this.transports = TransportFactory.createTransportsFromFile(zones);
+        System.out.println("Transports created. " + transports.size());
     }
 
     /**
@@ -42,17 +53,15 @@ public class CityModel {
     public void createEntities(int numberOfPeople) {
         // Create zones
         //this.zones = ZoneFactory.createZonesFromFile();
-        System.out.println("Zones created. " + zones.size());
 
         // Create transports
         this.transports = TransportFactory.createTransportsFromFile(zones);
         System.out.println("Transports created. " + transports.size());
 
         // Create zone table
-        this.zoneTable = new ZoneTable();
-        zoneTable.addPair(zones.get(0), zones.get(1), transports.get(0));
-        zoneTable.addPair(zones.get(1), zones.get(2), transports.get(1));
-        zoneTable.addPair(zones.get(0), zones.get(2),transports.get(2));
+        ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
+        ZoneTable.getInstance().addPair(zones.get(1), zones.get(2), transports.get(1));
+        ZoneTable.getInstance().addPair(zones.get(0), zones.get(2),transports.get(2));
 
         // Create businesses
         this.businesses = BusinessFactory.createBusinesses(zones);
@@ -61,8 +70,8 @@ public class CityModel {
         // Create people
         this.people = new ArrayList<>();
         for (var zone : zones) {
-            this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.getBusinessPercents()/100)),
-            zone.getWellfareMinMax(), businesses, zone, zoneTable));
+            this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.businessPercents()/100)),
+            zone.wellfareMinMax(), businesses, zone, zoneTable));
         }
 
         // Add people as observers to clock model
@@ -76,10 +85,27 @@ public class CityModel {
         // Print details of each person
         for (var group : people) {
             for (var person : group) {
-                System.out.println(person.getPersonData().name() + ", " + person.getPersonData().age() + ", " + person.getPersonData().money() + ", " +
-                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().getName() + ", " + person.getPersonData().residenceZone().getName());
+                System.out.println(person.getPersonData().name() + ", " + person.getPersonData().age() + ", " + person.getMoney() + ", " +
+                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().name() + ", " + person.getPersonData().residenceZone().name()
+                + ", " + person.getTripDuration());
             }
         }
+    }
+
+    public Pair<Integer,Integer> getFrameSize(){
+        // Get the screen size
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Calculate the maximum dimensions based on the screen size and a constant percentage
+        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+
+        // Calculate the frame dimensions based on the maximum dimensions
+        int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
+        int frameWidth = frameHeight * 2;
+
+        // Create and return the window model with the calculated dimensions
+        return new Pair<>(frameWidth, frameHeight);
     }
 
     /**
@@ -113,11 +139,41 @@ public class CityModel {
     public List<TransportLine> getTransportLines() {
         return this.transports;
     }
-    public List<Person> getAllPeople() {
-        List<Person> allPeople = new ArrayList<>();
-        for (List<Person> group : this.people) {
+
+    public List<DynamicPerson> getAllPeople() {
+        List<DynamicPerson> allPeople = new ArrayList<>();
+        for (var group : this.people) {
             allPeople.addAll(group);
         }
         return allPeople;
+    }
+
+    public void setFrameSize(Pair<Integer, Integer> frameSize) {
+        this.frameWidth = frameSize.getFirst();
+        this.frameHeight = frameSize.getSecond();
+    }
+
+    public int getFrameWidth(){
+        return this.frameWidth;
+    }
+
+    public int getFrameHeight(){
+        return this.frameHeight;
+    }
+
+    public Pair<Integer, Integer> getScreenSize() {
+        // Get the screen size
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Calculate the maximum dimensions based on the screen size and a constant percentage
+        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+
+        // Calculate the frame dimensions based on the maximum dimensions
+        int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
+        int frameWidth = frameHeight * 2;
+
+        // Create and return the window model with the calculated dimensions
+        return new Pair<>(frameWidth, frameHeight);
     }
 }

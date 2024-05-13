@@ -79,8 +79,6 @@ public class ClockModel {
                             currentDay++;
                         }
     
-                        System.out.println("Current time: " + currentTime.format(formatter) + " Day: " + currentDay);
-                        System.out.println("hour duration : "+ hourDuration);
                         
                         notifyObservers();
     
@@ -121,10 +119,17 @@ public class ClockModel {
      * Notifies all observers of a time update.
      */
     private void notifyObservers() {
-        for (ClockObserver observer : observers) {
+        long startTime = System.currentTimeMillis();
+        List<ClockObserver> observersCopy = new ArrayList<>(observers);
+        for (ClockObserver observer : observersCopy) {
             observer.onTimeUpdate(currentTime, currentDay);
         }
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
+        System.out.println("Tempo trascorso notify: " + elapsedTime + " millisecondi");
     }
+    
+    
 
     /**
      * Gets the current time of the simulation.

@@ -114,7 +114,7 @@ public class MapPanel extends StyledPanel {
 
     
     private Pair<Integer, Integer> getCenterOfZone(Zone zone) {
-        Boundary bounds = zone.getBoundary();
+        Boundary bounds = zone.boundary();
     
         int centerX = bounds.getX() + bounds.getWidth() / 2;
         int centerY = bounds.getY() + bounds.getHeight() / 2;
