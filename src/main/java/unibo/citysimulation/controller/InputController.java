@@ -17,7 +17,7 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
 public class InputController {
     private CityModel cityModel;
     private InputPanel inputPanel;
-    private int numberOfPeople = 0;
+    private int numberOfPeople;
     private GraphicsPanel graphicsPanel;
     private MapPanel mapPanel;
  
@@ -36,6 +36,8 @@ public class InputController {
         this.graphicsPanel = graphicsPanel;
 
         this.mapPanel = mapPanel;
+
+        numberOfPeople = inputPanel.getPeopleSlider().getValue();
  
         // Add action listener for the start button
         inputPanel.getStartButton().addActionListener(new ActionListener() {
@@ -54,7 +56,7 @@ public class InputController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("PREMUTO IL TASTO STOP SIMULATION");
-                //cityModel.getClockModel().stopSimulation();
+                stopSimulation(clockPanel);
 
                 inputPanel.getPeopleSlider().setEnabled(true);
                 inputPanel.getBusinessSlider().setEnabled(true);
@@ -84,6 +86,17 @@ public class InputController {
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
-    }  
+
+        clockPanel.getPauseButton().setEnabled(true);
+    }
+    
+    private void stopSimulation(ClockPanel clockPanel) {
+        // Restart the clock simulation
+        cityModel.getClockModel().stopSimulation();
+        // Update the pause button state on the clock panel
+        clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
+
+        clockPanel.getPauseButton().setEnabled(false);
+    }
 }
  

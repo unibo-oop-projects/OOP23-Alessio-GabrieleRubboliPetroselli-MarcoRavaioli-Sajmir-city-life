@@ -99,7 +99,6 @@ public class ClockModel {
     public void restartSimulation(){
         if(timer!=null){
             timer.cancel();
-            task.cancel();
         }
         isPaused=false;
         currentTime = LocalTime.of(0,0);
