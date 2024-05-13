@@ -31,7 +31,6 @@ public class WindowController {
 
         cityModel.setFrameSize(cityModel.getScreenSize());      //questo comando è inutile se non si vogliono salvare le dimensioni nel cityModel
 
-
         new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
 
         new ClockController(cityModel.getClockModel(), windowView.getClockPanel(), windowView.getInputPanel());

@@ -70,10 +70,7 @@ public class CityModel {
 
         // Create people
         this.people = new ArrayList<>();
-        for (var zone : zones) {
-            this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.businessPercents()/100)),
-            zone.wellfareMinMax(), businesses, zone, zoneTable));
-        }
+        people = PersonFactory.createAllPeople(numberOfPeople, zones, businesses);
 
         // Add people as observers to clock model
         clockModel.addObserver(new ClockObserverPerson(people));
