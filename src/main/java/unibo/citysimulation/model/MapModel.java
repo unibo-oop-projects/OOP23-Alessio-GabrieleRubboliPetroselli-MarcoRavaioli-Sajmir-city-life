@@ -54,18 +54,17 @@ public class MapModel {
     }
 
     public Color getColor(Double perc) {
-        // Calcola il valore interpolato tra il verde e il rosso in base alla percentuale
-        int red = (int) (255 * perc);
-        int green = (int) (255 * (1 - perc));
-        int blue = 0; // Nessun blu, altrimenti otterremmo un colore viola
-
-        // Assicurati che i valori siano compresi tra 0 e 255
-        red = Math.min(Math.max(red, 0), 255);
-        green = Math.min(Math.max(green, 0), 255);
-        blue = Math.min(Math.max(blue, 0), 255);
-
-        // Restituisci il colore RGB
-        return new Color(red, green, blue);
+        // Se la percentuale è inferiore al 50%, restituisci un colore verde
+        if (perc <= 50) {
+            int green = (int) (255 * perc / 50);
+            return new Color(0, green, 0);
+        } else {
+            // Se la percentuale è oltre il 50%, miscela gradualmente il verde con il rosso
+            double adjustedPerc = (perc / 100 - 50) / 50; // Normalizza la percentuale nell'intervallo 0-1
+            int red = (int) (255 * adjustedPerc);
+            int green = (int) (255 * (1 - adjustedPerc));
+            return new Color(red, green, 0);
+        }
     }
     
 

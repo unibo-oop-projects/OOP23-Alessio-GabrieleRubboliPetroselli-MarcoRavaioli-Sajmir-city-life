@@ -37,7 +37,6 @@ public class MapPanel extends StyledPanel {
 
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.GREEN);
         g2.setStroke(new BasicStroke(4));
 
         for(int i = 0; i < linesPointsCoordinates.size(); i++) {
