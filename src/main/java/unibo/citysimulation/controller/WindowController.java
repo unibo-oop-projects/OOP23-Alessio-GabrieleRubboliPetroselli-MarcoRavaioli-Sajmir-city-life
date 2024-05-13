@@ -25,8 +25,6 @@ public class WindowController {
         this.windowView = windowView;
         this.cityModel = cityModel;
         
-        var size = cityModel.getFrameSize();
-        this.windowView.setSize(size.getFirst(), size.getSecond());
 
         this.windowView.addResizeListener(new ResizeListener());
 
@@ -41,7 +39,8 @@ public class WindowController {
 
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
         
-        windowView.setFrame(cityModel.getScreenSize());
+        Pair<Integer, Integer> frameSize = cityModel.getScreenSize();
+        windowView.updateFrame(frameSize.getFirst(), frameSize.getSecond());
         windowView.repaint();
     }
 

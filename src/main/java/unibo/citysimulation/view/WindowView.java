@@ -49,15 +49,14 @@ public class WindowView extends JFrame {
         // Creiamo i componenti prima di aggiungerli al frame
         createComponents();
 
-        updatePanelSize();
-    
+        
         // Aggiungiamo un ComponentAdapter per gestire il ridimensionamento del frame
-        addResizeListener(new ComponentAdapter() {
+        /*addResizeListener(new ComponentAdapter() {
             @Override
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 updatePanelSize();
             }
-        });
+        });*/
     
         // Impostiamo il frame visibile e ridimensionabile
         setVisible(true);
