@@ -25,6 +25,7 @@ public class WindowController {
     public WindowController(WindowView windowView, CityModel cityModel) {
         this.windowView = windowView;
         this.cityModel = cityModel;
+        
 
         this.windowView.addResizeListener(new ResizeListener());
 
