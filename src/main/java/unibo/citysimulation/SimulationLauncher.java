@@ -15,9 +15,9 @@ public final class SimulationLauncher {
     public void start() {
 
         CityModel cityModel = new CityModel();
-
+        
         WindowView windowView = new WindowView();
-
+        
         new WindowController(windowView, cityModel);
     }
 }

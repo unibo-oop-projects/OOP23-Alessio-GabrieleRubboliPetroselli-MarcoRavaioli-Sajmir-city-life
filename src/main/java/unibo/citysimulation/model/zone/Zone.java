@@ -9,8 +9,8 @@ public record Zone(String name, float personPercents, float businessPercents, Pa
             static Random random = new Random();
 
             public Pair<Integer, Integer> getRandomPosition() {
-                int x = random.nextInt(boundary.getWidth());
-                int y = random.nextInt(boundary.getHeight());
+                int x = random.nextInt(boundary.getWidth()) + boundary.getX();
+                int y = random.nextInt(boundary.getHeight()) + boundary.getY();
                 return new Pair<>(x, y);
             }
 }

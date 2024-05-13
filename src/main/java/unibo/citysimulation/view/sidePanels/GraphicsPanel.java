@@ -34,6 +34,9 @@ public class GraphicsPanel extends StyledPanel {
     private int maxStateHeight = 1;
     private double maxCongestionHeight = 1;
 
+    private NumberAxis stateAxis = new NumberAxis();
+    private NumberAxis congestionAxis = new NumberAxis();
+
     /**
      * Constructs a GraphicsPanel with the specified background color.
      *
@@ -56,8 +59,14 @@ public class GraphicsPanel extends StyledPanel {
             plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
         }
 
+
+        plots.get(0).getRangeAxis().setTickLabelsVisible(false);
+        plots.get(1).getRangeAxis().setTickLabelsVisible(false);
+
+
         // Set layout to arrange charts horizontally
         setLayout(new GridLayout(names.size(), 1));
+
     }
 
     private List<XYSeriesCollection> createDatasets(int num) {
@@ -75,20 +84,6 @@ public class GraphicsPanel extends StyledPanel {
 
         return dataset;
     }
-
-    /*
-     * private XYSeriesCollection createDataset(int numObjects) {
-     * XYSeriesCollection dataset = new XYSeriesCollection();
-     * 
-     * for (int i = 0; i < numObjects; i++) {
-     * XYSeries series = new XYSeries("Object " + String.valueOf(i), false);
-     * 
-     * dataset.addSeries(series);
-     * }
-     * 
-     * return dataset;
-     * }
-     */
 
     private List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
         List<JFreeChart> charts = new ArrayList<JFreeChart>();

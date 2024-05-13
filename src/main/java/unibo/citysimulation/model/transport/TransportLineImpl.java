@@ -24,6 +24,10 @@ public class TransportLineImpl implements TransportLine {
     public String getName() {
         return name;
     }
+
+    public int getPersonInLine(){
+        return personInLine;
+    }
     public double getCongestion(){
         return (double)(personInLine*100/capacity);
     }

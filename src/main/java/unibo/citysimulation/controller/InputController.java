@@ -17,7 +17,7 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
 public class InputController {
     private CityModel cityModel;
     private InputPanel inputPanel;
-    private int numberOfPeople;
+    private int numberOfPeople = 0;
     private GraphicsPanel graphicsPanel;
     private MapPanel mapPanel;
  
@@ -30,9 +30,11 @@ public class InputController {
      */
     public InputController(CityModel cityModel, InputPanel inputPanel, ClockPanel clockPanel,GraphicsPanel graphicsPanel, MapPanel mapPanel) {
         this.cityModel = cityModel;
+
         this.inputPanel = inputPanel;
-        numberOfPeople = inputPanel.getPeopleSlider().getValue();
+
         this.graphicsPanel = graphicsPanel;
+
         this.mapPanel = mapPanel;
  
         // Add action listener for the start button
@@ -41,8 +43,13 @@ public class InputController {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("PREMUTO IL TASTO START SIMULATION");
                 startSimulation(clockPanel);
+
+                inputPanel.getPeopleSlider().setEnabled(false);
+                inputPanel.getBusinessSlider().setEnabled(false);
+                inputPanel.getRichnessSlider().setEnabled(false);
             }
         });
+
  
         // Add change listener for the people slider
         inputPanel.getPeopleSlider().addChangeListener(new ChangeListener() {
