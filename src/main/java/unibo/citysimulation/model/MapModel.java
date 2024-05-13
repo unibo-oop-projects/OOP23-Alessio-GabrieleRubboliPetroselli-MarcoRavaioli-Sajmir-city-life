@@ -63,16 +63,14 @@ public class MapModel {
         if(!simulationStarted){
             return Color.GRAY;
         }
-
         if (perc <= 50) {
-            int green = (int) (255 * perc / 50);
-            return new Color(0, green, 0);
+            int green = 255 - (int) (255 * perc / 50);
+            return new Color(0, Math.min(255, Math.max(0, green)), 0);
         } else {
-            // Se la percentuale è oltre il 50%, miscela gradualmente il verde con il rosso
-            double adjustedPerc = (perc / 100 - 50) / 50; // Normalizza la percentuale nell'intervallo 0-1
+            double adjustedPerc = (perc / 100 - 50) / 50; // Normalize the percentage in the range 0-1
             int red = (int) (255 * adjustedPerc);
             int green = (int) (255 * (1 - adjustedPerc));
-            return new Color(red, green, 0);
+            return new Color(Math.min(255, Math.max(0, red)), Math.min(255, Math.max(0, green)), 0);
         }
     }
     
