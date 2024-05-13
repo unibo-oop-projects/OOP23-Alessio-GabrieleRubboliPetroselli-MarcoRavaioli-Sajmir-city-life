@@ -39,10 +39,5 @@ public interface TransportLine {
 
     Pair<Zone, Zone> getLink();
 
-    void updateCongestion(double newCongestion);
-    void updateColor();
-    Color getColor();
-
-
-
+    void setCongestion(double newCongestion);
 }

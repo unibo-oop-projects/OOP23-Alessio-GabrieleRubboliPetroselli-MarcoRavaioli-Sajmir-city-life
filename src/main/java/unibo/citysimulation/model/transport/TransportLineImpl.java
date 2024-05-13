@@ -78,5 +78,9 @@ public class TransportLineImpl implements TransportLine {
     public Color getColor() {
         return color;
     }
+    @Override
+    public void setCongestion(double newCongestion) {
+        newCongestion = this.newCongestion;
+    }
     
 }
