@@ -87,7 +87,7 @@ public class MapPanel extends StyledPanel {
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
-        g2.setColor(Color.RED); 
+        g2.setColor(Color.GREEN); 
         if (transportLines != null) {
             for (TransportLine line : transportLines) {
                 Pair<Zone, Zone> linkedZones = line.getLink();
@@ -97,6 +97,13 @@ public class MapPanel extends StyledPanel {
 
                     Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
                     Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
+                    if (line.getCongestion() >= 40) {
+                        System.out.println("Congestion: " + line.getCongestion() + " on line " + line.getName());
+                        g2.setColor(Color.RED);
+                    } else {
+                        g2.setColor(Color.GREEN);
+                        System.out.println("Congestion: " + line.getCongestion() + " on line " + line.getName());
+                    }
 
                     g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
                 }
