@@ -2,11 +2,11 @@ package unibo.citysimulation.controller;
  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
  
 import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.InputModel;
 import unibo.citysimulation.model.MapModel;
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
@@ -18,7 +18,10 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
 public class InputController {
     private CityModel cityModel;
     private InputPanel inputPanel;
-    private int numberOfPeople = 0;
+    private int numberOfPeople = 0; //da mettere in inputModel
+    private int numberOfBusiness = 0; //da mettere
+    private int capacity = 0; //da mettere
+    private int richness = 0; //da mettere
     private GraphicsPanel graphicsPanel;
     private MapPanel mapPanel;
     private MapModel mapModel;
@@ -30,7 +33,7 @@ public class InputController {
      * @param inputPanel  The InputPanel object representing the input panel.
      * @param clockPanel  The ClockPanel object representing the clock panel.
      */
-    public InputController(CityModel cityModel, InputPanel inputPanel, ClockPanel clockPanel, GraphicsPanel graphicsPanel, MapPanel mapPanel) {
+    public InputController(CityModel cityModel, InputModel inputModel, InputPanel inputPanel, ClockPanel clockPanel, GraphicsPanel graphicsPanel, MapPanel mapPanel) {
         this.cityModel = cityModel;
 
         this.inputPanel = inputPanel;
@@ -56,13 +59,7 @@ public class InputController {
         });
 
  
-        // Add change listener for the people slider
-        inputPanel.getPeopleSlider().addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                numberOfPeople = inputPanel.getPeopleSlider().getValue();
-            }
-        });
+
     }
  
     /**
@@ -71,6 +68,12 @@ public class InputController {
      * @param clockPanel The ClockPanel object representing the clock panel.
      */
     private void startSimulation(ClockPanel clockPanel) {
+
+        numberOfPeople = inputPanel.getPeopleSlider().getValue() * (ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE) + ConstantAndResourceLoader.MIN_PEOPLE;
+        numberOfBusiness = inputPanel.getBusinessSlider().getValue();
+        capacity = inputPanel.getCapacitySlider().getValue();
+        richness = inputPanel.getRichnessSlider().getValue();
+
         // Create entities with the specified number of people
         cityModel.createEntities(numberOfPeople);
         // Restart the clock simulation

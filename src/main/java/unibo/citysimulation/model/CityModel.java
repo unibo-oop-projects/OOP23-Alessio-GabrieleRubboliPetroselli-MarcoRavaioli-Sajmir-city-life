@@ -30,6 +30,7 @@ public class CityModel {
     private List<List<DynamicPerson>> people;
     private MapModel mapModel;
     private ClockModel clockModel;
+    private InputModel inputModel;
 
     private int frameWidth;
     private int frameHeight;
@@ -40,6 +41,7 @@ public class CityModel {
     public CityModel() {
         this.mapModel = new MapModel();
         this.clockModel = new ClockModel(365);
+        this.inputModel = new InputModel();
 
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportFactory.createTransportsFromFile(zones);
@@ -122,6 +124,10 @@ public class CityModel {
      */
     public ClockModel getClockModel() {
         return this.clockModel;
+    }
+
+    public InputModel getInputModel() {
+        return this.inputModel;
     }
 
     /**
