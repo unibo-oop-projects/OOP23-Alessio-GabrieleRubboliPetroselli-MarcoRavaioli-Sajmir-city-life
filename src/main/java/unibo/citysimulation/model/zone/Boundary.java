@@ -50,5 +50,9 @@ public class Boundary {
         return coordinates.getFirst().getSecond();
     }
 
+    public Pair<Integer, Integer> getCenter(){
+        return new Pair<Integer, Integer>(getX() + getWidth() / 2, getY() + getHeight() / 2);
+    }
+
     
 }

@@ -28,7 +28,7 @@ public class InputController {
      * @param inputPanel  The InputPanel object representing the input panel.
      * @param clockPanel  The ClockPanel object representing the clock panel.
      */
-    public InputController(CityModel cityModel, InputPanel inputPanel, ClockPanel clockPanel,GraphicsPanel graphicsPanel, MapPanel mapPanel) {
+    public InputController(CityModel cityModel, InputPanel inputPanel, ClockPanel clockPanel, GraphicsPanel graphicsPanel, MapPanel mapPanel) {
         this.cityModel = cityModel;
 
         this.inputPanel = inputPanel;
@@ -72,10 +72,6 @@ public class InputController {
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
-
-        graphicsPanel.clearDatasets();
- 
-        mapPanel.setZones(cityModel.getZones());
     }  
 }
  

@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.awt.Color;
+
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.utilities.Pair;
 
 /**
  * Model class representing the map.
@@ -16,12 +23,63 @@ public class MapModel {
     private int maxX = -1;
     private int maxY = -1;
 
+    private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();
+    private List<Double> congestionsList = new ArrayList<>();
+
     /**
      * Constructs a MapModel object and loads the map image.
      */
     public MapModel() {
         loadMapImage();
     }
+
+    public void setTransportInfos(List<TransportLine> lines) {
+        linesPointsCoordinates = lines.stream()
+                .map(line -> {
+                    Pair<Integer, Integer> startPoint = line.getLinkedZones().getFirst().boundary().getCenter();
+                    Pair<Integer, Integer> endPoint = line.getLinkedZones().getSecond().boundary().getCenter();
+                    return new Pair<>(startPoint, endPoint);
+                })
+                .collect(Collectors.toList());
+
+        congestionsList = lines.stream()
+                .map(line -> line.getCongestion())
+                .collect(Collectors.toList());
+    }
+
+    public List<Color> getColorList() {
+        return congestionsList.stream()
+                .map(this::getColor)
+                .collect(Collectors.toList());
+    }
+
+    public Color getColor(Double perc) {
+        // Se la percentuale è inferiore al 50%, restituisci un colore verde
+        if (perc <= 50) {
+            int green = (int) (255 * perc / 50);
+            return new Color(0, green, 0);
+        } else {
+            // Se la percentuale è oltre il 50%, miscela gradualmente il verde con il rosso
+            double adjustedPerc = (perc / 100 - 50) / 50; // Normalizza la percentuale nell'intervallo 0-1
+            int red = (int) (255 * adjustedPerc);
+            int green = (int) (255 * (1 - adjustedPerc));
+            return new Color(red, green, 0);
+        }
+    }
+    
+
+    public List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> getLinesPointsCoordinates(){
+        return linesPointsCoordinates;
+    }
+
+    public void setCongestionsList(List<Double> congestionList) {
+        this.congestionsList = congestionList;
+    }
+
+    public List<Double> getCongestionsList() {
+        return congestionsList;
+    }
+
 
     /**
      * Sets the last clicked coordinates after normalization.

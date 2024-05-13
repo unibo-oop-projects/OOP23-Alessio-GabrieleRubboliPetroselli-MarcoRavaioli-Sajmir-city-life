@@ -31,6 +31,7 @@ public class TransportLineImpl implements TransportLine {
     public double getCongestion(){
         return (double)(personInLine*100/capacity);
     }
+    
     public int getDuration(){
         return duration;
     }
