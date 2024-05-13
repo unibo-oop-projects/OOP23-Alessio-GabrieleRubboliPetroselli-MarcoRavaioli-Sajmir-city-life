@@ -4,7 +4,6 @@ import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
-import unibo.citysimulation.model.clock.ClockObserverTransport;
 import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
