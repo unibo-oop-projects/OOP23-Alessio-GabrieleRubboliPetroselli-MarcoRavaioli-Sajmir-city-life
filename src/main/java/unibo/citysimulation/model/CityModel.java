@@ -92,6 +92,22 @@ public class CityModel {
         }
     }
 
+    public Pair<Integer,Integer> getFrameSize(){
+        // Get the screen size
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Calculate the maximum dimensions based on the screen size and a constant percentage
+        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+
+        // Calculate the frame dimensions based on the maximum dimensions
+        int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
+        int frameWidth = frameHeight * 2;
+
+        // Create and return the window model with the calculated dimensions
+        return new Pair<>(frameWidth, frameHeight);
+    }
+
     /**
      * Gets the map model associated with this city model.
      * @return The map model.
