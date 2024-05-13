@@ -13,7 +13,7 @@ public class InputModel {
     }
 
     public void setNumberOfPeople(int numberOfPeople) {
-        this.numberOfPeople = numberOfPeople * (ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE) + ConstantAndResourceLoader.MIN_PEOPLE;
+        this.numberOfPeople = numberOfPeople * (ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE) / 100 + ConstantAndResourceLoader.MIN_PEOPLE;
     }
 
     public int getNumberOfBusiness() {

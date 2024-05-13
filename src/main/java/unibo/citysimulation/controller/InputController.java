@@ -44,6 +44,7 @@ public class InputController {
                 startSimulation(clockPanel);
                 cityModel.getMapModel().startSimulation();
                 inputPanel.getPeopleSlider().setEnabled(false);
+                inputPanel.getCapacitySlider().setEnabled(false);
                 inputPanel.getBusinessSlider().setEnabled(false);
                 inputPanel.getRichnessSlider().setEnabled(false);
             }
