@@ -21,6 +21,7 @@ public class MapPanel extends StyledPanel {
     private List<Zone> zones; // List of zones
     private int originalWidth; 
     private int originalHeight; 
+    private List<TransportLine> transportLines;
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -31,6 +32,9 @@ public class MapPanel extends StyledPanel {
 
     public void setZones(List<Zone> zones) {
         this.zones = zones;
+    }
+    public void setTransportLines(List<TransportLine> transportLines) {
+        this.transportLines = transportLines;
     }
 
     /**
@@ -83,26 +87,20 @@ public class MapPanel extends StyledPanel {
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
-    
-        for (TransportLine line : transportLines) {
-            Zone zone1 = line.getLink().getFirst();
-            Zone zone2 = line.getLink().getSecond();
-    
-            Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
-            Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
+        g2.setColor(Color.RED); 
+        if (transportLines != null) {
+            for (TransportLine line : transportLines) {
+                Pair<Zone, Zone> linkedZones = line.getLink();
+                if (linkedZones != null) {
+                    Zone zone1 = linkedZones.getFirst();
+                    Zone zone2 = linkedZones.getSecond();
 
-            // Determine the color based on the capacity
-            double capacity = line.getCongestion();
-            System.out.println("congestion: "+capacity);
-            if (capacity < 10) {
-                g2.setColor(Color.GREEN);
-            } else if (capacity < 30) {
-                g2.setColor(Color.YELLOW);
-            } else {
-                g2.setColor(Color.ORANGE);
+                    Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
+                    Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
+
+                    g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
+                }
             }
-
-            g2.drawLine(startPoint.getFirst(), startPoint.getSecond(), endPoint.getFirst(), endPoint.getSecond());
         }
     }
     

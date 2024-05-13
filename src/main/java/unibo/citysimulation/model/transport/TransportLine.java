@@ -38,6 +38,4 @@ public interface TransportLine {
     int getCapacity();
 
     Pair<Zone, Zone> getLink();
-
-    void setCongestion(double newCongestion);
 }
