@@ -35,8 +35,8 @@ public class MapModel {
     public void setTransportLinesPoints(List<TransportLine> lines) {
         linesPointsCoordinates = lines.stream()
                 .map(line -> {
-                    Pair<Integer, Integer> startPoint = line.getLink().getFirst().getBoundary().getCenter();
-                    Pair<Integer, Integer> endPoint = line.getLink().getSecond().getBoundary().getCenter();
+                    Pair<Integer, Integer> startPoint = line.getLinkedZones().getFirst().boundary().getCenter();
+                    Pair<Integer, Integer> endPoint = line.getLinkedZones().getSecond().boundary().getCenter();
                     return new Pair<>(startPoint, endPoint);
                 })
                 .collect(Collectors.toList());

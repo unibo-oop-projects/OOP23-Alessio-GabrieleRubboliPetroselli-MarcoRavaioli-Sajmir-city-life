@@ -40,9 +40,9 @@ public class GraphicsController implements ClockObserver {
                 (int) allPeople.stream().filter(person -> person.getState() == PersonState.WORKING).count());
 
         graphicsPanel.updateDataset(
-            (int)cityModel.getTransportLines().get(0).getCongestion(), 
-            (int)cityModel.getTransportLines().get(1).getCongestion(),
+            peopleStateCounts, 
+            transportLinesCongestion,
+            50,
             this.counter++);
-
     }
 }
