@@ -80,7 +80,7 @@ public class ClockController implements ClockObserver {
         if (clockModel.getTimer() != null) {
             clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
         } else {
-            clockModel.setHourDuration(speed);
+            clockModel.setHourDuration(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
         }
     }
 

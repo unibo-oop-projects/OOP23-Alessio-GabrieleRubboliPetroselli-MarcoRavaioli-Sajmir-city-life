@@ -28,7 +28,12 @@ public class MapModel {
     private int maxY = -1;
     private boolean simulationStarted = false;
 
-    private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();    //coordinate normalizzate da 0 a 1000
+    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = new ArrayList<>(); // coordinate
+                                                                                                                   // normalizzate
+                                                                                                                   // da
+                                                                                                                   // 0
+                                                                                                                   // a
+                                                                                                                   // 1000
     private List<Double> congestionsList = new ArrayList<>();
 
     /**
@@ -61,7 +66,10 @@ public class MapModel {
                 .filter(person -> person.getPosition().isPresent())
                 .collect(Collectors.toMap(
                         person -> person.getPersonData().name(),
-                        person -> new Pair<>(person.getPosition().get(), this.getPersonColor(person))));
+                        person -> new Pair<>(
+                                new Pair<>(denormalizeCoordinate(person.getPosition().get().getFirst(), maxX),
+                                        denormalizeCoordinate(person.getPosition().get().getSecond(), maxY)),
+                                this.getPersonColor(person))));
     }
 
     public List<Color> getColorList() {
@@ -72,7 +80,7 @@ public class MapModel {
 
     public Color getColor(Double perc) {
         // Se la percentuale è inferiore al 50%, restituisci un colore verde
-        if(!simulationStarted){
+        if (!simulationStarted) {
             return Color.GRAY;
         }
         if (perc <= 50) {
@@ -94,14 +102,15 @@ public class MapModel {
         }
     }
 
-    public List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> getLinesPointsCoordinates(){
+    public List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> getLinesPointsCoordinates() {
         return linesPointsCoordinates.stream()
                 .map(pair -> new Pair<>(
-                        new Pair<>(denormalizeCoordinate(pair.getFirst().getFirst(), maxX), denormalizeCoordinate(pair.getFirst().getSecond(), maxY)),
-                        new Pair<>(denormalizeCoordinate(pair.getSecond().getFirst(), maxX), denormalizeCoordinate(pair.getSecond().getSecond(), maxY))))
+                        new Pair<>(denormalizeCoordinate(pair.getFirst().getFirst(), maxX),
+                                denormalizeCoordinate(pair.getFirst().getSecond(), maxY)),
+                        new Pair<>(denormalizeCoordinate(pair.getSecond().getFirst(), maxX),
+                                denormalizeCoordinate(pair.getSecond().getSecond(), maxY))))
                 .collect(Collectors.toList());
     }
-    
 
     public void setCongestionsList(List<Double> congestionList) {
         this.congestionsList = congestionList;
@@ -118,8 +127,8 @@ public class MapModel {
      * @param y The y-coordinate of the click.
      */
     public void setLastClickedCoordinates(int x, int y) {
-        normClickedX = normalizeCoordinate(x, maxX);
-        normClickedY = normalizeCoordinate(y, maxY);
+        normClickedX = x;
+        normClickedY = y;
     }
 
     /**
@@ -131,8 +140,8 @@ public class MapModel {
     public void setMaxCoordinates(int x, int y) {
         maxX = x;
         maxY = y;
-        //System.out.println("maxX: " + maxX);
-        //System.out.println("maxY: " + maxY);
+        // System.out.println("maxX: " + maxX);
+        // System.out.println("maxY: " + maxY);
     }
 
     /**
@@ -142,11 +151,11 @@ public class MapModel {
      * @param max The maximum value of the coordinate.
      * @return The normalized coordinate.
      */
-    private int normalizeCoordinate(int c, int max) {
+    public int normalizeCoordinate(int c, int max) {
         return (int) (c / (double) max * 1000);
     }
 
-    private int denormalizeCoordinate(int c, int max) {
+    public int denormalizeCoordinate(int c, int max) {
         return (int) (c / 1000.0 * max);
     }
 
@@ -156,6 +165,14 @@ public class MapModel {
 
     public int getNormY() {
         return normClickedY;
+    }
+
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getMaxY() {
+        return maxY;
     }
 
     /**
