@@ -7,11 +7,9 @@ import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.transport.TransportLineImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTable;
-import unibo.citysimulation.utilities.Pair;
 import java.util.List;
 
 
