@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.awt.Color;
 import java.util.Map;
-import java.util.HashMap;
 
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;

@@ -1,16 +1,10 @@
 package unibo.citysimulation.view.map;
 
-import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.transport.TransportLineImpl;
-import unibo.citysimulation.model.zone.Boundary;
-import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +17,6 @@ import javax.swing.SwingUtilities;
  */
 public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
-    private int originalWidth;
-    private int originalHeight;
 
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
     private List<Color> congestionsColorList;
@@ -121,8 +113,6 @@ public class MapPanel extends StyledPanel {
      */
     public void setImage(BufferedImage image) {
         mapImage = image;
-        originalWidth = image.getWidth();
-        originalHeight = image.getHeight();
         repaint();
     }
 

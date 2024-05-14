@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
  
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.InputPanel;
  
@@ -18,8 +16,6 @@ public class InputController {
     private InputModel inputModel;
 
     private InputPanel inputPanel;
-    private MapPanel mapPanel;
-    private MapModel mapModel;
  
     /**
      * Constructs an InputController object.

@@ -1,8 +1,6 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.clock.ClockObserverTransport;
-import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 
@@ -43,7 +41,7 @@ public class WindowController {
                 windowView.getClockPanel());
 
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
-        cityModel.getClockModel().addObserver(new ClockObserverTransport(cityModel.getTransportLines(), windowView.getMapPanel()));
+        //cityModel.getClockModel().addObserver(new ClockObserverTransport(cityModel.getTransportLines(), windowView.getMapPanel()));
 
         Pair<Integer, Integer> frameSize = cityModel.getScreenSize();
         windowView.updateFrame(frameSize.getFirst(), frameSize.getSecond());

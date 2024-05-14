@@ -1,7 +1,6 @@
 package unibo.citysimulation.model.business;
  
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.utilities.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

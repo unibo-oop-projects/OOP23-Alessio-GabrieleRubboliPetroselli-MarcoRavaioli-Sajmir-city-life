@@ -25,7 +25,6 @@ import java.util.List;
 public class CityModel {
     private List<Zone> zones;
     private List<TransportLine> transports;
-    private ZoneTable zoneTable;
     private List<Business> businesses;
     private List<List<DynamicPerson>> people;
     private MapModel mapModel;

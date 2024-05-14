@@ -1,6 +1,5 @@
 package unibo.citysimulation.view.sidePanels;
 
-import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
