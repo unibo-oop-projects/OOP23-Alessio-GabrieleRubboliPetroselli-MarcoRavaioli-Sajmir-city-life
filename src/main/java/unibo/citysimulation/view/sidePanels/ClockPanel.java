@@ -51,8 +51,8 @@ public class ClockPanel extends StyledPanel {
      * @param hourText The text for the hour label.
      */
     public void setClockText(String dayText, String hourText) {
-        timeDay.setText(dayText);
-        timeHour.setText(hourText);
+        timeDay.setText("Day: " + dayText);
+        timeHour.setText("Hour: " + hourText);
     }
 
     /**

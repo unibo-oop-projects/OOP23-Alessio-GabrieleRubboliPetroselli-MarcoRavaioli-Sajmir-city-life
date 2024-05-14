@@ -7,11 +7,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
-
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
-import javax.swing.SwingUtilities;
 /**
  * Panel for displaying the map.
  */
@@ -24,41 +19,11 @@ public class MapPanel extends StyledPanel {
 
     private List<String> transportLines;
 
-    //private int originalWidth;
-    //private int originalHeight;
     /**
      * Constructs a MapPanel with the specified background color.
      */
     public MapPanel() {
         super(bgColor);
-
-        // Add a ComponentListener to listen for resize events
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                System.out.println("MapPanel size: " + getWidth() + "x" + getHeight());
-
-                Window window = SwingUtilities.getWindowAncestor(MapPanel.this);
-                if (window != null) {
-                    System.out.println("Window size: " + window.getWidth() + "x" + window.getHeight());
-                }
-            }
-        });
-    }
-
-    public void setLinesPoints(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points) {
-        this.linesPointsCoordinates = points;
-    }
-    public void SetTransportNames(List<String> lines){
-        transportLines = lines;      
-    }
-
-    public void setCongestionsList(List<Color> ColorList) {
-        this.congestionsColorList = ColorList;
-    }
-
-    public void setPeopleMap(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap) {
-        this.peopleMap = peopleMap;
     }
 
     private void drawTransportLines(Graphics g) {
@@ -132,6 +97,21 @@ public class MapPanel extends StyledPanel {
         }
     }
 
+    public void setLinesPoints(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points) {
+        this.linesPointsCoordinates = points;
+    }
+    public void SetTransportNames(List<String> lines){
+        transportLines = lines;      
+    }
+
+    public void setCongestionsList(List<Color> ColorList) {
+        this.congestionsColorList = ColorList;
+    }
+
+    public void setPeopleMap(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap) {
+        this.peopleMap = peopleMap;
+    }
+
     /**
      * Sets the image to be displayed on the map panel.
      *
@@ -139,10 +119,6 @@ public class MapPanel extends StyledPanel {
      */
     public void setImage(BufferedImage image) {
         mapImage = image;
-
-        //originalWidth = image.getWidth();
-
-        //originalHeight = image.getHeight();
         repaint();
     }
 

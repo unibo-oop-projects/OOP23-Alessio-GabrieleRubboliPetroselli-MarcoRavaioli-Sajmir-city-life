@@ -15,8 +15,8 @@ import java.awt.event.ComponentAdapter;
  * Represents the main window of the application.
  */
 public class WindowView extends JFrame {
-    private int width;
-    private int height;
+    private int width;                              // questi potrebbero non essere necessari, bisogna che nel createSidePanel
+    private int height;                             // vengano passate le dimensioni, magari dal windowController, controllare l'ordine di istanziazione delle classi 
 
     private MapPanel mapPanel;
     private InfoPanel infoPanel;
@@ -36,29 +36,18 @@ public class WindowView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setFocusable(true);
-    
+
+        setLayout(new BorderLayout());
+
         // Creiamo i componenti
         mapPanel = new MapPanel();
         infoPanel = new InfoPanel(Color.GREEN);
         clockPanel = new ClockPanel(Color.RED);
         inputPanel = new InputPanel(Color.BLUE);
         graphicsPanel = new GraphicsPanel(Color.YELLOW);
-    
-    
-        configureLayout();
-        // Creiamo i componenti prima di aggiungerli al frame
+        
         createComponents();
 
-        
-        // Aggiungiamo un ComponentAdapter per gestire il ridimensionamento del frame
-        /*addResizeListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                updatePanelSize();
-            }
-        });*/
-    
-        // Impostiamo il frame visibile e ridimensionabile
         setVisible(true);
 
         validate();
@@ -91,15 +80,6 @@ public class WindowView extends JFrame {
 
         revalidate();
         repaint();
-    }
-
-    /**
-     * Configures the layout of the window.
-     */
-    private void configureLayout() {
-        setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(width, height));
-        pack();
     }
 
     /**

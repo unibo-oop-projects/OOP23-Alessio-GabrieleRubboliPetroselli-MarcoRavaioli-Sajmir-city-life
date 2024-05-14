@@ -73,7 +73,6 @@ public class WelcomeScreen extends JFrame {
 
     public static void main(String[] args) {
 
-        
     // Create and show the welcome screen
     WelcomeScreen welcomeScreen = new WelcomeScreen();
     welcomeScreen.setVisible(true);

@@ -18,6 +18,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents the model of the city simulation, containing zones, transports, businesses, and people.
@@ -105,7 +106,7 @@ public class CityModel {
         int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
 
         // Calculate the frame dimensions based on the maximum dimensions
-        int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
+        int frameHeight = maxHeight > (maxWidth / 2) ? maxWidth / 2 : maxHeight;
         int frameWidth = frameHeight * 2;
 
         // Create and return the window model with the calculated dimensions
@@ -149,18 +150,16 @@ public class CityModel {
     }
 
     public List<DynamicPerson> getAllPeople() {
-        List<DynamicPerson> allPeople = new ArrayList<>();
-        for (var group : this.people) {
-            allPeople.addAll(group);
-        }
-        return allPeople;
+        return people.stream()              // Stream<List<DynamicPerson>>
+                     .flatMap(List::stream) // Stream<DynamicPerson>
+                     .collect(Collectors.toList()); // Converti in List<DynamicPerson>
     }
+    
 
     public boolean isPeoplePresent() {
-        boolean res = this.people != null;
-        System.out.println("People present: " + res);
-        return res;
+        return this.people != null;                                                         // questo null è da togliere (come tutti gli altri)
     }
+    
 
     public void setFrameSize(Pair<Integer, Integer> frameSize) {
         this.frameWidth = frameSize.getFirst();
@@ -173,21 +172,5 @@ public class CityModel {
 
     public int getFrameHeight(){
         return this.frameHeight;
-    }
-
-    public Pair<Integer, Integer> getScreenSize() {
-        // Get the screen size
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Calculate the maximum dimensions based on the screen size and a constant percentage
-        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-
-        // Calculate the frame dimensions based on the maximum dimensions
-        int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
-        int frameWidth = frameHeight * 2;
-
-        // Create and return the window model with the calculated dimensions
-        return new Pair<>(frameWidth, frameHeight);
     }
 }

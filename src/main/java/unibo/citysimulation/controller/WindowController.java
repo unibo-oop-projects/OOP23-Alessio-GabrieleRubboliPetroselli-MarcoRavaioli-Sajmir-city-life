@@ -14,24 +14,13 @@ public class WindowController {
     private WindowView windowView;
     private CityModel cityModel;
 
-
-    /**
-     * Constructs a WindowController with the specified models and view.
-     *
-     * @param windowModel The model representing the main window.
-     * @param windowView  The view representing the main window.
-     * @param mapModel    The model representing the map.
-     */
     public WindowController(WindowView windowView, CityModel cityModel) {
         this.windowView = windowView;
         this.cityModel = cityModel;
 
         this.windowView.addResizeListener(new ResizeListener());
 
-        cityModel.setFrameSize(cityModel.getScreenSize()); // questo comando è inutile se non si vogliono salvare le
-                                                           // dimensioni nel cityModel
-
-        // MapModel mapModel = cityModel.getMapModel();
+        cityModel.setFrameSize(cityModel.getFrameSize()); // questo comando potrebbe essere modificato, così funziona
 
         new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
 
@@ -41,11 +30,9 @@ public class WindowController {
                 windowView.getClockPanel());
 
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
-        //cityModel.getClockModel().addObserver(new ClockObserverTransport(cityModel.getTransportLines(), windowView.getMapPanel()));
 
-        Pair<Integer, Integer> frameSize = cityModel.getScreenSize();
+        Pair<Integer, Integer> frameSize = cityModel.getFrameSize();
         windowView.updateFrame(frameSize.getFirst(), frameSize.getSecond());
-        windowView.repaint();
     }
 
     /**
@@ -56,44 +43,38 @@ public class WindowController {
         public void componentResized(ComponentEvent e) {
             super.componentResized(e);
 
-            int newWidth = e.getComponent().getBounds().width;
-            int newHeight = e.getComponent().getBounds().height;
+            // Ottieni le dimensioni del frame dopo il ridimensionamento
+            int newWidth = e.getComponent().getWidth();
+            int newHeight = e.getComponent().getHeight();
 
-            if (newWidth != cityModel.getFrameWidth() && newHeight != cityModel.getFrameHeight()) {
-                // Trova la dimensione più piccola tra nuova larghezza e altezza
-                int minSize = Math.min(newWidth, newHeight * 2);
-                // Imposta le nuove dimensioni mantenendo la proporzione 2:1
-                newWidth = minSize;
-                newHeight = minSize / 2;
-            } else {
-                if (newHeight != cityModel.getFrameHeight() && newWidth == cityModel.getFrameWidth()) {
-                    newWidth = (int) ((double) newHeight * 2);
-                } else {
-                    newHeight = (int) ((double) newWidth / 2);
-                }
+            // Se la modifica è stata apportata all'altezza
+            if (newHeight != cityModel.getFrameHeight()) {
+                newWidth = newHeight * 2;
+            } else { // Altrimenti, la modifica è stata apportata alla larghezza
+                newHeight = newWidth / 2;
             }
 
-            //////////////////
-            cityModel.getMapModel().setMaxCoordinates((int) windowView.getMapPanel().getSize().getWidth(),
-                    (int) windowView.getMapPanel().getSize().getHeight());
-            cityModel.getMapModel().setTransportInfos(cityModel.getTransportLines());
-            windowView.getMapPanel().setLinesPoints(cityModel.getMapModel().getLinesPointsCoordinates());
-            windowView.getMapPanel().setCongestionsList(cityModel.getMapModel().getColorList());
 
+            // Aggiorna le coordinate massime nel modello della mappa con le nuove dimensioni della mapPanel
+            cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(), windowView.getMapPanel().getHeight());       //
+            // Aggiorna le informazioni sui trasporti nel modello della mappa                                                           // questa parte potrebbe essere fatta in un metodo nel citymodel
+            cityModel.getMapModel().setTransportInfos(cityModel.getTransportLines());                                                   // forse
+            // Imposta le nuove dimensioni del frame nel modello della città
+            cityModel.setFrameSize(new Pair<>(newWidth, newHeight));
+
+            // Imposta le nuove coordinate delle linee nella mapPanel
+            windowView.getMapPanel().setLinesPoints(cityModel.getMapModel().getLinesPointsCoordinates());                               //
+            // Imposta i nuovi colori delle linee nella mapPanel                                                                        // idem come sopra
+            windowView.getMapPanel().setCongestionsList(cityModel.getMapModel().getColorList());                                        // forse
+            // Aggiorna le dimensioni del frame nella windowView
+            
+
+            // Se sono presenti persone, imposta le nuove informazioni delle persone nella mapPanel
             if (cityModel.isPeoplePresent()) {
                 windowView.getMapPanel().setPeopleMap(cityModel.getMapModel().getPersonInfos(cityModel.getAllPeople()));
             }
 
-            windowView.getMapPanel().repaint();
-            //////////////////
-
-
-            cityModel.setFrameSize(new Pair<Integer, Integer>(newWidth, newHeight)); // questa informazione è inutile,
-                                                                                     // ricontrollare, al massimo la
-                                                                                     // togli anche da cityModel
             windowView.updateFrame(newWidth, newHeight);
-            windowView.repaint();
         }
     }
-
 }
