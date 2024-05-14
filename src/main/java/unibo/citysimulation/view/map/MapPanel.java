@@ -1,10 +1,16 @@
 package unibo.citysimulation.view.map;
 
+import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.TransportLineImpl;
+import unibo.citysimulation.model.zone.Boundary;
+import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.awt.event.ComponentAdapter;
@@ -112,39 +118,4 @@ public class MapPanel extends StyledPanel {
             return super.getPreferredSize();
         }
     }
-
-    /**
-     * Draws the transport lines between zones.
-     *
-     * @param g The Graphics context.
-     */
-    /*
-     * private void drawTransportLines(Graphics g) {
-     * Graphics2D g2 = (Graphics2D) g;
-     * g2.setStroke(new BasicStroke(4));
-     * 
-     * for (TransportLine line : transportLines) { // invece che le linee di
-     * trasporto io qui posso avere direttamente la congestione
-     * Zone zone1 = line.getLink().getFirst();
-     * Zone zone2 = line.getLink().getSecond();
-     * 
-     * Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
-     * Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
-     * 
-     * // Determine the color based on the capacity
-     * double capacity = line.getCongestion();
-     * System.out.println("congestion: "+capacity);
-     * if (capacity < 10) {
-     * g2.setColor(Color.GREEN);
-     * } else if (capacity < 30) {
-     * g2.setColor(Color.YELLOW);
-     * } else {
-     * g2.setColor(Color.ORANGE);
-     * }
-     * 
-     * g2.drawLine(startPoint.getFirst(), startPoint.getSecond(),
-     * endPoint.getFirst(), endPoint.getSecond());
-     * }
-     * }
-     */
 }

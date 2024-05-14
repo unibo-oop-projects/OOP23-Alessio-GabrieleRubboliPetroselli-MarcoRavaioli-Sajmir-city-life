@@ -11,6 +11,7 @@ public class InputPanel extends StyledPanel {
     private JButton startButton;
     private JSlider peopleSlider;
     private JSlider businessSlider;
+    private JSlider capacitySlider;
     private JSlider richnessSlider;
 
     public InputPanel(Color bgColor) {
@@ -32,7 +33,7 @@ public class InputPanel extends StyledPanel {
         gbc.gridwidth = 1; // Resetta a una colonna per gli elementi successivi
     
         // Creazione e aggiunta dello slider per il numero di persone
-        peopleSlider = createSlider("Number of People", ConstantAndResourceLoader.MIN_PEOPLE, ConstantAndResourceLoader.MAX_PEOPLE);
+        peopleSlider = createSlider("Number of People", 0, 100);
         gbc.gridy = 1;
         gbc.weighty = 0.5;
         add(peopleSlider, gbc);
@@ -41,10 +42,15 @@ public class InputPanel extends StyledPanel {
         businessSlider = createSlider("Number of Business", 0, 100);
         gbc.gridy = 2;
         add(businessSlider, gbc);
+
+        // Creazione e aggiunta dello slider per la capacità delle linee di trasporto
+        capacitySlider = createSlider("Transports' Capacity", 0, 100);
+        gbc.gridy = 3;
+        add(capacitySlider, gbc);
     
         // Creazione e aggiunta dello slider per il benessere generale delle persone
         richnessSlider = createSlider("People's Richness", 0, 100);
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         add(richnessSlider, gbc);
     
         JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -54,7 +60,7 @@ public class InputPanel extends StyledPanel {
         startButton.setPreferredSize(new Dimension(100, 50));
         buttonPanel.add(startButton);
     
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2; // Occupa due colonne
         add(buttonPanel, gbc);
     }
@@ -71,6 +77,10 @@ public class InputPanel extends StyledPanel {
         return businessSlider.getValue();
     }
 
+    public int getCapacitySliderValue() {
+        return capacitySlider.getValue();
+    }
+
     public int getRichnessSliderValue() {
         return richnessSlider.getValue();
     }
@@ -81,6 +91,10 @@ public class InputPanel extends StyledPanel {
 
     public JSlider getBusinessSlider() {
         return businessSlider;
+    }
+
+    public JSlider getCapacitySlider() {
+        return capacitySlider;
     }
 
     public JSlider getRichnessSlider() {
@@ -98,28 +112,5 @@ public class InputPanel extends StyledPanel {
         slider.setPaintLabels(true);
         slider.setForeground(Color.WHITE);
         return slider;
-    }
-
-    private JSlider getSlider(int index) {
-        switch (index) {
-            case 1:
-                return peopleSlider;
-            case 2:
-                return businessSlider;
-            case 3:
-                return richnessSlider;
-            default:
-                return null;
-        }
-    }
-
-    private GridBagConstraints createConstraints(int x, int y, double weightx, double weighty, int fill) {
-        return new GridBagConstraints() {{
-            gridx = x;
-            gridy = y;
-            this.weightx = weightx;
-            this.weighty = weighty;
-            this.fill = fill;
-        }};
     }
 }

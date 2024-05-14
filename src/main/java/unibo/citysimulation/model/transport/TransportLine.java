@@ -34,6 +34,10 @@ public interface TransportLine {
 
     void decrementPersonInLine();
 
+    int getCapacity();
+
+    Pair<Zone, Zone> getLink();
+
     int getPersonInLine();
 
     Pair<Zone,Zone> getLinkedZones();
