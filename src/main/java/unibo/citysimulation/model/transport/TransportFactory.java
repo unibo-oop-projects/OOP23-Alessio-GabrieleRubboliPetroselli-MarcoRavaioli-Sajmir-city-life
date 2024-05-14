@@ -1,71 +1,53 @@
 package unibo.citysimulation.model.transport;
 
-import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileReader;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * Factory for creating TransportLine objects.
- * This factory creates a list of TransportLine objects based on a list of Zone objects.
+ * This factory creates a list of TransportLine objects based on a list of Zone
+ * objects.
  */
 public class TransportFactory {
-    
 
-    /**
-     * Constructs a TransportFactory with the specified ClockModel.
-     *
-     * @param clock the ClockModel to be used
-     */
 
-    /**
-     * Creates a list of TransportLine objects based on a list of Zone objects.
-     *
-     * @param zones the list of Zone objects
-     * @return a list of TransportLine objects
-     */
-    public static List<TransportLine> createTransports(List<Zone> zones) {
-        List<TransportLine> transports = new ArrayList<>();
+    public static List<TransportLine> createTransportsFromFile(List<Zone> zones) {
+        List<TransportLine> lines = new ArrayList<>();
 
-        List<List<Object>> transportsInfo = getTransportInfoList(zones);
+        try {
+            Gson gson = new Gson();
 
-        // Iterates over the list of transport information lists and creates the corresponding transport lines
-        for (var entry : transportsInfo) {
-            TransportLine transport = new TransportLineImpl((String)entry.get(0), (Integer)entry.get(1), (Integer)entry.get(2), (Pair<Zone,Zone>)entry.get(3));
-            transports.add(transport);
+            JsonArray jsonArray = gson.fromJson(
+                    new FileReader("src/main/resources/unibo/citysimulation/data/TransportInfo.json"), JsonArray.class);
+
+            for (JsonElement jsonElement : jsonArray) {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+                lines.add(
+                    new TransportLineImpl(
+                        jsonObject.get("name").getAsString(),
+                        jsonObject.get("capacity").getAsInt(),
+                        jsonObject.get("duration").getAsInt(),
+                        new Pair<Zone, Zone>(
+                                zones.get(jsonObject.get("zone").getAsJsonObject().get("a").getAsInt()),
+                                zones.get(jsonObject.get("zone").getAsJsonObject().get("b").getAsInt())
+                        )
+                    )
+                );
+            }
+            return lines;
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return transports;
+        return null;
     }
 
-    /**
-     * Returns a list of transport information lists.
-     * Each transport information list contains the name, capacity, duration, and a pair of origin and destination zones of a transport line.
-     *
-     * @param zones the list of Zone objects
-     * @return a list of transport information lists
-     */
-    private static List<List<Object>> getTransportInfoList(List<Zone> zones) {
-        List<List<Object>> transportsInfo = new ArrayList<>();
-        List<Object> infos = new ArrayList<>();
-        infos.add("Tangenziale");
-        infos.add(100);
-        infos.add(20);
-        infos.add(new Pair<>(zones.get(0), zones.get(1)));
-
-        transportsInfo.add(infos);
-        infos.clear();
-
-        infos.add("Secante");
-        infos.add(20);
-        infos.add(5);
-        infos.add(new Pair<>(zones.get(1), zones.get(2)));
-
-        transportsInfo.add(infos);
-        infos.clear();
-
-        return transportsInfo;
-    }
 }

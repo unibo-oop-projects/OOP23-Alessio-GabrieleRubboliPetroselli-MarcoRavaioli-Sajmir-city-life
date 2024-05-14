@@ -1,0 +1,49 @@
+[
+    {
+        "name": "Poste",
+        "wageRate": 10,
+        "openingTime": "08:00",
+        "closingTime": "12:00"
+    },
+
+    {
+        "name": "Amazon",
+        "wageRate": 5,
+        "openingTime": "08:00",
+        "closingTime": "18:00"
+    },
+
+    {
+        "name": "DHL",
+        "wageRate": 7,
+        "openingTime": "08:00",
+        "closingTime": "16:00"
+    },
+
+    {
+        "name": "Ikea",
+        "wageRate": 8,
+        "openingTime": "10:00",
+        "closingTime": "22:00"
+    },
+
+    {
+        "name": "Ristorante",
+        "wageRate": 9,
+        "openingTime": "14:00",
+        "closingTime": "24:00"
+    },
+
+    {
+        "name": "Bar",
+        "wageRate": 6,
+        "openingTime": "18:00",
+        "closingTime": "02:00"
+    }
+
+
+
+
+
+
+]

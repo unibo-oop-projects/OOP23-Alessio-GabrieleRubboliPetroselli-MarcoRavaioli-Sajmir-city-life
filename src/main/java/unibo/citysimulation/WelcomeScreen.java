@@ -1,4 +1,5 @@
 package unibo.citysimulation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,8 @@ public class WelcomeScreen extends JFrame {
 
     // Set the layout manager to BorderLayout
     setLayout(new BorderLayout());
+
+    setMinimumSize(new Dimension(400, 200));
 
     // Create a JLabel with the welcome message
     JLabel welcomeLabel = new JLabel("Welcome to city-simulation", SwingConstants.CENTER);
@@ -69,6 +72,8 @@ public class WelcomeScreen extends JFrame {
     }
 
     public static void main(String[] args) {
+
+        
     // Create and show the welcome screen
     WelcomeScreen welcomeScreen = new WelcomeScreen();
     welcomeScreen.setVisible(true);

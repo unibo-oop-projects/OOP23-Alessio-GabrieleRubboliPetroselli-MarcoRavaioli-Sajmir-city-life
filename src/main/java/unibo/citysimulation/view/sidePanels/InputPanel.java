@@ -1,85 +1,116 @@
 package unibo.citysimulation.view.sidePanels;
 
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
+
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class InputPanel extends StyledPanel {
-    private JLabel numberOfPersonLabel;
-    private JTextField numberOfPersonTextField;
-    private JButton confirmButton;
     private JButton startButton;
+    private JSlider peopleSlider;
+    private JSlider businessSlider;
+    private JSlider capacitySlider;
+    private JSlider richnessSlider;
 
     public InputPanel(Color bgColor) {
         super(bgColor);
-
-        // Set the layout manager to GridBagLayout
+    
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
-        // Create a JLabel with the desired text
-        JLabel label = new JLabel("INPUTPANEL", SwingConstants.CENTER); // Align the text to the center
-        label.setForeground(Color.WHITE); // Set the text color
-
-        // Add the JLabel to the panel
+    
+        JLabel label = new JLabel("INPUTPANEL", SwingConstants.CENTER);
+        label.setForeground(Color.WHITE);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
+        gbc.gridwidth = 2; // Occupa due colonne
         gbc.fill = GridBagConstraints.BOTH;
         add(label, gbc);
-
-        // Create a new panel for the buttons
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-
-        // Create the start button
-        startButton = new JButton("Start");
-        startButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
-
-        // Add the start button to the button panel
-        buttonPanel.add(startButton);
-
-
-        // Add the button panel to the main panel
+    
+        gbc.gridwidth = 1; // Resetta a una colonna per gli elementi successivi
+    
+        // Creazione e aggiunta dello slider per il numero di persone
+        peopleSlider = createSlider("Number of People", 0, 100);
         gbc.gridy = 1;
-        add(buttonPanel, gbc);
-
-        // Create a new panel for the second row
-        JPanel secondRowPanel = new JPanel(new FlowLayout());
-
-        // Create the label for the number of persons
-        numberOfPersonLabel = new JLabel("Number of People:");
-        numberOfPersonLabel.setForeground(Color.BLACK);
-        secondRowPanel.add(numberOfPersonLabel);
-
-        // Create the JTextField for input
-        numberOfPersonTextField = new JTextField(10);
-        secondRowPanel.add(numberOfPersonTextField);
-
-        // Create the confirm button
-        confirmButton = new JButton("Confirm");
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String input = numberOfPersonTextField.getText();
-                try {
-                    int numberOfPersons = Integer.parseInt(input);
-                    // TODO: Handle the number of persons (e.g., pass it to a listener)
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(InputPanel.this, "Invalid input! Please enter a valid number.");
-                }
-            }
-        });
-        secondRowPanel.add(confirmButton);
-
-        // Add the second row panel to the panel
+        gbc.weighty = 0.5;
+        add(peopleSlider, gbc);
+    
+        // Creazione e aggiunta dello slider per il numero di business
+        businessSlider = createSlider("Number of Business", 0, 100);
         gbc.gridy = 2;
-        add(secondRowPanel, gbc);
+        add(businessSlider, gbc);
+
+        // Creazione e aggiunta dello slider per la capacità delle linee di trasporto
+        capacitySlider = createSlider("Transports' Capacity", 0, 100);
+        gbc.gridy = 3;
+        add(capacitySlider, gbc);
+    
+        // Creazione e aggiunta dello slider per il benessere generale delle persone
+        richnessSlider = createSlider("People's Richness", 0, 100);
+        gbc.gridy = 4;
+        add(richnessSlider, gbc);
+    
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setOpaque(false);
+    
+        startButton = new JButton("Start");
+        startButton.setPreferredSize(new Dimension(100, 50));
+        buttonPanel.add(startButton);
+    
+        gbc.gridy = 5;
+        gbc.gridwidth = 2; // Occupa due colonne
+        add(buttonPanel, gbc);
     }
 
     public JButton getStartButton() {
         return startButton;
+    }
+
+    public int getPeopleSliderValue() {
+        return peopleSlider.getValue();
+    }
+
+    public int getBusinessSliderValue() {
+        return businessSlider.getValue();
+    }
+
+    public int getCapacitySliderValue() {
+        return capacitySlider.getValue();
+    }
+
+    public int getRichnessSliderValue() {
+        return richnessSlider.getValue();
+    }
+
+    public JSlider getPeopleSlider() {
+        return peopleSlider;
+    }
+
+    public JSlider getBusinessSlider() {
+        return businessSlider;
+    }
+
+    public JSlider getCapacitySlider() {
+        return capacitySlider;
+    }
+
+    public JSlider getRichnessSlider() {
+        return richnessSlider;
+    }
+
+    private JSlider createSlider(String title, int min, int max) {
+        JSlider slider = new JSlider(min, max);
+        TitledBorder border = BorderFactory.createTitledBorder(title);
+        border.setTitleColor(Color.WHITE);
+        slider.setBorder(border);
+        slider.setMajorTickSpacing(20);
+        slider.setMinorTickSpacing(5);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setForeground(Color.WHITE);
+        return slider;
     }
 }

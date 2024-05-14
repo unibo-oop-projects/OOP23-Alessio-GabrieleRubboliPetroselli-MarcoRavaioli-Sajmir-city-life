@@ -2,7 +2,6 @@ package unibo.citysimulation.model.transport;
 
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.clock.*;
 
 /**
  * Represents a transport line within the city simulation.
@@ -25,14 +24,29 @@ public class TransportLineImpl implements TransportLine {
     public String getName() {
         return name;
     }
+
+    public int getPersonInLine(){
+        return personInLine;
+    }
     public double getCongestion(){
         return (double)(personInLine*100/capacity);
     }
+    
     public int getDuration(){
         return duration;
     }
 
     public Pair<Zone,Zone> getLinkedZones(){
         return link;
+    }
+
+    @Override
+    public void incrementPersonInLine() {
+        personInLine++;
+    }
+
+    @Override
+    public void decrementPersonInLine() {
+        personInLine--;
     }
 }

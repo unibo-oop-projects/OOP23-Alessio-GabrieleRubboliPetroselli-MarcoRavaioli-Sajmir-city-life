@@ -4,7 +4,7 @@ package unibo.citysimulation.model.business;
  * This interface represents an employee with a name and an ID.
  */
 public interface Employee {
-
+ 
     /**
      * Returns the name of the employee.
      *

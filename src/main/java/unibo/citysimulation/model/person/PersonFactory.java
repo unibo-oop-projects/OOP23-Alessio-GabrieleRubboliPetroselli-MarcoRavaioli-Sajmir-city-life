@@ -1,38 +1,30 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.person.Person;
-import unibo.citysimulation.model.person.PersonImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class PersonFactory {
-    private ClockModel clock;
-    private ZoneTable zoneTable;
-    private Random random;
+    private static Random random = new Random();
 
-    public PersonFactory(ClockModel clock, ZoneTable zoneTable) {
-        this.clock = clock;
-        this.zoneTable = zoneTable;
-        random = new Random();
-    }
-
-    public List<Person> createGroupOfPeople(int numberOfPeople, Pair<Integer, Integer> moneyMinMax, Business business, Zone residenceZone) {
-        List<Person> people = new ArrayList<>();
+    public static List<DynamicPerson> createGroupOfPeople(int numberOfPeople, Pair<Integer, Integer> moneyMinMax,
+    List<Business> businesses, Zone residenceZone, ZoneTable zoneTable) {
+        List<DynamicPerson> people = new ArrayList<>();
         for (int i = 0; i < numberOfPeople; i++) {
-            people.add(createPerson("Person" + i, random.nextInt(100), random.nextInt(moneyMinMax.getSecond()) + moneyMinMax.getFirst(), business, residenceZone, clock, zoneTable));
+            people.add(createPerson("Person" + i, random.nextInt(62) + 18,
+            businesses.get(new Random().nextInt(businesses.size())), residenceZone,
+            random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst()));
+            //people.get(i).getPersonData().business().hire(people.get(i));
         }
         return people;
     }
 
-    private Person createPerson(String name, int age, int money, Business business, Zone residenceZone, ClockModel clock, ZoneTable zoneTable) {
-        return new PersonImpl(name, age, money, business, residenceZone, zoneTable);
+    private static DynamicPerson createPerson(String name, int age, Business business, Zone residenceZone, int money) {
+        return new DynamicPersonImpl(new PersonData(name, age, business, residenceZone), money);
     }
 }
 

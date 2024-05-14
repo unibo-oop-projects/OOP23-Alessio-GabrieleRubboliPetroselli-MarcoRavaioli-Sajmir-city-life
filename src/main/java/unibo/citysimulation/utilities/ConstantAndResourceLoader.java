@@ -13,17 +13,19 @@ public final class ConstantAndResourceLoader extends ClassLoader{
      * Screen size percentage
      */
     public static final double SCREEN_SIZE_PERCENTAGE = 0.90;
-<<<<<<< HEAD
-=======
 
     public static final int MINUTES_IN_A_SECOND = 5;
 
     public static final int TIME_UPDATE_RATE = 500;
+
+    public static final int[] SPEEDS = {1, 2, 10, 20};
     /**
      * Screen minimum size pixel
      */
     public static final int SCREEN_MINIMUM_WIDTH_PIXEL = 1000;
     public static final int SCREEN_MINIMUM_HEIGHT_PIXEL = 500;
 
->>>>>>> branch_develop
+    public static final int MIN_PEOPLE = 10;
+    public static final int MAX_PEOPLE = 100;
+
 }

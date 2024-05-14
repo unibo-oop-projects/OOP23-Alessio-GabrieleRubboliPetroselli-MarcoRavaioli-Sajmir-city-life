@@ -1,11 +1,5 @@
 package unibo.citysimulation.view;
 
-import unibo.citysimulation.controller.ClockController;
-import unibo.citysimulation.controller.MapController;
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.model.WindowModel;
-import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
@@ -21,41 +15,54 @@ import java.awt.event.ComponentAdapter;
  * Represents the main window of the application.
  */
 public class WindowView extends JFrame {
-    private MapModel mapModel;
-    private MapController mapController;
-    private WindowModel windowModel;
-    private ClockObserver clockController;
-    private ClockModel clockModel;
+    private int width;
+    private int height;
 
-    private InfoPanel infoPanel = new InfoPanel(Color.GREEN);
+    private MapPanel mapPanel;
+    private InfoPanel infoPanel;
     private ClockPanel clockPanel;
     private InputPanel inputPanel;
-    private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
+    private GraphicsPanel graphicsPanel;
+
 
     /**
      * Constructs a WindowView with the specified window model and map model.
-     *
-     * @param windowModel The model representing the main window.
-     * @param mapModel    The model representing the map.
      */
-    public WindowView(WindowModel windowModel, MapModel mapModel) {
-        this.windowModel = windowModel;
-        this.mapModel = mapModel;
-        this.mapController = new MapController(mapModel, infoPanel);
-        this.clockModel = new ClockModel(2);
-        this.clockPanel = new ClockPanel(Color.RED);
-        this.inputPanel = new InputPanel(Color.BLUE);
-        this.clockController = new ClockController(clockPanel, inputPanel, clockModel);
-
+    public WindowView() {
+        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL,
+                ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
+    
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setFocusable(true);
+    
+        // Creiamo i componenti
+        mapPanel = new MapPanel();
+        infoPanel = new InfoPanel(Color.GREEN);
+        clockPanel = new ClockPanel(Color.RED);
+        inputPanel = new InputPanel(Color.BLUE);
+        graphicsPanel = new GraphicsPanel(Color.YELLOW);
+    
+    
         configureLayout();
+        // Creiamo i componenti prima di aggiungerli al frame
         createComponents();
+
+        
+        // Aggiungiamo un ComponentAdapter per gestire il ridimensionamento del frame
+        /*addResizeListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                updatePanelSize();
+            }
+        });*/
+    
+        // Impostiamo il frame visibile e ridimensionabile
         setVisible(true);
 
-        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
+        validate();
+        pack();
     }
 
     /**
@@ -70,13 +77,17 @@ public class WindowView extends JFrame {
     /**
      * Updates the size of the panels based on the window size.
      */
-    public void updatePanelSize() {
-        int panelWidth = windowModel.getWidth() / 4;
+    public void updateFrame(int width, int height) {
+        this.width = width;
+        this.height = height;
 
-        inputPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
-        infoPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
-        clockPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
-        graphicsPanel.setPreferredSize(new Dimension(panelWidth, windowModel.getHeight()));
+        setSize(new Dimension(width, height));
+
+        inputPanel.setPreferredSize(new Dimension(width / 4, height));
+        infoPanel.setPreferredSize(new Dimension(width / 4, height));
+        clockPanel.setPreferredSize(new Dimension(width / 4, height));
+        graphicsPanel.setPreferredSize(new Dimension(width / 4, height));
+        mapPanel.setPreferredSize(new Dimension(width / 2, height));
 
         revalidate();
         repaint();
@@ -87,7 +98,7 @@ public class WindowView extends JFrame {
      */
     private void configureLayout() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(windowModel.getWidth(), windowModel.getHeight()));
+        setPreferredSize(new Dimension(width, height));
         pack();
     }
 
@@ -95,9 +106,7 @@ public class WindowView extends JFrame {
      * Creates the components of the window.
      */
     private void createComponents() {
-
         // Add the map panel to the center
-        MapPanel mapPanel = new MapPanel(mapModel, infoPanel);
         add(mapPanel, BorderLayout.CENTER);
 
         // Add the side panels
@@ -108,9 +117,8 @@ public class WindowView extends JFrame {
      * Creates the side panels of the window.
      */
     private void createSidePanels() {
-
-        int sidePanelWidth = getSize().width / 4;
-        int sidePanelsHeight = getSize().height;
+        int sidePanelWidth = width / 4;
+        int sidePanelsHeight = height;
 
         JPanel leftPanel = new JPanel(new GridBagLayout());
         JPanel rightPanel = new JPanel(new GridBagLayout());
@@ -119,18 +127,18 @@ public class WindowView extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1;
 
-
+        // Add input panel and info panel to left panel
         constraints.gridy = 0;
-        constraints.weighty = 0.75;
-        inputPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 4 * 3));
+        constraints.weighty = 0.625;
+        inputPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8 * 5));
         leftPanel.add(inputPanel, constraints);
 
         constraints.gridy = 1;
-        constraints.weighty = 0.25;
-        infoPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 4));
+        constraints.weighty = 0.375;
+        infoPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8 * 3));
         leftPanel.add(infoPanel, constraints);
 
-
+        // Add clock panel and graphics panel to right panel
         constraints.gridy = 0;
         constraints.weighty = 0.125;
         clockPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8));
@@ -141,9 +149,54 @@ public class WindowView extends JFrame {
         graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8 * 7));
         rightPanel.add(graphicsPanel, constraints);
 
-
+        // Add left and right panels to the window
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
     }
 
+
+    /**
+     * Retrieves the info panel.
+     *
+     * @return The info panel.
+     */
+    public InfoPanel getInfoPanel() {
+        return infoPanel;
+    }
+
+    /**
+     * Retrieves the clock panel.
+     *
+     * @return The clock panel.
+     */
+    public ClockPanel getClockPanel() {
+        return clockPanel;
+    }
+
+    /**
+     * Retrieves the input panel.
+     *
+     * @return The input panel.
+     */
+    public InputPanel getInputPanel() {
+        return inputPanel;
+    }
+
+    /**
+     * Retrieves the graphics panel.
+     *
+     * @return The graphics panel.
+     */
+    public GraphicsPanel getGraphicsPanel() {
+        return graphicsPanel;
+    }
+
+    /**
+     * Retrieves the map panel.
+     *
+     * @return The map panel.
+     */
+    public MapPanel getMapPanel() {
+        return mapPanel;
+    }
 }

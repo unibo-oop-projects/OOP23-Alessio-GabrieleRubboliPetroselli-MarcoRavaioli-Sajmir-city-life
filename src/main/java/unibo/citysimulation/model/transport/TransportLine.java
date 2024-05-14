@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.transport;
 
-<<<<<<< HEAD
+import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.utilities.Pair;
 
 =======
 >>>>>>> branch_develop
@@ -9,31 +10,6 @@ package unibo.citysimulation.model.transport;
  * Each transport line has a name, capacity, and duration.
  * It also maintains the number of people in line and can calculate the congestion.
  */
-<<<<<<< HEAD
-public class TransportLine {
-    private int capacity;
-    private String name;
-    private int personInLine=0;
-    private int duration;
-
-    public TransportLine(String name,int capacity,int duration) {
-        this.name = name;
-        this.capacity=capacity;
-        this.duration=duration;
-    }
-
-    // Getter and setter methods for other fields, if needed
-    public String getName() {
-        return name;
-    }
-    public double getCongestion(){
-        return (double)(personInLine*100/capacity);
-    }
-    public int getDuration(){
-        return duration;
-    }
-}
-=======
 public interface TransportLine {
     /**
      * Returns the name of the transport line.
@@ -55,5 +31,12 @@ public interface TransportLine {
      * @return the duration of the transport line
      */
     int getDuration();
+
+    void incrementPersonInLine();
+
+    void decrementPersonInLine();
+
+    int getPersonInLine();
+
+    Pair<Zone,Zone> getLinkedZones();
 }
->>>>>>> branch_develop

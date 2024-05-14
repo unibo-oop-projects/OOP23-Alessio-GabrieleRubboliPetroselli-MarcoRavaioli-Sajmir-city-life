@@ -1,5 +1,5 @@
 package unibo.citysimulation.model.business;
-
+ 
 /**
  * EmployeeImpl is a class that implements the Employee interface.
  * It represents an employee with a name and an ID.

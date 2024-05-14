@@ -1,16 +1,16 @@
 package unibo.citysimulation.view.sidePanels;
 
-
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
 import java.awt.*;
-<<<<<<< HEAD
-public class InfoPanel extends StyledPanel{
-    private JLabel coordinates = new JLabel("Coordinates: (x, y)", SwingConstants.CENTER);
-    private int x;
-    private int y;
-=======
+import java.util.List;
+
+/**
+ * Panel for displaying information.
+ */
 public class InfoPanel extends StyledPanel {
     private int x;
     private int y;
@@ -18,9 +18,16 @@ public class InfoPanel extends StyledPanel {
     private JLabel numberOfPeople;
     private JLabel numberOfZones;
     private JLabel numberOfTransportLines;
->>>>>>> branch_develop
+    private List<Zone> zones;
+    private List<TransportLine> transports;
+    private JLabel zoneNJLabel;
 
-    public InfoPanel(Color bgColor) { 
+    /**
+     * Constructs an InfoPanel with the specified background color.
+     *
+     * @param bgColor The background color of the panel.
+     */
+    public InfoPanel(Color bgColor) {
         super(bgColor);
 
         // Set the layout manager to GridBagLayout
@@ -47,34 +54,36 @@ public class InfoPanel extends StyledPanel {
         gbc.gridy = 2;
         add(numberOfPeople, gbc);
 
-        numberOfZones = new JLabel("Number of Zones: ");
+        zoneNJLabel = new JLabel("Zone: ");
         gbc.gridy = 3;
-        add(numberOfZones, gbc);
+        add(zoneNJLabel, gbc);
 
-        numberOfTransportLines = new JLabel("Number of Transport Lines: ");
-        gbc.gridy = 4;
-        add(numberOfTransportLines, gbc);
+
     }
 
+    /**
+     * Updates the position information displayed on the panel.
+     *
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     */
     public void updatePositionInfo(int x, int y){
         this.x = x;
         this.y = y;
         coordinates.setText("Coordinates: (" + x + ", " + y + ")");
         System.out.println("Coordinates: (" + x + ", " + y + ")");
-<<<<<<< HEAD
-=======
     }
 
-    public void updateNumberOfPeople(int people){
-        numberOfPeople.setText("Number of People: " + people);
+    /**
+     * Updates the number of people displayed on the panel.
+     *
+     * @param peopleNumber The number of people.
+     */
+    public void updateNumberOfPeople(int peopleNumber){
+        numberOfPeople.setText("Number of People: " + peopleNumber);
     }
 
-    public void updateNumberOfZones(int zones){
-        numberOfZones.setText("Number of Zones: " + zones);
-    }
-
-    public void updateNumberOfTransportLines(int lines){
-        numberOfTransportLines.setText("Number of Transport Lines: " + lines);
->>>>>>> branch_develop
+    public void updateZoneName(String zoneName){
+        zoneNJLabel.setText("Zone: " + zoneName);
     }
 }
