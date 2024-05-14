@@ -85,7 +85,6 @@ public class MapModel {
     public List<Color> getColorList() {
         return congestionsList.stream()
                 .map(this::getColor)
-                .map(this::getColor)
                 .collect(Collectors.toList());
     }
 
