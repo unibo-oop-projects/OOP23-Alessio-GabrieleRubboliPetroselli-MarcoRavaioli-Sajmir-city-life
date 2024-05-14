@@ -51,13 +51,9 @@ public class CityModel {
      * Creates entities such as zones, transports, businesses, and people.
      * @param numberOfPeople The number of people to create in the simulation.
      */
-    public void createEntities(int numberOfPeople) {
-        // Create zones
-        //this.zones = ZoneFactory.createZonesFromFile();
+    public void createEntities() {
 
-        // Create transports
-        //this.transports = TransportFactory.createTransportsFromFile(zones);
-        System.out.println("Transports created. " + transports.size());
+        transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
 
         // Create zone table
         ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
@@ -76,9 +72,10 @@ public class CityModel {
         this.businesses = BusinessFactory.createBusinesses(zones);
         System.out.println("Businesses created. " + businesses.size());
 
+
         // Create people
         this.people = new ArrayList<>();
-        people = PersonFactory.createAllPeople(numberOfPeople, zones, businesses);
+        people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
         // Add people as observers to clock model
         clockModel.addObserver(new ClockObserverPerson(people));
@@ -87,7 +84,7 @@ public class CityModel {
         for (var group : people) {
             System.out.println("Group size: " + group.size());
         }
-
+        ////////////////////////////////////////////////////////////////
         // Print details of each person
         for (var group : people) {
             for (var person : group) {
@@ -96,6 +93,7 @@ public class CityModel {
                 + ", " + person.getTripDuration());
             }
         }
+        ////////////////////////////////////////////////////////////////
     }
 
     public Pair<Integer,Integer> getFrameSize(){

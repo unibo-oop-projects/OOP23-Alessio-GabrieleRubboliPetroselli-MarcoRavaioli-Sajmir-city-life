@@ -61,6 +61,7 @@ public class InputPanel extends StyledPanel {
         buttonPanel.add(startButton);
 
         stopButton = new JButton("Stop");
+        stopButton.setEnabled(false);
         stopButton.setPreferredSize(new Dimension(100, 50));
         buttonPanel.add(stopButton);
     

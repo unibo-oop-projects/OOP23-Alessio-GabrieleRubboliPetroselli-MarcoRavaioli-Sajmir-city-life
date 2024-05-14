@@ -37,6 +37,7 @@ public class InputController {
                 System.out.println("PREMUTO IL TASTO START SIMULATION");
                 startSimulation(clockPanel);
                 cityModel.getMapModel().startSimulation();
+
                 inputPanel.getPeopleSlider().setEnabled(false);
                 inputPanel.getCapacitySlider().setEnabled(false);
                 inputPanel.getBusinessSlider().setEnabled(false);
@@ -74,8 +75,8 @@ public class InputController {
         inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
         inputModel.setRichness(inputPanel.getRichnessSlider().getValue());
         
-        // Create entities with the specified number of people
-        cityModel.createEntities(inputModel.getNumberOfPeople());
+        // Create entities
+        cityModel.createEntities();
         // Restart the clock simulation
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel

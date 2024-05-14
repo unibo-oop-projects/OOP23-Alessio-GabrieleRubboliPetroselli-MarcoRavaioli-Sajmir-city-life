@@ -41,4 +41,6 @@ public interface TransportLine {
     int getPersonInLine();
 
     Pair<Zone,Zone> getLinkedZones();
+
+    void setCapacity(int capacity);
 }

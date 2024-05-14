@@ -27,6 +27,10 @@ public class TransportLineImpl implements TransportLine {
         return capacity;
     }
 
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
     // Getter and setter methods for other fields, if needed
     public String getName() {
         return name;
