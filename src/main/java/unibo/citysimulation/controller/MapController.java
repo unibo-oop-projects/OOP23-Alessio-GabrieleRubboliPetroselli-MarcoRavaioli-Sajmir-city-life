@@ -93,6 +93,8 @@ public class MapController implements ClockObserver{
         mapModel.setTransportInfos(cityModel.getTransportLines());
         mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
         mapPanel.setCongestionsList(mapModel.getColorList());
+
+        mapPanel.setBusinessPoints(mapModel.getBusinessInfos(cityModel.getBusinesses()));
         
 
         mapPanel.repaint();

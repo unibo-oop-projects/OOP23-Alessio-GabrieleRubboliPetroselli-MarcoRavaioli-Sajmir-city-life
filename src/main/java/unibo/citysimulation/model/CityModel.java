@@ -150,6 +150,14 @@ public class CityModel {
         return this.transports;
     }
 
+    /**
+     * Gets the list of businesses in the city model.
+     * @return The list of businesses.
+     */
+    public List<Business> getBusinesses() {
+        return this.businesses;
+    }
+
     public List<DynamicPerson> getAllPeople() {
         List<DynamicPerson> allPeople = new ArrayList<>();
         for (var group : this.people) {
@@ -161,6 +169,12 @@ public class CityModel {
     public boolean isPeoplePresent() {
         boolean res = this.people != null;
         System.out.println("People present: " + res);
+        return res;
+    }
+
+    public boolean isBusinessesPresent() {
+        boolean res = this.businesses != null;
+        System.out.println("Businesses present: " + res);
         return res;
     }
 

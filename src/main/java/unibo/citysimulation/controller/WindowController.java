@@ -84,6 +84,10 @@ public class WindowController {
                 windowView.getMapPanel().setPeopleMap(cityModel.getMapModel().getPersonInfos(cityModel.getAllPeople()));
             }
 
+            if (cityModel.isBusinessesPresent()) {
+                windowView.getMapPanel().setBusinessPoints(cityModel.getMapModel().getBusinessInfos(cityModel.getBusinesses()));
+            }
+
             windowView.getMapPanel().repaint();
             //////////////////
 
