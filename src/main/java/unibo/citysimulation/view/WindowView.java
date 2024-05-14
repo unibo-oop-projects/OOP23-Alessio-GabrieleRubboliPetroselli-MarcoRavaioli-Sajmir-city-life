@@ -1,6 +1,5 @@
 package unibo.citysimulation.view;
 
-import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
