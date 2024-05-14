@@ -156,6 +156,12 @@ public class CityModel {
         return allPeople;
     }
 
+    public boolean isPeoplePresent() {
+        boolean res = this.people != null;
+        System.out.println("People present: " + res);
+        return res;
+    }
+
     public void setFrameSize(Pair<Integer, Integer> frameSize) {
         this.frameWidth = frameSize.getFirst();
         this.frameHeight = frameSize.getSecond();

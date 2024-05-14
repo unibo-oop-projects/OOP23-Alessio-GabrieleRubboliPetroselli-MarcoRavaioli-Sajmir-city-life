@@ -80,6 +80,10 @@ public class WindowController {
             windowView.getMapPanel().setLinesPoints(cityModel.getMapModel().getLinesPointsCoordinates());
             windowView.getMapPanel().setCongestionsList(cityModel.getMapModel().getColorList());
 
+            if (cityModel.isPeoplePresent()) {
+                windowView.getMapPanel().setPeopleMap(cityModel.getMapModel().getPersonInfos(cityModel.getAllPeople()));
+            }
+
             windowView.getMapPanel().repaint();
             //////////////////
 

@@ -57,8 +57,8 @@ public class MapController implements ClockObserver{
      * @param e The MouseEvent object representing the mouse event.
      */
     public void handleMouseclick(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
+        int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
+        int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
 
         System.out.println("pressed coordinates: " + x + " " + y);  //queste rimangono uguali
         List<Zone> zones = cityModel.getZones();
