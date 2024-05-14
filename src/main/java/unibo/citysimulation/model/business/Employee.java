@@ -12,12 +12,9 @@ public interface Employee {
      */
     String getName();
 
-    /**
-     * Returns the id of the employee.
-     *
-     * @return The id of the employee.
-     */
-    int getId();
+    int getExperience();
+
+    int getcountDelay();
 
     
 }
