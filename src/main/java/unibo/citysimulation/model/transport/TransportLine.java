@@ -2,10 +2,6 @@ package unibo.citysimulation.model.transport;
 
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
-import java.awt.Color;
-
-import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.utilities.Pair;
 
 /**
  * Represents a transport line within the city simulation.
@@ -41,8 +37,6 @@ public interface TransportLine {
     int getCapacity();
 
     Pair<Zone, Zone> getLink();
-
-    void setCongestion(double newCongestion);
 
     int getPersonInLine();
 

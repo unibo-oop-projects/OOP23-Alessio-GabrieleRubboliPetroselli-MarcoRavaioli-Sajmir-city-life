@@ -132,12 +132,6 @@ public class MapModel {
         return (int) (c / 1000.0 * max);
     }
 
-    private Pair<Integer, Integer> denormalizePair(Pair<Integer,Integer> coordPair){
-        return new Pair<Integer,Integer>(
-                    denormalizeCoordinate(coordPair.getFirst(), maxX), 
-                    denormalizeCoordinate(coordPair.getSecond(), maxY));
-    }
-
     public int getNormX() {
         return normClickedX;
     }
