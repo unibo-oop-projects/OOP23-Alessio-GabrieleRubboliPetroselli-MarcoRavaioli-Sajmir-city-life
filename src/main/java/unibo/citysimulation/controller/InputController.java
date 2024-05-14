@@ -2,7 +2,7 @@ package unibo.citysimulation.controller;
  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
- 
+
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
