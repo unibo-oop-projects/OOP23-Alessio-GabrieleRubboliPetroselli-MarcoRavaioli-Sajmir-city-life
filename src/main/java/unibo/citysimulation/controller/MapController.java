@@ -60,7 +60,7 @@ public class MapController implements ClockObserver{
         int x = e.getX();
         int y = e.getY();
 
-        System.out.println("pressed coordinates: " + x + " " + y);
+        System.out.println("pressed coordinates: " + x + " " + y);  //queste rimangono uguali
         List<Zone> zones = cityModel.getZones();
         String zoneName = ""; // Declare zoneName here
         for (Zone zone : zones) {

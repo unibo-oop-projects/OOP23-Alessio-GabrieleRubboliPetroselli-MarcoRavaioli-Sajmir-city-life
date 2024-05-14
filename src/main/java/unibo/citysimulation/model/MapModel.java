@@ -24,7 +24,7 @@ public class MapModel {
     private int maxY = -1;
     private boolean simulationStarted = false;
 
-    private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();
+    private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();    //coordinate normalizzate da 0 a 1000
     private List<Double> congestionsList = new ArrayList<>();
 
     /**
@@ -76,8 +76,13 @@ public class MapModel {
     
 
     public List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> getLinesPointsCoordinates(){
-        return linesPointsCoordinates;
+        return linesPointsCoordinates.stream()
+                .map(pair -> new Pair<>(
+                        new Pair<>(denormalizeCoordinate(pair.getFirst().getFirst(), maxX), denormalizeCoordinate(pair.getFirst().getSecond(), maxY)),
+                        new Pair<>(denormalizeCoordinate(pair.getSecond().getFirst(), maxX), denormalizeCoordinate(pair.getSecond().getSecond(), maxY))))
+                .collect(Collectors.toList());
     }
+    
 
     public void setCongestionsList(List<Double> congestionList) {
         this.congestionsList = congestionList;
@@ -108,6 +113,8 @@ public class MapModel {
     public void setMaxCoordinates(int x, int y) {
         maxX = x;
         maxY = y;
+        //System.out.println("maxX: " + maxX);
+        //System.out.println("maxY: " + maxY);
     }
 
     /**
@@ -118,7 +125,17 @@ public class MapModel {
      * @return The normalized coordinate.
      */
     private int normalizeCoordinate(int c, int max) {
-        return (int) (c / (double) maxX * 1000);
+        return (int) (c / (double) max * 1000);
+    }
+
+    private int denormalizeCoordinate(int c, int max) {
+        return (int) (c / 1000.0 * max);
+    }
+
+    private Pair<Integer, Integer> denormalizePair(Pair<Integer,Integer> coordPair){
+        return new Pair<Integer,Integer>(
+                    denormalizeCoordinate(coordPair.getFirst(), maxX), 
+                    denormalizeCoordinate(coordPair.getSecond(), maxY));
     }
 
     public int getNormX() {

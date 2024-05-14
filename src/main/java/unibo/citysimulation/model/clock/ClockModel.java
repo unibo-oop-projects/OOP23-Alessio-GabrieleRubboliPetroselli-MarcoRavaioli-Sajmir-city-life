@@ -126,7 +126,7 @@ public class ClockModel {
         }
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
-        System.out.println("Tempo trascorso notify: " + elapsedTime + " millisecondi");
+        //System.out.println("Tempo trascorso notify: " + elapsedTime + " millisecondi");
     }
     
     
