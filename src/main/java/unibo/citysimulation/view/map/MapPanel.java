@@ -7,6 +7,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
+import javax.swing.SwingUtilities;
 /**
  * Panel for displaying the map.
  */
@@ -23,6 +27,19 @@ public class MapPanel extends StyledPanel {
      */
     public MapPanel() {
         super(bgColor);
+
+        // Add a ComponentListener to listen for resize events
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                System.out.println("MapPanel size: " + getWidth() + "x" + getHeight());
+
+                Window window = SwingUtilities.getWindowAncestor(MapPanel.this);
+                if (window != null) {
+                    System.out.println("Window size: " + window.getWidth() + "x" + window.getHeight());
+                }
+            }
+        });
     }
 
     public void setLinesPoints(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points) {
