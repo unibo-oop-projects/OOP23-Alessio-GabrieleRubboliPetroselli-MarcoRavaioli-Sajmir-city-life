@@ -47,8 +47,10 @@ public class MapController implements ClockObserver{
         });
 
         mapModel.setTransportInfos(cityModel.getTransportLines());
+        mapModel.setTransportNames(cityModel.getTransportLines());
         mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
         mapPanel.setCongestionsList(mapModel.getColorList());
+        mapPanel.SetTransportNames(mapModel.getTransportNames());
     }
 
     /**

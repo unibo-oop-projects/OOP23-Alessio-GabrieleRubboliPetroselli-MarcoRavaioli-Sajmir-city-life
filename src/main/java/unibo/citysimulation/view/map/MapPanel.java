@@ -1,5 +1,9 @@
 package unibo.citysimulation.view.map;
 
+import unibo.citysimulation.model.MapModel;
+import unibo.citysimulation.model.transport.TransportFactory;
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.TransportLineImpl;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
@@ -7,6 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -22,7 +27,7 @@ public class MapPanel extends StyledPanel {
 
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
     private List<Color> congestionsColorList;
-
+    private List<String> transportLines;
     /**
      * Constructs a MapPanel with the specified background color.
      */
@@ -47,6 +52,9 @@ public class MapPanel extends StyledPanel {
         this.linesPointsCoordinates = points;
         repaint();
     }
+    public void SetTransportNames(List<String> lines){
+        transportLines = lines;      
+    }
 
     public void setCongestionsList(List<Color> ColorList) {
         this.congestionsColorList = ColorList;
@@ -56,18 +64,36 @@ public class MapPanel extends StyledPanel {
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
-
+    
         for(int i = 0; i < linesPointsCoordinates.size(); i++) {
             int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
             int y1 = linesPointsCoordinates.get(i).getFirst().getSecond();
             int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
             int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
-
             g2.setColor(congestionsColorList.get(i));
-
             g2.drawLine(x1, y1, x2, y2);
-        }
+    
+            String linename = transportLines.get(i);
+    
+            int midX = (x1 + x2) / 2;
+            int midY = (y1 + y2) / 2;
+    
+            // Set color to black before drawing the string
+            g2.setColor(Color.BLACK);
+            g2.setStroke(new BasicStroke(2));
+            Font currentFont = g2.getFont();
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.2F); // 2 times the current size
+            g2.setFont(newFont);
 
+            FontMetrics fm = g2.getFontMetrics();
+            int textWidth = fm.stringWidth(linename);
+            int textX = midX - textWidth / 2;
+    
+            g2.drawString(linename, textX, midY);
+    
+            // Reset the font size for the next line
+            g2.setFont(currentFont);
+        }
     }
 
     /**
