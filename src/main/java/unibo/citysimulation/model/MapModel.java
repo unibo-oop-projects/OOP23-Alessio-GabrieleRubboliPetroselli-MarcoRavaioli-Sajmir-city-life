@@ -64,9 +64,17 @@ public class MapModel {
                         person -> new Pair<>(person.getPosition().get(), this.getPersonColor(person))));
     }
 
+    public Color getPersonColor(DynamicPerson person) {
+        if (person.getState() == PersonState.AT_HOME) {
+            return Color.BLUE;
+        } else {
+            return Color.RED;
+        }
+    }
+
     public List<Color> getColorList() {
         return congestionsList.stream()
-                .map(this::getLineColor)
+                .map(this::getColor)
                 .collect(Collectors.toList());
     }
 
