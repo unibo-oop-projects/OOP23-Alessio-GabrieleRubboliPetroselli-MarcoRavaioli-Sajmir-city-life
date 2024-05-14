@@ -26,8 +26,9 @@ public class MapModel {
     private int normClickedY = -1;
     private int maxX = -1;
     private int maxY = -1;
+    private boolean simulationStarted = false;
 
-    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = new ArrayList<>();
+    private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();    //coordinate normalizzate da 0 a 1000
     private List<Double> congestionsList = new ArrayList<>();
 
     /**
@@ -35,6 +36,10 @@ public class MapModel {
      */
     public MapModel() {
         loadMapImage();
+    }
+
+    public void startSimulation() {
+        simulationStarted = true;
     }
 
     public void setTransportInfos(List<TransportLine> lines) {
@@ -61,24 +66,24 @@ public class MapModel {
 
     public List<Color> getColorList() {
         return congestionsList.stream()
-                .map(this::getLineColor)
+                .map(this::getColor)
                 .collect(Collectors.toList());
     }
 
-    public Color getLineColor(Double perc) {
-        // Calcola il valore interpolato tra il verde e il rosso in base alla
-        // percentuale
-        int red = (int) (255 * perc);
-        int green = (int) (255 * (1 - perc));
-        int blue = 0; // Nessun blu, altrimenti otterremmo un colore viola
-
-        // Assicurati che i valori siano compresi tra 0 e 255
-        red = Math.min(Math.max(red, 0), 255);
-        green = Math.min(Math.max(green, 0), 255);
-        blue = Math.min(Math.max(blue, 0), 255);
-
-        // Restituisci il colore RGB
-        return new Color(red, green, blue);
+    public Color getColor(Double perc) {
+        // Se la percentuale è inferiore al 50%, restituisci un colore verde
+        if(!simulationStarted){
+            return Color.GRAY;
+        }
+        if (perc <= 50) {
+            int green = 255 - (int) (255 * perc / 50);
+            return new Color(0, Math.min(255, Math.max(0, green)), 0);
+        } else {
+            double adjustedPerc = (perc / 100 - 50) / 50; // Normalize the percentage in the range 0-1
+            int red = (int) (255 * adjustedPerc);
+            int green = (int) (255 * (1 - adjustedPerc));
+            return new Color(Math.min(255, Math.max(0, red)), Math.min(255, Math.max(0, green)), 0);
+        }
     }
 
     public Color getPersonColor(DynamicPerson person) {
@@ -89,9 +94,14 @@ public class MapModel {
         }
     }
 
-    public List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> getLinesPointsCoordinates() {
-        return linesPointsCoordinates;
+    public List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> getLinesPointsCoordinates(){
+        return linesPointsCoordinates.stream()
+                .map(pair -> new Pair<>(
+                        new Pair<>(denormalizeCoordinate(pair.getFirst().getFirst(), maxX), denormalizeCoordinate(pair.getFirst().getSecond(), maxY)),
+                        new Pair<>(denormalizeCoordinate(pair.getSecond().getFirst(), maxX), denormalizeCoordinate(pair.getSecond().getSecond(), maxY))))
+                .collect(Collectors.toList());
     }
+    
 
     public void setCongestionsList(List<Double> congestionList) {
         this.congestionsList = congestionList;
@@ -121,6 +131,8 @@ public class MapModel {
     public void setMaxCoordinates(int x, int y) {
         maxX = x;
         maxY = y;
+        //System.out.println("maxX: " + maxX);
+        //System.out.println("maxY: " + maxY);
     }
 
     /**
@@ -131,7 +143,11 @@ public class MapModel {
      * @return The normalized coordinate.
      */
     private int normalizeCoordinate(int c, int max) {
-        return (int) (c / (double) maxX * 1000);
+        return (int) (c / (double) max * 1000);
+    }
+
+    private int denormalizeCoordinate(int c, int max) {
+        return (int) (c / 1000.0 * max);
     }
 
     public int getNormX() {

@@ -1,10 +1,11 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.clock.ClockObserverTransport;
+import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 
-import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -14,6 +15,7 @@ import java.awt.event.ComponentEvent;
 public class WindowController {
     private WindowView windowView;
     private CityModel cityModel;
+
 
     /**
      * Constructs a WindowController with the specified models and view.
@@ -25,21 +27,26 @@ public class WindowController {
     public WindowController(WindowView windowView, CityModel cityModel) {
         this.windowView = windowView;
         this.cityModel = cityModel;
-        
 
         this.windowView.addResizeListener(new ResizeListener());
 
-        cityModel.setFrameSize(cityModel.getScreenSize());      //questo comando è inutile se non si vogliono salvare le dimensioni nel cityModel
+        cityModel.setFrameSize(cityModel.getScreenSize()); // questo comando è inutile se non si vogliono salvare le
+                                                           // dimensioni nel cityModel
+
+        // MapModel mapModel = cityModel.getMapModel();
 
         new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
 
         new ClockController(cityModel.getClockModel(), windowView.getClockPanel(), windowView.getInputPanel());
 
-        new InputController(cityModel, windowView.getInputPanel(),windowView.getClockPanel(),windowView.getGraphicsPanel(),windowView.getMapPanel());
+        new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(),
+                windowView.getClockPanel());
 
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
-        
-        windowView.setFrame(cityModel.getScreenSize());
+        cityModel.getClockModel().addObserver(new ClockObserverTransport(cityModel.getTransportLines(), windowView.getMapPanel()));
+
+        Pair<Integer, Integer> frameSize = cityModel.getScreenSize();
+        windowView.updateFrame(frameSize.getFirst(), frameSize.getSecond());
         windowView.repaint();
     }
 
@@ -68,11 +75,23 @@ public class WindowController {
                 }
             }
 
-            cityModel.setFrameSize(new Pair<Integer,Integer>(newWidth, newHeight));        //questa informazione è inutile, ricontrollare, al massimo la togli anche da cityModel
+            //////////////////
+            cityModel.getMapModel().setMaxCoordinates((int) windowView.getMapPanel().getSize().getWidth(),
+                    (int) windowView.getMapPanel().getSize().getHeight());
+            cityModel.getMapModel().setTransportInfos(cityModel.getTransportLines());
+            windowView.getMapPanel().setLinesPoints(cityModel.getMapModel().getLinesPointsCoordinates());
+            windowView.getMapPanel().setCongestionsList(cityModel.getMapModel().getColorList());
+
+            windowView.getMapPanel().repaint();
+            //////////////////
+
+
+            cityModel.setFrameSize(new Pair<Integer, Integer>(newWidth, newHeight)); // questa informazione è inutile,
+                                                                                     // ricontrollare, al massimo la
+                                                                                     // togli anche da cityModel
             windowView.updateFrame(newWidth, newHeight);
             windowView.repaint();
         }
     }
-
 
 }

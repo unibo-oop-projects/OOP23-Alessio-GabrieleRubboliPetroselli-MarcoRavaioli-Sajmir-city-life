@@ -1,7 +1,6 @@
 package unibo.citysimulation.view;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
-import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.GraphicsPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
@@ -19,27 +18,50 @@ public class WindowView extends JFrame {
     private int width;
     private int height;
 
-    private MapPanel mapPanel = new MapPanel();                                 // questi andrebbero dentro ad una lista
-    private InfoPanel infoPanel = new InfoPanel(Color.GREEN);                   // List<StyledPanel> e gestirli tutti insieme
-    private ClockPanel clockPanel = new ClockPanel(Color.RED);
-    private InputPanel inputPanel = new InputPanel(Color.BLUE);
-    private GraphicsPanel graphicsPanel = new GraphicsPanel(Color.YELLOW);
+    private MapPanel mapPanel;
+    private InfoPanel infoPanel;
+    private ClockPanel clockPanel;
+    private InputPanel inputPanel;
+    private GraphicsPanel graphicsPanel;
+
 
     /**
      * Constructs a WindowView with the specified window model and map model.
      */
     public WindowView() {
-        
-        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL, ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
-
+        setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL,
+                ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
+    
         setTitle(ConstantAndResourceLoader.APPLICATION_NAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setFocusable(true);
+    
+        // Creiamo i componenti
+        mapPanel = new MapPanel();
+        infoPanel = new InfoPanel(Color.GREEN);
+        clockPanel = new ClockPanel(Color.RED);
+        inputPanel = new InputPanel(Color.BLUE);
+        graphicsPanel = new GraphicsPanel(Color.YELLOW);
+    
+    
         configureLayout();
+        // Creiamo i componenti prima di aggiungerli al frame
         createComponents();
+
+        
+        // Aggiungiamo un ComponentAdapter per gestire il ridimensionamento del frame
+        /*addResizeListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                updatePanelSize();
+            }
+        });*/
+    
+        // Impostiamo il frame visibile e ridimensionabile
         setVisible(true);
 
+        validate();
         pack();
     }
 
@@ -56,6 +78,9 @@ public class WindowView extends JFrame {
      * Updates the size of the panels based on the window size.
      */
     public void updateFrame(int width, int height) {
+        this.width = width;
+        this.height = height;
+
         setSize(new Dimension(width, height));
 
         inputPanel.setPreferredSize(new Dimension(width / 4, height));
@@ -129,21 +154,13 @@ public class WindowView extends JFrame {
         add(rightPanel, BorderLayout.EAST);
     }
 
-    public void setFrame(Pair<Integer, Integer> frameSize) {
-        this.width = frameSize.getFirst();
-        this.height = frameSize.getSecond();
-        //setSize(width, height);
-
-        updateFrame(width, height);
-    }
-
 
     /**
      * Retrieves the info panel.
      *
      * @return The info panel.
      */
-    public InfoPanel getInfoPanel(){
+    public InfoPanel getInfoPanel() {
         return infoPanel;
     }
 
@@ -152,7 +169,7 @@ public class WindowView extends JFrame {
      *
      * @return The clock panel.
      */
-    public ClockPanel getClockPanel(){
+    public ClockPanel getClockPanel() {
         return clockPanel;
     }
 
@@ -161,7 +178,7 @@ public class WindowView extends JFrame {
      *
      * @return The input panel.
      */
-    public InputPanel getInputPanel(){
+    public InputPanel getInputPanel() {
         return inputPanel;
     }
 
@@ -170,7 +187,7 @@ public class WindowView extends JFrame {
      *
      * @return The graphics panel.
      */
-    public GraphicsPanel getGraphicsPanel(){
+    public GraphicsPanel getGraphicsPanel() {
         return graphicsPanel;
     }
 
@@ -179,7 +196,7 @@ public class WindowView extends JFrame {
      *
      * @return The map panel.
      */
-    public MapPanel getMapPanel(){
+    public MapPanel getMapPanel() {
         return mapPanel;
     }
 }

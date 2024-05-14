@@ -30,6 +30,7 @@ public class CityModel {
     private List<List<DynamicPerson>> people;
     private MapModel mapModel;
     private ClockModel clockModel;
+    private InputModel inputModel;
 
     private int frameWidth;
     private int frameHeight;
@@ -40,6 +41,7 @@ public class CityModel {
     public CityModel() {
         this.mapModel = new MapModel();
         this.clockModel = new ClockModel(365);
+        this.inputModel = new InputModel();
 
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportFactory.createTransportsFromFile(zones);
@@ -53,7 +55,6 @@ public class CityModel {
     public void createEntities(int numberOfPeople) {
         // Create zones
         //this.zones = ZoneFactory.createZonesFromFile();
-        System.out.println("Zones created. " + zones.size());
 
         // Create transports
         //this.transports = TransportFactory.createTransportsFromFile(zones);
@@ -98,6 +99,22 @@ public class CityModel {
         }
     }
 
+    public Pair<Integer,Integer> getFrameSize(){
+        // Get the screen size
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Calculate the maximum dimensions based on the screen size and a constant percentage
+        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+
+        // Calculate the frame dimensions based on the maximum dimensions
+        int frameHeight = maxHeight > maxWidth / 2 ? maxWidth / 2 : maxHeight;
+        int frameWidth = frameHeight * 2;
+
+        // Create and return the window model with the calculated dimensions
+        return new Pair<>(frameWidth, frameHeight);
+    }
+
     /**
      * Gets the map model associated with this city model.
      * @return The map model.
@@ -112,6 +129,10 @@ public class CityModel {
      */
     public ClockModel getClockModel() {
         return this.clockModel;
+    }
+
+    public InputModel getInputModel() {
+        return this.inputModel;
     }
 
     /**
