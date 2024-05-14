@@ -58,6 +58,7 @@ public class ClockController implements ClockObserver {
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
         // Update the clock panel text with current time and day
         clockPanel.setClockText("Giorno: " + currentDay + " ora: " + currentTime);
+        
     }
 
     /**

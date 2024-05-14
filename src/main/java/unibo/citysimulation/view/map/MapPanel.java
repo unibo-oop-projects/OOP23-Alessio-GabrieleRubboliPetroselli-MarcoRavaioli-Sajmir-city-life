@@ -1,10 +1,16 @@
 package unibo.citysimulation.view.map;
 
+import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.TransportLineImpl;
+import unibo.citysimulation.model.zone.Boundary;
+import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
