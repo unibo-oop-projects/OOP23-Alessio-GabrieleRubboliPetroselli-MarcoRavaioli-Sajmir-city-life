@@ -31,8 +31,6 @@ public class InputController {
 
         this.inputPanel = inputPanel;
 
-        //cityModel.getMapModel().startSimulation();
-        // Add action listener for the start button
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,6 +41,8 @@ public class InputController {
                 inputPanel.getCapacitySlider().setEnabled(false);
                 inputPanel.getBusinessSlider().setEnabled(false);
                 inputPanel.getRichnessSlider().setEnabled(false);
+                inputPanel.getStartButton().setEnabled(false);
+                inputPanel.getStopButton().setEnabled(true);
             }
         });
 
@@ -55,6 +55,9 @@ public class InputController {
                 inputPanel.getPeopleSlider().setEnabled(true);
                 inputPanel.getBusinessSlider().setEnabled(true);
                 inputPanel.getRichnessSlider().setEnabled(true);
+                inputPanel.getCapacitySlider().setEnabled(true);
+                inputPanel.getStartButton().setEnabled(true);
+                inputPanel.getStopButton().setEnabled(false);
             }
         });
     }
