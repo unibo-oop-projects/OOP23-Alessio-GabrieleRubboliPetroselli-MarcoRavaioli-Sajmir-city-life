@@ -1,9 +1,5 @@
 package unibo.citysimulation.view.map;
 
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.model.transport.TransportFactory;
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.transport.TransportLineImpl;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
@@ -11,7 +7,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -28,6 +23,9 @@ public class MapPanel extends StyledPanel {
     private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap;
 
     private List<String> transportLines;
+
+    //private int originalWidth;
+    //private int originalHeight;
     /**
      * Constructs a MapPanel with the specified background color.
      */
@@ -65,7 +63,7 @@ public class MapPanel extends StyledPanel {
 
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
+        
     
         for(int i = 0; i < linesPointsCoordinates.size(); i++) {
             int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
@@ -73,6 +71,7 @@ public class MapPanel extends StyledPanel {
             int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
             int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
             g2.setColor(congestionsColorList.get(i));
+            g2.setStroke(new BasicStroke(6));
             g2.drawLine(x1, y1, x2, y2);
     
             String linename = transportLines.get(i);
@@ -140,6 +139,10 @@ public class MapPanel extends StyledPanel {
      */
     public void setImage(BufferedImage image) {
         mapImage = image;
+
+        //originalWidth = image.getWidth();
+
+        //originalHeight = image.getHeight();
         repaint();
     }
 
