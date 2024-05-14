@@ -3,10 +3,12 @@ package unibo.citysimulation.controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.time.LocalTime;
 import java.util.List;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.MapModel;
+import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.InfoPanel;
@@ -14,7 +16,7 @@ import unibo.citysimulation.view.sidePanels.InfoPanel;
 /**
  * Controller class responsible for handling mouse events on the map.
  */
-public class MapController {
+public class MapController implements ClockObserver{
     private InfoPanel infoPanel;
     private MapPanel mapPanel;
     private MapModel mapModel;
@@ -31,7 +33,9 @@ public class MapController {
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;
         this.mapModel = cityModel.getMapModel();
-        mapPanel.setZones(cityModel.getZones());
+        //mapPanel.setZones(cityModel.getZones());
+
+        cityModel.getClockModel().addObserver(this);
 
         mapPanel.setImage(mapModel.getImage());
 
@@ -41,6 +45,10 @@ public class MapController {
                 handleMouseclick(e);
             }
         });
+
+        mapModel.setTransportInfos(cityModel.getTransportLines());
+        mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
+        mapPanel.setCongestionsList(mapModel.getColorList());
     }
 
     /**
@@ -75,5 +83,16 @@ public class MapController {
 
     public BufferedImage getImage() {
         return mapModel.getImage();
+    }
+
+    @Override
+    public void onTimeUpdate(LocalTime currentTime, int currentDay) {
+        
+        mapModel.setTransportInfos(cityModel.getTransportLines());
+        mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
+        mapPanel.setCongestionsList(mapModel.getColorList());
+        
+
+        mapPanel.repaint();
     }
 }

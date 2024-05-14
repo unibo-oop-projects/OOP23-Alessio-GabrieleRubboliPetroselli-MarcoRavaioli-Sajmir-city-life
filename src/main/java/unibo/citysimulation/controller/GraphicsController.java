@@ -27,7 +27,7 @@ public class GraphicsController implements ClockObserver {
 
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
-
+        
         List<Double> transportLinesCongestion = cityModel.getTransportLines().stream()
                 .map(TransportLine::getCongestion)
                 .collect(Collectors.toList());
@@ -40,10 +40,9 @@ public class GraphicsController implements ClockObserver {
                 (int) allPeople.stream().filter(person -> person.getState() == PersonState.WORKING).count());
 
         graphicsPanel.updateDataset(
-                peopleStateCounts,
-                transportLinesCongestion,
-                50,
-                this.counter++);
-
+            peopleStateCounts, 
+            transportLinesCongestion,
+            50,
+            this.counter++);
     }
 }
