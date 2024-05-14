@@ -26,9 +26,11 @@ public class MapModel {
     private int maxX = -1;
     private int maxY = -1;
     private boolean simulationStarted = false;
+    private List<String> transportLines;
 
     private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();    //coordinate normalizzate da 0 a 1000
     private List<Double> congestionsList = new ArrayList<>();
+
 
     /**
      * Constructs a MapModel object and loads the map image.
@@ -53,6 +55,15 @@ public class MapModel {
         congestionsList = lines.stream()
                 .map(line -> line.getCongestion())
                 .collect(Collectors.toList());
+    }
+    public void setTransportNames(List<TransportLine> lines){
+        transportLines = lines.stream()
+                .map(n->n.getName())
+                .collect(Collectors.toList());       
+    }
+
+    public List<String> getTransportNames(){
+        return transportLines;
     }
 
     public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {
