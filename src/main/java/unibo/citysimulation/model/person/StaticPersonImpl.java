@@ -61,12 +61,20 @@ public class StaticPersonImpl implements StaticPerson {
                 this.position = Optional.empty();
                 break;
             case WORKING:
-                this.position = Optional.of(personData.business().getPosition());
+                Pair<Integer, Integer> businessPosition = personData.business().getPosition();
+                int newX = businessPosition.getFirst() + getRandomDeviation();
+                int newY = businessPosition.getSecond() + getRandomDeviation();
+                this.position = Optional.of(new Pair<>(newX, newY));
                 break;
             case AT_HOME:
                 this.position = Optional.of(homePosition);
                 break;
         }
+    }
+    
+    private int getRandomDeviation() {
+        // Genera un numero casuale compreso tra -20 e 20
+        return (int) (Math.random() * 41) - 20;
     }
 
     private void getTrip() {

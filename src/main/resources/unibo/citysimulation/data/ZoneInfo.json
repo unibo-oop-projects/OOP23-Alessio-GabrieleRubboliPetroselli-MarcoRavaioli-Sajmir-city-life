@@ -1,59 +1,97 @@
 [
     {
-      "name": "Centro",
-      "personPercents": 10,
-      "businessPercents": 40,
-      "wellfareMinMax": {
-        "min": 1000,
-        "max": 1500
-      },
-      "ageMinMax": {
-        "min": 3,
-        "max": 99
-      },
-      "boundary": {
-        "x1": 0,
-        "y1": 0,
-        "x2": 250,
-        "y2": 250
-      }
-    },
-    {
-      "name": "Industrial",
+      "name": "Centre",
       "personPercents": 30,
-      "businessPercents": 10,
+      "businessPercents": 45,
       "wellfareMinMax": {
-        "min": 800,
-        "max": 1600
+        "min": 3000,
+        "max": 5500
       },
       "ageMinMax": {
         "min": 3,
         "max": 99
       },
       "boundary": {
-        "x1": 250,
-        "y1": 0,
-        "x2": 500,
-        "y2": 250
+        "x1": 226,
+        "y1": 178,
+        "x2": 493,
+        "y2": 351
       }
     },
     {
-      "name": "Periferia",
+      "name": "Industrial Area",
       "personPercents": 20,
-      "businessPercents": 30,
+      "businessPercents": 35,
       "wellfareMinMax": {
-        "min": 500,
-        "max": 1000
+        "min": 1500,
+        "max": 3000
+      },
+      "ageMinMax": {
+        "min": 3,
+        "max": 99
+      },
+      "boundary": {
+        "x1": 494,
+        "y1": 178,
+        "x2": 648,
+        "y2": 620
+      }
+    },
+    {
+      "name": "Residencial Area",
+      "personPercents": 20,
+      "businessPercents": 5,
+      "wellfareMinMax": {
+        "min": 2500,
+        "max": 4000
       },
       "ageMinMax": {
         "min": 20,
         "max": 99
       },
       "boundary": {
+        "x1": 226,
+        "y1": 0,
+        "x2": 648,
+        "y2": 177
+      }
+    },
+    {
+      "name": "Hills",
+      "personPercents": 10,
+      "businessPercents": 5,
+      "wellfareMinMax": {
+        "min": 6000,
+        "max": 8000
+      },
+      "ageMinMax": {
+        "min": 3,
+        "max": 99
+      },
+      "boundary": {
         "x1": 0,
-        "y1": 250,
-        "x2": 250,
-        "y2": 500
+        "y1": 0,
+        "x2": 225,
+        "y2": 351
+      }
+    },
+    {
+      "name": "Suburbs",
+      "personPercents": 20,
+      "businessPercents": 10,
+      "wellfareMinMax": {
+        "min": 700,
+        "max": 1300
+      },
+      "ageMinMax": {
+        "min": 3,
+        "max": 99
+      },
+      "boundary": {
+        "x1": 0,
+        "y1": 352,
+        "x2": 493,
+        "y2": 620
       }
     }
   ]

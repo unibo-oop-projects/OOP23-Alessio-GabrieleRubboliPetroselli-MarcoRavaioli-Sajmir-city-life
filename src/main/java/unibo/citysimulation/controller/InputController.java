@@ -49,6 +49,18 @@ public class InputController {
                 inputPanel.getRichnessSlider().setEnabled(false);
             }
         });
+
+        inputPanel.getStopButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("PREMUTO IL TASTO STOP SIMULATION");
+                stopSimulation(clockPanel);
+
+                inputPanel.getPeopleSlider().setEnabled(true);
+                inputPanel.getBusinessSlider().setEnabled(true);
+                inputPanel.getRichnessSlider().setEnabled(true);
+            }
+        });
     }
  
     /**
@@ -69,6 +81,17 @@ public class InputController {
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
-    }  
+
+        clockPanel.getPauseButton().setEnabled(true);
+    }
+    
+    private void stopSimulation(ClockPanel clockPanel) {
+        // Restart the clock simulation
+        cityModel.getClockModel().stopSimulation();
+        // Update the pause button state on the clock panel
+        clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
+
+        clockPanel.getPauseButton().setEnabled(false);
+    }
 }
  

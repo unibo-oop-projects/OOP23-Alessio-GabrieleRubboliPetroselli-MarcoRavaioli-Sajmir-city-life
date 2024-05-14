@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.awt.Color;
+import java.util.Map;
+import java.util.HashMap;
 
+import unibo.citysimulation.model.person.DynamicPerson;
+import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
@@ -52,9 +56,17 @@ public class MapModel {
                 .collect(Collectors.toList());
     }
 
+    public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {
+        return people.stream()
+                .filter(person -> person.getPosition().isPresent())
+                .collect(Collectors.toMap(
+                        person -> person.getPersonData().name(),
+                        person -> new Pair<>(person.getPosition().get(), this.getPersonColor(person))));
+    }
+
     public List<Color> getColorList() {
         return congestionsList.stream()
-                .map(this::getColor)
+                .map(this::getLineColor)
                 .collect(Collectors.toList());
     }
 
@@ -92,7 +104,6 @@ public class MapModel {
         return congestionsList;
     }
 
-
     /**
      * Sets the last clicked coordinates after normalization.
      *
@@ -103,7 +114,7 @@ public class MapModel {
         normClickedX = normalizeCoordinate(x, maxX);
         normClickedY = normalizeCoordinate(y, maxY);
     }
-    
+
     /**
      * Sets the maximum coordinates of the map.
      *
@@ -145,7 +156,7 @@ public class MapModel {
      *
      * @return The BufferedImage object representing the map image.
      */
-    public BufferedImage getImage(){
+    public BufferedImage getImage() {
         return image;
     }
 
@@ -155,7 +166,7 @@ public class MapModel {
     private void loadMapImage() {
         try {
             // Load the image using a relative path within the classpath
-            URL imageUrl = getClass().getResource("/unibo/citysimulation/mapImage.jpeg");
+            URL imageUrl = getClass().getResource("/unibo/citysimulation/image3.png");
             if (imageUrl != null) {
                 image = ImageIO.read(imageUrl);
             } else {
@@ -172,7 +183,9 @@ public class MapModel {
      * @param e The IOException instance representing the error.
      */
     private void handleImageLoadError(IOException e) {
-        // Handle the error in a meaningful way, such as showing an error message to the user
-        JOptionPane.showMessageDialog(null, "Error loading map image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        // Handle the error in a meaningful way, such as showing an error message to the
+        // user
+        JOptionPane.showMessageDialog(null, "Error loading map image: " + e.getMessage(), "Error",
+                JOptionPane.ERROR_MESSAGE);
     }
 }

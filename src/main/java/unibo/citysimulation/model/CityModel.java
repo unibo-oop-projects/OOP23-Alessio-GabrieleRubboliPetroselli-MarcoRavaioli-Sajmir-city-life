@@ -64,6 +64,14 @@ public class CityModel {
         ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
         ZoneTable.getInstance().addPair(zones.get(1), zones.get(2), transports.get(1));
         ZoneTable.getInstance().addPair(zones.get(0), zones.get(2),transports.get(2));
+        ZoneTable.getInstance().addPair(zones.get(0), zones.get(3), transports.get(3));
+        ZoneTable.getInstance().addPair(zones.get(0), zones.get(4),transports.get(4));
+        ZoneTable.getInstance().addPair(zones.get(1), zones.get(3), transports.get(5));
+        ZoneTable.getInstance().addPair(zones.get(1), zones.get(4),transports.get(6));
+        ZoneTable.getInstance().addPair(zones.get(2), zones.get(3), transports.get(7));
+        ZoneTable.getInstance().addPair(zones.get(2), zones.get(4),transports.get(8));
+        ZoneTable.getInstance().addPair(zones.get(3), zones.get(4), transports.get(9));
+
 
         // Create businesses
         this.businesses = BusinessFactory.createBusinesses(zones);
@@ -71,10 +79,7 @@ public class CityModel {
 
         // Create people
         this.people = new ArrayList<>();
-        for (var zone : zones) {
-            this.people.add(PersonFactory.createGroupOfPeople((int) (numberOfPeople * (zone.businessPercents()/100)),
-            zone.wellfareMinMax(), businesses, zone, zoneTable));
-        }
+        people = PersonFactory.createAllPeople(numberOfPeople, zones, businesses);
 
         // Add people as observers to clock model
         clockModel.addObserver(new ClockObserverPerson(people));

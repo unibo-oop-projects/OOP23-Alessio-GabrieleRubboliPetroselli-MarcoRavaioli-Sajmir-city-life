@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -27,6 +28,7 @@ public class MapPanel extends StyledPanel {
 
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
     private List<Color> congestionsColorList;
+    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap;
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -50,12 +52,14 @@ public class MapPanel extends StyledPanel {
 
     public void setLinesPoints(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points) {
         this.linesPointsCoordinates = points;
-        repaint();
     }
 
     public void setCongestionsList(List<Color> ColorList) {
         this.congestionsColorList = ColorList;
-        repaint();
+    }
+
+    public void setPeopleMap(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap) {
+        this.peopleMap = peopleMap;
     }
 
     private void drawTransportLines(Graphics g) {
@@ -75,6 +79,19 @@ public class MapPanel extends StyledPanel {
 
     }
 
+    private void drawPeople(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+
+        for (var entry : peopleMap.entrySet()) {
+            Pair<Integer, Integer> point = entry.getValue().getFirst();
+            Color color = entry.getValue().getSecond();
+
+            g2.setColor(color);
+            g2.fillOval(point.getFirst(), point.getSecond(), 5, 5);
+        }
+    }
+
     /**
      * Paints the map image on the panel.
      *
@@ -86,6 +103,10 @@ public class MapPanel extends StyledPanel {
         // Draws the image on the JPanel
         if (mapImage != null) {
             g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
+        }
+
+        if (peopleMap != null) {
+            drawPeople(g);
         }
 
         if (linesPointsCoordinates != null) {

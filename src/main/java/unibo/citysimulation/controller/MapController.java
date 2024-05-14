@@ -35,8 +35,6 @@ public class MapController implements ClockObserver{
         this.mapModel = cityModel.getMapModel();
         //mapPanel.setZones(cityModel.getZones());
 
-        cityModel.getClockModel().addObserver(this);
-
         mapPanel.setImage(mapModel.getImage());
 
         mapPanel.addMouseListener(new MouseAdapter() {
@@ -49,6 +47,8 @@ public class MapController implements ClockObserver{
         mapModel.setTransportInfos(cityModel.getTransportLines());
         mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
         mapPanel.setCongestionsList(mapModel.getColorList());
+
+        cityModel.getClockModel().addObserver(this);
     }
 
     /**
@@ -87,6 +87,8 @@ public class MapController implements ClockObserver{
 
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
+
+        mapPanel.setPeopleMap(mapModel.getPersonInfos(cityModel.getAllPeople()));
         
         mapModel.setTransportInfos(cityModel.getTransportLines());
         mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
