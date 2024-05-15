@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.sidePanels;
 
+import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.view.StyledPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -153,7 +154,7 @@ public class GraphicsPanel extends StyledPanel {
         return chart;
     }
 
-    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, int business,
+    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, List<Business> businesses,
             double counter) {
         synchronized (datasets) {
             if (columnCount > 150) {
@@ -194,9 +195,13 @@ public class GraphicsPanel extends StyledPanel {
                 }
             }
 
-            synchronized (datasets.get(2)) { // Sincronizza l'accesso al dataset corrente
-                datasets.get(2).getSeries(0).add(counter, business);
-            }
+            int totalEmployees = businesses.stream()
+                                       .mapToInt(business -> business.getEmployees().size())
+                                       .sum();
+            
+            synchronized (datasets.get(2)) {
+            datasets.get(2).getSeries(0).add(counter, totalEmployees);
+        }
 
             NumberAxis stateAxis = new NumberAxis();
             stateAxis.setRange(0, maxStateHeight * 1.15);
