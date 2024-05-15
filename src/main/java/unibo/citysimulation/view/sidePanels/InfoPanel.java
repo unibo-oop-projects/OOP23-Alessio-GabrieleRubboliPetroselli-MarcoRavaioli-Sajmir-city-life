@@ -1,6 +1,8 @@
 package unibo.citysimulation.view.sidePanels;
 
 import unibo.citysimulation.view.StyledPanel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +50,23 @@ public class InfoPanel extends StyledPanel {
         zoneNJLabel = new JLabel("Zone: ");
         gbc.gridy = 3;
         add(zoneNJLabel, gbc);
+
+        JButton legendButton = new JButton("Legend");
+        legendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame legendFrame = new JFrame(" Graph Legend");
+                legendFrame.setSize(300, 300);
+                legendFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JLabel legendLabel = new JLabel("<html><h1>Graph Legend</h1><br><h2>Red: People</h2><br><h2>Green: Business</h2><br><h2>Blue: Richness</h2></html>");
+                legendFrame.add(legendLabel);
+                legendFrame.setVisible(true);
+            }
+        });
+        gbc.gridy = 4;
+        add(legendButton, gbc);
     }
+
 
     /**
      * Updates the position information displayed on the panel.
