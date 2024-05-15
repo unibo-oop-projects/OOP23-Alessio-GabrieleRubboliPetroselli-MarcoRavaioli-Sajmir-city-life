@@ -1,9 +1,14 @@
 package unibo.citysimulation.model;
 
 import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
 import unibo.citysimulation.model.person.DynamicPerson;
+
+import unibo.citysimulation.model.person.Person;
+import unibo.citysimulation.model.business.BusinessType;
+
 import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
@@ -35,6 +40,8 @@ public class CityModel {
     private int frameWidth;
     private int frameHeight;
 
+
+
     /**
      * Constructs a CityModel object with default settings.
      */
@@ -45,6 +52,7 @@ public class CityModel {
 
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportFactory.createTransportsFromFile(zones);
+        this.businesses = new ArrayList<>();
 
     
     }
@@ -55,7 +63,17 @@ public class CityModel {
      * Creates entities such as zones, transports, businesses, and people.
      * @param numberOfPeople The number of people to create in the simulation.
      */
-    public void createEntities(int numberOfPeople) {
+    public void createEntities(int numberOfPeople, int numberOfBusinesses) {
+
+        // Create businesses
+        numberOfBusinesses = 30;
+        for (int i = 0; i < numberOfBusinesses; i++) {
+            BusinessFactory businessFactory = new BusinessFactory();
+            Business business = businessFactory.createBusiness(BusinessFactory.getRandomBusinessType()).get();
+            businesses.add(business);
+        }
+
+
         // Create zones
         //this.zones = ZoneFactory.createZonesFromFile();
 
@@ -94,6 +112,8 @@ public class CityModel {
             }
         }
     }
+
+    
 
     public Pair<Integer,Integer> getFrameSize(){
         // Get the screen size
