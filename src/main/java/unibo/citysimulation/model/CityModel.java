@@ -49,6 +49,8 @@ public class CityModel {
     
     }
 
+    //istanzo businessfactory chiamo la create e le meto random
+
     /**
      * Creates entities such as zones, transports, businesses, and people.
      * @param numberOfPeople The number of people to create in the simulation.
