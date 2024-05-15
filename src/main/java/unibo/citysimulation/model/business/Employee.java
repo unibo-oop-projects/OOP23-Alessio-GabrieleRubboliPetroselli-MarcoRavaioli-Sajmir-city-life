@@ -19,6 +19,10 @@ public class Employee implements EmployeeStatus{
 
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
     @Override
     public int getcountDelay(Employee employee) {
         return employee.countDelay;
