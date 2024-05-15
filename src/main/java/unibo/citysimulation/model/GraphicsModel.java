@@ -1,6 +1,5 @@
 package unibo.citysimulation.model;
 
-import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,8 +13,6 @@ import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
 
 public class GraphicsModel {
-    private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
-            Color.PINK, Color.CYAN);
     private List<XYSeriesCollection> datasets;
     private List<String> names = Arrays.asList("Person State", "Transport Congestion", "Business Occupation");
     private int counter = 0;
@@ -23,7 +20,7 @@ public class GraphicsModel {
     private int columnCount = 0;
 
     public GraphicsModel(){
-        createDatasets(List.of(3, 5, 1));
+        createDatasets(List.of(3, 7, 1));
         System.out.println("in teoria qua ha già creato i datasets");
     }
 

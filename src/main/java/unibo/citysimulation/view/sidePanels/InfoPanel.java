@@ -1,6 +1,5 @@
 package unibo.citysimulation.view.sidePanels;
 
-import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;

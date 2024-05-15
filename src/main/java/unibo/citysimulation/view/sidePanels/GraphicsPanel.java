@@ -4,19 +4,16 @@ import unibo.citysimulation.view.StyledPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.awt.*;
 
 /**
@@ -25,13 +22,7 @@ import java.awt.*;
 public class GraphicsPanel extends StyledPanel {
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
             Color.PINK, Color.CYAN);
-    private List<XYSeriesCollection> datasets;
-    private List<String> names;
     private List<XYPlot> plots;
-    private int columnCount = 0;
-
-    private int maxStateHeight = 1;
-    private double maxCongestionHeight = 1;
 
     /**
      * Constructs a GraphicsPanel with the specified background color.
@@ -40,21 +31,9 @@ public class GraphicsPanel extends StyledPanel {
      */
     public GraphicsPanel(Color bgColor) {
         super(bgColor);
-
-        /*plots = createCharts(names, datasets).stream()
-                .map(JFreeChart::getXYPlot)
-                .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
-                .collect(Collectors.toList());
-
-        synchronized (this) {
-            plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
-        }
-
-        setLayout(new GridLayout(names.size(), 1));*/
     }
 
     public void createGraphics(List<String> names, List<XYSeriesCollection> datasets) {
-        System.out.println("valore iniziale nel dataset 0, serie 0: " + datasets.get(0).getXValue(0, 0));
         plots = createCharts(names, datasets).stream()
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
@@ -92,18 +71,6 @@ public class GraphicsPanel extends StyledPanel {
         return renderer;
     }
 
-    public void clearDatasets() {
-
-        synchronized (datasets) {
-            columnCount = 0; // Resetta anche il contatore delle colonne
-            for (XYSeriesCollection dataset : datasets) {
-                for (int i = 0; i < dataset.getSeriesCount(); i++) {
-                    dataset.getSeries(i).clear();
-                }
-            }
-        }
-    }
-
     // Method to create a chart
     private JFreeChart createChart(String title, String domainLabel, String rangeLabel,
             XYDataset dataset) {
@@ -129,56 +96,4 @@ public class GraphicsPanel extends StyledPanel {
 
         return chart;
     }
-
-    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, int business,
-            double counter) {
-        synchronized (datasets) {
-            if (columnCount > 150) {
-                int columnsToRemove = columnCount - 150;
-                datasets.forEach(dataset -> {
-                    synchronized (dataset) {
-                        IntStream.range(0, columnsToRemove).forEach(i -> {
-                            IntStream.range(0, dataset.getSeriesCount()).forEach(j -> {
-                                XYSeries series = dataset.getSeries(j);
-                                if (!series.isEmpty()) {
-                                    series.remove(0);
-                                }
-                            });
-                        });
-                    }
-                });
-                columnCount = 150;
-            }
-
-            columnCount++;
-
-            for (int i = 0; i < datasets.get(0).getSeriesCount(); i++) {
-                synchronized (datasets.get(0)) {
-                    datasets.get(0).getSeries(i).add(counter, states.get(i));
-                    maxStateHeight = states.get(i) > maxStateHeight ? states.get(i) : maxStateHeight;
-                }
-            }
-
-            for (int i = 0; i < datasets.get(1).getSeriesCount(); i++) {
-                synchronized (datasets.get(1)) {
-                    datasets.get(1).getSeries(i).add(counter, congestions.get(i));
-                    maxCongestionHeight = congestions.get(i) > maxCongestionHeight ? congestions.get(i)
-                            : maxCongestionHeight;
-                }
-            }
-
-            synchronized (datasets.get(2)) { // Sincronizza l'accesso al dataset corrente
-                datasets.get(2).getSeries(0).add(counter, business);
-            }
-
-            NumberAxis stateAxis = new NumberAxis();
-            stateAxis.setRange(0, (maxStateHeight * 1.15 < 100 ? maxStateHeight * 1.15 : 100));
-            plots.get(0).setRangeAxis(stateAxis);
-
-            NumberAxis congestionAxis = new NumberAxis();
-            congestionAxis.setRange(0, (maxCongestionHeight * 1.15 < 100 ? maxCongestionHeight * 1.15 : 100));
-            plots.get(1).setRangeAxis(congestionAxis);
-        }
-    }
-
 }

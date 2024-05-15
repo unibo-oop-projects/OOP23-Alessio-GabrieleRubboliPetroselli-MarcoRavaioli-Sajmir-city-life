@@ -7,13 +7,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
-
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
-import javax.swing.SwingUtilities;
-
-import org.w3c.dom.css.RGBColor;
 /**
  * Panel for displaying the map.
  */
