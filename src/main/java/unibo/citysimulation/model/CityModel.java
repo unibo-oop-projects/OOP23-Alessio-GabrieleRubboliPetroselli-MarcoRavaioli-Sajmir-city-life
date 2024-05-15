@@ -11,6 +11,7 @@ import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTable;
+import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
 
@@ -61,16 +62,7 @@ public class CityModel {
         System.out.println("Transports created. " + transports.size());
 
         // Create zone table
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
-        ZoneTable.getInstance().addPair(zones.get(1), zones.get(2), transports.get(1));
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(2),transports.get(2));
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(3), transports.get(3));
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(4),transports.get(4));
-        ZoneTable.getInstance().addPair(zones.get(1), zones.get(3), transports.get(5));
-        ZoneTable.getInstance().addPair(zones.get(1), zones.get(4),transports.get(6));
-        ZoneTable.getInstance().addPair(zones.get(2), zones.get(3), transports.get(7));
-        ZoneTable.getInstance().addPair(zones.get(2), zones.get(4),transports.get(8));
-        ZoneTable.getInstance().addPair(zones.get(3), zones.get(4), transports.get(9));
+        ZoneTableCreation.createAndAddPairs(zones, transports);
 
 
         // Create businesses

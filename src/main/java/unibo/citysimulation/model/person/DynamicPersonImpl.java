@@ -1,6 +1,9 @@
 package unibo.citysimulation.model.person;
 
 import java.time.LocalTime;
+import java.util.Arrays;
+
+import unibo.citysimulation.model.transport.TransportLine;
 
 public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
     private int lastArrivingTime;
@@ -41,7 +44,9 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         if (currentTime.toSecondOfDay() == this.lastArrivingTime) {
             this.setState(this.lastDestination);
             updatePosition();
-            this.transportLine.decrementPersonInLine();
+            Arrays.stream(transportLine)
+                  .forEach(TransportLine::decrementPersonInLine);
+
         }
     }
 
@@ -64,7 +69,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
             this.setState(newState);
         } else {
             this.setState(PersonState.MOVING);
-            this.transportLine.incrementPersonInLine();
+            Arrays.stream(transportLine)
+                  .forEach(TransportLine::incrementPersonInLine);
         }
         this.lastDestination = newState;
         this.updatePosition();

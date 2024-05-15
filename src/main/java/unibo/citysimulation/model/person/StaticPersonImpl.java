@@ -11,7 +11,7 @@ public class StaticPersonImpl implements StaticPerson {
     protected final PersonData personData;
     protected PersonState state;
     protected Pair<Integer, Integer> homePosition;
-    protected TransportLine transportLine;
+    protected TransportLine[] transportLine;
     protected int tripDuration;
 
     public StaticPersonImpl(PersonData personData, int money) {
@@ -47,7 +47,7 @@ public class StaticPersonImpl implements StaticPerson {
         this.state = state;
     }
 
-    public TransportLine getTransportLine() {
+    public TransportLine[] getTransportLine() {
         return transportLine;
     }
 
@@ -82,7 +82,7 @@ public class StaticPersonImpl implements StaticPerson {
             this.tripDuration = 0;
         } else {
             this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(), personData.business().getZone());
-            tripDuration = this.transportLine.getDuration() * 60;
+            tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
         }
     }
 }
