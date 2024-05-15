@@ -65,7 +65,7 @@ public class CityModel {
 
 
         // Create businesses
-        this.businesses = BusinessFactory.createBusinesses(zones);
+        this.businesses = BusinessFactory.createBusinessesFromFile(zones);
         System.out.println("Businesses created. " + businesses.size());
 
         // Create people
