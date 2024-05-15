@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import java.awt.Color;
 import java.util.Map;
 
+import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
@@ -64,6 +65,14 @@ public class MapModel {
 
     public List<String> getTransportNames(){
         return transportLines;
+    }
+
+    public Map<String, Pair<Integer, Integer>> getBusinessInfos(List<Business> businesses) {
+        return businesses.stream()
+                .collect(Collectors.toMap(
+                        business -> business.getName(),
+                        business -> new Pair<>(denormalizeCoordinate(business.getPosition().getFirst(), maxX),
+                                denormalizeCoordinate(business.getPosition().getSecond(), maxY))));
     }
 
     public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {

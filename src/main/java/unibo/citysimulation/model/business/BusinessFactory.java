@@ -1,9 +1,19 @@
 package unibo.citysimulation.model.business;
  
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.TransportLineImpl;
 import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.utilities.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import java.io.FileReader;
+
 import java.time.LocalTime;
  
 /**
@@ -17,36 +27,34 @@ public class BusinessFactory {
      * @param zones the list of Zone objects
      * @return a list of Business objects
      */
-    public static List<Business> createBusinesses(List<Zone> zones) {
+    public static List<Business> createBusinessesFromFile(List<Zone> zones) {
         List<Business> businesses = new ArrayList<>();
- 
-        List<Object> infos = new ArrayList<>();
- 
-        infos.add("ProjectSRL");
-        infos.add(1500);
-        infos.add(20.0);
-        infos.add(LocalTime.of(8, 0));
-        infos.add(LocalTime.of(18, 0));
-        infos.add(zones.get(0));
-        businesses.add(createBusiness(infos));
- 
-        infos.clear();
- 
-        infos.add("Golden Gym");
-        infos.add(1100);
-        infos.add(10.0);
-        infos.add(LocalTime.of(11, 0));
-        infos.add(LocalTime.of(20, 0));
-        infos.add(zones.get(1));
-        businesses.add(createBusiness(infos));
- 
-        infos.clear();
- 
-        return businesses;
-    }
- 
-    private static Business createBusiness(List<Object> infos) {
-        return new BusinessImpl((String) infos.get(0), (int) infos.get(1), (double) infos.get(2),
-        (LocalTime) infos.get(3), (LocalTime) infos.get(4), (Zone) infos.get(5));
+
+        try {
+            Gson gson = new Gson();
+
+            JsonArray jsonArray = gson.fromJson(
+                    new FileReader("src/main/resources/unibo/citysimulation/data/BusinessInfo.json"), JsonArray.class);
+
+            for (JsonElement jsonElement : jsonArray) {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+                businesses.add(
+                    new BusinessImpl(
+                        jsonObject.get("name").getAsString(),
+                        jsonObject.get("income").getAsInt(),
+                        jsonObject.get("wageRate").getAsDouble(),
+                        LocalTime.parse(jsonObject.get("openingTime").getAsString()),
+                        LocalTime.parse(jsonObject.get("closingTime").getAsString()),
+                        zones.get(jsonObject.get("zone").getAsInt())
+                    )
+                );
+            }
+            return businesses;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

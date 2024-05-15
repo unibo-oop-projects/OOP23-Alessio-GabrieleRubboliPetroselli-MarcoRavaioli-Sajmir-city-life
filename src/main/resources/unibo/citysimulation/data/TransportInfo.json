@@ -9,15 +9,6 @@
         }
     },
     {
-        "name": "Secante",
-        "capacity": 20,
-        "duration": 5,
-        "zone": {
-            "a": 1,
-            "b": 2
-        }
-    },
-    {
         "name": "Circolare",
         "capacity": 50,
         "duration": 50,
@@ -45,15 +36,6 @@
         }
     },
     {
-        "name": "Statale 4",
-        "capacity": 50,
-        "duration": 50,
-        "zone": {
-            "a": 1,
-            "b": 3
-        }
-    },
-    {
         "name": "Statale 5",
         "capacity": 50,
         "duration": 50,
@@ -69,15 +51,6 @@
         "zone": {
             "a": 2,
             "b": 3
-        }
-    },
-    {
-        "name": "Statale 8",
-        "capacity": 50,
-        "duration": 50,
-        "zone": {
-            "a": 2,
-            "b": 4
         }
     },
     {

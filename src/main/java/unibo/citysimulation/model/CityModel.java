@@ -11,6 +11,7 @@ import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTable;
+import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
 
@@ -59,20 +60,11 @@ public class CityModel {
 
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
         // Create zone table
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
-        ZoneTable.getInstance().addPair(zones.get(1), zones.get(2), transports.get(1));
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(2),transports.get(2));
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(3), transports.get(3));
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(4),transports.get(4));
-        ZoneTable.getInstance().addPair(zones.get(1), zones.get(3), transports.get(5));
-        ZoneTable.getInstance().addPair(zones.get(1), zones.get(4),transports.get(6));
-        ZoneTable.getInstance().addPair(zones.get(2), zones.get(3), transports.get(7));
-        ZoneTable.getInstance().addPair(zones.get(2), zones.get(4),transports.get(8));
-        ZoneTable.getInstance().addPair(zones.get(3), zones.get(4), transports.get(9));
+        ZoneTableCreation.createAndAddPairs(zones, transports);
 
 
         // Create businesses
-        this.businesses = BusinessFactory.createBusinesses(zones);
+        this.businesses = BusinessFactory.createBusinessesFromFile(zones);
         System.out.println("Businesses created. " + businesses.size());
 
 
@@ -155,6 +147,14 @@ public class CityModel {
         return this.transports;
     }
 
+    /**
+     * Gets the list of businesses in the city model.
+     * @return The list of businesses.
+     */
+    public List<Business> getBusinesses() {
+        return this.businesses;
+    }
+
     public List<DynamicPerson> getAllPeople() {
         return people.stream()              // Stream<List<DynamicPerson>>
                      .flatMap(List::stream) // Stream<DynamicPerson>
@@ -166,6 +166,12 @@ public class CityModel {
         return this.people != null;                                                         // questo null è da togliere (come tutti gli altri)
     }
     
+
+    public boolean isBusinessesPresent() {
+        boolean res = this.businesses != null;
+        System.out.println("Businesses present: " + res);
+        return res;
+    }
 
     public void setFrameSize(Pair<Integer, Integer> frameSize) {
         this.frameWidth = frameSize.getFirst();

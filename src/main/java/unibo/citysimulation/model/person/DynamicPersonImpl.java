@@ -1,10 +1,16 @@
 package unibo.citysimulation.model.person;
 
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Random;
+
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 
 public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
     private int lastArrivingTime;
     private PersonState lastDestination;
+    private Random random = new Random();
 
     public DynamicPersonImpl(PersonData personData, int money) {
         super(personData, money);
@@ -20,17 +26,21 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     }
 
     private void checkTimeToGoToWork(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(), personData.business().getOpeningTime().toSecondOfDay() - tripDuration,
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), updatedTime(personData.business().getOpeningTime()) - tripDuration,
                 tripDuration)) {
             movePerson(PersonState.WORKING);
         }
     }
 
     private void checkTimeToGoHome(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(), personData.business().getClosingTime().toSecondOfDay(),
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(),updatedTime(personData.business().getClosingTime()),
                 tripDuration)) {
             movePerson(PersonState.AT_HOME);
         }
+    }
+
+    private int updatedTime(LocalTime movingTime) {
+        return movingTime.toSecondOfDay() + (random.nextInt(13) * ConstantAndResourceLoader.MINUTES_IN_A_SECOND * 60);
     }
 
     public void incrementLastArrivingTime(int duration) {
@@ -41,7 +51,9 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         if (currentTime.toSecondOfDay() == this.lastArrivingTime) {
             this.setState(this.lastDestination);
             updatePosition();
-            this.transportLine.decrementPersonInLine();
+            Arrays.stream(transportLine)
+                  .forEach(TransportLine::decrementPersonInLine);
+
         }
     }
 
@@ -64,7 +76,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
             this.setState(newState);
         } else {
             this.setState(PersonState.MOVING);
-            this.transportLine.incrementPersonInLine();
+            Arrays.stream(transportLine)
+                  .forEach(TransportLine::incrementPersonInLine);
         }
         this.lastDestination = newState;
         this.updatePosition();
