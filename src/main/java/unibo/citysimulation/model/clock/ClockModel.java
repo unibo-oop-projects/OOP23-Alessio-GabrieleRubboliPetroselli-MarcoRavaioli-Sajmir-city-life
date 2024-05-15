@@ -124,14 +124,10 @@ public class ClockModel {
      * Notifies all observers of a time update.
      */
     private void notifyObservers() {
-        //long startTime = System.currentTimeMillis();
         List<ClockObserver> observersCopy = new ArrayList<>(observers);
         for (ClockObserver observer : observersCopy) {
             observer.onTimeUpdate(currentTime, currentDay);
         }
-        //long endTime = System.currentTimeMillis();
-        //long elapsedTime = endTime - startTime;
-        //System.out.println("Tempo trascorso notify: " + elapsedTime + " millisecondi");
     }
     
     
