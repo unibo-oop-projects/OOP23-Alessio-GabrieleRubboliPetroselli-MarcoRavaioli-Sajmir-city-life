@@ -1,69 +1,34 @@
 package unibo.citysimulation.view.map;
 
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.model.transport.TransportFactory;
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.transport.TransportLineImpl;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
-import javax.swing.SwingUtilities;
+import java.util.Map;
 /**
  * Panel for displaying the map.
  */
 public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
-    private int originalWidth;
-    private int originalHeight;
 
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
     private List<Color> congestionsColorList;
+    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap;
+
     private List<String> transportLines;
+
     /**
      * Constructs a MapPanel with the specified background color.
      */
     public MapPanel() {
         super(bgColor);
-
-        // Add a ComponentListener to listen for resize events
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                System.out.println("MapPanel size: " + getWidth() + "x" + getHeight());
-
-                Window window = SwingUtilities.getWindowAncestor(MapPanel.this);
-                if (window != null) {
-                    System.out.println("Window size: " + window.getWidth() + "x" + window.getHeight());
-                }
-            }
-        });
-    }
-
-    public void setLinesPoints(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points) {
-        this.linesPointsCoordinates = points;
-        repaint();
-    }
-    public void SetTransportNames(List<String> lines){
-        transportLines = lines;      
-    }
-
-    public void setCongestionsList(List<Color> ColorList) {
-        this.congestionsColorList = ColorList;
-        repaint();
     }
 
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
+        
     
         for(int i = 0; i < linesPointsCoordinates.size(); i++) {
             int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
@@ -71,6 +36,7 @@ public class MapPanel extends StyledPanel {
             int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
             int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
             g2.setColor(congestionsColorList.get(i));
+            g2.setStroke(new BasicStroke(6));
             g2.drawLine(x1, y1, x2, y2);
     
             String linename = transportLines.get(i);
@@ -96,6 +62,19 @@ public class MapPanel extends StyledPanel {
         }
     }
 
+    private void drawPeople(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+
+        for (var entry : peopleMap.entrySet()) {
+            Pair<Integer, Integer> point = entry.getValue().getFirst();
+            Color color = entry.getValue().getSecond();
+
+            g2.setColor(color);
+            g2.fillOval(point.getFirst(), point.getSecond(), 5, 5);
+        }
+    }
+
     /**
      * Paints the map image on the panel.
      *
@@ -109,9 +88,28 @@ public class MapPanel extends StyledPanel {
             g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
         }
 
+        if (peopleMap != null) {
+            drawPeople(g);
+        }
+
         if (linesPointsCoordinates != null) {
             drawTransportLines(g);
         }
+    }
+
+    public void setLinesPoints(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points) {
+        this.linesPointsCoordinates = points;
+    }
+    public void SetTransportNames(List<String> lines){
+        transportLines = lines;      
+    }
+
+    public void setCongestionsList(List<Color> ColorList) {
+        this.congestionsColorList = ColorList;
+    }
+
+    public void setPeopleMap(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap) {
+        this.peopleMap = peopleMap;
     }
 
     /**
@@ -121,8 +119,6 @@ public class MapPanel extends StyledPanel {
      */
     public void setImage(BufferedImage image) {
         mapImage = image;
-        originalWidth = image.getWidth();
-        originalHeight = image.getHeight();
         repaint();
     }
 
@@ -139,39 +135,4 @@ public class MapPanel extends StyledPanel {
             return super.getPreferredSize();
         }
     }
-
-    /**
-     * Draws the transport lines between zones.
-     *
-     * @param g The Graphics context.
-     */
-    /*
-     * private void drawTransportLines(Graphics g) {
-     * Graphics2D g2 = (Graphics2D) g;
-     * g2.setStroke(new BasicStroke(4));
-     * 
-     * for (TransportLine line : transportLines) { // invece che le linee di
-     * trasporto io qui posso avere direttamente la congestione
-     * Zone zone1 = line.getLink().getFirst();
-     * Zone zone2 = line.getLink().getSecond();
-     * 
-     * Pair<Integer, Integer> startPoint = getCenterOfZone(zone1);
-     * Pair<Integer, Integer> endPoint = getCenterOfZone(zone2);
-     * 
-     * // Determine the color based on the capacity
-     * double capacity = line.getCongestion();
-     * System.out.println("congestion: "+capacity);
-     * if (capacity < 10) {
-     * g2.setColor(Color.GREEN);
-     * } else if (capacity < 30) {
-     * g2.setColor(Color.YELLOW);
-     * } else {
-     * g2.setColor(Color.ORANGE);
-     * }
-     * 
-     * g2.drawLine(startPoint.getFirst(), startPoint.getSecond(),
-     * endPoint.getFirst(), endPoint.getSecond());
-     * }
-     * }
-     */
 }

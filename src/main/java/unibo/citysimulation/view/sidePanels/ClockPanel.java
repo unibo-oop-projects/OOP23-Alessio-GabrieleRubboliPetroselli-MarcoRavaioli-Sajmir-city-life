@@ -5,12 +5,12 @@ import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
 import java.awt.*;
-
 /**
  * Panel for displaying the clock and controlling simulation speed.
  */
 public class ClockPanel extends StyledPanel {
-    private JLabel timeDay = new JLabel("Day: 1 Hour: 00:00", SwingConstants.CENTER);
+    private JLabel timeDay = new JLabel("Day: 1", SwingConstants.CENTER);
+    private JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
     private JButton speedButton;
     private JButton pauseButton;
     private int[] speeds = ConstantAndResourceLoader.SPEEDS;
@@ -24,31 +24,35 @@ public class ClockPanel extends StyledPanel {
     public ClockPanel(Color bgColor) {
         super(bgColor);
         speedButton = new JButton("1x");
-    speedButton.setForeground(Color.black);
-    speedButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+        speedButton.setForeground(Color.black);
+        speedButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
 
-    pauseButton = new JButton("Stop");
-    pauseButton.setForeground(Color.black);
-    pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+        pauseButton = new JButton("Pause");
+        pauseButton.setForeground(Color.black);
+        pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
 
-    this.setBackground(Color.RED);
-    // Set up layout
-    JPanel speedPanel = new JPanel(new FlowLayout());
-    speedPanel.setBackground(Color.RED); // Set the background color of speedPanel
-    speedPanel.add(speedButton);
-    speedPanel.add(pauseButton);
+        JPanel timePanel = new JPanel(new GridLayout(2, 1));
+        timePanel.setBackground(Color.RED);
+        timeDay.setFont(new Font("Arial", Font.BOLD, 15));
+        timeHour.setFont(new Font("Arial", Font.BOLD, 15));
+        timePanel.add(timeDay);
+        timePanel.add(timeHour);
 
-    add(speedPanel, BorderLayout.NORTH);
-    add(timeDay, BorderLayout.SOUTH);
+        setLayout(new BorderLayout());
+        add(speedButton, BorderLayout.WEST);
+        add(timePanel, BorderLayout.CENTER);
+        add(pauseButton, BorderLayout.EAST);
     }
 
     /**
      * Sets the text of the clock label.
      *
-     * @param text The text to set.
+     * @param dayText  The text for the day label.
+     * @param hourText The text for the hour label.
      */
-    public void setClockText(String text){
-        timeDay.setText(text);
+    public void setClockText(String dayText, String hourText) {
+        timeDay.setText("Day: " + dayText);
+        timeHour.setText("Hour: " + hourText);
     }
 
     /**
@@ -57,7 +61,7 @@ public class ClockPanel extends StyledPanel {
      * @param isPaused Boolean indicating if simulation is paused.
      */
     public void updatePauseButton(boolean isPaused) {
-        pauseButton.setText(isPaused ? "Resume" : "Stop");
+        pauseButton.setText(isPaused ? "Resume" : "Pause");
     }
 
     /**

@@ -82,9 +82,9 @@ public class BusinessImpl implements Business{
     @Override
     public double calculatePersonnelCost() {
         double totalCost = 0;
-        for (Employee employee : this.employees) {
+        for (int i = 0; i < this.employees.size(); i++) {
             totalCost += this.wageRate * getBusinessHours();
-        }
+        }        
         return totalCost;
     }
  

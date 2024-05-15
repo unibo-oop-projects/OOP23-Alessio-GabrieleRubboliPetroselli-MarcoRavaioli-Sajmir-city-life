@@ -1,25 +1,16 @@
 package unibo.citysimulation.view.sidePanels;
 
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 /**
  * Panel for displaying information.
  */
 public class InfoPanel extends StyledPanel {
-    private int x;
-    private int y;
     private JLabel coordinates;
     private JLabel numberOfPeople;
-    private JLabel numberOfZones;
-    private JLabel numberOfTransportLines;
-    private List<Zone> zones;
-    private List<TransportLine> transports;
     private JLabel zoneNJLabel;
 
     /**
@@ -57,8 +48,6 @@ public class InfoPanel extends StyledPanel {
         zoneNJLabel = new JLabel("Zone: ");
         gbc.gridy = 3;
         add(zoneNJLabel, gbc);
-
-
     }
 
     /**
@@ -68,8 +57,6 @@ public class InfoPanel extends StyledPanel {
      * @param y The y-coordinate.
      */
     public void updatePositionInfo(int x, int y){
-        this.x = x;
-        this.y = y;
         coordinates.setText("Coordinates: (" + x + ", " + y + ")");
         System.out.println("Coordinates: (" + x + ", " + y + ")");
     }

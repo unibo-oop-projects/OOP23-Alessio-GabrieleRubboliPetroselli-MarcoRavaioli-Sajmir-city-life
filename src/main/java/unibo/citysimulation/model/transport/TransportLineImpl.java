@@ -2,7 +2,6 @@ package unibo.citysimulation.model.transport;
 
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.model.zone.Zone;
-import java.awt.Color;
 
 
 /**
@@ -14,8 +13,6 @@ public class TransportLineImpl implements TransportLine {
     private int personInLine=0;
     private int duration;
     private Pair<Zone,Zone> link;
-    private double congestion;
-    private Color color=Color.GREEN;
 
     public TransportLineImpl(String name,int capacity,int duration, Pair<Zone,Zone> link) {
         this.name = name;
@@ -28,6 +25,10 @@ public class TransportLineImpl implements TransportLine {
     }
     public int getCapacity(){
         return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     // Getter and setter methods for other fields, if needed
@@ -53,35 +54,11 @@ public class TransportLineImpl implements TransportLine {
     @Override
     public void incrementPersonInLine() {
         personInLine++;
-        updateCongestion((double)(personInLine*100/capacity));
-        updateColor();
     }
 
     @Override
     public void decrementPersonInLine() {
         personInLine--;
-        updateCongestion((double)(personInLine*100/capacity));
-        updateColor();
 
     }
-
-    public void updateCongestion(double newCongestion) {
-        this.congestion = newCongestion;
-        updateColor();
-    }
-    
-    public void updateColor() {
-        if (congestion < 10) {
-            color = Color.GREEN;
-        } else if (congestion < 30) {
-            color = Color.YELLOW;
-        } else {
-            color = Color.RED;
-        }
-    }
-
-    public Color getColor() {
-        return color;
-    }
-    
 }

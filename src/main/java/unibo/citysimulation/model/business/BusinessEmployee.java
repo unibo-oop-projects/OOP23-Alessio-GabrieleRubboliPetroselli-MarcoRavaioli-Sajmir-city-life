@@ -1,7 +1,5 @@
 package unibo.citysimulation.model.business;
- 
-import java.util.List;
- 
+
 /**
 * Interface representing employee-related aspects of a business entity.
 * Provides methods for hiring, firing, counting, and retrieving employees.
