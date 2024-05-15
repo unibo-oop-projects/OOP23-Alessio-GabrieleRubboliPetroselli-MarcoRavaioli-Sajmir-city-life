@@ -1,10 +1,31 @@
 package unibo.citysimulation.model.business;
 
+import java.time.LocalTime;
 import java.util.Optional;
+import java.util.Random;
+
+
 
 public final class BusinessFactory{
+
+    private static final int StartTimeSmallBusiness = 8;
+    private static final int EndTimeSmallBusiness = 13;
+    private static final int StartTimeBigBusiness = 12;
+    private static final int EndTimeBigBusiness = 21;
+    private static final int StartTimeMediumBusiness = 17;
+    private static final int EndTimeMediumBusiness = 23;
+    private static final int Minuts = 0;
     
-  
+
+    private static final LocalTime SMALL_OPENING_TIME = LocalTime.of(StartTimeSmallBusiness, Minuts);
+    private static final LocalTime SMALL_CLOSING_TIME = LocalTime.of(EndTimeSmallBusiness, Minuts);
+    private static final LocalTime BIG_OPENING_TIME = LocalTime.of(StartTimeBigBusiness, Minuts);
+    private static final LocalTime BIG_CLOSING_TIME = LocalTime.of(EndTimeBigBusiness, Minuts);
+    private static final LocalTime MEDIUM_OPENING_TIME = LocalTime.of(StartTimeMediumBusiness, Minuts);
+    private static final LocalTime MEDIUM_CLOSING_TIME = LocalTime.of(EndTimeMediumBusiness, Minuts);
+
+    
+    
     public Optional<Business> createBusiness(BusinessType type) {
         switch (type) {
             case SMALL:
@@ -21,14 +42,40 @@ public final class BusinessFactory{
         
     }
 
+    public static BusinessType getRandomBusinessType() {
+        // Creazione di un oggetto Random
+        Random random = new Random();
+
+        // Generazione di un numero casuale tra 0 e 2 (inclusi)
+        int typeIndex = random.nextInt(3);
+
+        // Restituzione del tipo di business corrispondente al numero casuale generato
+        switch (typeIndex) {
+            case 0:
+                return BusinessType.SMALL;
+            case 1:
+                return BusinessType.MEDIUM;
+            case 2:
+                return BusinessType.BIG;
+            default:
+                return BusinessType.SMALL; // Default a small business se qualcosa va storto
+        }
+    }
+
     //business abstarct businessfactory
 
     public Business createSmallBusiness(){
+
+        
         return new Business(){
             private static final int MAX_TARDINESS = 10; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 18;
             private static final int MAX_AGE = 25;
-        
+
+            {
+            this.opLocalTime = SMALL_OPENING_TIME;
+            this.clLocalTime = SMALL_CLOSING_TIME;
+            }
             
             @Override
             public void hire(Employee employee, Business business) {
@@ -52,8 +99,12 @@ public final class BusinessFactory{
         return new Business(){
             private static final int MAX_TARDINESS = 3; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 25;
-        
-            
+
+            {
+            this.opLocalTime = BIG_OPENING_TIME;
+            this.clLocalTime = BIG_CLOSING_TIME;
+            }
+
         
             @Override
             public void hire(Employee employee, Business business) {
@@ -78,6 +129,11 @@ public final class BusinessFactory{
         return new Business(){
             private static final int MAX_TARDINESS = 5; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 35;
+
+            {
+            this.opLocalTime = MEDIUM_OPENING_TIME;
+            this.clLocalTime = MEDIUM_CLOSING_TIME;
+            }
         
             
             @Override
