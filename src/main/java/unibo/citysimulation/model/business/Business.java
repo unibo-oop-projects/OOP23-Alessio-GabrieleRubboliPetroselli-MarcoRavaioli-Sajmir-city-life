@@ -8,10 +8,11 @@ import unibo.citysimulation.model.zone.Zone;
 
 public abstract class Business implements BusinessEmployee{
 
-    protected Zone zone;
+    private Zone zone;
     protected List<Employee> employees;
-    LocalTime opLocalTime;
-    LocalTime clLocalTime;
+    protected LocalTime opLocalTime;
+    protected LocalTime clLocalTime;
+    protected double revenue;
 
     public Business() {
         this.employees = new ArrayList<>();
