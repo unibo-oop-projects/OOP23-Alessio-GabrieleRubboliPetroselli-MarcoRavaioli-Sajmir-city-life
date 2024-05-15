@@ -1,4 +1,4 @@
-/*package unibo.citylife;
+package unibo.citylife;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +14,7 @@ import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTable;
+import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.Pair;
 import java.util.Optional;
 import java.util.Random;
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class StaticPersonImplTest {
     private List<Zone> zones = ZoneFactory.createZonesFromFile();
     private List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
-    private List<Business> businesses = BusinessFactory.createBusinesses(zones);
+    private List<Business> businesses = BusinessFactory.createBusinessesFromFile(zones);
     private Random random = new Random();
 
     private StaticPerson staticPerson;
@@ -34,9 +35,7 @@ public class StaticPersonImplTest {
     void setUp() {
         Zone residenceZone = zones.get(random.nextInt(zones.size()));
         Business business = businesses.get(random.nextInt(businesses.size()));
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
-        ZoneTable.getInstance().addPair(zones.get(1), zones.get(2), transports.get(1));
-        ZoneTable.getInstance().addPair(zones.get(0), zones.get(2),transports.get(2));
+        ZoneTableCreation.createAndAddPairs(zones, transports);
         // Simuliamo un dato di una persona per i test
         PersonData personData = new PersonData("Mario", 30, business, residenceZone);
         staticPerson = new StaticPersonImpl(personData, 100);
@@ -73,4 +72,4 @@ public class StaticPersonImplTest {
     void testGetState() {
         assertEquals(PersonState.AT_HOME, staticPerson.getState()); // La persona dovrebbe essere a casa inizialmente
     }
-}*/
+}

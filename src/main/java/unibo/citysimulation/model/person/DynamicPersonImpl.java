@@ -58,6 +58,7 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     }
 
     public void checkState(LocalTime currentTime) {
+        System.out.println("Current time: " + currentTime);
         switch (this.state) {
             case MOVING:
                 this.checkArrivingTime(currentTime);
