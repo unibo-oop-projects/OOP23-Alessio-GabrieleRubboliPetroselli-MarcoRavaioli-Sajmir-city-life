@@ -88,6 +88,7 @@ public class InputController {
     private void stopSimulation(ClockPanel clockPanel) {
         // Restart the clock simulation
         cityModel.getClockModel().stopSimulation();
+
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
 

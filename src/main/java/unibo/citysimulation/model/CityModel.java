@@ -55,6 +55,8 @@ public class CityModel {
      * @param numberOfPeople The number of people to create in the simulation.
      */
     public void createEntities() {
+        graphicsModel.clearDatasets();
+
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
         // Create zone table
         ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
@@ -131,6 +133,10 @@ public class CityModel {
 
     public InputModel getInputModel() {
         return this.inputModel;
+    }
+
+    public GraphicsModel getGraphicsModel() {
+        return this.graphicsModel;
     }
 
     /**

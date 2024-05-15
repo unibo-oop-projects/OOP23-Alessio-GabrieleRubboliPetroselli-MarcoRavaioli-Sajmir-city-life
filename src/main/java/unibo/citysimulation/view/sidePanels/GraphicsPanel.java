@@ -14,7 +14,6 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,7 +23,8 @@ import java.awt.*;
  * Panel for displaying graphics.
  */
 public class GraphicsPanel extends StyledPanel {
-    private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW, Color.PINK, Color.CYAN);
+    private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
+            Color.PINK, Color.CYAN);
     private List<XYSeriesCollection> datasets;
     private List<String> names;
     private List<XYPlot> plots;
@@ -41,12 +41,7 @@ public class GraphicsPanel extends StyledPanel {
     public GraphicsPanel(Color bgColor) {
         super(bgColor);
 
-        names = Arrays.asList("Person State", "Transport Congestion", "Business");
-
-        datasets = createDatasets(names.size());
-        List<JFreeChart> charts = createCharts(names, datasets);
-
-        plots = charts.stream()
+        /*plots = createCharts(names, datasets).stream()
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
                 .collect(Collectors.toList());
@@ -55,32 +50,24 @@ public class GraphicsPanel extends StyledPanel {
             plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
         }
 
+        setLayout(new GridLayout(names.size(), 1));*/
+    }
 
-        plots.get(0).getRangeAxis().setTickLabelsVisible(false);
-        plots.get(1).getRangeAxis().setTickLabelsVisible(false);
+    public void createGraphics(List<String> names, List<XYSeriesCollection> datasets) {
+        System.out.println("valore iniziale nel dataset 0, serie 0: " + datasets.get(0).getXValue(0, 0));
+        plots = createCharts(names, datasets).stream()
+                .map(JFreeChart::getXYPlot)
+                .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
+                .collect(Collectors.toList());
 
+        synchronized (this) {
+            plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
+        }
 
-        // Set layout to arrange charts horizontally
         setLayout(new GridLayout(names.size(), 1));
     }
 
-    private List<XYSeriesCollection> createDatasets(int num) {
-        return IntStream.range(0, num)
-                .mapToObj(i -> createDataset(3))
-                .collect(Collectors.toList());
-    }
-
-    private XYSeriesCollection createDataset(int numObjects) {
-        XYSeriesCollection dataset = new XYSeriesCollection();
-
-        IntStream.range(0, numObjects)
-                .mapToObj(i -> new XYSeries("Object " + i, false))
-                .forEach(dataset::addSeries);
-
-        return dataset;
-    }
-
-    private List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
+    public List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
         List<JFreeChart> charts = new ArrayList<JFreeChart>();
 
         for (int i = 0; i < names.size(); i++) {
@@ -138,7 +125,7 @@ public class GraphicsPanel extends StyledPanel {
         domainAxis.setUpperMargin(0.01);
         rangeAxis.setTickLabelsVisible(true);
         rangeAxis.setAutoRange(false);
-        rangeAxis.setRange(0, 1);
+        rangeAxis.setRange(0, 105);
 
         return chart;
     }
