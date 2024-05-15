@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.business;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,20 +8,15 @@ import unibo.citysimulation.model.zone.Zone;
 
 public abstract class Business implements BusinessEmployee{
 
-   // protected Hash code; // per il nome
     protected Zone zone;
     protected List<Employee> employees;
+    LocalTime opLocalTime;
+    LocalTime clLocalTime;
 
     public Business() {
         this.employees = new ArrayList<>();
-     //   this.code = hashCode();
-        this.zone = getZone();
+        this.zone = zone.getRandomZone();
     }
-
-  /*   public String getName() {
-        return name;
-    }
-    */
 
     public Zone getZone() {
         return zone;
@@ -29,6 +25,16 @@ public abstract class Business implements BusinessEmployee{
     public List<Employee> getEmployees() {
         return employees;
     }
+
+    public LocalTime getOpLocalTime() {
+        return opLocalTime;
+    }
+
+    public LocalTime getClLocalTime() {
+        return clLocalTime;
+    }
+
+    
 
     
 }
