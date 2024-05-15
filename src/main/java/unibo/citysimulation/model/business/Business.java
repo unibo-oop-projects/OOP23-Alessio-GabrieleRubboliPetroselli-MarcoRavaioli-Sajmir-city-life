@@ -6,6 +6,7 @@ import java.util.List;
 import unibo.citysimulation.model.zone.Zone;
 
 public abstract class Business {
+    
     protected List<Employee> employees;
     protected Zone zone;
 

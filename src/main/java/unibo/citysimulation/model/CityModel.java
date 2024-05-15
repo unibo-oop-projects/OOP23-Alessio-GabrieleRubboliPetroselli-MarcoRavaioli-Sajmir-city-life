@@ -1,7 +1,6 @@
 package unibo.citysimulation.model;
 
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
 import unibo.citysimulation.model.person.DynamicPerson;
@@ -26,11 +25,12 @@ public class CityModel {
     private List<Zone> zones;
     private List<TransportLine> transports;
     private ZoneTable zoneTable;
-    private List<Business> businesses;
+    
     private List<List<DynamicPerson>> people;
     private MapModel mapModel;
     private ClockModel clockModel;
     private InputModel inputModel;
+    private List<Business> businesses;
 
     private int frameWidth;
     private int frameHeight;
@@ -46,6 +46,7 @@ public class CityModel {
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportFactory.createTransportsFromFile(zones);
 
+    
     }
 
     /**
@@ -65,9 +66,7 @@ public class CityModel {
         ZoneTable.getInstance().addPair(zones.get(1), zones.get(2), transports.get(1));
         ZoneTable.getInstance().addPair(zones.get(0), zones.get(2),transports.get(2));
 
-        // Create businesses
-        this.businesses = BusinessFactory.createBusinesses(zones);
-        System.out.println("Businesses created. " + businesses.size());
+        
 
         // Create people
         this.people = new ArrayList<>();
