@@ -20,7 +20,6 @@ public class GraphicsController implements ClockObserver {
         graphicsModel = cityModel.getGraphicsModel();
         cityModel.getClockModel().addObserver(this);
 
-        //graphicsModel.createDatasets(List.of(3, 5, 1));
         graphicsPanel.createGraphics(graphicsModel.getNames(), graphicsModel.getDatasets());
     }
 

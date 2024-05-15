@@ -103,9 +103,9 @@ public class GraphicsModel {
 
     public List<Integer> getPeopleStateCounts(List<DynamicPerson> list){
         return Arrays.asList(
-                (int) list.stream().filter(person -> person.getState() == PersonState.AT_HOME).count(),
-                (int) list.stream().filter(person -> person.getState() == PersonState.MOVING).count(),
-                (int) list.stream().filter(person -> person.getState() == PersonState.WORKING).count());
+                (int) list.stream().filter(person -> person.getState() == PersonState.AT_HOME).count() * 100 / list.size(),
+                (int) list.stream().filter(person -> person.getState() == PersonState.MOVING).count() * 100 / list.size(),
+                (int) list.stream().filter(person -> person.getState() == PersonState.WORKING).count() * 100 / list.size());
     }        
 
     public List<Double> getTransportLinesCongestion(List<TransportLine> list) {
