@@ -5,18 +5,33 @@ import java.util.List;
 
 import unibo.citysimulation.model.zone.Zone;
 
-public abstract class Business {
-    
-    protected List<Employee> employees;
-    protected Zone zone;
+public abstract class Business implements BusinessEmployee{
 
-    public Business(Zone zone) {
-        this.zone = zone;
+   // protected Hash code; // per il nome
+    protected Zone zone;
+    protected List<Employee> employees;
+
+    public Business() {
         this.employees = new ArrayList<>();
+     //   this.code = hashCode();
+        this.zone = getZone();
     }
 
-    public abstract void hire(Employee employee);
+  /*   public String getName() {
+        return name;
+    }
+    */
 
-    public abstract void fire(Employee employee);
-}
+    public Zone getZone() {
+        return zone;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
     
+}
+
+    
+
