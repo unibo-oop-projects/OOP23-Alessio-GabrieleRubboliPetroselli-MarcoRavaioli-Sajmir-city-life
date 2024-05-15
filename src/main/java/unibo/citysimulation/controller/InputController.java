@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.InputPanel;
  
@@ -18,8 +16,6 @@ public class InputController {
     private InputModel inputModel;
 
     private InputPanel inputPanel;
-    private MapPanel mapPanel;
-    private MapModel mapModel;
  
     /**
      * Constructs an InputController object.
@@ -35,8 +31,6 @@ public class InputController {
 
         this.inputPanel = inputPanel;
 
-        //cityModel.getMapModel().startSimulation();
-        // Add action listener for the start button
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,6 +41,8 @@ public class InputController {
                 inputPanel.getCapacitySlider().setEnabled(false);
                 inputPanel.getBusinessSlider().setEnabled(false);
                 inputPanel.getRichnessSlider().setEnabled(false);
+                inputPanel.getStartButton().setEnabled(false);
+                inputPanel.getStopButton().setEnabled(true);
             }
         });
 
@@ -59,6 +55,9 @@ public class InputController {
                 inputPanel.getPeopleSlider().setEnabled(true);
                 inputPanel.getBusinessSlider().setEnabled(true);
                 inputPanel.getRichnessSlider().setEnabled(true);
+                inputPanel.getCapacitySlider().setEnabled(true);
+                inputPanel.getStartButton().setEnabled(true);
+                inputPanel.getStopButton().setEnabled(false);
             }
         });
     }

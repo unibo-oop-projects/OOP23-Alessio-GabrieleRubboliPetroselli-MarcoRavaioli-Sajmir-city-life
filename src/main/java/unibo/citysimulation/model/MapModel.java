@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.awt.Color;
 import java.util.Map;
-import java.util.HashMap;
 
+import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
@@ -61,6 +61,14 @@ public class MapModel {
                 .collect(Collectors.toList());
     }
 
+    public Map<String, Pair<Integer, Integer>> getBusinessInfos(List<Business> businesses) {
+        return businesses.stream()
+                .collect(Collectors.toMap(
+                        business -> business.getName(),
+                        business -> new Pair<>(denormalizeCoordinate(business.getPosition().getFirst(), maxX),
+                                denormalizeCoordinate(business.getPosition().getSecond(), maxY))));
+    }
+
     public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {
         return people.stream()
                 .filter(person -> person.getPosition().isPresent())
@@ -70,6 +78,14 @@ public class MapModel {
                                 new Pair<>(denormalizeCoordinate(person.getPosition().get().getFirst(), maxX),
                                         denormalizeCoordinate(person.getPosition().get().getSecond(), maxY)),
                                 this.getPersonColor(person))));
+    }
+
+    public Color getPersonColor(DynamicPerson person) {
+        if (person.getState() == PersonState.AT_HOME) {
+            return Color.BLUE;
+        } else {
+            return Color.RED;
+        }
     }
 
     public List<Color> getColorList() {
@@ -91,14 +107,6 @@ public class MapModel {
             int red = (int) (255 * adjustedPerc);
             int green = (int) (255 * (1 - adjustedPerc));
             return new Color(Math.min(255, Math.max(0, red)), Math.min(255, Math.max(0, green)), 0);
-        }
-    }
-
-    public Color getPersonColor(DynamicPerson person) {
-        if (person.getState() == PersonState.AT_HOME) {
-            return Color.BLUE;
-        } else {
-            return Color.RED;
         }
     }
 

@@ -34,9 +34,6 @@ public class GraphicsPanel extends StyledPanel {
     private int maxStateHeight = 1;
     private double maxCongestionHeight = 1;
 
-    private NumberAxis stateAxis = new NumberAxis();
-    private NumberAxis congestionAxis = new NumberAxis();
-
     /**
      * Constructs a GraphicsPanel with the specified background color.
      *

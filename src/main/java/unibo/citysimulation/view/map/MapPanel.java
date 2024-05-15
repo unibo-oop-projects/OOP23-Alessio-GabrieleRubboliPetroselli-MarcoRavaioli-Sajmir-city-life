@@ -1,16 +1,10 @@
 package unibo.citysimulation.view.map;
 
-import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.transport.TransportLineImpl;
-import unibo.citysimulation.model.zone.Boundary;
-import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,17 +12,18 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import javax.swing.SwingUtilities;
+
+import org.w3c.dom.css.RGBColor;
 /**
  * Panel for displaying the map.
  */
 public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
-    private int originalWidth;
-    private int originalHeight;
 
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
     private List<Color> congestionsColorList;
     private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap;
+    private Map<String, Pair<Integer, Integer>> businessMap;
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -62,6 +57,10 @@ public class MapPanel extends StyledPanel {
         this.peopleMap = peopleMap;
     }
 
+    public void setBusinessPoints(Map<String, Pair<Integer, Integer>> businessMap) {
+        this.businessMap = businessMap;
+    }
+
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
@@ -92,6 +91,20 @@ public class MapPanel extends StyledPanel {
         }
     }
 
+    private void drawBusinesses(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+    
+        for (var entry : businessMap.entrySet()) {
+            Pair<Integer, Integer> point = entry.getValue();
+            Color color = new Color(139, 69, 19);
+            g2.setColor(color);
+            // Disegna un quadrato (rettangolo con altezza e larghezza uguali)
+            g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
+        }
+    }
+    
+
     /**
      * Paints the map image on the panel.
      *
@@ -109,6 +122,10 @@ public class MapPanel extends StyledPanel {
             drawPeople(g);
         }
 
+        if (businessMap != null) {
+            drawBusinesses(g);
+        }
+
         if (linesPointsCoordinates != null) {
             drawTransportLines(g);
         }
@@ -121,8 +138,6 @@ public class MapPanel extends StyledPanel {
      */
     public void setImage(BufferedImage image) {
         mapImage = image;
-        originalWidth = image.getWidth();
-        originalHeight = image.getHeight();
         repaint();
     }
 
