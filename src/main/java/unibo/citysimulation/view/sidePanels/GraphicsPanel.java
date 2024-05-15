@@ -16,7 +16,6 @@ import org.jfree.data.xy.XYSeriesCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.awt.*;
@@ -25,9 +24,9 @@ import java.awt.*;
  * Panel for displaying graphics.
  */
 public class GraphicsPanel extends StyledPanel {
+    private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW, Color.PINK, Color.CYAN);
     private List<XYSeriesCollection> datasets;
     private List<String> names;
-    private Random random = new Random();
     private List<XYPlot> plots;
     private int columnCount = 0;
 
@@ -63,7 +62,6 @@ public class GraphicsPanel extends StyledPanel {
 
         // Set layout to arrange charts horizontally
         setLayout(new GridLayout(names.size(), 1));
-
     }
 
     private List<XYSeriesCollection> createDatasets(int num) {
@@ -99,8 +97,7 @@ public class GraphicsPanel extends StyledPanel {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 
         for (int i = 0; i < num; i++) {
-            Color color = new Color(random.nextInt(4) * 64, random.nextInt(4) * 64, random.nextInt(4) * 64);
-            renderer.setSeriesPaint(i, color);
+            renderer.setSeriesPaint(i, colors.get(i));
             renderer.setSeriesShapesVisible(i, false);
             renderer.setSeriesStroke(i, new BasicStroke(2.0f));
         }
@@ -109,7 +106,6 @@ public class GraphicsPanel extends StyledPanel {
     }
 
     public void clearDatasets() {
-        long startTime = System.currentTimeMillis();
 
         synchronized (datasets) {
             columnCount = 0; // Resetta anche il contatore delle colonne
@@ -119,9 +115,6 @@ public class GraphicsPanel extends StyledPanel {
                 }
             }
         }
-        long endTime = System.currentTimeMillis();
-        long elapsedTime = endTime - startTime;
-        System.out.println("Tempo trascorso clear func: " + elapsedTime + " millisecondi");
     }
 
     // Method to create a chart
@@ -143,9 +136,9 @@ public class GraphicsPanel extends StyledPanel {
         domainAxis.setTickLabelsVisible(false);
         domainAxis.setLowerMargin(0.01);
         domainAxis.setUpperMargin(0.01);
-        rangeAxis.setTickLabelsVisible(false);
+        rangeAxis.setTickLabelsVisible(true);
         rangeAxis.setAutoRange(false);
-        rangeAxis.setRange(0, 100);
+        rangeAxis.setRange(0, 1);
 
         return chart;
     }
@@ -154,23 +147,19 @@ public class GraphicsPanel extends StyledPanel {
             double counter) {
         synchronized (datasets) {
             if (columnCount > 150) {
-
                 int columnsToRemove = columnCount - 150;
-
-                // Rimuovi le colonne in eccesso dal dataset
-                for (var dataset : datasets) {
+                datasets.forEach(dataset -> {
                     synchronized (dataset) {
-                        for (int i = 0; i < columnsToRemove; i++) {
-                            for (int j = 0; j < dataset.getSeriesCount(); j++) {
+                        IntStream.range(0, columnsToRemove).forEach(i -> {
+                            IntStream.range(0, dataset.getSeriesCount()).forEach(j -> {
                                 XYSeries series = dataset.getSeries(j);
                                 if (!series.isEmpty()) {
                                     series.remove(0);
                                 }
-                            }
-                        }
+                            });
+                        });
                     }
-                }
-
+                });
                 columnCount = 150;
             }
 
@@ -196,14 +185,12 @@ public class GraphicsPanel extends StyledPanel {
             }
 
             NumberAxis stateAxis = new NumberAxis();
-            stateAxis.setRange(0, maxStateHeight * 1.15);
+            stateAxis.setRange(0, (maxStateHeight * 1.15 < 100 ? maxStateHeight * 1.15 : 100));
             plots.get(0).setRangeAxis(stateAxis);
-            plots.get(0).getRangeAxis().setTickLabelsVisible(false);
 
             NumberAxis congestionAxis = new NumberAxis();
-            congestionAxis.setRange(0, maxCongestionHeight * 1.15);
+            congestionAxis.setRange(0, (maxCongestionHeight * 1.15 < 100 ? maxCongestionHeight * 1.15 : 100));
             plots.get(1).setRangeAxis(congestionAxis);
-            plots.get(1).getRangeAxis().setTickLabelsVisible(false);
         }
     }
 

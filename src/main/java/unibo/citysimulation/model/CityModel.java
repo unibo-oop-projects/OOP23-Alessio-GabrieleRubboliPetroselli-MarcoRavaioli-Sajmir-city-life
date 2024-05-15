@@ -31,6 +31,7 @@ public class CityModel {
     private MapModel mapModel;
     private ClockModel clockModel;
     private InputModel inputModel;
+    private GraphicsModel graphicsModel;
 
     private int frameWidth;
     private int frameHeight;
@@ -42,6 +43,7 @@ public class CityModel {
         this.mapModel = new MapModel();
         this.clockModel = new ClockModel(365);
         this.inputModel = new InputModel();
+        this.graphicsModel = new GraphicsModel();
 
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportFactory.createTransportsFromFile(zones);
@@ -53,9 +55,7 @@ public class CityModel {
      * @param numberOfPeople The number of people to create in the simulation.
      */
     public void createEntities() {
-
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
-
         // Create zone table
         ZoneTable.getInstance().addPair(zones.get(0), zones.get(1), transports.get(0));
         ZoneTable.getInstance().addPair(zones.get(1), zones.get(2), transports.get(1));
