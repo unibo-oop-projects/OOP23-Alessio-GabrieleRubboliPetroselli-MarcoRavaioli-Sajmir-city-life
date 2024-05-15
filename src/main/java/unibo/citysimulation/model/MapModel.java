@@ -71,7 +71,10 @@ public class MapModel {
                 .filter(person -> person.getPosition().isPresent())
                 .collect(Collectors.toMap(
                         person -> person.getPersonData().name(),
-                        person -> new Pair<>(person.getPosition().get(), this.getPersonColor(person))));
+                        person -> new Pair<>(
+                                new Pair<>(denormalizeCoordinate(person.getPosition().get().getFirst(), maxX),
+                                        denormalizeCoordinate(person.getPosition().get().getSecond(), maxY)),
+                                this.getPersonColor(person))));
     }
 
     public Color getPersonColor(DynamicPerson person) {

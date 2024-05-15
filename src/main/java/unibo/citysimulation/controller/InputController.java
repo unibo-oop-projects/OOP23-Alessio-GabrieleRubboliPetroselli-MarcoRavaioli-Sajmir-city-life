@@ -70,10 +70,10 @@ public class InputController {
      */
     private void startSimulation(ClockPanel clockPanel) {
 
-        inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue()); 
-        inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());
-        inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
-        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());
+        inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());      //
+        inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());  // questi potrebbero essere dentro un metodo nel model
+        inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());          //
+        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());          //
         
         // Create entities
         cityModel.createEntities();

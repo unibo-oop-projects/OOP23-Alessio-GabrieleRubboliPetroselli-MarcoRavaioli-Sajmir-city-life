@@ -14,14 +14,17 @@ public class InputModel {
 
     public void setNumberOfPeople(int numberOfPeople) {
         this.numberOfPeople = numberOfPeople * (ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE) / 100 + ConstantAndResourceLoader.MIN_PEOPLE;
+        System.out.println(numberOfPeople);
     }
 
     public int getNumberOfBusiness() {
         return numberOfBusiness;
+        
     }
 
     public void setNumberOfBusiness(int numberOfBusiness) {
         this.numberOfBusiness = numberOfBusiness;
+        System.out.println(numberOfBusiness);
     }
 
     public int getCapacity() {
@@ -30,6 +33,7 @@ public class InputModel {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+        System.out.println(capacity);
     }
 
     public int getRichness() {
@@ -38,5 +42,6 @@ public class InputModel {
 
     public void setRichness(int richness) {
         this.richness = richness;
+        System.out.println(richness);
     }
 }
