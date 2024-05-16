@@ -14,19 +14,16 @@ import ch.qos.logback.core.joran.sanity.Pair;
 public class PersonImpl implements Person {
     private String name;
     private int age;
-    private int experience;
-    private int money;
-    private Pair<Integer, Integer> home;
+    
+   
     
 
 
 
-    public PersonImpl(String name, int age, int experience, Pair<Integer, Integer> home, int money) {
+    public PersonImpl(String name, int age) {
         this.age = age;
         this.name = name;
-        this.experience = experience;
-        this.home = home;
-        this.money = money;
+        
     }
 
     public String getName() {
