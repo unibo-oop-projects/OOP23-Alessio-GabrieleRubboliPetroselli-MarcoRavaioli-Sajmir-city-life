@@ -6,6 +6,7 @@ import unibo.citysimulation.view.StyledPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 /**
@@ -132,9 +133,16 @@ public class MapPanel extends StyledPanel {
         this.peopleMap = peopleMap;
     }
 
-    public void setBusinessPoints(Map<String, Pair<Integer, Integer>> businessMap) {
-        this.businessMap = businessMap;
+    public void setBusinessPoints(Map<Pair<Integer, Integer>, Pair<LocalTime, Double>> businessInfos) {
+    Map<String, Pair<Integer, Integer>> businessMap = new HashMap<>();
+    for (var entry : businessInfos.entrySet()) {
+        String businessName = "Business" + entry.hashCode(); // Genera un nome univoco per ogni impresa
+        Pair<Integer, Integer> position = entry.getKey();
+        businessMap.put(businessName, position);
     }
+    this.businessMap = businessMap;
+    repaint(); // Richiama repaint per aggiornare la visualizzazione
+}
 
     /**
      * Sets the image to be displayed on the map panel.
