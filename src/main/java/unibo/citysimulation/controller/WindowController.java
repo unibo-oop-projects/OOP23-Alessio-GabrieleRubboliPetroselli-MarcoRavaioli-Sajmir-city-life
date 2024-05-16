@@ -75,7 +75,7 @@ public class WindowController {
             }
 
             if (cityModel.isBusinessesPresent()) {
-                windowView.getMapPanel().setBusinessesMap(cityModel.getMapModel().getBusinessInfos(cityModel.getBusinesses()));
+                windowView.getMapPanel().setBusinessPoints(cityModel.getMapModel().getBusinessInfos(cityModel.getBusinesses()));
             }
 
             windowView.updateFrame(newWidth, newHeight);
