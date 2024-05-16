@@ -2,6 +2,8 @@ package unibo.citysimulation.model.clock;
 
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.Employee;
+import unibo.citysimulation.model.business.EmployymentOffice;
+import unibo.citysimulation.model.business.EmployymentOfficeManager;
 import unibo.citysimulation.model.person.Person;
 
 import java.util.List;
@@ -13,31 +15,22 @@ public class CloclObserverBusiness implements ClockObserver{
     private static final int WEEK = 7;
     private List<Business> businesses;
     private int lastKnownDay = DEFAULT_DAY;
+
+    private EmployymentOfficeManager employmentManager;
     
-    public CloclObserverBusiness(List<Business> businesses) {
+    public CloclObserverBusiness(List<Business> businesses, EmployymentOffice employymentOffice) {
         this.businesses = businesses;
+        this.employmentManager = new EmployymentOfficeManager(businesses, employymentOffice);
     }
     
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
-        if(currentDay != lastKnownDay){
-        for (Business business : businesses) {
-            for (Employee employee : business.getEmployees()) {
-                business.fire(employee, business);
-                disoccupiedPeople.add(employee.getPerson());
-            }
+        if (currentDay != lastKnownDay) {
+            employmentManager.handleEmployeeFiring();
+            lastKnownDay = currentDay;
         }
-        }
-    lastKnownDay = currentDay;
         if (currentDay % WEEK == 0) {
-        for (Business business : businesses) {
-            if(business.getEmployees().size() < business.getMaxEmployees()){
-            for (Person person : disoccupiedPeople){
-                business.hire(new Employee(person), business);
-                disoccupiedPeople.remove(person);
-            }
-            }
-        }
+            employmentManager.handleEmployeeHiring();
         }
         }
     }
