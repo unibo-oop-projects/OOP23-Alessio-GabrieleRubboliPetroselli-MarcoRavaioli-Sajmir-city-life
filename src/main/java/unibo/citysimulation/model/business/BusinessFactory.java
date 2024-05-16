@@ -28,6 +28,10 @@ public final class BusinessFactory{
     private static final LocalTime MEDIUM_CLOSING_TIME = LocalTime.of(EndTimeMediumBusiness, Minuts);
     private static final LocalTime SMALL_OPENING_TIME = LocalTime.of(StartTimeSmallBusiness, Minuts);
     private static final LocalTime SMALL_CLOSING_TIME = LocalTime.of(EndTimeSmallBusiness, Minuts);
+
+    private static final int MAX_EMPLOYEES_BIG_BUSINESS = 300;
+    private static final int MAX_EMPLOYEES_MEDIUM_BUSINESS = 100;
+    private static final int MAX_EMPLOYEES_SMALL_BUSINESS = 0;
     
     
     public Optional<Business> createBusiness(BusinessType type) {
@@ -69,7 +73,7 @@ public final class BusinessFactory{
     //business abstarct businessfactory
 
     public final Business createBigBusiness(){
-        return new Business(){
+        return new Business(MAX_EMPLOYEES_BIG_BUSINESS){
             private static final int MAX_TARDINESS = 3; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 25;
 
@@ -100,7 +104,7 @@ public final class BusinessFactory{
     }
 
     public Business createMediumBusiness(){ 
-        return new Business(){
+    return new Business(MAX_EMPLOYEES_MEDIUM_BUSINESS){
             private static final int MAX_TARDINESS = 5; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 35;
 
@@ -133,7 +137,7 @@ public final class BusinessFactory{
     public Business createSmallBusiness(){
 
         
-        return new Business(){
+        return new Business(MAX_EMPLOYEES_SMALL_BUSINESS){
             private static final int MAX_TARDINESS = 10; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 18;
             private static final int MAX_AGE = 25;
