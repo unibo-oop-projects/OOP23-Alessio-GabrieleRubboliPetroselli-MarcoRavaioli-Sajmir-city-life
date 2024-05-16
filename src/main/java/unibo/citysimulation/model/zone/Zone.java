@@ -14,7 +14,7 @@ public record Zone(String name, float personPercents, float businessPercents, Pa
                 return new Pair<>(x, y);
             }
 
-            public Zone getRandomZone(){
+            public static Zone getRandomZone(){
                 return ZoneFactory.createZonesFromFile().get(random.nextInt(ZoneFactory.createZonesFromFile().size()));
             }
 }
