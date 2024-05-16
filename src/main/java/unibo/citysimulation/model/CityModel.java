@@ -8,7 +8,7 @@ import unibo.citysimulation.model.person.DynamicPerson;
 
 import unibo.citysimulation.model.person.Person;
 import unibo.citysimulation.model.business.BusinessType;
-
+import unibo.citysimulation.model.business.EmployymentOffice;
 import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
@@ -37,6 +37,8 @@ public class CityModel {
     private ClockModel clockModel;
     private InputModel inputModel;
     private GraphicsModel graphicsModel;
+
+    private EmployymentOffice employymentOffice;
     
 
     private int frameWidth;
@@ -56,6 +58,8 @@ public class CityModel {
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportFactory.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
+
+        this.employymentOffice = new EmployymentOffice();
 
     
     }
@@ -92,6 +96,9 @@ public class CityModel {
         // Create people
         this.people = new ArrayList<>();
         people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
+        for (int i =  0; i < people.size(); i++) {
+            employymentOffice.addDisoccupiedPerson(people.get(i));
+        }
 
         // Add people as observers to clock model
         clockModel.addObserver(new ClockObserverPerson(people));
@@ -99,7 +106,10 @@ public class CityModel {
         System.out.println("People groups created. " + people.size());
         for (var group : people) {
             System.out.println("Group size: " + group.size());
+            
         }
+
+        
         ////////////////////////////////////////////////////////////////
         // Print details of each person
         
