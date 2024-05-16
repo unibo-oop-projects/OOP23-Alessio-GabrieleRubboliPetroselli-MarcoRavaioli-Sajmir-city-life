@@ -30,14 +30,14 @@ import java.util.stream.Collectors;
 public class CityModel {
     private List<Zone> zones;
     private List<TransportLine> transports;
-    private ZoneTable zoneTable;
+   
     private List<Business> businesses;
     private List<List<DynamicPerson>> people;
     private MapModel mapModel;
     private ClockModel clockModel;
     private InputModel inputModel;
     private GraphicsModel graphicsModel;
-    private List<Business> businesses;
+    
 
     private int frameWidth;
     private int frameHeight;
@@ -66,15 +66,10 @@ public class CityModel {
      * Creates entities such as zones, transports, businesses, and people.
      * @param numberOfPeople The number of people to create in the simulation.
      */
-    public void createEntities(int numberOfPeople, int numberOfBusinesses) {
+    
 
         // Create businesses
-        numberOfBusinesses = 30;
-        for (int i = 0; i < numberOfBusinesses; i++) {
-            BusinessFactory businessFactory = new BusinessFactory();
-            Business business = businessFactory.createBusiness(BusinessFactory.getRandomBusinessType()).get();
-            businesses.add(business);
-        }
+        
 
 
         // Create zones
@@ -87,9 +82,12 @@ public class CityModel {
         ZoneTableCreation.createAndAddPairs(zones, transports);
 
 
-        // Create businesses
-        this.businesses = BusinessFactory.createBusinesses(zones);
-        System.out.println("Businesses created. " + businesses.size());
+        int numberOfBusinesses = 30;
+        for (int i = 0; i < numberOfBusinesses; i++) {
+            BusinessFactory businessFactory = new BusinessFactory();
+            Business business = businessFactory.createBusiness(BusinessFactory.getRandomBusinessType()).get();
+            businesses.add(business);
+        }
 
         // Create people
         this.people = new ArrayList<>();
@@ -104,13 +102,7 @@ public class CityModel {
         }
         ////////////////////////////////////////////////////////////////
         // Print details of each person
-        for (var group : people) {
-            for (var person : group) {
-                System.out.println(person.getPersonData().name() + ", " + person.getPersonData().age() + ", " + person.getMoney() + ", " +
-                person.getPersonData().business().getName() + ", " + person.getPersonData().business().getZone().name() + ", " + person.getPersonData().residenceZone().name()
-                + ", " + person.getTripDuration());
-            }
-        }
+        
         ////////////////////////////////////////////////////////////////
     }
 
