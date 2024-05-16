@@ -1,4 +1,4 @@
-import unibo.citysimulation.model.zone.Zone;
+/*import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.model.transport.TransportLine;
 
@@ -120,11 +120,6 @@ import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
 
 public class PathFinder {
-    private ZoneTable zoneTable;
-
-    public PathFinder() {
-        this.zoneTable = ZoneTable.getInstance();
-    }
 
     public List<List<TransportLine>> getAllPossiblePaths(Zone sourceZone, Zone destinationZone) {
         // PriorityQueue per gestire i nodi da esplorare, ordinati per durata del percorso
@@ -207,5 +202,5 @@ public class PathFinder {
     private int calculateTotalDuration(List<TransportLine> path) {
         return path.stream().mapToInt(TransportLine::getDuration).sum();
     }
-}
+}*/
 

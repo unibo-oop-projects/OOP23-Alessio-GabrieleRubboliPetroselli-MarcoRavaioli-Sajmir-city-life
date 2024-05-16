@@ -1,42 +1,85 @@
 package unibo.citylife;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTable;
+import unibo.citysimulation.model.zone.ZoneTable.Path;
+import unibo.citysimulation.model.zone.ZoneTableCreation;
+
 import java.util.List;
+import java.util.Arrays;
 
 
 class ZoneTableTest {
-    //add the list for making the test
     private List<Zone> zones = ZoneFactory.createZonesFromFile();
     private List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
-    //private List<Business> businesses = BusinessFactory.createBusinesses(zones);
+
+    @BeforeEach
+    void setUp() {
+        ZoneTableCreation.createAndAddPairs(zones, transports);
+    }
 
     @Test
-    void testAddPairAndGetTransportLine() {
-        // Ensure there are at least two zones and one transport line
-        if (zones.size() < 2 || transports.size() < 1) {
-            fail("Not enough data to run test");
+    public void testShortestPath0to1() {
+        Zone startZone = zones.get(0);
+        Zone endZone = zones.get(1);
+        Path path = ZoneTable.findBestPath(startZone, endZone);
+
+        assertFalse(path == null, "No path found from 0 to 1");
+
+        List<Zone> expectedPath = Arrays.asList(zones.get(0), zones.get(3),zones.get(4), zones.get(1));
+        TransportLine[] expectedTransportLines = {transports.get(2), transports.get(6), transports.get(4)};
+        int expectedDuration = 24;
+
+        assertEquals(expectedPath, path.getZones(), "Shortest path from 0 to 1 is incorrect");
+        assertEquals(expectedDuration, path.getTotalDuration(), "Total duration for shortest path from 0 to 1 is incorrect");
+        assertArrayEquals(expectedTransportLines, path.getLinesPath(), "Transport lines for shortest path from 0 to 1 are incorrect");
+    }
+
+    @Test
+    public void testShortestPath0to1Congestion() {
+        Zone startZone = zones.get(0);
+        Zone endZone = zones.get(1);
+
+        for (int i = 0; i < 50; i++) {
+            transports.get(4).incrementPersonInLine();
         }
-    
-        Zone zone1 = zones.get(0);
-        Zone zone2 = zones.get(1);
-        TransportLine transportLine = transports.get(0);
-    
-        ZoneTable zoneTable = ZoneTable.getInstance();
-        //zoneTable.addPair(zone1, zone2, transportLine);
-    
-        //TransportLine actualTransportLine = zoneTable.getTransportLine(zone1, zone2);
-        //assertSame(transportLine, actualTransportLine, "The transport line returned by getTransportLine() should be the same as the one added with addPair()");
-    
-        //actualTransportLine = zoneTable.getTransportLine(zone2, zone1);
-        //assertSame(transportLine, actualTransportLine, "The transport line returned by getTransportLine() should be the same as the one added with addPair(), even when the zones are reversed");
+
+        assertEquals(transports.get(4).getCongestion(), 100.0, "Congestion for transport line 4 is incorrect");
+
+        Path path = ZoneTable.findBestPath(startZone, endZone);
+
+        assertFalse(path == null, "No path found from 0 to 1");
+
+        List<Zone> expectedPath = Arrays.asList(zones.get(0), zones.get(1));
+        TransportLine[] expectedTransportLines = {transports.get(0)};
+        int expectedDuration = 60;
+
+        assertEquals(expectedPath, path.getZones(), "Shortest path from 0 to 1 is incorrect");
+        assertEquals(expectedDuration, path.getTotalDuration(), "Total duration for shortest path from 0 to 1 is incorrect");
+        assertArrayEquals(expectedTransportLines, path.getLinesPath(), "Transport lines for shortest path from 0 to 1 are incorrect");
+    }
+
+    @Test
+    public void testShortestPath2to4() {
+        Zone startZone = zones.get(2);
+        Zone endZone = zones.get(4);
+        Path path = ZoneTable.findBestPath(startZone, endZone);
+
+        assertFalse(path == null, "No path found from 2 to 4");
+
+        List<Zone> expectedPath = Arrays.asList(zones.get(2), zones.get(0), zones.get(3), zones.get(4));
+        TransportLine[] expectedTransportLines = {transports.get(1), transports.get(2), transports.get(6)};
+        int expectedDuration = 14;
+
+        assertEquals(expectedPath, path.getZones(), "Shortest path from 2 to 4 is incorrect");
+        assertEquals(expectedDuration, path.getTotalDuration(), "Total duration for shortest path from 2 to 4 is incorrect");
+        assertArrayEquals(expectedTransportLines, ZoneTable.getBestLinesPath(startZone, endZone), "Transport lines for shortest path from 2 to 4 are incorrect");
     }
 }

@@ -51,8 +51,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         if (currentTime.toSecondOfDay() == this.lastArrivingTime) {
             this.setState(this.lastDestination);
             updatePosition();
-            Arrays.stream(transportLine)
-                  .forEach(TransportLine::decrementPersonInLine);
+            /*Arrays.stream(transportLine)
+                  .forEach(TransportLine::decrementPersonInLine);*/
 
         }
     }
@@ -77,8 +77,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
             this.setState(newState);
         } else {
             this.setState(PersonState.MOVING);
-            Arrays.stream(transportLine)
-                  .forEach(TransportLine::incrementPersonInLine);
+            /*Arrays.stream(transportLine)
+                  .forEach(TransportLine::incrementPersonInLine);*/
         }
         this.lastDestination = newState;
         this.updatePosition();
