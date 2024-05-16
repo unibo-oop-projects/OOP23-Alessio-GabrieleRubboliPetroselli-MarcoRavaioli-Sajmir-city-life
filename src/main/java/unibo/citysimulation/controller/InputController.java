@@ -2,11 +2,9 @@ package unibo.citysimulation.controller;
  
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
- 
+
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
 import unibo.citysimulation.view.sidePanels.InputPanel;
  
@@ -18,8 +16,6 @@ public class InputController {
     private InputModel inputModel;
 
     private InputPanel inputPanel;
-    private MapPanel mapPanel;
-    private MapModel mapModel;
  
     /**
      * Constructs an InputController object.
@@ -35,18 +31,34 @@ public class InputController {
 
         this.inputPanel = inputPanel;
 
-        //cityModel.getMapModel().startSimulation();
-        // Add action listener for the start button
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("PREMUTO IL TASTO START SIMULATION");
                 startSimulation(clockPanel);
                 cityModel.getMapModel().startSimulation();
+
                 inputPanel.getPeopleSlider().setEnabled(false);
                 inputPanel.getCapacitySlider().setEnabled(false);
                 inputPanel.getBusinessSlider().setEnabled(false);
                 inputPanel.getRichnessSlider().setEnabled(false);
+                inputPanel.getStartButton().setEnabled(false);
+                inputPanel.getStopButton().setEnabled(true);
+            }
+        });
+
+        inputPanel.getStopButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("PREMUTO IL TASTO STOP SIMULATION");
+                stopSimulation(clockPanel);
+
+                inputPanel.getPeopleSlider().setEnabled(true);
+                inputPanel.getBusinessSlider().setEnabled(true);
+                inputPanel.getRichnessSlider().setEnabled(true);
+                inputPanel.getCapacitySlider().setEnabled(true);
+                inputPanel.getStartButton().setEnabled(true);
+                inputPanel.getStopButton().setEnabled(false);
             }
         });
     }
@@ -58,17 +70,29 @@ public class InputController {
      */
     private void startSimulation(ClockPanel clockPanel) {
 
-        inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue()); 
-        inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());
-        inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
-        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());
+        inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());      //
+        inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());  // questi potrebbero essere dentro un metodo nel model
+        inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());          //
+        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());          //
         
-        // Create entities with the specified number of people
-        cityModel.createEntities(inputModel.getNumberOfPeople());
+        // Create entities
+        cityModel.createEntities();
         // Restart the clock simulation
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
-    }  
+
+        clockPanel.getPauseButton().setEnabled(true);
+    }
+    
+    private void stopSimulation(ClockPanel clockPanel) {
+        // Restart the clock simulation
+        cityModel.getClockModel().stopSimulation();
+
+        // Update the pause button state on the clock panel
+        clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
+
+        clockPanel.getPauseButton().setEnabled(false);
+    }
 }
  

@@ -60,7 +60,6 @@ public class ClockModel {
         System.out.println("Simulation started");
         if(timer!=null){
             timer.cancel();
-            task.cancel();
         }
         
         this.hourDuration = hourDuration;
@@ -100,7 +99,6 @@ public class ClockModel {
     public void restartSimulation(){
         if(timer!=null){
             timer.cancel();
-            task.cancel();
         }
         isPaused=false;
         currentTime = LocalTime.of(0,0);
@@ -115,18 +113,21 @@ public class ClockModel {
         isPaused=!isPaused;
     }
 
+    public void stopSimulation(){
+        if(timer!=null){
+            timer.cancel();
+        }
+        isPaused=true;
+    }
+
     /**
      * Notifies all observers of a time update.
      */
     private void notifyObservers() {
-        long startTime = System.currentTimeMillis();
         List<ClockObserver> observersCopy = new ArrayList<>(observers);
         for (ClockObserver observer : observersCopy) {
             observer.onTimeUpdate(currentTime, currentDay);
         }
-        long endTime = System.currentTimeMillis();
-        long elapsedTime = endTime - startTime;
-        System.out.println("Tempo trascorso notify: " + elapsedTime + " millisecondi");
     }
     
     

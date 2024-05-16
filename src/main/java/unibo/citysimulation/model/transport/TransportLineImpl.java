@@ -3,6 +3,7 @@ package unibo.citysimulation.model.transport;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.model.zone.Zone;
 
+
 /**
  * Represents a transport line within the city simulation.
  */
@@ -18,6 +19,16 @@ public class TransportLineImpl implements TransportLine {
         this.capacity=capacity;
         this.duration=duration;
         this.link = link;
+    }
+    public Pair<Zone,Zone> getLink(){
+        return link;
+    }
+    public int getCapacity(){
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     // Getter and setter methods for other fields, if needed
@@ -48,5 +59,6 @@ public class TransportLineImpl implements TransportLine {
     @Override
     public void decrementPersonInLine() {
         personInLine--;
+
     }
 }

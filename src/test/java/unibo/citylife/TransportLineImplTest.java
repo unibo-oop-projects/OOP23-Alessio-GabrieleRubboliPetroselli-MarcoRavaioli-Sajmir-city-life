@@ -1,49 +1,38 @@
 package unibo.citylife;
 import org.junit.jupiter.api.Test;
-
-import unibo.citysimulation.model.transport.TransportLineImpl;
+import static org.junit.jupiter.api.Assertions.*;
+import unibo.citysimulation.model.transport.TransportFactory;
+import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.model.zone.ZoneFactory;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-/*
-public class TransportLineImplTest {
+//test for class transportLineImpl
+class TransportLineImplTest {
+    
+    private List<Zone> zones = ZoneFactory.createZonesFromFile();
+    private List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
 
     @Test
-    public void testAddPredefinedLine() {
-        // Creazione delle zone di origine e destinazione
-        Zone originZone1 = new ZoneImpl("Origin 1");
-        Zone destinationZone1 = new ZoneImpl("Destination 1");
-        Zone originZone2 = new ZoneImpl("Origin 2");
-        Zone destinationZone2 = new ZoneImpl("Destination 2");
-        Zone originZone3 = new ZoneImpl("Origin 3");
-
-        Zone destinationZone3 = new ZoneImpl("Destination 3");
-
-        // Creazione della linea di trasporto
-        TransportLineImpl transportLine = new TransportLineImpl("Line 1", 8, 20, 100, 60);
-
-        // Aggiunta di più linee predefinite
-        
-        transportLine.addPredefinedLine(originZone1, destinationZone1, 30);
-        transportLine.addPredefinedLine(originZone2, destinationZone2, 45);
-        transportLine.addPredefinedLine(originZone3, destinationZone3, 20);
-        
-
-        // Verifica che tutte le linee predefinite siano state aggiunte correttamente
-        assertTrue(transportLine.getPredefinedLines().containsKey(originZone1));
-        assertTrue(transportLine.getPredefinedLines().containsKey(originZone2));
-        assertTrue(transportLine.getPredefinedLines().containsKey(originZone3));
-        assertEquals(destinationZone1, transportLine.getPredefinedLines().get(originZone1));
-        assertEquals(destinationZone2, transportLine.getPredefinedLines().get(originZone2));
-        assertEquals(destinationZone3, transportLine.getPredefinedLines().get(originZone3));
-
-        // Verifica che tutte le durate dei percorsi siano state memorizzate correttamente
-        assertTrue(transportLine.getPredefinedDurations().containsKey(originZone1));
-        assertTrue(transportLine.getPredefinedDurations().containsKey(originZone2));
-        assertTrue(transportLine.getPredefinedDurations().containsKey(originZone3));
-        assertEquals(30, transportLine.getPredefinedDurations().get(originZone1));
-        assertEquals(45, transportLine.getPredefinedDurations().get(originZone2));
-        assertEquals(20, transportLine.getPredefinedDurations().get(originZone3));
+    void testGetName() {
+        String expectedName = transports.get(0).getName();
+        String actualName = transports.get(0).getName();
+        assertEquals(expectedName, actualName, "The name of the transport line should be " + expectedName);
     }
-}*/
+
+    @Test
+    void testGetDuration() {
+        int expectedDuration = transports.get(0).getDuration();
+        int actualDuration = transports.get(0).getDuration();
+        assertEquals(expectedDuration, actualDuration, "The duration of the transport line should be " + expectedDuration);
+    }
+
+    @Test
+    void testIncrementAndDecrementPersonInLine() {
+        TransportLine line = transports.get(0);
+        line.incrementPersonInLine();
+        assertEquals(1, line.getPersonInLine(), "The number of people in line should be 1 after incrementing");
+        line.decrementPersonInLine();
+        assertEquals(0, line.getPersonInLine(), "The number of people in line should be 0 after decrementing");
+    }
+}

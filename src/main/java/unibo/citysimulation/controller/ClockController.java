@@ -57,7 +57,8 @@ public class ClockController implements ClockObserver {
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
         // Update the clock panel text with current time and day
-        clockPanel.setClockText("Giorno: " + currentDay + " ora: " + currentTime);
+        clockPanel.setClockText(Integer.toString(currentDay), currentTime.toString());
+        
     }
 
     /**
@@ -79,7 +80,7 @@ public class ClockController implements ClockObserver {
         if (clockModel.getTimer() != null) {
             clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
         } else {
-            clockModel.setHourDuration(speed);
+            clockModel.setHourDuration(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
         }
     }
 
