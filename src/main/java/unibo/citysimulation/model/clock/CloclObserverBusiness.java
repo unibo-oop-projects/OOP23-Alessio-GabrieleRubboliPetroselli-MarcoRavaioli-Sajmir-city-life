@@ -2,6 +2,7 @@ package unibo.citysimulation.model.clock;
 
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.Employee;
+import unibo.citysimulation.model.person.Person;
 
 import java.util.List;
 import java.time.LocalTime;
@@ -30,11 +31,12 @@ public class CloclObserverBusiness implements ClockObserver{
         if (currentDay % WEEK == 0) {
         for (Business business : businesses) {
             if(business.getEmployees().size() < business.getMaxEmployees()){
-            for (Employee employee : business.getEmployees()) {
-                business.hire(employee, business);
+            for (Person person : disoccupiedPeople){
+                business.hire(new Employee(person), business);
+            }
             }
         }
         }
         }
     }
-}
+
