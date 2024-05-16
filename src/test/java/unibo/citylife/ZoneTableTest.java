@@ -14,6 +14,7 @@ import unibo.citysimulation.model.zone.ZoneTableCreation;
 
 import java.util.List;
 import java.util.Arrays;
+import java.util.Optional;
 
 
 class ZoneTableTest {
@@ -64,6 +65,15 @@ class ZoneTableTest {
         assertEquals(expectedPath, path.getZones(), "Shortest path from 0 to 1 is incorrect");
         assertEquals(expectedDuration, path.getTotalDuration(), "Total duration for shortest path from 0 to 1 is incorrect");
         assertArrayEquals(expectedTransportLines, path.getLinesPath(), "Transport lines for shortest path from 0 to 1 are incorrect");
+
+        for (int i = 0; i < 100; i++) {
+            transports.get(0).incrementPersonInLine();
+        }
+
+        assertEquals(transports.get(0).getCongestion(), 100.0, "Congestion for transport line 0 is incorrect");
+
+        assertNull(ZoneTable.findBestPath(startZone, endZone), "Path found from 0 to 1 with 100% congestion");
+        assertEquals(Optional.empty(), ZoneTable.getBestLinesPath(startZone, endZone), "Transport lines for path from 0 to 1 with 100% congestion");
     }
 
     @Test
@@ -75,11 +85,11 @@ class ZoneTableTest {
         assertFalse(path == null, "No path found from 2 to 4");
 
         List<Zone> expectedPath = Arrays.asList(zones.get(2), zones.get(0), zones.get(3), zones.get(4));
-        TransportLine[] expectedTransportLines = {transports.get(1), transports.get(2), transports.get(6)};
+        Optional<TransportLine[]> expectedTransportLines = Optional.of(new TransportLine[]{transports.get(1), transports.get(2), transports.get(6)});
         int expectedDuration = 14;
 
         assertEquals(expectedPath, path.getZones(), "Shortest path from 2 to 4 is incorrect");
         assertEquals(expectedDuration, path.getTotalDuration(), "Total duration for shortest path from 2 to 4 is incorrect");
-        assertArrayEquals(expectedTransportLines, ZoneTable.getBestLinesPath(startZone, endZone), "Transport lines for shortest path from 2 to 4 are incorrect");
+        assertArrayEquals(expectedTransportLines.get(), ZoneTable.getBestLinesPath(startZone, endZone).get(), "Transport lines for shortest path from 2 to 4 are incorrect");
     }
 }

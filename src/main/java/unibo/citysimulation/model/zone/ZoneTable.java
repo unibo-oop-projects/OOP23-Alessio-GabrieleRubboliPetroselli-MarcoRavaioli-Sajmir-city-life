@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Optional;
 
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
@@ -77,9 +78,12 @@ public class ZoneTable {
         return null; // No valid path found
     }
 
-    public static TransportLine[] getBestLinesPath(Zone start, Zone end) {
+    public static Optional<TransportLine[]> getBestLinesPath(Zone start, Zone end) {
         Path bestPath = findBestPath(start, end);
-        return bestPath.getLinesPath();
+        if (bestPath == null) {
+            return Optional.empty();
+        }
+        return Optional.of(bestPath.getLinesPath());
     }
     
     /*public static List<Path> findShortestPaths(Zone start, Zone end) {
