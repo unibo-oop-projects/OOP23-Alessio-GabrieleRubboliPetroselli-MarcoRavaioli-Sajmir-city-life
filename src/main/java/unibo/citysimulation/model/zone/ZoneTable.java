@@ -79,20 +79,15 @@ public class ZoneTable {
         visited.remove(current);
     }
 
-    public Path findBestPath(Zone start, Zone end) {
+    public TransportLine[] findBestPath(Zone start, Zone end) {
         List<Path> paths = allPaths.getOrDefault(start, Collections.emptyMap()).getOrDefault(end,
                 Collections.emptyList());
         for (Path path : paths) {
             if (path.isValid()) {
-                return path;
+                return path.getLinesPath();
             }
         }
-        return null; // No valid path found
-    }
-
-    public TransportLine[] getBestLinesPath(Zone start, Zone end) {
-        Path bestPath = findBestPath(start, end);
-        return bestPath != null ? bestPath.getLinesPath() : new TransportLine[0];
+        return new TransportLine[0]; // No valid path found
     }
 
     public static class Path {
@@ -111,7 +106,25 @@ public class ZoneTable {
         public int getTotalDuration(){
             return totalDuration;
         }
+
+        public boolean isValid() {
+            for (var line : getLinesPath()) {
+                if (line.getCongestion() >= 100.0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+ 
+        public TransportLine[] getLinesPath() {
+            TransportLine[] lines = new TransportLine[zones.size() - 1];
+            for (int i = 0; i < zones.size() - 1; i++) {
+                lines[i] = getTransportLine(zones.get(i), zones.get(i + 1));
+            }
+            return lines;
+        }
     }
+
 }
 
 /*
