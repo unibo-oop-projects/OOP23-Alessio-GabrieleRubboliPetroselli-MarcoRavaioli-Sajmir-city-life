@@ -7,9 +7,8 @@ import unibo.citysimulation.utilities.Pair;
 
 public class ZoneTable {
     private static ZoneTable instance;
-    private static List<Zone> zones;
     private static Map<Pair<Zone, Zone>, TransportLine> zonePairs;
-    private Map<Zone, Map<Zone, List<Path>>> allPaths;
+    private static Map<Zone, Map<Zone, List<Path>>> allPaths;
 
     private ZoneTable() {
         zonePairs = new HashMap<>();
@@ -36,7 +35,7 @@ public class ZoneTable {
         return transportLines.getDuration();
     }
 
-    public void calculateAllPaths(List<Zone> zones) {
+    public static void calculateAllPaths(List<Zone> zones) {
         for (int i = 0; i < zones.size(); i++) {
             for (int j = i + 1; j < zones.size(); j++) {
                 Zone start = zones.get(i);
@@ -79,7 +78,7 @@ public class ZoneTable {
         visited.remove(current);
     }
 
-    public TransportLine[] findBestPath(Zone start, Zone end) {
+    public static TransportLine[] findBestPath(Zone start, Zone end) {
         List<Path> paths = allPaths.getOrDefault(start, Collections.emptyMap()).getOrDefault(end,
                 Collections.emptyList());
         for (Path path : paths) {
