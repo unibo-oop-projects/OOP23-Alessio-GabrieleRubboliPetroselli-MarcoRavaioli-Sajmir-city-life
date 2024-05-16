@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * Panel for displaying graphics.
@@ -40,28 +41,33 @@ public class GraphicsPanel extends StyledPanel {
      */
     public GraphicsPanel(Color bgColor) {
         super(bgColor);
-
+        JButton helpButton = new JButton("?");
+        helpButton.setPreferredSize(new Dimension(20, 20)); // Set the preferred size of the button to make it small
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(helpButton, BorderLayout.NORTH);
+    
+        // Add the top panel to this panel
+        this.add(topPanel, BorderLayout.NORTH);
+    
         names = Arrays.asList("Person State", "Transport Congestion", "Business");
-
+    
         datasets = createDatasets(names.size());
         List<JFreeChart> charts = createCharts(names, datasets);
-
+    
         plots = charts.stream()
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
                 .collect(Collectors.toList());
-
+    
         synchronized (this) {
             plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
         }
-
-
+    
         plots.get(0).getRangeAxis().setTickLabelsVisible(false);
         plots.get(1).getRangeAxis().setTickLabelsVisible(false);
-
-
-        // Set layout to arrange charts horizontally
-        setLayout(new GridLayout(names.size(), 1));
+    
+        // Set layout to arrange charts vertically
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     }
 
     private List<XYSeriesCollection> createDatasets(int num) {

@@ -120,13 +120,13 @@ public class WindowView extends JFrame {
 
         // Add clock panel and graphics panel to right panel
         constraints.gridy = 0;
-        constraints.weighty = 0.125;
-        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8));
+        constraints.weighty = 0.1; // Decrease the weight of the clock panel
+        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 10)); // Decrease the preferred size of the clock panel
         rightPanel.add(clockPanel, constraints);
 
         constraints.gridy = 1;
-        constraints.weighty = 0.875;
-        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8 * 7));
+        constraints.weighty = 0.9; // Increase the weight of the graphics panel
+        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 10 * 9)); // Increase the preferred size of the graphics panel
         rightPanel.add(graphicsPanel, constraints);
 
         // Add left and right panels to the window
