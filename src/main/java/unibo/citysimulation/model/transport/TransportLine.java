@@ -3,8 +3,7 @@ package unibo.citysimulation.model.transport;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 
-=======
->>>>>>> branch_develop
+
 /**
  * Represents a transport line within the city simulation.
  * Each transport line has a name, capacity, and duration.

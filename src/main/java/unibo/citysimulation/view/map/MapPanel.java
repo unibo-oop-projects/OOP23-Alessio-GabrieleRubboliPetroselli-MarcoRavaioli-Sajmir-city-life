@@ -5,6 +5,7 @@ import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 /**
@@ -158,4 +159,6 @@ public class MapPanel extends StyledPanel {
             return super.getPreferredSize();
         }
     }
+
+    
 }
