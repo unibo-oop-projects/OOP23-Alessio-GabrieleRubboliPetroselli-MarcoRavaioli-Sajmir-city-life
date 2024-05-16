@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
@@ -55,7 +56,7 @@ public class GraphicsModel {
         }
     }
 
-    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, int business,
+    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, Double employeesCount,
             double counter) {
         synchronized (datasets) {
             if (columnCount > 150) {
@@ -92,8 +93,10 @@ public class GraphicsModel {
                 }
             }
 
+            
+
             synchronized (datasets.get(2)) { // Sincronizza l'accesso al dataset corrente
-                datasets.get(2).getSeries(0).add(counter, business);
+                datasets.get(2).getSeries(0).add(counter, employeesCount);
             }
         }
     }
@@ -111,6 +114,11 @@ public class GraphicsModel {
                 .collect(Collectors.toList());
     }
 
+    public Double getBusinessesEmployee(List<Business> businesses){
+        return businesses.stream()
+            .mapToInt(b -> b.getEmployees().size()).sum() / businesses.stream()
+                .mapToDouble(b -> b.getEmployees().size()).sum();
+    }
     public List<XYSeriesCollection> getDatasets(){
         return datasets;
     }
