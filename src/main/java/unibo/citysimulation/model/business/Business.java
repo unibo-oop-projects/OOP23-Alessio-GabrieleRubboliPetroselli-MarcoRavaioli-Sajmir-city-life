@@ -8,22 +8,23 @@ import unibo.citysimulation.model.zone.Zone;
 
 public abstract class Business implements BusinessEmployee{
 
-    private Zone zone;
+    //private Zone zone = Zone.getRandomZone();
     protected List<Employee> employees;
     protected LocalTime opLocalTime;
     protected LocalTime clLocalTime;
     protected double revenue;
     protected int maxEmployees;
+    
 
-    public Business(int maxEmployees) {
+    public Business() {
         this.employees = new ArrayList<>();
-        this.zone = zone.getRandomZone();
-        this.maxEmployees = maxEmployees;
+        
+  
     }
 
-    public Zone getZone() {
-        return zone;
-    }
+    //public Zone getZone() {
+        //return zone;
+    //}
 
     public List<Employee> getEmployees() {
         return employees;
@@ -39,6 +40,10 @@ public abstract class Business implements BusinessEmployee{
 
     public int getMaxEmployees() {
         return maxEmployees;
+    }
+
+    public double getRevenue() {
+        return revenue;
     }
 
     
