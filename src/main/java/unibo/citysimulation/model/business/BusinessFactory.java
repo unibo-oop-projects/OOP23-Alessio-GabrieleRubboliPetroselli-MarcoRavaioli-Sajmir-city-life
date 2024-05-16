@@ -31,17 +31,17 @@ public final class BusinessFactory{
 
     private static final int MAX_EMPLOYEES_BIG_BUSINESS = 300;
     private static final int MAX_EMPLOYEES_MEDIUM_BUSINESS = 100;
-    private static final int MAX_EMPLOYEES_SMALL_BUSINESS = 0;
+    private static final int MAX_EMPLOYEES_SMALL_BUSINESS = 20;
     
     
     public Optional<Business> createBusiness(BusinessType type) {
         switch (type) {
             case BIG:
-                return Optional.of(createSmallBusiness());
-            case MEDIUM:
                 return Optional.of(createBigBusiness());
+            case MEDIUM:
+                return Optional.of(createMediumBusiness());
             case SMALL:
-                return Optional.of(createMediumBusiness());     
+                return Optional.of(createSmallBusiness());     
             default:
                 break;
         
@@ -73,7 +73,7 @@ public final class BusinessFactory{
     //business abstarct businessfactory
 
     public final Business createBigBusiness(){
-        return new Business(MAX_EMPLOYEES_BIG_BUSINESS){
+        return new Business(){
             private static final int MAX_TARDINESS = 3; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 25;
 
@@ -81,6 +81,7 @@ public final class BusinessFactory{
             this.opLocalTime = BIG_OPENING_TIME;
             this.clLocalTime = BIG_CLOSING_TIME;
             this.revenue = BIG_REVENUE;
+            this.maxEmployees = MAX_EMPLOYEES_BIG_BUSINESS;
             }
 
         
@@ -104,7 +105,7 @@ public final class BusinessFactory{
     }
 
     public Business createMediumBusiness(){ 
-    return new Business(MAX_EMPLOYEES_MEDIUM_BUSINESS){
+        return new Business(){
             private static final int MAX_TARDINESS = 5; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 35;
 
@@ -112,6 +113,7 @@ public final class BusinessFactory{
             this.opLocalTime = MEDIUM_OPENING_TIME;
             this.clLocalTime = MEDIUM_CLOSING_TIME;
             this.revenue = MEDIUM_REVENUE;
+            this.maxEmployees = MAX_EMPLOYEES_MEDIUM_BUSINESS;
             }
         
             
@@ -137,7 +139,7 @@ public final class BusinessFactory{
     public Business createSmallBusiness(){
 
         
-        return new Business(MAX_EMPLOYEES_SMALL_BUSINESS){
+        return new Business(){
             private static final int MAX_TARDINESS = 10; // Example maximum allowed tardiness for employees
             private static final int MIN_AGE = 18;
             private static final int MAX_AGE = 25;
@@ -146,6 +148,7 @@ public final class BusinessFactory{
             this.opLocalTime = SMALL_OPENING_TIME;
             this.clLocalTime = SMALL_CLOSING_TIME;
             this.revenue = SMALL_REVENUE;
+            this.maxEmployees = MAX_EMPLOYEES_SMALL_BUSINESS;
             }
             
             @Override
