@@ -3,6 +3,8 @@ package unibo.citysimulation.model;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
+
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import java.util.List;
@@ -67,12 +69,11 @@ public class MapModel {
         return transportLines;
     }
 
-    public Map<String, Pair<Integer, Integer>> getBusinessInfos(List<Business> businesses) {
+    public Map<Pair<Integer, Integer>, Pair<LocalTime, Double>> getBusinessInfos(List<Business> businesses, int maxX, int maxY) {
         return businesses.stream()
                 .collect(Collectors.toMap(
-                        business -> business.getName(),
-                        business -> new Pair<>(denormalizeCoordinate(business.getPosition().getFirst(), maxX),
-                                denormalizeCoordinate(business.getPosition().getSecond(), maxY))));
+                        Business::getPosition,
+                        business -> new Pair<>(business.getOpLocalTime(), business.getRevenue())));
     }
 
     public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {
