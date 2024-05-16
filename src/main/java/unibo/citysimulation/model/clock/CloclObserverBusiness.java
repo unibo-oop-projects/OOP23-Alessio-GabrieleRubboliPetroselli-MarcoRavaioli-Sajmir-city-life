@@ -24,6 +24,7 @@ public class CloclObserverBusiness implements ClockObserver{
         for (Business business : businesses) {
             for (Employee employee : business.getEmployees()) {
                 business.fire(employee, business);
+                disoccupiedPeople.add(employee.getPerson());
             }
         }
         }
@@ -33,6 +34,7 @@ public class CloclObserverBusiness implements ClockObserver{
             if(business.getEmployees().size() < business.getMaxEmployees()){
             for (Person person : disoccupiedPeople){
                 business.hire(new Employee(person), business);
+                disoccupiedPeople.remove(person);
             }
             }
         }
