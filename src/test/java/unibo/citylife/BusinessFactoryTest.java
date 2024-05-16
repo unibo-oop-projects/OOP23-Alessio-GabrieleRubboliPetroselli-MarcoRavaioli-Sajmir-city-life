@@ -19,18 +19,16 @@ public class BusinessFactoryTest {
     public void testCreateBigBusiness() {
         //arrange
         BusinessFactory factory = new BusinessFactory();
-        PersonImpl person = new PersonImpl(null, 0);
-        PersonImpl person2 = new PersonImpl(null, 40);
-        
+        PersonImpl person = new PersonImpl("bho", 0);
+        PersonImpl person2 = new PersonImpl("ciao", 40);
+
+        Employee employee = new Employee(person2);
+        employee.setcountDelay(10);
         
         //act
         BusinessType type = BusinessType.BIG;
-        
 
         Business business = factory.createBusiness(type).get();
-
-        
-        
 
         // Verifica che il numero massimo di dipendenti sia corretto
         assertEquals(25.0, business.getRevenue());
@@ -59,11 +57,16 @@ public class BusinessFactoryTest {
         assertEquals(0, business.getEmployees().size());
 
         //Verifica HIRE di dipendenti
-        business.hire(new Employee(person2), business);
+        business.hire(employee, business);
 
         //Verifica che il numero di dipendenti sia corretto
         assertEquals(1, business.getEmployees().size());
 
+        //Verifica FIRE di dipendenti
+        business.fire(employee, business);
+
+        //Verifica che il numero di dipendenti sia corretto
+        assertEquals(0, business.getEmployees().size());
 
     }
 }
