@@ -4,27 +4,30 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.model.zone.Zone;
 
 public abstract class Business implements BusinessEmployee{
 
-    //private Zone zone = Zone.getRandomZone();
+    
     protected List<Employee> employees;
     protected LocalTime opLocalTime;
     protected LocalTime clLocalTime;
     protected double revenue;
     protected int maxEmployees;
+    private Pair<Integer, Integer> position;
     
 
     public Business() {
         this.employees = new ArrayList<>();
+        position = Zone.getRandomZone().getRandomPosition();
         
   
     }
 
-    //public Zone getZone() {
-        //return zone;
-    //}
+    public Pair<Integer, Integer> getPosition() {
+        return position;
+    }
 
     public List<Employee> getEmployees() {
         return employees;
