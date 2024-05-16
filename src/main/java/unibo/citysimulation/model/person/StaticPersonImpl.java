@@ -78,11 +78,13 @@ public class StaticPersonImpl implements StaticPerson {
     }
 
     private void getTrip() {
+        System.out.println("dentro getTrip");
         if (personData.residenceZone() == personData.business().getZone()) {
             this.tripDuration = 0;
         } else {
             this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(), personData.business().getZone());
             tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
         }
+        System.out.println("in getTrip: " + tripDuration);
     }
 }

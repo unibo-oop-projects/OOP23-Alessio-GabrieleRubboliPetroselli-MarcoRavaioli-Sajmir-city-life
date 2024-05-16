@@ -1,23 +1,19 @@
 package unibo.citysimulation.model.zone;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
 public class ZoneTable {
     private static ZoneTable instance;
+    private static List<Zone> zones;
     private static Map<Pair<Zone, Zone>, TransportLine> zonePairs;
+    private Map<Zone, Map<Zone, List<Path>>> allPaths;
 
     private ZoneTable() {
         zonePairs = new HashMap<>();
+        allPaths = new HashMap<>();
     }
 
     public static ZoneTable getInstance() {
@@ -40,6 +36,21 @@ public class ZoneTable {
         return transportLines.getDuration();
     }
 
+    public void calculateAllPaths(List<Zone> zones) {
+        for (int i = 0; i < zones.size(); i++) {
+            for (int j = i + 1; j < zones.size(); j++) {
+                Zone start = zones.get(i);
+                Zone end = zones.get(j);
+                if (!start.equals(end)) {
+                    List<Path> paths = findAllPaths(start, end);
+                    allPaths.computeIfAbsent(start, k -> new HashMap<>()).put(end, paths);
+                    allPaths.computeIfAbsent(end, k -> new HashMap<>()).put(start, paths);
+                    System.out.println(start + ", " + end);
+                }
+            }
+        }
+    }
+
     private static List<Path> findAllPaths(Zone start, Zone end) {
         List<Path> allPaths = new ArrayList<>();
         findAllPathsHelper(start, end, new HashSet<>(), new ArrayList<>(), 0, allPaths);
@@ -47,7 +58,8 @@ public class ZoneTable {
         return allPaths;
     }
 
-    private static void findAllPathsHelper(Zone current, Zone end, Set<Zone> visited, List<Zone> path, int duration, List<Path> allPaths) {
+    private static void findAllPathsHelper(Zone current, Zone end, Set<Zone> visited, List<Zone> path, int duration,
+            List<Path> allPaths) {
         visited.add(current);
         path.add(current);
 
@@ -57,7 +69,8 @@ public class ZoneTable {
             for (Map.Entry<Pair<Zone, Zone>, TransportLine> entry : zonePairs.entrySet()) {
                 Pair<Zone, Zone> zonePair = entry.getKey();
                 if (zonePair.getFirst().equals(current) && !visited.contains(zonePair.getSecond())) {
-                    findAllPathsHelper(zonePair.getSecond(), end, visited, path, duration + entry.getValue().getDuration(), allPaths);
+                    findAllPathsHelper(zonePair.getSecond(), end, visited, path,
+                            duration + entry.getValue().getDuration(), allPaths);
                 }
             }
         }
@@ -66,9 +79,10 @@ public class ZoneTable {
         visited.remove(current);
     }
 
-    public static Path findBestPath(Zone start, Zone end) {
-        List<Path> allPaths = findAllPaths(start, end);
-        for (Path path : allPaths) {
+    public Path findBestPath(Zone start, Zone end) {
+        List<Path> paths = allPaths.getOrDefault(start, Collections.emptyMap()).getOrDefault(end,
+                Collections.emptyList());
+        for (Path path : paths) {
             if (path.isValid()) {
                 return path;
             }
@@ -76,55 +90,10 @@ public class ZoneTable {
         return null; // No valid path found
     }
 
-    public static Optional<TransportLine[]> getBestLinesPath(Zone start, Zone end) {
+    public TransportLine[] getBestLinesPath(Zone start, Zone end) {
         Path bestPath = findBestPath(start, end);
-        if (bestPath == null) {
-            return Optional.empty();
-        }
-        return Optional.of(bestPath.getLinesPath());
+        return bestPath != null ? bestPath.getLinesPath() : new TransportLine[0];
     }
-    
-    /*public static List<Path> findShortestPaths(Zone start, Zone end) {
-        Map<Zone, Integer> distances = new HashMap<>();
-        Map<Zone, Zone> previous = new HashMap<>();
-        PriorityQueue<Pair<Zone, Integer>> queue = new PriorityQueue<>(Comparator.comparingInt(Pair::getSecond));
-
-        distances.put(start, 0);
-        queue.add(new Pair<>(start, 0));
-
-        while (!queue.isEmpty()) {
-            Zone current = queue.poll().getFirst();
-
-            if (current.equals(end)) break;
-
-            for (Map.Entry<Pair<Zone, Zone>, TransportLine> entry : zonePairs.entrySet()) {
-                Pair<Zone, Zone> zonePair = entry.getKey();
-                if (zonePair.getFirst().equals(current)) {
-                    Zone neighbor = zonePair.getSecond();
-                    int newDist = distances.get(current) + getTripDuration(entry.getValue());
-                    if (newDist < distances.getOrDefault(neighbor, Integer.MAX_VALUE)) {
-                        distances.put(neighbor, newDist);
-                        previous.put(neighbor, current);
-                        queue.add(new Pair<>(neighbor, newDist));
-                    }
-                }
-            }
-        }
-
-        List<Path> paths = new ArrayList<>();
-        if (!distances.containsKey(end)) {
-            return paths; // No path found
-        }
-
-        List<Zone> path = new ArrayList<>();
-        for (Zone at = end; at != null; at = previous.get(at)) {
-            path.add(at);
-        }
-        Collections.reverse(path);
-
-        paths.add(new Path(path, distances.get(end)));
-        return paths;
-    }*/
 
     public static class Path {
         private List<Zone> zones;
@@ -139,33 +108,26 @@ public class ZoneTable {
             return zones;
         }
 
-        public int getTotalDuration() {
+        public int getTotalDuration(){
             return totalDuration;
-        }
-
-        public boolean isValid() {
-            for (var line : getLinesPath()) {
-                if (line.getCongestion() >= 100.0) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public TransportLine[] getLinesPath() {
-            TransportLine[] lines = new TransportLine[zones.size() - 1];
-            for (int i = 0; i < zones.size() - 1; i++) {
-                lines[i] = getTransportLine(zones.get(i), zones.get(i + 1));
-            }
-            return lines;
-        }
-
-        @Override
-        public String toString() {
-            return "Path{" +
-                    "zones=" + zones +
-                    ", totalDuration=" + totalDuration +
-                    '}';
         }
     }
 }
+
+/*
+ * zoneTable ci da i collegamenti nodo - arco
+ * 
+ * una volta istanziati trasporti e zone PathFinder calcola la tabella dei
+ * percorsi da una zona a tutte le altre
+ * 
+ * la tabella si applica ad ogni zona
+ * 
+ * INIZIA LA SIMULAZIONE
+ * 
+ * person1234 deve andare da ZoneA a ZoneZ interroga la lista della zona in cui
+ * è
+ * 
+ * persona1234 scorre cercando il primo percorso con tutte le linee libere
+ * 
+ * se non trova linee riprova il ciclo di clock successivo
+ */
