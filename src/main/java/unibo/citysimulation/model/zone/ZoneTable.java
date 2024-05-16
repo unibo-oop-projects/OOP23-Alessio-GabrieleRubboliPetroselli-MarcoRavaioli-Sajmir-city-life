@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
-import java.util.Arrays;
 
 public class ZoneTable {
     private static ZoneTable instance;
