@@ -69,7 +69,7 @@ public class MapModel {
         return transportLines;
     }
 
-    public Map<Pair<Integer, Integer>, Pair<LocalTime, Double>> getBusinessInfos(List<Business> businesses, int maxX, int maxY) {
+    public Map<Pair<Integer, Integer>, Pair<LocalTime, Double>> getBusinessInfos(List<Business> businesses) {
         return businesses.stream()
                 .collect(Collectors.toMap(
                         Business::getPosition,
