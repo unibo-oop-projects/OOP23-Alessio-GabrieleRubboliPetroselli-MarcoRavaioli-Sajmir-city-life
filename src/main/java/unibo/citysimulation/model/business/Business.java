@@ -13,10 +13,12 @@ public abstract class Business implements BusinessEmployee{
     protected LocalTime opLocalTime;
     protected LocalTime clLocalTime;
     protected double revenue;
+    protected int maxEmployees;
 
-    public Business() {
+    public Business(int maxEmployees) {
         this.employees = new ArrayList<>();
         this.zone = zone.getRandomZone();
+        this.maxEmployees = maxEmployees;
     }
 
     public Zone getZone() {
@@ -33,6 +35,10 @@ public abstract class Business implements BusinessEmployee{
 
     public LocalTime getClLocalTime() {
         return clLocalTime;
+    }
+
+    public int getMaxEmployees() {
+        return maxEmployees;
     }
 
     
