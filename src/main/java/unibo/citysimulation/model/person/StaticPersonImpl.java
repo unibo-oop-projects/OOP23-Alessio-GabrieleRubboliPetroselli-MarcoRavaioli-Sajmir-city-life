@@ -78,6 +78,8 @@ public class StaticPersonImpl implements StaticPerson {
     }
 
     private void getTrip() {
+        
+
         System.out.println("dentro getTrip");
         if (personData.residenceZone() == personData.business().getZone()) {
             this.tripDuration = 0;

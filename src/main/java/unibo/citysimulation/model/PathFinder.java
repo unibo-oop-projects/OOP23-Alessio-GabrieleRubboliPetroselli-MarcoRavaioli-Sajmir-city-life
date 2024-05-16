@@ -1,116 +1,4 @@
-/*import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneTable;
-import unibo.citysimulation.model.transport.TransportLine;
-
-import java.util.*;
-
-public class PathFinder {
-    //per calcolare i percorsi possibili tra due zone usiamo un algoritmo che ci ordina le strade possibili in ordine crescente di durata
-
-    //per ogni zona di partenza dobbiamo calcolare i percorsi possibili per la zona di arrivo
-
-    //per ogni zona di partenza si calcolano tutte le liste di percorsi possibili verso tutte le altre zone
-
-    //per ogni zona di partenza, per ogni zona di arrivo, per ogni percorso disponibile 
-    public Optional<TransportLine[]> getShortestPath(){
-
-    }
-
-    // Trova una lista di percorsi diversi tra un nodo di partenza e uno di arrivo
-    public List<TransportLine[]> getAllPossiblePaths(Zone sourceZone, Zone destinationZone) {
-        // Coda di priorità per gestire i nodi da esplorare
-        PriorityQueue<NodeWithPaths> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.totalDuration));
-
-        // Inizializzazione
-        queue.offer(new NodeWithPaths(sourceZone, new TransportLine[0], 0));
-
-        // Lista dei percorsi trovati
-        List<TransportLine[]> paths = new ArrayList<>();
-
-        // Ricerca dei cammini
-        while (!queue.isEmpty()) {
-            NodeWithPaths node = queue.poll();
-            Zone currentZone = node.zone;
-            TransportLine[] currentPath = node.path;
-            int totalDuration = node.totalDuration;
-
-            // Se raggiungiamo la destinazione, aggiungiamo il percorso alla lista dei percorsi
-            if (currentZone.equals(destinationZone)) {
-                paths.add(currentPath);
-                continue; // Continua la ricerca per trovare altri percorsi
-            }
-
-            // Esplora i vicini del nodo corrente
-            for (Edge edge : zoneTable.getEdges(currentZone)) {
-                Zone neighbor = edge.getDestination();
-                TransportLine transportLine = edge.getTransportLine();
-                int duration = transportLine.getDuration();
-
-                // Calcola la nuova durata totale del percorso
-                int newTotalDuration = totalDuration + duration;
-
-                // Crea un nuovo percorso con l'aggiunta della linea di trasporto corrente
-                TransportLine[] newPath = Arrays.copyOf(currentPath, currentPath.length + 1);
-                newPath[newPath.length - 1] = transportLine;
-
-                // Aggiungi il nuovo percorso alla coda di priorità
-                queue.offer(new NodeWithPaths(neighbor, newPath, newTotalDuration));
-            }
-        }
-
-        return paths;
-    }
-
-    // Trova una lista di percorsi diversi tra un nodo di partenza e uno di arrivo
-    public List<List<TransportLine>> findAllPaths(Zone sourceZone, Zone destinationZone) {
-        // Coda di priorità per gestire i nodi da esplorare
-        PriorityQueue<NodeWithPath> queue = new PriorityQueue<>(Comparator.comparingInt(n -> n.path.size()));
-
-        // Inizializzazione
-        queue.offer(new NodeWithPath(sourceZone, new ArrayList<>()));
-
-        // Lista dei percorsi trovati
-        List<List<TransportLine>> paths = new ArrayList<>();
-
-        // Ricerca dei cammini
-        while (!queue.isEmpty()) {
-            NodeWithPath node = queue.poll();
-            Zone currentZone = node.zone;
-            List<TransportLine> currentPath = node.path;
-
-            // Se raggiungiamo la destinazione, aggiungiamo il percorso alla lista dei percorsi
-            if (currentZone.equals(destinationZone)) {
-                paths.add(new ArrayList<>(currentPath));
-                continue; // Continua la ricerca per trovare altri percorsi
-            }
-
-            // Esplora i vicini del nodo corrente
-            for (TransportLine edge : zoneTable.get(currentZone)) {
-                Zone neighbor = edge.getDestination();
-
-                // Se il vicino non è già stato visitato
-                if (!currentPath.contains(edge.getTransportLine())) {
-                    List<TransportLine> newPath = new ArrayList<>(currentPath);
-                    newPath.add(edge.getTransportLine());
-                    queue.offer(new NodeWithPath(neighbor, newPath));
-                }
-            }
-        }
-
-        return paths;
-    }
-
-    // Classe per rappresentare un nodo con un percorso
-    private static class NodeWithPath {
-        Zone zone;
-        List<TransportLine> path;
-
-        public NodeWithPath(Zone zone, List<TransportLine> path) {
-            this.zone = zone;
-            this.path = path;
-        }
-    }
-}
+package unibo.citysimulation.model;
 
 import java.util.*;
 
@@ -120,87 +8,105 @@ import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
 
 public class PathFinder {
+    private static PathFinder instance;
+    private Map<Zone, Map<Zone, List<Path>>> allPaths;
 
-    public List<List<TransportLine>> getAllPossiblePaths(Zone sourceZone, Zone destinationZone) {
-        // PriorityQueue per gestire i nodi da esplorare, ordinati per durata del percorso
-        PriorityQueue<NodeWithPath> queue = new PriorityQueue<>(Comparator.comparingInt(NodeWithPath::getTotalDuration));
+    private PathFinder() {
+        allPaths = new HashMap<>();
+    }
 
-        // Inizializzazione
-        queue.offer(new NodeWithPath(sourceZone, new ArrayList<>(), 0));
+    public static PathFinder getInstance() {
+        if (instance == null) {
+            instance = new PathFinder();
+        }
+        return instance;
+    }
 
-        // Lista dei percorsi trovati
-        List<List<TransportLine>> paths = new ArrayList<>();
-
-        // Set per evitare cicli
-        Set<Zone> visited = new HashSet<>();
-
-        // Ricerca dei cammini
-        while (!queue.isEmpty()) {
-            NodeWithPath node = queue.poll();
-            Zone currentZone = node.zone;
-            List<TransportLine> currentPath = node.path;
-
-            // Se raggiungiamo la destinazione, aggiungiamo il percorso alla lista dei percorsi
-            if (currentZone.equals(destinationZone)) {
-                paths.add(new ArrayList<>(currentPath));
-                continue; // Continua la ricerca per trovare altri percorsi
+    public void calculateAllPaths(List<Zone> zones) {
+        for (int i = 0; i < zones.size(); i++) {
+            for (int j = i + 1; j < zones.size(); j++) {
+                Zone start = zones.get(i);
+                Zone end = zones.get(j);
+                if (!start.equals(end)) {
+                    List<Path> paths = findAllPaths(start, end);
+                    allPaths.computeIfAbsent(start, k -> new HashMap<>()).put(end, paths);
+                    allPaths.computeIfAbsent(end, k -> new HashMap<>()).put(start, paths);
+                    System.out.println(start + ", " + end);
+                }
             }
+        }
+    }
 
-            // Evita di riesplorare i nodi già visitati
-            if (!visited.add(currentZone)) {
-                continue;
-            }
+    private List<Path> findAllPaths(Zone start, Zone end) {
+        List<Path> allPaths = new ArrayList<>();
+        findAllPathsHelper(start, end, new HashSet<>(), new ArrayList<>(), 0, allPaths);
+        allPaths.sort(Comparator.comparingInt(Path::getTotalDuration));
+        return allPaths;
+    }
 
-            // Esplora i vicini del nodo corrente
-            for (TransportLine transportLine : getAdjacentTransportLines(currentZone)) {
-                Zone neighbor = getOtherZone(transportLine, currentZone);
-                List<TransportLine> newPath = new ArrayList<>(currentPath);
-                newPath.add(transportLine);
+    private void findAllPathsHelper(Zone current, Zone end, Set<Zone> visited, List<Zone> path, int duration,
+                                    List<Path> allPaths) {
+        visited.add(current);
+        path.add(current);
 
-                queue.offer(new NodeWithPath(neighbor, newPath, node.totalDuration + transportLine.getDuration()));
+        if (current.equals(end)) {
+            allPaths.add(new Path(new ArrayList<>(path), duration));
+        } else {
+            for (Map.Entry<Pair<Zone, Zone>, TransportLine> entry : ZoneTable.getInstance().getZonePairs().entrySet()) {
+                Pair<Zone, Zone> zonePair = entry.getKey();
+                if (zonePair.getFirst().equals(current) && !visited.contains(zonePair.getSecond())) {
+                    findAllPathsHelper(zonePair.getSecond(), end, visited, path,
+                            duration + entry.getValue().getDuration(), allPaths);
+                }
             }
         }
 
-        // Ordina i percorsi trovati in base alla durata totale
-        paths.sort(Comparator.comparingInt(this::calculateTotalDuration));
-
-        return paths;
+        path.remove(path.size() - 1);
+        visited.remove(current);
     }
 
-    // Classe per rappresentare un nodo con un percorso
-    private static class NodeWithPath {
-        Zone zone;
-        List<TransportLine> path;
-        int totalDuration;
+    public TransportLine[] findBestPath(Zone start, Zone end) {
+        List<Path> paths = allPaths.getOrDefault(start, Collections.emptyMap()).getOrDefault(end, Collections.emptyList());
+        for (Path path : paths) {
+            if (path.isValid()) {
+                return path.getLinesPath();
+            }
+        }
+        return new TransportLine[0]; // No valid path found
+    }
 
-        public NodeWithPath(Zone zone, List<TransportLine> path, int totalDuration) {
-            this.zone = zone;
-            this.path = path;
+    public static class Path {
+        private List<Zone> zones;
+        private int totalDuration;
+
+        public Path(List<Zone> zones, int totalDuration) {
+            this.zones = zones;
             this.totalDuration = totalDuration;
+        }
+
+        public List<Zone> getZones() {
+            return zones;
         }
 
         public int getTotalDuration() {
             return totalDuration;
         }
-    }
 
-    private List<TransportLine> getAdjacentTransportLines(Zone zone) {
-        List<TransportLine> transportLines = new ArrayList<>();
-        for (Pair<Zone, Zone> pair : zoneTable.getZonePairs().keySet()) {
-            if (pair.getFirst().equals(zone) || pair.getSecond().equals(zone)) {
-                transportLines.add(zoneTable.getTransportLine(pair.getFirst(), pair.getSecond()));
+        public boolean isValid() {
+            for (var line : getLinesPath()) {
+                if (line.getCongestion() >= 100.0) {
+                    return false;
+                }
             }
+            return true;
         }
-        return transportLines;
-    }
 
-    private Zone getOtherZone(TransportLine transportLine, Zone currentZone) {
-        Pair<Zone, Zone> link = transportLine.getLink();
-        return link.getFirst().equals(currentZone) ? link.getSecond() : link.getFirst();
+        public TransportLine[] getLinesPath() {
+            TransportLine[] lines = new TransportLine[zones.size() - 1];
+            for (int i = 0; i < zones.size() - 1; i++) {
+                lines[i] = ZoneTable.getTransportLine(zones.get(i), zones.get(i + 1));
+            }
+            return lines;
+        }
     }
-
-    private int calculateTotalDuration(List<TransportLine> path) {
-        return path.stream().mapToInt(TransportLine::getDuration).sum();
-    }
-}*/
-
+}
