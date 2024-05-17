@@ -97,7 +97,7 @@ public class CityModel {
         this.people = new ArrayList<>();
         people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
         for (int i =  0; i < people.size(); i++) {
-            employymentOffice.addDisoccupiedPerson(people.get(i));
+            employymentOffice.addDisoccupiedPerson(people.get(i)); //the problem is the method accepts a person
         }
 
         // Add people as observers to clock model
