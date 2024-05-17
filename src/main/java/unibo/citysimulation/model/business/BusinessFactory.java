@@ -88,7 +88,7 @@ public final class BusinessFactory{
             @Override
             public void hire(Employee employee, Business business) {
                 // Implement hire method for big business
-               if(employee.getPerson().getAge() > MIN_AGE) {
+               if(employee.getPerson().getPersonData().age() > MIN_AGE) {
                    business.getEmployees().add(employee);
                }
                 
@@ -120,7 +120,7 @@ public final class BusinessFactory{
             @Override
             public void hire(Employee employee, Business business) {
                 // Implement hire method for medium business
-                if(employee.getPerson().getAge() > MIN_AGE) {
+                if(employee.getPerson().getPersonData().age() > MIN_AGE) {
                     business.getEmployees().add(employee);
                 }
             }
@@ -154,7 +154,7 @@ public final class BusinessFactory{
             @Override
             public void hire(Employee employee, Business business) {
                 // Implement hire method for small business
-                int employeeAge = employee.getPerson().getAge();
+                int employeeAge = employee.getPerson().getPersonData().age();
                 if (employeeAge >= MIN_AGE && employeeAge <= MAX_AGE) {
                     business.getEmployees().add(employee);
                 }
