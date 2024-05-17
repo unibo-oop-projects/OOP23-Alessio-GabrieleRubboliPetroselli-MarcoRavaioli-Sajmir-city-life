@@ -26,14 +26,14 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     }
 
     private void checkTimeToGoToWork(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(), updatedTime(personData.business().getOpeningTime()) - tripDuration,
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), updatedTime(personData.business().getOpLocalTime()) - tripDuration,
                 tripDuration)) {
             movePerson(PersonState.WORKING);
         }
     }
 
     private void checkTimeToGoHome(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(),updatedTime(personData.business().getClosingTime()),
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(),updatedTime(personData.business().getClLocalTime()),
                 tripDuration)) {
             movePerson(PersonState.AT_HOME);
         }
