@@ -1,6 +1,6 @@
 package unibo.citysimulation.model.business;
 
-import unibo.citysimulation.model.person.Person;
+import unibo.citysimulation.model.person.DynamicPerson;
 
 
 
@@ -11,15 +11,15 @@ import unibo.citysimulation.model.person.Person;
 public class Employee implements EmployeeStatus{
     
     private int countDelay;
-    private Person person;
+    private DynamicPerson person;
 
-    public Employee(Person person){
+    public Employee(DynamicPerson person){
         this.person = person;
         this.countDelay = 0;
 
     }
 
-    public Person getPerson() {
+    public DynamicPerson getPerson() {
         return person;
     }
 

@@ -2,7 +2,7 @@ package unibo.citysimulation.model.business;
 
 import java.util.List;
 
-import unibo.citysimulation.model.person.Person;
+import unibo.citysimulation.model.person.DynamicPerson;
 
 public class EmployymentOfficeManager {
     private List<Business> businesses;
@@ -25,7 +25,7 @@ public class EmployymentOfficeManager {
     public void handleEmployeeHiring() {
         for (Business business : businesses) {
             if (business.getEmployees().size() < business.getMaxEmployees()) {
-                for (Person person : employymentOffice.getDisoccupiedPeople()) {
+                for (DynamicPerson person : employymentOffice.getDisoccupiedPeople()) {
                     business.hire(new Employee(person), business);
                     employymentOffice.removeDisoccupiedPerson(person);
                 }

@@ -2,25 +2,25 @@ package unibo.citysimulation.model.business;
 
 import java.util.ArrayList;
 import java.util.List;
-import unibo.citysimulation.model.person.Person;
+import unibo.citysimulation.model.person.DynamicPerson;
 
 public class EmployymentOffice {
 
-    List<Person> disoccupiedPeople;
+    List<DynamicPerson> disoccupiedPeople;
 
     public EmployymentOffice() {
         this.disoccupiedPeople = new ArrayList<>();
     }
 
-    public List<Person> getDisoccupiedPeople() {
+    public List<DynamicPerson> getDisoccupiedPeople() {
         return disoccupiedPeople;
     }
 
-    public void addDisoccupiedPerson(Person person) {
+    public void addDisoccupiedPerson(DynamicPerson person) {
         this.disoccupiedPeople.add(person);
     }
 
-    public void removeDisoccupiedPerson(Person person) {
+    public void removeDisoccupiedPerson(DynamicPerson person) {
         this.disoccupiedPeople.remove(person);
     }
     
