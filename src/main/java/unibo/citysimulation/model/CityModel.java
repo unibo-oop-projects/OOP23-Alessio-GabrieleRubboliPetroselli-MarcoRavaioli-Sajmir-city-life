@@ -6,7 +6,7 @@ import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
 import unibo.citysimulation.model.person.DynamicPerson;
 
-import unibo.citysimulation.model.person.Person;
+
 import unibo.citysimulation.model.business.BusinessType;
 import unibo.citysimulation.model.business.EmployymentOffice;
 import unibo.citysimulation.model.person.PersonFactory;
@@ -86,7 +86,7 @@ public class CityModel {
         ZoneTableCreation.createAndAddPairs(zones, transports);
 
 
-        int numberOfBusinesses = 30;
+        int numberOfBusinesses = 30; //
         for (int i = 0; i < numberOfBusinesses; i++) {
             BusinessFactory businessFactory = new BusinessFactory();
             Business business = businessFactory.createBusiness(BusinessFactory.getRandomBusinessType()).get();
@@ -96,8 +96,9 @@ public class CityModel {
         // Create people
         this.people = new ArrayList<>();
         people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
-        for (int i =  0; i < people.size(); i++) {
-            employymentOffice.addDisoccupiedPerson(people.get(i)); //the problem is the method accepts a person
+
+        for (int i =  0; i < people.size(); i++) { //
+            employymentOffice.addDisoccupiedPerson(people.get(i).get(i)); 
         }
 
         // Add people as observers to clock model
