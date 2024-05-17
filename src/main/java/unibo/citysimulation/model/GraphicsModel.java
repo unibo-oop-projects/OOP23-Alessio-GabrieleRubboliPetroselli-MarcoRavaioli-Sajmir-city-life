@@ -117,6 +117,10 @@ public class GraphicsModel {
                 .collect(Collectors.toList());
     }
 
+    public List<Business> getBusinessesOccupation(List<Business> list) { //
+        return list; 
+    }
+
     public List<XYSeriesCollection> getDatasets(){
         return datasets;
     }
