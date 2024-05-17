@@ -6,7 +6,7 @@ import unibo.citysimulation.utilities.Pair;
 /**
  * A class representing a zone in the city.
  */
-public class ZoneImpl implements Zone {
+public class ZoneImpl  {
     private String name;
     private float personPercents;
     private float businessPercents;
