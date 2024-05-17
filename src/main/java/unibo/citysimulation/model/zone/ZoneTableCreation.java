@@ -7,7 +7,6 @@ import java.util.List;
 public class ZoneTableCreation {
     public static void createAndAddPairs(List<Zone> zones, List<TransportLine> transports) {
         ZoneTable zoneTable = ZoneTable.getInstance();
-        
         zoneTable.addPair(zones.get(0), zones.get(1), new TransportLine[]{transports.get(0)});
         zoneTable.addPair(zones.get(0), zones.get(2), new TransportLine[]{transports.get(1)});
         zoneTable.addPair(zones.get(0), zones.get(3), new TransportLine[]{transports.get(2)});
