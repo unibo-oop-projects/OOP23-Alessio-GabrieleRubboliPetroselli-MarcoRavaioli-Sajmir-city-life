@@ -17,6 +17,7 @@ public abstract class Business implements BusinessEmployee{
     protected int maxEmployees;
     private Pair<Integer, Integer> position;
     
+    
 
     public Business() {
         this.employees = new ArrayList<>();
@@ -49,8 +50,9 @@ public abstract class Business implements BusinessEmployee{
         return revenue;
     }
 
-    
-
+    public Zone getZone() { //
+        return Zone.getZoneByPosition(position);
+    }
     
 }
 
