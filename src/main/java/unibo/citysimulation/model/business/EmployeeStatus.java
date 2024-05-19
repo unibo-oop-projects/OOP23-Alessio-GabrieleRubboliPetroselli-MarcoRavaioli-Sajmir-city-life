@@ -14,9 +14,9 @@ public interface EmployeeStatus {
      */
     
 
-    int getcountDelay(Employee employee);
+    int getCountDelay(Employee employee);
 
-    void setcountDelay(int countDelay);
+    void setCountDelay(int countDelay);
 
     
 }

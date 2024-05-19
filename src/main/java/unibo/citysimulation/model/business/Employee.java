@@ -24,12 +24,12 @@ public class Employee implements EmployeeStatus{
     }
 
     @Override
-    public int getcountDelay(Employee employee) {
+    public int getCountDelay(Employee employee) {
         return employee.countDelay;
     }
 
     @Override
-    public void setcountDelay(int countDelay) {
+    public void setCountDelay(int countDelay) {
         this.countDelay = countDelay;
     }
 
