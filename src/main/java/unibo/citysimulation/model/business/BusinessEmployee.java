@@ -9,8 +9,8 @@ package unibo.citysimulation.model.business;
  */
 public interface BusinessEmployee {
     
-    void hire(Employee employee, Business business);
-    void fire(Employee employee, Business business);
+    void hire(Employee employee);
+    void fire(Employee employee);
 
     
 }
