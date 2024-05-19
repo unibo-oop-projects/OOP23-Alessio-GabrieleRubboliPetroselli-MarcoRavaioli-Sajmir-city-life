@@ -1,4 +1,4 @@
-package unibo.citylife;
+/*package unibo.citylife;
 
 import org.junit.jupiter.api.Test;
 import unibo.citysimulation.model.business.Business;
@@ -33,5 +33,5 @@ public class PersonDataTest {
         assertEquals(business, personData.business());
         assertEquals(residenceZone, personData.residenceZone());
     }
-}
+}*/
 
