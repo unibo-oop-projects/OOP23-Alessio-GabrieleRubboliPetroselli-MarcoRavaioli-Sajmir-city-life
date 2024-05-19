@@ -85,8 +85,14 @@ public class StaticPersonImpl implements StaticPerson {
             this.tripDuration = 0;
         } else {
             this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(), personData.business().getZone());
+            if (this.transportLine == null) {
+                System.err.println("No transport line found between " + personData.residenceZone() + " and " + personData.business().getZone());
+                throw new IllegalStateException("No transport line found between the given zones.");
+            }
             tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
+            System.out.println(transportLine[0].getName());
         }
         System.out.println("in getTrip: " + tripDuration);
     }
+    
 }
