@@ -16,13 +16,10 @@ public abstract class Business implements BusinessEmployee{
     protected double revenue;
     protected int maxEmployees;
     private Pair<Integer, Integer> position;
-    
 
     public Business() {
         this.employees = new ArrayList<>();
-        position = Zone.getRandomZone().getRandomPosition();
-        
-  
+        this.position = Zone.getRandomZone().getRandomPosition();
     }
 
     public Pair<Integer, Integer> getPosition() {
