@@ -31,14 +31,14 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
                 if (line.getCongestion() > 98) {
                     congestioned = true;
                     late = true;
-                    System.out.println("for " + personData.name() + " line congestioned: " + line.getName() + " congestion: " + line.getCongestion());
+                    //System.out.println("for " + personData.name() + " line congestioned: " + line.getName() + " congestion: " + line.getCongestion());
                 }
             }
-            System.out.println("congestioned: " + congestioned);
+            //System.out.println("congestioned: " + congestioned);
             if (!congestioned) {
                 this.lastArrivingTime = currentTime + lineDuration;
 
-                System.out.println("now " + personData.name() + "is on transport line " + (late ? "before was late" : "on time"));
+                //System.out.println("now " + personData.name() + "is on transport line " + (late ? "before was late" : "on time"));
 
                 late = false;
 

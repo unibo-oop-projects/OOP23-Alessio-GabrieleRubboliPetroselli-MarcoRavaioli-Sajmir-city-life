@@ -28,4 +28,6 @@ public final class ConstantAndResourceLoader extends ClassLoader{
     public static final int MIN_PEOPLE = 100;
     public static final int MAX_PEOPLE = 1000;
 
+    public static final int MAX_COLUMNS = 150;
+
 }
