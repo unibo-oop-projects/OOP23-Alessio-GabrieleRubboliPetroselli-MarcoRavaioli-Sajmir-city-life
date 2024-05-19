@@ -86,18 +86,14 @@ public class CityModel {
         ZoneTableCreation.createAndAddPairs(zones, transports);
 
 
-        int numberOfBusinesses = 30;
-        for (int i = 0; i < numberOfBusinesses; i++) {
-            BusinessFactory businessFactory = new BusinessFactory();
-            Business business = businessFactory.createBusiness(BusinessFactory.getRandomBusinessType()).get();
-            businesses.add(business);
-        }
+        // Create businesses
+        createBusinesses();
 
         // Create people
         this.people = new ArrayList<>();
         people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
-        for (int i =  0; i < people.size(); i++) {
-            employymentOffice.addDisoccupiedPerson(people.get(i)); //the problem is the method accepts a person
+        for (Person person : people) {
+            employymentOffice.addDisoccupiedPerson(person);
         }
 
         // Add people as observers to clock model
@@ -114,6 +110,15 @@ public class CityModel {
         // Print details of each person
         
         ////////////////////////////////////////////////////////////////
+    }
+
+    private void createBusinesses() {
+        int businessNum = 1000;
+        BusinessFactory businessFactory = new BusinessFactory();
+        for (int i = 0; i < businessNum; i++) {
+            Business business = businessFactory.createBusiness(BusinessFactory.getRandomBusinessType()).orElseThrow();
+            businesses.add(business);
+        }
     }
 
     
