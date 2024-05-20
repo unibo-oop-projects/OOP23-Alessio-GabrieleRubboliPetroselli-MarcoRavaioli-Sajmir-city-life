@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.business;
 
+import unibo.citysimulation.model.zone.Zone;
+
 /**
  * Represents a big business in the city simulation.
  * Extends the Business class.
@@ -11,7 +13,8 @@ public class BigBusiness extends Business{
      * Initializes the opening and closing times, revenue, maximum number of employees,
      * maximum and minimum age requirements, and maximum tardiness for the big business.
      */
-    public BigBusiness() {
+    public BigBusiness(Zone zone) {
+        super(zone);
         this.opLocalTime = BusinessConfig.BIG_OPENING_TIME;
         this.clLocalTime = BusinessConfig.BIG_CLOSING_TIME;
         this.revenue = BusinessConfig.BIG_REVENUE;

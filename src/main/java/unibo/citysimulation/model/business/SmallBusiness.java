@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.business;
 
+import unibo.citysimulation.model.zone.Zone;
+
 /**
  * Represents a small business in the city simulation.
  * Inherits from the Business class.
@@ -12,7 +14,8 @@ public class SmallBusiness extends Business{
      * maximum age, minimum age, and maximum tardiness based on the configuration values
      * defined in the BusinessConfig class.
      */
-    public SmallBusiness() {
+    public SmallBusiness(Zone zone) {
+        super(zone);
         this.opLocalTime = BusinessConfig.SMALL_OPENING_TIME;
         this.clLocalTime = BusinessConfig.SMALL_CLOSING_TIME;
         this.revenue = BusinessConfig.SMALL_REVENUE;
