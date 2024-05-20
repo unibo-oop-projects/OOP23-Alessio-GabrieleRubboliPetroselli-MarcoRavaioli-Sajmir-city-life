@@ -134,14 +134,11 @@ public class MapPanel extends StyledPanel {
     }
 
     public void setBusinessPoints(Map<Pair<Integer, Integer>, Pair<LocalTime, Double>> businessInfos) {
-    Map<String, Pair<Integer, Integer>> businessMap = new HashMap<>();
-    for (var entry : businessInfos.entrySet()) {
-        String businessName = "Business" + entry.hashCode(); // Genera un nome univoco per ogni impresa
-        Pair<Integer, Integer> position = entry.getKey();
-        businessMap.put(businessName, position);
-    }
-    this.businessMap = businessMap;
-    repaint(); // Richiama repaint per aggiornare la visualizzazione
+        businessMap = new HashMap<>();
+        for (var entry : businessInfos.entrySet()) {
+            Pair<Integer, Integer> point = entry.getKey();
+            businessMap.put(entry.getKey().toString(), point);
+        }
 }
 
     /**
