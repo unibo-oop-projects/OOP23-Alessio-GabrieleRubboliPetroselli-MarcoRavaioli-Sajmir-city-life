@@ -37,7 +37,7 @@ public abstract class Business implements BusinessEmployee{
      */
     @Override
     public final void hire(final Employee employee) {
-        if(employee.getPerson().getAge() >= this.minAge && employee.getPerson().getAge() <= this.maxAge) {
+        if(employee.getPerson().getPersonData().age() >= this.minAge && employee.getPerson().getPersonData().age() <= this.maxAge) {
             if(employees.size() < getMaxEmployees()) {
                 employees.add(employee);
             }
