@@ -39,7 +39,7 @@ public class ZoneTable {
     public TransportLine[] getTransportLine(Zone zone1, Zone zone2) {
         System.out.println("Getting pair: " + zone1.name() + " - " + zone2.name());
 
-        System.out.println("\n"+zonePairs);
+        //System.out.println("\n"+zonePairs);
         
         System.out.println(zonePairs.get(new Pair<Zone,Zone>(zone1, zone2))[0].getName());
         return zonePairs.get(new Pair<Zone,Zone>(zone1, zone2));

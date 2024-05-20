@@ -2,6 +2,7 @@ package unibo.citysimulation.model.zone;
 
 import java.util.Random;
 
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.utilities.Pair;
 
 public record Zone(String name, float personPercents, float businessPercents, Pair<Integer, Integer> wellfareMinMax,
@@ -14,14 +15,7 @@ public record Zone(String name, float personPercents, float businessPercents, Pa
                 return new Pair<>(x, y);
             }
 
-            public static Zone getRandomZone(){
-                return ZoneFactory.createZonesFromFile().get(random.nextInt(ZoneFactory.createZonesFromFile().size()));
-            }
+           
 
-            public static Zone getZoneByPosition(Pair<Integer, Integer> position){  //
-                return ZoneFactory.createZonesFromFile().stream()
-                .filter(zone -> zone.boundary().isInside(position.getFirst(), position.getSecond()))
-                .findFirst()
-                .orElse(null);
-            }
+
 }

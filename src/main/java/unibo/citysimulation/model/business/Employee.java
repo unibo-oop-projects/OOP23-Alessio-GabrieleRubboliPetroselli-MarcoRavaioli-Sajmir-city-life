@@ -1,7 +1,4 @@
 package unibo.citysimulation.model.business;
-
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Dynamic;
-
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.utilities.Pair;
 
@@ -69,6 +66,7 @@ public class Employee implements EmployeeStatus{
      * @param businessPosition The position of the business.
      * @return true if the employee is late, false otherwise.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Override
     public final boolean isLate(Pair<Integer, Integer> businessPosition) {
         return !this.person.getPosition().equals(businessPosition);
