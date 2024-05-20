@@ -18,7 +18,7 @@ public class MapPanel extends StyledPanel {
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
     private List<Color> congestionsColorList = Collections.emptyList();
     private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
-    private Map<String, Pair<Integer, Integer>> businessMap = Collections.emptyMap();
+    private Map<Integer, Pair<Integer, Integer>> businessMap = Collections.emptyMap();
     private List<String> linesName = Collections.emptyList();
 
     /**
@@ -122,17 +122,16 @@ public class MapPanel extends StyledPanel {
         this.congestionsColorList = colors;
     }
 
-    public void setEntities(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, Map<String, Pair<Integer, Integer>> businessMap){
+    public void setEntities(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, Map<Integer, Pair<Integer, Integer>> businessMap){
         this.peopleMap = peopleMap;
+        this.businessMap = businessMap;
     }
 
-    public void setBusinessPoints(Map<Pair<Integer, Integer>, Pair<LocalTime, Double>> businessInfos) {
-        businessMap = new HashMap<>();
-        for (var entry : businessInfos.entrySet()) {
-            Pair<Integer, Integer> point = entry.getKey();
-            businessMap.put(entry.getKey().toString(), point);
-        }
-}
+    public void setBusinessPoints(Map<Integer, Pair<Integer, Integer>> businessMap){
+        this.businessMap = businessMap;
+    }
+        
+
 
     /**
      * Sets the image to be displayed on the map panel.

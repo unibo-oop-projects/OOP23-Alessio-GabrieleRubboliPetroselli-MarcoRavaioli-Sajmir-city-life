@@ -30,7 +30,7 @@ public class PersonFactory {
         for (int i = 0; i < numberOfPeople; i++) {
             // Filtra i business per escludere quelli nella stessa zona della residenza
             List<Business> eligibleBusinesses = businesses.stream()
-                    .filter(b -> !b.getZone().equals(residenceZone))
+                    .filter(b -> !Zone.getZoneByPosition(b.getPosition()).equals(residenceZone)) ///
                     .collect(Collectors.toList());
 
             if (eligibleBusinesses.isEmpty()) {
