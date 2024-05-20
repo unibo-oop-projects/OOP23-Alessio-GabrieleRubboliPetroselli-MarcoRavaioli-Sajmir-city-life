@@ -4,14 +4,17 @@ import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
+import unibo.citysimulation.model.clock.CloclObserverBusiness;
 import unibo.citysimulation.model.person.DynamicPerson;
 
 
 import unibo.citysimulation.model.business.BusinessType;
 import unibo.citysimulation.model.business.EmployymentOffice;
+import unibo.citysimulation.model.business.EmployymentOfficeManager;
 import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTable;
@@ -24,6 +27,10 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import java.util.Optional;
+import java.util.Random;
+
 
 /**
  * Represents the model of the city simulation, containing zones, transports, businesses, and people.
@@ -45,6 +52,9 @@ public class CityModel {
     private int frameWidth;
     private int frameHeight;
 
+    private static final Random random = new Random();
+
+
 
 
     /**
@@ -65,6 +75,27 @@ public class CityModel {
     
     }
 
+    public Zone getRandomZone() {
+        if (zones.isEmpty()) {
+            throw new IllegalStateException("No zones available.");
+        }
+        return zones.get(random.nextInt(zones.size()));
+    }
+
+    public Optional<Zone> getZoneByPosition(Pair<Integer, Integer> position) {
+        return zones.stream()
+                .filter(zone -> isPositionInZone(position, zone))
+                .findFirst();
+    }
+
+    private boolean isPositionInZone(Pair<Integer, Integer> position, Zone zone) {
+        int x = position.getFirst();
+        int y = position.getSecond();
+        Boundary boundary = zone.boundary();
+        return x >= boundary.getX() && x <= (boundary.getX() + boundary.getWidth())
+                && y >= boundary.getY() && y <= (boundary.getY() + boundary.getHeight());
+    }
+
     //istanzo businessfactory chiamo la create e le meto random
 
     /**
@@ -75,7 +106,7 @@ public class CityModel {
 
         // Create businesses
         
-
+    
 
         // Create zones
         //this.zones = ZoneFactory.createZonesFromFile();
@@ -91,36 +122,49 @@ public class CityModel {
         // Create businesses
         createBusinesses();
 
+
         // Create people
         this.people = new ArrayList<>();
         people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
-        for (int i =  0; i < people.size(); i++) { //
-            employymentOffice.addDisoccupiedPerson(people.get(i).get(i)); 
+        for (List<DynamicPerson> group : people) {
+            for (DynamicPerson person : group) {
+                employymentOffice.addDisoccupiedPerson(person);
+            }
         }
 
         // Add people as observers to clock model
         clockModel.addObserver(new ClockObserverPerson(people));
 
-        System.out.println("People groups created. " + people.size());
+        clockModel.addObserver(new CloclObserverBusiness(businesses, employymentOffice));
+
+        
+
+        //System.out.println("People groups created. " + people.size());
         for (var group : people) {
-            System.out.println("Group size: " + group.size());
+            //System.out.println("Group size: " + group.size());
             
         }
 
+        EmployymentOfficeManager employmentManager = new EmployymentOfficeManager(businesses, employymentOffice);
+        employmentManager.handleEmployeeHiring();
+
+
         
-        ////////////////////////////////////////////////////////////////
-        // Print details of each person
         
-        ////////////////////////////////////////////////////////////////
     }
 
     private final void createBusinesses() {
-        int businessNum = 1000;
+        int businessNum = 100;
         for (int i = 0; i < businessNum; i++) {
-            businesses.add(BusinessFactory.getRandomBusiness().orElseThrow());
+            BusinessFactory.getRandomBusiness(zones).ifPresent(business -> {
+                businesses.add(business);
+            });
         }
     }
+    
+
+    
 
     
 
@@ -202,7 +246,7 @@ public class CityModel {
 
     public boolean isBusinessesPresent() {
         boolean res = this.businesses != null;
-        System.out.println("Businesses present: " + res);
+        //System.out.println("Businesses present: " + res);
         return res;
     }
 
