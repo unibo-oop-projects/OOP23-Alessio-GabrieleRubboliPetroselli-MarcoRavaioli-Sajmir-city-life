@@ -1,36 +1,78 @@
 package unibo.citysimulation.model.business;
 
 import unibo.citysimulation.model.person.Person;
-
-
+import unibo.citysimulation.utilities.Pair;
 
 /**
- * EmployeeImpl is a class that implements the Employee interface.
- * It represents an employee with a name and an ID.
+ * The Employee class represents an employee with a name and an ID.
+ * It implements the EmployeeStatus interface.
  */
 public class Employee implements EmployeeStatus{
     
     private int countDelay;
-    private Person person;
+    private final Person person;
+    private final Business business;
 
-    public Employee(Person person){
+    /**
+     * Constructs an Employee object with the specified person and business.
+     * @param person The person associated with the employee.
+     * @param business The business associated with the employee.
+     */
+    public Employee(final Person person, final Business business){
         this.person = person;
         this.countDelay = 0;
-
+        this.business = business;
     }
 
-    public Person getPerson() {
+    /**
+     * Returns the person associated with the employee.
+     * @return The person associated with the employee.
+     */
+    public final Person getPerson() {
         return person;
     }
 
-    @Override
-    public int getCountDelay(Employee employee) {
-        return employee.countDelay;
+    /**
+     * Returns the business associated with the employee.
+     * @return The business associated with the employee.
+     */
+    public final Business getBusiness() {
+        return business;
     }
 
+    /**
+     * Returns the count of delays for the employee.
+     * @return The count of delays for the employee.
+     */
     @Override
-    public void setCountDelay(int countDelay) {
+    public final int getCountDelay() {
+        return countDelay;
+    }
+
+    /**
+     * Sets the count of delays for the employee.
+     * @param countDelay The count of delays for the employee.
+     */
+    @Override
+    public final void setCountDelay(int countDelay) {
         this.countDelay = countDelay;
     }
 
+    /**
+     * Increments the count of delays for the employee by 1.
+     */
+    @Override
+    public final void incrementDelayCount() {
+        countDelay++;
+    }
+
+    /**
+     * Checks if the employee is late based on the business position.
+     * @param businessPosition The position of the business.
+     * @return true if the employee is late, false otherwise.
+     */
+    @Override
+    public final boolean isLate(Pair<Integer, Integer> businessPosition) {
+        return !this.person.getPosition().equals(businessPosition);
+    }
 }
