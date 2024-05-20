@@ -55,7 +55,7 @@ public class GraphicsModel {
         }
     }
 
-    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, List<Business> businesses,
+    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, List<Integer> businessOccupations,
             double counter) {
         synchronized (datasets) {
             if (columnCount > ConstantAndResourceLoader.MAX_COLUMNS) {
@@ -80,12 +80,13 @@ public class GraphicsModel {
             updateSeries(datasets.get(0), states, counter);
             updateSeries(datasets.get(1), congestions, counter);
 
-            int totalEmployees = businesses.stream().mapToInt(b -> b.getEmployees().size()).sum();
-            int totMaxEmployees = businesses.stream().mapToInt(b -> b.getMaxEmployees()).sum();
+            
 
-            int employeesPercenties = (totalEmployees / totMaxEmployees) * 100;
+            updateSeries(datasets.get(2), businessOccupations, counter);
+            
 
-            updateSeries(datasets.get(2), List.of(employeesPercenties), counter);
+            
+            
         }
     }
 
@@ -108,8 +109,10 @@ public class GraphicsModel {
                 .collect(Collectors.toList());
     }
 
-    public List<Business> getBusinessesOccupation(List<Business> list) { //
-        return list; 
+    public List<Integer> getBusinessesOccupation(List<Business> list) { //
+        return list.stream()
+                .map(business -> (int) ((double) business.getEmployees().size() / business.getMaxEmployees() * 100))
+                .collect(Collectors.toList());
     }
 
     public List<XYSeriesCollection> getDatasets(){
