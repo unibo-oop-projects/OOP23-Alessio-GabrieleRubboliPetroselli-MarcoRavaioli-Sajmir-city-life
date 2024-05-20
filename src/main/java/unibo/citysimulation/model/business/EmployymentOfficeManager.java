@@ -1,6 +1,10 @@
 package unibo.citysimulation.model.business;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import unibo.citysimulation.model.person.DynamicPerson;
 
 /**
  * The EmploymentOfficeManager class manages the hiring and firing of employees for businesses.
@@ -26,13 +30,18 @@ public class EmployymentOfficeManager {
      * and fires the employee from their business.
      */
     public final void handleEmployeeFiring() {
+
+        List<Employee> employeesToFire = new ArrayList<>();
+
         businesses.stream()
             .flatMap(business -> business.getEmployees().stream())
             .filter(this::shouldFire)
-            .forEach(employee -> {
-                employymentOffice.addDisoccupiedPerson(employee.getPerson());
-                employee.getBusiness().fire(employee);
-            });
+            .forEach(employeesToFire::add);
+    
+        employeesToFire.forEach(employee -> {
+            employymentOffice.addDisoccupiedPerson(employee.getPerson());
+            employee.getBusiness().fire(employee);
+        });
     }
 
     /**
@@ -44,12 +53,14 @@ public class EmployymentOfficeManager {
         businesses.stream()
             .filter(this::canHire)
             .forEach(business -> {
-                employymentOffice.getDisoccupiedPeople().stream()
+                List<DynamicPerson> peopleToHire = employymentOffice.getDisoccupiedPeople().stream()
                     .limit(business.getMaxEmployees() - business.getEmployees().size())
-                    .forEach(person -> {
-                        business.hire(new Employee(person, business));
-                        employymentOffice.removeDisoccupiedPerson(person);
-                    });
+                    .collect(Collectors.toList());
+                
+                for (DynamicPerson person : peopleToHire) {
+                    business.hire(new Employee(person, business));
+                    employymentOffice.removeDisoccupiedPerson(person);
+                }
             });
     }
 
@@ -70,6 +81,6 @@ public class EmployymentOfficeManager {
      * @return true if the employee should be fired, false otherwise.
      */
     private final boolean shouldFire(final Employee employee) {
-        return employee.getCountDelay() > employee.getBusiness().getMaxTardiness();
+        return employee != null && employee.getCountDelay() > employee.getBusiness().getMaxTardiness();
     }
 }
