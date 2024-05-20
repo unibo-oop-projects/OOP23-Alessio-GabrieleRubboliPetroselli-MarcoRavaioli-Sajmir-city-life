@@ -79,7 +79,13 @@ public class GraphicsModel {
 
             updateSeries(datasets.get(0), states, counter);
             updateSeries(datasets.get(1), congestions, counter);
-            datasets.get(2).getSeries(0).add(counter, business);
+
+            int totalEmployees = businesses.stream().mapToInt(b -> b.getEmployees().size()).sum();
+            int totMaxEmployees = businesses.stream().mapToInt(b -> b.getMaxEmployees()).sum();
+
+            int employeesPercenties = (totalEmployees / totMaxEmployees) * 100;
+
+            updateSeries(datasets.get(2), List.of(employeesPercenties), counter);
         }
     }
 
