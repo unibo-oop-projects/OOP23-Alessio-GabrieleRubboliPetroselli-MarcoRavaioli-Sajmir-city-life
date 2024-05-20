@@ -112,12 +112,10 @@ public class CityModel {
         ////////////////////////////////////////////////////////////////
     }
 
-    private void createBusinesses() {
+    private final void createBusinesses() {
         int businessNum = 1000;
-        BusinessFactory businessFactory = new BusinessFactory();
         for (int i = 0; i < businessNum; i++) {
-            Business business = businessFactory.createBusiness(BusinessFactory.getRandomBusinessType()).orElseThrow();
-            businesses.add(business);
+            businesses.add(BusinessFactory.getRandomBusiness().orElseThrow());
         }
     }
 
