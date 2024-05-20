@@ -1,7 +1,10 @@
 package unibo.citysimulation.model.business;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
+import unibo.citysimulation.model.zone.Zone;
 
 /**
  * The BusinessFactory class is responsible for creating instances of Business objects.
@@ -14,14 +17,14 @@ public final class BusinessFactory {
      * @param type The type of business to create.
      * @return An Optional containing the created Business object, or an empty Optional if the type is invalid.
      */
-    public static Optional<Business> createBusiness(final BusinessType type) {
+    public static Optional<Business> createBusiness(final BusinessType type, final Zone zone) {
         switch (type) {
             case BIG:
-                return Optional.of(new BigBusiness());
+                return Optional.of(new BigBusiness(zone));
             case MEDIUM:
-                return Optional.of(new MediumBusiness());
+                return Optional.of(new MediumBusiness(zone));
             case SMALL:
-                return Optional.of(new SmallBusiness());     
+                return Optional.of(new SmallBusiness(zone));     
             default:
                 break;
         }
@@ -33,10 +36,11 @@ public final class BusinessFactory {
      *
      * @return An Optional containing the created Business object.
      */
-    public static Optional<Business> getRandomBusiness() {
+    public static Optional<Business> getRandomBusiness(final List<Zone> zones) {
         final Random random = new Random();
-        final BusinessType type =  BusinessType.values()[random.nextInt(BusinessType.values().length)];  
-        return createBusiness(type);
+        final BusinessType type = BusinessType.values()[random.nextInt(BusinessType.values().length)];
+        final Zone zone = zones.get(random.nextInt(zones.size()));
+        return createBusiness(type, zone);
     }
 }
     
