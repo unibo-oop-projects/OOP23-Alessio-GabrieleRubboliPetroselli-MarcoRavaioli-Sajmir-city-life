@@ -28,6 +28,9 @@ public class CloclObserverBusiness implements ClockObserver{
     public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
         this.businesses = businesses;
         this.employmentManager = new EmployymentOfficeManager(businesses, employymentOffice);
+
+        // Assumi dipendenti iniziali
+        this.employmentManager.handleEmployeeHiring();
     }
     
     /**
