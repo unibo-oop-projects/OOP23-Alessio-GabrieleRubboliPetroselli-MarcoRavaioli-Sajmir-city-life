@@ -80,22 +80,22 @@ public class StaticPersonImpl implements StaticPerson {
 
     private void getTrip() {
 
-        System.out.println(Zone.getZoneByPosition(personData.business().getPosition()).name());
+        //System.out.println(Zone.getZoneByPosition(personData.business().getPosition()).name());
 
-        if (personData.residenceZone() ==  Zone.getZoneByPosition(personData.business().getPosition())) {  
+        if (personData.residenceZone() ==  personData.business().getZone()) {  
             
             this.tripDuration = 0;
 
         } else {
-            System.out.println(personData.residenceZone().name() + "\n" + Zone.getZoneByPosition(personData.business().getPosition()).name());
+            //System.out.println(personData.residenceZone().name() + "\n" + Zone.getZoneByPosition(personData.business().getPosition()).name());
             
-            this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(), Zone.getZoneByPosition(personData.business().getPosition()));  ///
+            this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(), personData.business().getZone());  ///
             if (this.transportLine == null) {
-                System.err.println("No transport line found between " + personData.residenceZone() + " and " + Zone.getZoneByPosition(personData.business().getPosition()));  ///
+                System.err.println("No transport line found between " + personData.residenceZone() + " and " + personData.business().getZone());  ///
                 throw new IllegalStateException("No transport line found between the given zones.");
             }
             tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
-            System.out.println(transportLine[0].getName());
+            //System.out.println(transportLine[0].getName());
         }
     }
     
