@@ -218,4 +218,6 @@ public class CityModel {
     public int getFrameHeight(){
         return this.frameHeight;
     }
+
+    
 }
