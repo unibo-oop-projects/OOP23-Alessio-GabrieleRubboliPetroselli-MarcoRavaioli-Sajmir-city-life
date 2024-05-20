@@ -124,10 +124,15 @@ public class MapPanel extends StyledPanel {
 
     public void setEntities(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, Map<String, Pair<Integer, Integer>> businessMap){
         this.peopleMap = peopleMap;
-        this.businessMap = businessMap;
-
-        repaint();
     }
+
+    public void setBusinessPoints(Map<Pair<Integer, Integer>, Pair<LocalTime, Double>> businessInfos) {
+        businessMap = new HashMap<>();
+        for (var entry : businessInfos.entrySet()) {
+            Pair<Integer, Integer> point = entry.getKey();
+            businessMap.put(entry.getKey().toString(), point);
+        }
+}
 
     /**
      * Sets the image to be displayed on the map panel.

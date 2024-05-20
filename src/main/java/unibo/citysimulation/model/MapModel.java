@@ -55,7 +55,8 @@ public class MapModel {
     public Map<Pair<Integer, Integer>, Pair<LocalTime, Double>> getBusinessInfos(List<Business> businesses) {
         return businesses.stream()
                 .collect(Collectors.toMap(
-                        Business::getPosition,
+                        business -> new Pair<>(denormalizeCoordinate(business.getPosition().getFirst(), maxX),
+                                denormalizeCoordinate(business.getPosition().getSecond(), maxY)),
                         business -> new Pair<>(business.getOpLocalTime(), business.getRevenue())));
     }
 

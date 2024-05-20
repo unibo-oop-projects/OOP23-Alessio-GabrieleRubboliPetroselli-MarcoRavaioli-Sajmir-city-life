@@ -87,12 +87,9 @@ public class CityModel {
         // Create zone table
         ZoneTableCreation.createAndAddPairs(zones, transports);
 
-        int numberOfBusinesses = 30; //
-        for (int i = 0; i < numberOfBusinesses; i++) {
-            BusinessFactory businessFactory = new BusinessFactory();
-            Business business = businessFactory.createBusiness(BusinessFactory.getRandomBusinessType()).get();
-            businesses.add(business);
-        }
+
+        // Create businesses
+        createBusinesses();
 
         // Create people
         this.people = new ArrayList<>();
@@ -116,6 +113,13 @@ public class CityModel {
         // Print details of each person
         
         ////////////////////////////////////////////////////////////////
+    }
+
+    private final void createBusinesses() {
+        int businessNum = 1000;
+        for (int i = 0; i < businessNum; i++) {
+            businesses.add(BusinessFactory.getRandomBusiness().orElseThrow());
+        }
     }
 
     

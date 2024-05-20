@@ -1,22 +1,36 @@
 package unibo.citysimulation.model.business;
 
+import unibo.citysimulation.utilities.Pair;
 
 /**
  * This interface represents an employee with a name and an ID.
  */
 public interface EmployeeStatus {
 
+    /**
+     * Returns the count of delays for the employee.
+     *
+     * @return The count of delays for the employee.
+     */
+    int getCountDelay();
 
     /**
-     * Returns the name of the employee.
+     * Sets the count of delays for the employee.
      *
-     * @return The name of the employee.
+     * @param countDelay The count of delays for the employee.
      */
-    
+    void setCountDelay(int countDelay);
 
-    int getcountDelay(Employee employee);
+    /**
+     * Increments the count of delays for the employee by 1.
+     */
+    void incrementDelayCount();
 
-    void setcountDelay(int countDelay);
-
-    
+    /**
+     * Checks if the employee is late based on the given business position.
+     *
+     * @param businessPosition The business position to check against.
+     * @return True if the employee is late, false otherwise.
+     */
+    boolean isLate(Pair<Integer, Integer> businessPosition);
 }
