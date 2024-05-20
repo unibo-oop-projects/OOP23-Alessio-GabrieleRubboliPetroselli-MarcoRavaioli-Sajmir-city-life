@@ -48,5 +48,7 @@ public interface Person {
     Pair<Integer, Integer> getHome();   
 
     int getAge();
+
+    Pair<Integer, Integer>getPosition();
     
 }

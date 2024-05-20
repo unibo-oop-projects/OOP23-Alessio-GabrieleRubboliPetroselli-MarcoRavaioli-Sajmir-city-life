@@ -3,6 +3,7 @@ package unibo.citysimulation.model.business;
 import java.time.LocalTime;
 
 public class BusinessConfig {
+    
     public static final int START_TIME_BIG_BUSINESS = 12;
     public static final int END_TIME_BIG_BUSINESS = 21;
     public static final int START_TIME_MEDIUM_BUSINESS = 17;
@@ -10,6 +11,7 @@ public class BusinessConfig {
     public static final int START_TIME_SMALL_BUSINESS = 8;
     public static final int END_TIME_SMALL_BUSINESS = 13;
     public static final int MINUTES = 0;
+
 
     public static final double BIG_REVENUE = 25.0;
     public static final double MEDIUM_REVENUE = 12.0;
