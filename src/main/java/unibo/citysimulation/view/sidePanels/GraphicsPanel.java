@@ -39,25 +39,50 @@ public class GraphicsPanel extends StyledPanel {
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
                 .collect(Collectors.toList());
+                
+        setLayout(new GridLayout(names.size(), 1));
 
         synchronized (this) {
             plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
         }
 
-        setLayout(new GridLayout(names.size(), 1));
+        
     }
 
     public List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
         List<JFreeChart> charts = new ArrayList<JFreeChart>();
 
         for (int i = 0; i < names.size(); i++) {
-            XYSeriesCollection dataset = datasets.get(i);
-            String name = names.get(i);
-            JFreeChart chart = createChart(name, null, null, dataset);
-            charts.add(chart);
+            charts.add(createChart(names.get(i), datasets.get(i)));
         }
-
         return charts;
+    }
+
+
+    // Method to create a chart
+    private JFreeChart createChart(String title, XYDataset dataset) {
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                title,
+                null,
+                null,
+                dataset,
+                PlotOrientation.VERTICAL,
+                false,
+                false,
+                false);
+
+        XYPlot plot = chart.getXYPlot();
+        ValueAxis domainAxis = plot.getDomainAxis();
+        ValueAxis rangeAxis = plot.getRangeAxis();
+
+        domainAxis.setTickLabelsVisible(false);
+        domainAxis.setLowerMargin(0.01);
+        domainAxis.setUpperMargin(0.01);
+        rangeAxis.setTickLabelsVisible(true);
+        rangeAxis.setAutoRange(false);
+        rangeAxis.setRange(0, 105);
+
+        return chart;
     }
 
     private XYLineAndShapeRenderer createRenderer(int num) {
@@ -68,33 +93,6 @@ public class GraphicsPanel extends StyledPanel {
             renderer.setSeriesShapesVisible(i, false);
             renderer.setSeriesStroke(i, new BasicStroke(2.0f));
         }
-
         return renderer;
-    }
-
-    // Method to create a chart
-    private JFreeChart createChart(String title, String domainLabel, String rangeLabel,
-            XYDataset dataset) {
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                title,
-                domainLabel,
-                rangeLabel,
-                dataset,
-                PlotOrientation.VERTICAL,
-                false,
-                false,
-                false);
-
-        ValueAxis domainAxis = chart.getXYPlot().getDomainAxis();
-        ValueAxis rangeAxis = chart.getXYPlot().getRangeAxis();
-
-        domainAxis.setTickLabelsVisible(false);
-        domainAxis.setLowerMargin(0.01);
-        domainAxis.setUpperMargin(0.01);
-        rangeAxis.setTickLabelsVisible(true);
-        rangeAxis.setAutoRange(false);
-        rangeAxis.setRange(0, 105);
-
-        return chart;
     }
 }

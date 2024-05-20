@@ -56,26 +56,18 @@ public class WindowController {
 
 
             // Aggiorna le coordinate massime nel modello della mappa con le nuove dimensioni della mapPanel
-            cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(), windowView.getMapPanel().getHeight());       //
-            // Aggiorna le informazioni sui trasporti nel modello della mappa                                                           // questa parte potrebbe essere fatta in un metodo nel citymodel
-            cityModel.getMapModel().setTransportInfos(cityModel.getTransportLines());                                                   // forse
+            cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(), windowView.getMapPanel().getHeight());   
+            // Aggiorna le informazioni sui trasporti nel modello della mappa                                                          
+            cityModel.getMapModel().setTransportInfo(cityModel.getTransportLines());                                                   
             // Imposta le nuove dimensioni del frame nel modello della città
             cityModel.setFrameSize(new Pair<>(newWidth, newHeight));
 
             // Imposta le nuove coordinate delle linee nella mapPanel
-            windowView.getMapPanel().setLinesPoints(cityModel.getMapModel().getLinesPointsCoordinates());                               //
-            // Imposta i nuovi colori delle linee nella mapPanel                                                                        // idem come sopra
-            windowView.getMapPanel().setCongestionsList(cityModel.getMapModel().getColorList());                                        // forse
-            // Aggiorna le dimensioni del frame nella windowView
-            
+            windowView.getMapPanel().setLinesInfo(cityModel.getMapModel().getLinesPointsCoordinates(), cityModel.getMapModel().getTransportNames());
 
             // Se sono presenti persone, imposta le nuove informazioni delle persone nella mapPanel
-            if (cityModel.isPeoplePresent()) {
-                windowView.getMapPanel().setPeopleMap(cityModel.getMapModel().getPersonInfos(cityModel.getAllPeople()));
-            }
-
-            if (cityModel.isBusinessesPresent()) {
-                windowView.getMapPanel().setBusinessPoints(cityModel.getMapModel().getBusinessInfos(cityModel.getBusinesses()));
+            if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()){
+                windowView.getMapPanel().setEntities(cityModel.getMapModel().getPersonInfos(cityModel.getAllPeople()), cityModel.getMapModel().getBusinessInfos(cityModel.getBusinesses()));
             }
 
             windowView.updateFrame(newWidth, newHeight);

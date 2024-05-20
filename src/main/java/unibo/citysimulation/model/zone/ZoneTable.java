@@ -32,10 +32,13 @@ public class ZoneTable {
     public void addPair(Zone zone1, Zone zone2, TransportLine transportLine) {
         zonePairs.put(new Pair<>(zone1, zone2), transportLine);
         zonePairs.put(new Pair<>(zone2, zone1), transportLine); // to ensure the table works both ways
+        System.out.println("Added pair: " + zone1.name() + " - " + zone2.name() + " with lines: " + Arrays.toString(transportLine));
     }
 
-    public static TransportLine getTransportLine(Zone zone1, Zone zone2) {
-        return zonePairs.get(new Pair<>(zone1, zone2));
+    public TransportLine[] getTransportLine(Zone zone1, Zone zone2) {
+        System.out.println("Getting pair: " + zone1.name() + " - " + zone2.name());
+        System.out.println(zonePairs.get(new Pair<Zone,Zone>(zone1, zone2))[0].getName());
+        return zonePairs.get(new Pair<Zone,Zone>(zone1, zone2));
     }
 
     public static int getTripDuration(TransportLine transportLines) {

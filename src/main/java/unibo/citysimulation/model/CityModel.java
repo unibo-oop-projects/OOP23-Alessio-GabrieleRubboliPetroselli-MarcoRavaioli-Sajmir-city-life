@@ -14,6 +14,7 @@ import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
+import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
@@ -82,9 +83,9 @@ public class CityModel {
         graphicsModel.clearDatasets();
 
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
+
         // Create zone table
         ZoneTableCreation.createAndAddPairs(zones, transports);
-
 
         int numberOfBusinesses = 30; //
         for (int i = 0; i < numberOfBusinesses; i++) {

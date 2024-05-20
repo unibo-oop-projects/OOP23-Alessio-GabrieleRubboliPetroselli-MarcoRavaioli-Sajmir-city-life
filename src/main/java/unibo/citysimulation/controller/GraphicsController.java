@@ -11,7 +11,6 @@ public class GraphicsController implements ClockObserver {
     private CityModel cityModel;
     private GraphicsModel graphicsModel;
     
-
     public GraphicsController(CityModel cityModel, GraphicsPanel graphicsPanel) {
         this.cityModel = cityModel;
         graphicsModel = cityModel.getGraphicsModel();
@@ -22,9 +21,6 @@ public class GraphicsController implements ClockObserver {
 
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
-
-        //// parte di business
-
         graphicsModel.updateDataset(
             graphicsModel.getPeopleStateCounts(cityModel.getAllPeople()), 
             graphicsModel.getTransportLinesCongestion(cityModel.getTransportLines()),

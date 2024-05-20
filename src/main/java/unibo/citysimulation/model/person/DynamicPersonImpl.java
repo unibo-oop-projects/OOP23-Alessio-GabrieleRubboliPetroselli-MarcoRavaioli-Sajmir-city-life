@@ -10,30 +10,54 @@ import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
     private int lastArrivingTime;
     private PersonState lastDestination;
+    private boolean late;
     private Random random = new Random();
 
     public DynamicPersonImpl(PersonData personData, int money) {
         super(personData, money);
         this.lastDestination = PersonState.WORKING;
+        late = false;
     }
 
     private boolean checkTimeToMove(int currentTime, int timeToMove, int lineDuration) {
-        boolean moveBool = (currentTime == timeToMove);
-        if (moveBool) {
-            this.lastArrivingTime = currentTime + lineDuration;
+        boolean congestioned = false;
+        //System.out.println(
+        //    "persona: " + personData.name() +
+        //    " " + transportLine[0].getName() +
+        //    " " + transportLine[0].getCongestion()
+        //);
+        if (currentTime == timeToMove || late) {
+            for (var line : transportLine) {
+                if (line.getCongestion() > 98) {
+                    congestioned = true;
+                    late = true;
+                    //System.out.println("for " + personData.name() + " line congestioned: " + line.getName() + " congestion: " + line.getCongestion());
+                }
+            }
+            //System.out.println("congestioned: " + congestioned);
+            if (!congestioned) {
+                this.lastArrivingTime = currentTime + lineDuration;
+
+                //System.out.println("now " + personData.name() + "is on transport line " + (late ? "before was late" : "on time"));
+
+                late = false;
+
+                return true;
+            }
         }
-        return moveBool;
+        return false;
     }
 
     private void checkTimeToGoToWork(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(), updatedTime(personData.business().getOpLocalTime()) - tripDuration,
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(),
+                updatedTime(personData.business().getOpeningTime()) - tripDuration,
                 tripDuration)) {
             movePerson(PersonState.WORKING);
         }
     }
 
     private void checkTimeToGoHome(LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(),updatedTime(personData.business().getClLocalTime()),
+        if (this.checkTimeToMove(currentTime.toSecondOfDay(), updatedTime(personData.business().getClosingTime()),
                 tripDuration)) {
             movePerson(PersonState.AT_HOME);
         }
@@ -51,14 +75,13 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         if (currentTime.toSecondOfDay() == this.lastArrivingTime) {
             this.setState(this.lastDestination);
             updatePosition();
-            /*Arrays.stream(transportLine)
-                  .forEach(TransportLine::decrementPersonInLine);*/
+            Arrays.stream(transportLine)
+                    .forEach(TransportLine::decrementPersonInLine);
 
         }
     }
 
     public void checkState(LocalTime currentTime) {
-        System.out.println("Current time: " + currentTime);
         switch (this.state) {
             case MOVING:
                 this.checkArrivingTime(currentTime);
@@ -77,8 +100,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
             this.setState(newState);
         } else {
             this.setState(PersonState.MOVING);
-            /*Arrays.stream(transportLine)
-                  .forEach(TransportLine::incrementPersonInLine);*/
+            Arrays.stream(transportLine)
+                    .forEach(TransportLine::incrementPersonInLine);
         }
         this.lastDestination = newState;
         this.updatePosition();
