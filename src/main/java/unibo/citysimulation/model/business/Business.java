@@ -21,13 +21,16 @@ public abstract class Business implements BusinessEmployee{
     protected int minAge;
     protected int maxAge;
     protected int maxTardiness;
+    protected Zone zone;
+    
 
     /**
      * Constructs a new Business object.
      */
-    public Business() {
+    public Business(Zone zone) {
         this.employees = new ArrayList<>();
-        this.position = Zone.getRandomZone().getRandomPosition();
+        this.zone = zone;
+        this.position = zone.getRandomPosition();
     }
 
     /**
@@ -51,7 +54,7 @@ public abstract class Business implements BusinessEmployee{
      */
     @Override
     public final void fire(final Employee employee) {
-        if (employee.getCountDelay() > this.maxTardiness) {
+        if (employee != null && employee.getCountDelay() > this.maxTardiness) {
             employees.remove(employee);
         }
     }
@@ -86,7 +89,7 @@ public abstract class Business implements BusinessEmployee{
      * @return the list of employees
      */
     public final List<Employee> getEmployees() {
-        return employees;
+        return employees != null ? employees : new ArrayList<>();
     }
 
     /**
@@ -150,6 +153,15 @@ public abstract class Business implements BusinessEmployee{
      */
     public final int getMaxTardiness() {
         return maxTardiness;
+    }
+
+    /**
+     * Returns the zone in which the business is located.
+     * 
+     * @return the zone
+     */
+    public final Zone getZone() {
+        return zone;
     }
     
 }
