@@ -1,6 +1,10 @@
 package unibo.citysimulation.view.sidePanels;
 
 import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.transport.TransportFactory;
+import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.view.StyledPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -23,7 +27,8 @@ import javax.swing.*;
  */
 public class GraphicsPanel extends StyledPanel {
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
-            Color.PINK, Color.CYAN);
+            Color.PINK, Color.CYAN);        // da mettere nel model
+    private final JButton legendButton;
     private List<XYPlot> plots;
 
     /**
@@ -33,6 +38,22 @@ public class GraphicsPanel extends StyledPanel {
      */
     public GraphicsPanel(Color bgColor) {
         super(bgColor);
+
+        
+        this.legendButton = new JButton("Legend");
+        this.legendButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size of the button to make it small
+
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Modifica layout per meglio posizionare il bottone
+        topPanel.setBackground(bgColor);
+        topPanel.add(legendButton);
+
+        // Add the top panel to this panel
+        this.setLayout(new BorderLayout()); // Imposta layout di GraphicsPanel
+        this.add(topPanel, BorderLayout.NORTH);
+    }
+
+    public JButton getLegendButton(){
+        return this.legendButton;
     }
 
     public void createGraphics(List<String> names, List<XYSeriesCollection> datasets) {
@@ -40,15 +61,19 @@ public class GraphicsPanel extends StyledPanel {
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
                 .collect(Collectors.toList());
-                
-        setLayout(new GridLayout(names.size(), 1));
-
+    
+        JPanel chartsPanel = new JPanel();
+        chartsPanel.setBackground(bgColor);
+        chartsPanel.setLayout(new GridLayout(plots.size(), 1)); // 1 colonna, tante righe quante sono i grafici
+    
         synchronized (this) {
-            plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
+            plots.forEach(plot -> chartsPanel.add(new ChartPanel(plot.getChart())));
         }
-
-        
+    
+    
+        this.add(chartsPanel, BorderLayout.CENTER);
     }
+    
 
     public List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
         List<JFreeChart> charts = new ArrayList<JFreeChart>();
@@ -95,5 +120,9 @@ public class GraphicsPanel extends StyledPanel {
             renderer.setSeriesStroke(i, new BasicStroke(2.0f));
         }
         return renderer;
+    }
+
+    public List<Color> getColors(){
+        return colors;
     }
 }
