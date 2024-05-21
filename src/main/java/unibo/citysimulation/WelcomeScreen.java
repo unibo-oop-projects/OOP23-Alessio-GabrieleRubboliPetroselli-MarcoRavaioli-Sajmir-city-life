@@ -61,6 +61,22 @@ public class WelcomeScreen extends JFrame {
     // Add the button panel to the window
     add(buttonPanel, BorderLayout.SOUTH);
 
+    JButton aboutButton = new JButton("ABOUT");
+    aboutButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Show the about dialog
+            JOptionPane.showMessageDialog(WelcomeScreen.this,
+                    "City-simulation is a project developed by the students of the Software Engineering course at the University of Bologna.\n" +
+                            "The project aims to simulate a city and its traffic, with the goal of improving the quality of life of its citizens.\n" +
+                            "The project is open-source and can be found on GitHub");
+        }
+    });
+
+    buttonPanel.add(aboutButton);
+    
+
+
     // Set the default close operation
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
