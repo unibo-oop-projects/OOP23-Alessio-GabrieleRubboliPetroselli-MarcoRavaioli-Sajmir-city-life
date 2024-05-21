@@ -269,4 +269,10 @@ public class CityModel {
                            .filter(p -> p.getPersonData().residenceZone().name().equals(zoneName))
                            .count();
     }
+
+    public int getBusinessesInZone(String zoneName) {
+        return (int) businesses.stream()
+                               .filter(b -> b.getZone().name().equals(zoneName))
+                               .count();
+    }
 }

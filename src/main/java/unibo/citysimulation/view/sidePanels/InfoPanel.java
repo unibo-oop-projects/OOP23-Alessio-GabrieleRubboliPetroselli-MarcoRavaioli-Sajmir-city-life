@@ -19,6 +19,7 @@ public class InfoPanel extends StyledPanel {
     private JLabel coordinates;
     private JLabel numberOfPeople;
     private JLabel zoneNJLabel;
+    private JLabel numberOfBusiness;
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW, Color.PINK, Color.CYAN);
     private List<TransportLine> transportLines;
     private List<Zone> zones = ZoneFactory.createZonesFromFile();
@@ -39,8 +40,9 @@ public class InfoPanel extends StyledPanel {
         GridBagConstraints gbc = new GridBagConstraints();
 
         // Create a JLabel with the desired text
-        JLabel label = new JLabel("INFOPANEL", SwingConstants.CENTER); // Align the text to the center
-        label.setForeground(Color.WHITE); // Set the color of the text
+        zoneNJLabel = new JLabel("Zone:", SwingConstants.CENTER); // Align the text to the center
+        zoneNJLabel.setFont(new Font("Arial", Font.BOLD, 20)); // Set the font of the text
+
 
         // Add the JLabel to the panel
         gbc.gridx = 0;
@@ -48,7 +50,7 @@ public class InfoPanel extends StyledPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        add(label, gbc);
+        add(zoneNJLabel, gbc);
 
         coordinates = new JLabel("Coordinates: ");
         gbc.gridy = 1;
@@ -57,10 +59,10 @@ public class InfoPanel extends StyledPanel {
         numberOfPeople = new JLabel("Number of People: ");
         gbc.gridy = 2;
         add(numberOfPeople, gbc);
-
-        zoneNJLabel = new JLabel("Zone: ");
+        
+        numberOfBusiness = new JLabel("Number of Business: ");
         gbc.gridy = 3;
-        add(zoneNJLabel, gbc);
+        add(numberOfBusiness, gbc);
     }
     /**
      * Updates the position information displayed on the panel.
@@ -84,5 +86,9 @@ public class InfoPanel extends StyledPanel {
 
     public void updateZoneName(String zoneName){
         zoneNJLabel.setText("Zone: " + zoneName);
+    }
+
+    public void updateNumberOfBusiness(int businessNumber){
+        numberOfBusiness.setText("Number of Business: " + businessNumber);
     }
 }
