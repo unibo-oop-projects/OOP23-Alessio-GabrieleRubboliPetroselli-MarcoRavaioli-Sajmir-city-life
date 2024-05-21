@@ -14,7 +14,7 @@ public class InputModel {
 
     public void setNumberOfPeople(int numberOfPeople) {
         this.numberOfPeople = numberOfPeople * (ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE) / 100 + ConstantAndResourceLoader.MIN_PEOPLE;
-        System.out.println(numberOfPeople);
+        //System.out.println(numberOfPeople);
     }
 
     public int getNumberOfBusiness() {
@@ -24,7 +24,7 @@ public class InputModel {
 
     public void setNumberOfBusiness(int numberOfBusiness) {
         this.numberOfBusiness = numberOfBusiness;
-        System.out.println(numberOfBusiness);
+        //System.out.println(numberOfBusiness);
     }
 
     public int getCapacity() {

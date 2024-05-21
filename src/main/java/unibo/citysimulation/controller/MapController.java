@@ -33,7 +33,18 @@ public class MapController implements ClockObserver{
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;
         this.mapModel = cityModel.getMapModel();
-        //mapPanel.setZones(cityModel.getZones());
+
+        initialize();
+        
+
+    }
+
+    private void initialize(){
+        cityModel.getClockModel().addObserver(this);
+
+        mapModel.setTransportInfo(cityModel.getTransportLines());
+        mapModel.setTransportCongestion(cityModel.getTransportLines());
+
 
         mapPanel.setImage(mapModel.getImage());
 
@@ -44,13 +55,8 @@ public class MapController implements ClockObserver{
             }
         });
 
-        mapModel.setTransportInfos(cityModel.getTransportLines());
-        mapModel.setTransportNames(cityModel.getTransportLines());
-        mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
-        mapPanel.setCongestionsList(mapModel.getColorList());
-
-        cityModel.getClockModel().addObserver(this);
-        mapPanel.SetTransportNames(mapModel.getTransportNames());
+        mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
+        mapPanel.setLinesColor(mapModel.getColorList());
     }
 
     /**
@@ -62,13 +68,11 @@ public class MapController implements ClockObserver{
         int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
         int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
 
-        System.out.println("pressed coordinates: " + x + " " + y);  //queste rimangono uguali
         List<Zone> zones = cityModel.getZones();
         String zoneName = ""; // Declare zoneName here
         for (Zone zone : zones) {
             if (zone.boundary().isInside(x, y)) {
-                zoneName = zone.name(); // Assign value here
-                System.out.println("Clicked inside zone: " + zoneName);
+                zoneName = zone.name();
                 break;
             }
         }
@@ -78,7 +82,6 @@ public class MapController implements ClockObserver{
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
-
         infoPanel.updateZoneName(zoneName);
 
         infoPanel.updateNumberOfPeople(cityModel.getPeopleInZone(zoneName));
@@ -92,13 +95,9 @@ public class MapController implements ClockObserver{
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
 
-        mapPanel.setPeopleMap(mapModel.getPersonInfos(cityModel.getAllPeople()));
-        
-        mapModel.setTransportInfos(cityModel.getTransportLines());
-        mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
-        mapPanel.setCongestionsList(mapModel.getColorList());
-        
+        mapModel.setTransportCongestion(cityModel.getTransportLines());
 
-        mapPanel.repaint();
+        mapPanel.setLinesColor(mapModel.getColorList());
+        mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), mapModel.getBusinessInfos(cityModel.getBusinesses()));
     }
 }

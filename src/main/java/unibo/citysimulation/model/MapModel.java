@@ -3,6 +3,8 @@ package unibo.citysimulation.model;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
+
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import java.util.List;
@@ -10,7 +12,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.awt.Color;
 import java.util.Map;
-
+import java.util.Collections;
+import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
@@ -21,21 +24,23 @@ import unibo.citysimulation.utilities.Pair;
  */
 public class MapModel {
     private BufferedImage image;
-    private int normClickedX = -1;
-    private int normClickedY = -1;
-    private int maxX = -1;
-    private int maxY = -1;
+    private int normClickedX;
+    private int normClickedY;
+    private int maxX;
+    private int maxY;
     private boolean simulationStarted = false;
-    private List<String> transportLines;
-
-    private List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> linesPointsCoordinates = new ArrayList<>();    //coordinate normalizzate da 0 a 1000
-    private List<Double> congestionsList = new ArrayList<>();
-
+    private List<String> linesName = Collections.emptyList();
+    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
+    private List<Double> congestionsList = Collections.emptyList();
 
     /**
      * Constructs a MapModel object and loads the map image.
      */
     public MapModel() {
+        normClickedX = -1;
+        normClickedY = -1;
+        maxX = -1;
+        maxY = -1;
         loadMapImage();
     }
 
@@ -43,87 +48,85 @@ public class MapModel {
         simulationStarted = true;
     }
 
-    public void setTransportInfos(List<TransportLine> lines) {
-        linesPointsCoordinates = lines.stream()
-                .map(line -> {
-                    Pair<Integer, Integer> startPoint = line.getLinkedZones().getFirst().boundary().getCenter();
-                    Pair<Integer, Integer> endPoint = line.getLinkedZones().getSecond().boundary().getCenter();
-                    return new Pair<>(startPoint, endPoint);
-                })
-                .collect(Collectors.toList());
-
-        congestionsList = lines.stream()
-                .map(line -> line.getCongestion())
-                .collect(Collectors.toList());
-    }
-    public void setTransportNames(List<TransportLine> lines){
-        transportLines = lines.stream()
-                .map(n->n.getName())
-                .collect(Collectors.toList());       
+    public List<String> getTransportNames() {
+        return linesName;
     }
 
-    public List<String> getTransportNames(){
-        return transportLines;
+    public Map<Integer,Pair<Integer,Integer>> getBusinessInfos(List<Business> businesses) {
+        return businesses.stream()
+            .collect(Collectors.toMap(
+                businesses::indexOf,
+                business -> new Pair<>(
+                    denormalizeCoordinate(business.getPosition().getFirst(), maxX),
+                    denormalizeCoordinate(business.getPosition().getSecond(), maxY))));
+            
+            
     }
 
     public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {
         return people.stream()
-                .filter(person -> person.getPosition().isPresent())
-                .collect(Collectors.toMap(
-                        person -> person.getPersonData().name(),
-                        person -> new Pair<>(
-                                new Pair<>(denormalizeCoordinate(person.getPosition().get().getFirst(), maxX),
-                                        denormalizeCoordinate(person.getPosition().get().getSecond(), maxY)),
-                                this.getPersonColor(person))));
+            .filter(person -> person.getPosition().isPresent())
+            .collect(Collectors.toMap(
+                person -> person.getPersonData().name(),
+                person -> new Pair<>(
+                    new Pair<>(denormalizeCoordinate(person.getPosition().get().getFirst(), maxX),
+                        denormalizeCoordinate(person.getPosition().get().getSecond(), maxY)),
+                    getPersonColor(person))));
     }
 
-    public Color getPersonColor(DynamicPerson person) {
-        if (person.getState() == PersonState.AT_HOME) {
-            return Color.BLUE;
-        } else {
-            return Color.RED;
-        }
+    private Color getPersonColor(DynamicPerson person) {
+        return person.getState() == PersonState.AT_HOME ? Color.BLUE : Color.RED;
     }
 
     public List<Color> getColorList() {
         return congestionsList.stream()
-                .map(this::getColor)
-                .collect(Collectors.toList());
+            .map(this::getColor)
+            .collect(Collectors.toList());
     }
 
-    public Color getColor(Double perc) {
-        // Se la percentuale è inferiore al 50%, restituisci un colore verde
+    private Color getColor(Double perc) {
         if (!simulationStarted) {
             return Color.GRAY;
         }
         if (perc <= 50) {
-            int green = 255 - (int) (255 * perc / 50);
-            return new Color(0, Math.min(255, Math.max(0, green)), 0);
+            int green = (int) (128 + (127 * perc / 50));
+            return new Color(0, green, 0);
         } else {
-            double adjustedPerc = (perc / 100 - 50) / 50; // Normalize the percentage in the range 0-1
+            double adjustedPerc = (perc - 50) / 50;
             int red = (int) (255 * adjustedPerc);
             int green = (int) (255 * (1 - adjustedPerc));
-            return new Color(Math.min(255, Math.max(0, red)), Math.min(255, Math.max(0, green)), 0);
+            return new Color(red, green, 0);
         }
     }
-    
 
-    public List<Pair<Pair<Integer,Integer>, Pair<Integer,Integer>>> getLinesPointsCoordinates(){
+    public List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> getLinesPointsCoordinates() {
         return linesPointsCoordinates.stream()
-                .map(pair -> new Pair<>(
-                        new Pair<>(denormalizeCoordinate(pair.getFirst().getFirst(), maxX),
-                                denormalizeCoordinate(pair.getFirst().getSecond(), maxY)),
-                        new Pair<>(denormalizeCoordinate(pair.getSecond().getFirst(), maxX),
-                                denormalizeCoordinate(pair.getSecond().getSecond(), maxY))))
-                .collect(Collectors.toList());
+            .map(pair -> new Pair<>(
+                new Pair<>(denormalizeCoordinate(pair.getFirst().getFirst(), maxX),
+                    denormalizeCoordinate(pair.getFirst().getSecond(), maxY)),
+                new Pair<>(denormalizeCoordinate(pair.getSecond().getFirst(), maxX),
+                    denormalizeCoordinate(pair.getSecond().getSecond(), maxY))))
+            .collect(Collectors.toList());
     }
 
-    public void setCongestionsList(List<Double> congestionList) {
-        this.congestionsList = congestionList;
+    public void setTransportInfo(List<TransportLine> lines) {
+        linesPointsCoordinates = lines.stream()
+            .map(line -> {
+                Pair<Integer, Integer> startPoint = line.getLinkedZones().getFirst().boundary().getCenter();
+                Pair<Integer, Integer> endPoint = line.getLinkedZones().getSecond().boundary().getCenter();
+                return new Pair<>(startPoint, endPoint);
+            })
+            .collect(Collectors.toList());
+
+        linesName = lines.stream()
+            .map(TransportLine::getName)
+            .collect(Collectors.toList());
     }
 
-    public List<Double> getCongestionsList() {
-        return congestionsList;
+    public void setTransportCongestion(List<TransportLine> lines) {
+        congestionsList = lines.stream()
+            .map(TransportLine::getCongestion)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -146,8 +149,6 @@ public class MapModel {
     public void setMaxCoordinates(int x, int y) {
         maxX = x;
         maxY = y;
-        // System.out.println("maxX: " + maxX);
-        // System.out.println("maxY: " + maxY);
     }
 
     /**
@@ -195,7 +196,6 @@ public class MapModel {
      */
     private void loadMapImage() {
         try {
-            // Load the image using a relative path within the classpath
             URL imageUrl = getClass().getResource("/unibo/citysimulation/image3.png");
             if (imageUrl != null) {
                 image = ImageIO.read(imageUrl);
@@ -213,9 +213,7 @@ public class MapModel {
      * @param e The IOException instance representing the error.
      */
     private void handleImageLoadError(IOException e) {
-        // Handle the error in a meaningful way, such as showing an error message to the
-        // user
         JOptionPane.showMessageDialog(null, "Error loading map image: " + e.getMessage(), "Error",
-                JOptionPane.ERROR_MESSAGE);
+            JOptionPane.ERROR_MESSAGE);
     }
 }

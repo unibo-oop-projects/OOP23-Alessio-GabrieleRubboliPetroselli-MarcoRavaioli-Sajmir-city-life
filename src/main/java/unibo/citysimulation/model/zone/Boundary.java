@@ -54,5 +54,9 @@ public class Boundary {
         return new Pair<Integer, Integer>(getX() + getWidth() / 2, getY() + getHeight() / 2);
     }
 
+    public Object contains(Pair<Integer, Integer> position) {  //
+        return isInside(position.getFirst(), position.getSecond());
+    }
+
     
 }

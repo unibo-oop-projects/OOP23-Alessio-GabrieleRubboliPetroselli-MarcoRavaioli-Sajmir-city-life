@@ -2,6 +2,7 @@ package unibo.citysimulation.model.person;
 
 import java.util.Optional;
 import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.utilities.Pair;
 
@@ -11,7 +12,7 @@ public class StaticPersonImpl implements StaticPerson {
     protected final PersonData personData;
     protected PersonState state;
     protected Pair<Integer, Integer> homePosition;
-    protected TransportLine transportLine;
+    protected TransportLine[] transportLine;
     protected int tripDuration;
 
     public StaticPersonImpl(PersonData personData, int money) {
@@ -47,7 +48,7 @@ public class StaticPersonImpl implements StaticPerson {
         this.state = state;
     }
 
-    public TransportLine getTransportLine() {
+    public TransportLine[] getTransportLine() {
         return transportLine;
     }
 
@@ -78,11 +79,24 @@ public class StaticPersonImpl implements StaticPerson {
     }
 
     private void getTrip() {
-        if (personData.residenceZone() == personData.business().getZone()) {
+
+        //System.out.println(Zone.getZoneByPosition(personData.business().getPosition()).name());
+
+        if (personData.residenceZone() ==  personData.business().getZone()) {  
+            
             this.tripDuration = 0;
+
         } else {
-            this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(), personData.business().getZone());
-            tripDuration = this.transportLine.getDuration() * 60;
+            //System.out.println(personData.residenceZone().name() + "\n" + Zone.getZoneByPosition(personData.business().getPosition()).name());
+            
+            this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(), personData.business().getZone());  ///
+            if (this.transportLine == null) {
+                System.err.println("No transport line found between " + personData.residenceZone() + " and " + personData.business().getZone());  ///
+                throw new IllegalStateException("No transport line found between the given zones.");
+            }
+            tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
+            //System.out.println(transportLine[0].getName());
         }
     }
+    
 }

@@ -33,7 +33,7 @@ public interface StaticPerson {
 
     int getTripDuration();
 
-    TransportLine getTransportLine();
+    TransportLine[] getTransportLine();
 
     Optional<Pair<Integer, Integer>> getPosition();
     

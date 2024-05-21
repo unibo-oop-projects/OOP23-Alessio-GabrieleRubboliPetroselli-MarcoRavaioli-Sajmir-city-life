@@ -25,7 +25,9 @@ public final class ConstantAndResourceLoader extends ClassLoader{
     public static final int SCREEN_MINIMUM_WIDTH_PIXEL = 1000;
     public static final int SCREEN_MINIMUM_HEIGHT_PIXEL = 500;
 
-    public static final int MIN_PEOPLE = 10;
-    public static final int MAX_PEOPLE = 100;
+    public static final int MIN_PEOPLE = 100;
+    public static final int MAX_PEOPLE = 1000;
+
+    public static final int MAX_COLUMNS = 150;
 
 }
