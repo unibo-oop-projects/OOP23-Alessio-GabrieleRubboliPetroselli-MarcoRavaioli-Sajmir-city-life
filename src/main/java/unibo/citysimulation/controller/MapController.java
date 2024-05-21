@@ -81,6 +81,8 @@ public class MapController implements ClockObserver{
 
         infoPanel.updateZoneName(zoneName);
 
+        infoPanel.updateNumberOfPeople(cityModel.getPeopleInZone(zoneName));
+
     }
 
     public BufferedImage getImage() {

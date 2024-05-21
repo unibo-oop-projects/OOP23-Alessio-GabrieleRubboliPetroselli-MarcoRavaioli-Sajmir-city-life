@@ -173,4 +173,11 @@ public class CityModel {
     public int getFrameHeight(){
         return this.frameHeight;
     }
+
+    public int getPeopleInZone(String zoneName) {
+        return (int) people.stream()
+                           .flatMap(List::stream)
+                           .filter(p -> p.getPersonData().residenceZone().name().equals(zoneName))
+                           .count();
+    }
 }
