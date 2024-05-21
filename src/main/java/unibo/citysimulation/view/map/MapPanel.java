@@ -125,6 +125,7 @@ public class MapPanel extends StyledPanel {
     public void setEntities(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, Map<Integer, Pair<Integer, Integer>> businessMap){
         this.peopleMap = peopleMap;
         this.businessMap = businessMap;
+        repaint();
     }
 
     public void setBusinessPoints(Map<Integer, Pair<Integer, Integer>> businessMap){
