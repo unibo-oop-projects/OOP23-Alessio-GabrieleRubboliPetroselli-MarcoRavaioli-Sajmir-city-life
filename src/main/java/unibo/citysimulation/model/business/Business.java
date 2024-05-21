@@ -43,6 +43,7 @@ public abstract class Business implements BusinessEmployee{
         if(employee.getPerson().getPersonData().age() >= this.minAge && employee.getPerson().getPersonData().age() <= this.maxAge) {
             if(employees.size() < getMaxEmployees()) {
                 employees.add(employee);
+
             }
         }
     }
