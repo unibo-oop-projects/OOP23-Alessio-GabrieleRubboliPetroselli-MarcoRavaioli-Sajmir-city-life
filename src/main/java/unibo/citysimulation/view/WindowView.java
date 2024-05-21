@@ -43,7 +43,7 @@ public class WindowView extends JFrame {
         mapPanel = new MapPanel();
         infoPanel = new InfoPanel(Color.GREEN);
         clockPanel = new ClockPanel(Color.RED);
-        inputPanel = new InputPanel(Color.BLUE);
+        inputPanel = new InputPanel(new Color(50,50,50));
         graphicsPanel = new GraphicsPanel(Color.YELLOW);
         
         createComponents();
