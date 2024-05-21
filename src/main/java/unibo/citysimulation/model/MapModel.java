@@ -33,6 +33,8 @@ public class MapModel {
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
     private List<Double> congestionsList = Collections.emptyList();
 
+    
+
     /**
      * Constructs a MapModel object and loads the map image.
      */
@@ -49,21 +51,26 @@ public class MapModel {
     }
 
     public List<String> getTransportNames() {
-        return linesName;
+        
+            return new ArrayList<>(linesName);
+        
     }
 
     public Map<Integer,Pair<Integer,Integer>> getBusinessInfos(List<Business> businesses) {
+        
         return businesses.stream()
             .collect(Collectors.toMap(
                 businesses::indexOf,
                 business -> new Pair<>(
                     denormalizeCoordinate(business.getPosition().getFirst(), maxX),
                     denormalizeCoordinate(business.getPosition().getSecond(), maxY))));
+        
             
             
     }
 
     public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {
+        
         return people.stream()
             .filter(person -> person.getPosition().isPresent())
             .collect(Collectors.toMap(
@@ -72,6 +79,7 @@ public class MapModel {
                     new Pair<>(denormalizeCoordinate(person.getPosition().get().getFirst(), maxX),
                         denormalizeCoordinate(person.getPosition().get().getSecond(), maxY)),
                     getPersonColor(person))));
+        
     }
 
     private Color getPersonColor(DynamicPerson person) {
@@ -79,9 +87,11 @@ public class MapModel {
     }
 
     public List<Color> getColorList() {
+        
         return congestionsList.stream()
             .map(this::getColor)
             .collect(Collectors.toList());
+        
     }
 
     private Color getColor(Double perc) {
@@ -90,16 +100,20 @@ public class MapModel {
         }
         if (perc <= 50) {
             int green = (int) (128 + (127 * perc / 50));
+            green = Math.max(0, Math.min(255, green));
             return new Color(0, green, 0);
         } else {
             double adjustedPerc = (perc - 50) / 50;
             int red = (int) (255 * adjustedPerc);
             int green = (int) (255 * (1 - adjustedPerc));
+            red = Math.max(0, Math.min(255, red)); // Ensure red is within the range
+            green = Math.max(0, Math.min(255, green));
             return new Color(red, green, 0);
         }
     }
 
     public List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> getLinesPointsCoordinates() {
+        
         return linesPointsCoordinates.stream()
             .map(pair -> new Pair<>(
                 new Pair<>(denormalizeCoordinate(pair.getFirst().getFirst(), maxX),
@@ -107,9 +121,11 @@ public class MapModel {
                 new Pair<>(denormalizeCoordinate(pair.getSecond().getFirst(), maxX),
                     denormalizeCoordinate(pair.getSecond().getSecond(), maxY))))
             .collect(Collectors.toList());
+        
     }
 
     public void setTransportInfo(List<TransportLine> lines) {
+        
         linesPointsCoordinates = lines.stream()
             .map(line -> {
                 Pair<Integer, Integer> startPoint = line.getLinkedZones().getFirst().boundary().getCenter();
@@ -121,12 +137,15 @@ public class MapModel {
         linesName = lines.stream()
             .map(TransportLine::getName)
             .collect(Collectors.toList());
+        
     }
 
     public void setTransportCongestion(List<TransportLine> lines) {
+        
         congestionsList = lines.stream()
             .map(TransportLine::getCongestion)
             .collect(Collectors.toList());
+        
     }
 
     /**
