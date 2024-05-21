@@ -155,7 +155,7 @@ public class CityModel {
     }
 
     private final void createBusinesses() {
-        int businessNum = 100;
+        int businessNum = 25;
         for (int i = 0; i < businessNum; i++) {
             BusinessFactory.getRandomBusiness(zones).ifPresent(business -> {
                 businesses.add(business);
