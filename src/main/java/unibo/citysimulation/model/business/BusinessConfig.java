@@ -29,14 +29,14 @@ public class BusinessConfig {
     public static final int MAX_EMPLOYEES_SMALL_BUSINESS = 20;
 
     public static final int BIG_MAX_TARDINESS = 1;
-    public static final int MEDIUM_MAX_TARDINESS = 3;
+    public static final int MEDIUM_MAX_TARDINESS = 5;
     public static final int SMALL_MAX_TARDINESS = 10;
 
-    public static final int BIG_MIN_AGE = 25;
-    public static final int MEDIUM_MIN_AGE = 24;
+    public static final int BIG_MIN_AGE = 35;
+    public static final int MEDIUM_MIN_AGE = 27;
     public static final int SMALL_MIN_AGE = 18;
 
-    public static final int BIG_MAX_AGE = 65;
-    public static final int MEDIUM_MAX_AGE = 40;
-    public static final int SMALL_MAX_AGE = 28;
+    public static final int BIG_MAX_AGE = 60;
+    public static final int MEDIUM_MAX_AGE = 50;
+    public static final int SMALL_MAX_AGE = 29;
 }
