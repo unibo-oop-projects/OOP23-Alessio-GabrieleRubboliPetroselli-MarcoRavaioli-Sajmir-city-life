@@ -40,16 +40,16 @@ public class GraphicsPanel extends StyledPanel {
         super(bgColor);
 
         
-        this.legendButton = new JButton("Legend");
-        this.legendButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size of the button to make it small
+        this.legendButton = new JButton("?");
+        this.legendButton.setPreferredSize(new Dimension(70, 40)); // Set the preferred size of the button to make it small
 
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Modifica layout per meglio posizionare il bottone
-        topPanel.setBackground(bgColor);
-        topPanel.add(legendButton);
-
-        // Add the top panel to this panel
-        this.setLayout(new BorderLayout()); // Imposta layout di GraphicsPanel
-        this.add(topPanel, BorderLayout.NORTH);
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Create a new panel for the button
+        bottomPanel.setBackground(bgColor);
+        bottomPanel.add(this.legendButton); // Add the button to the panel
+    
+        // Add the bottom panel to this panel
+        this.setLayout(new BorderLayout()); // Set layout of GraphicsPanel
+        this.add(bottomPanel, BorderLayout.SOUTH); // Add the panel to the SOUTH position
     }
 
     public JButton getLegendButton(){
