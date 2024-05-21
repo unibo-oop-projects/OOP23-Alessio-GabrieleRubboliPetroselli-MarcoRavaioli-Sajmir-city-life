@@ -55,8 +55,11 @@ public class MapController implements ClockObserver{
             }
         });
 
+        
+
         mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
         mapPanel.setLinesColor(mapModel.getColorList());
+        
     }
 
     /**

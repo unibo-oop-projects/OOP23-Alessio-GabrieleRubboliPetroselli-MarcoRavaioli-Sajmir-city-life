@@ -42,9 +42,9 @@ public class GraphicsPanel extends StyledPanel {
                 
         setLayout(new GridLayout(names.size(), 1));
 
-        synchronized (this) {
+        
             plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
-        }
+        
 
         
     }
