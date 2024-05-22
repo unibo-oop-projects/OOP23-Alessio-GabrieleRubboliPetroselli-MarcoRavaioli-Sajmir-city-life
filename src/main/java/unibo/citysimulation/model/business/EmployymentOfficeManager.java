@@ -28,38 +28,28 @@ public class EmployymentOfficeManager {
     }
 
     /**
-     * Handles the firing of employees for all businesses.
+     * Handles the firing of employees for the specified business.
      * For each employee that should be fired, adds the person to the employment office's disoccupied people list
      * and fires the employee from their business.
+     * 
+     * @param business The business for which to handle employee firing.
      */
-    /**
-     * Handles the firing of employees for all businesses.
-     * For each employee that should be fired, adds the person to the employment office's disoccupied people list
-     * and fires the employee from their business.
-     */
-    public final void handleEmployeeFiring() {
-        List<Employee> employeesToFire = getEmployeesToFire();
-
+    public final void handleEmployeeFiring(Business business) {
+        List<Employee> employeesToFire = getEmployeesToFire(business);
         fireEmployees(employeesToFire);
     }
 
     /**
-     * Handles the hiring of employees for all businesses.
-     * Selects a random business that can hire, and hires a random number of employees
-     * from the employment office's disoccupied people list until the maximum number of employees
-     * is reached for the business.
+     * Handles the hiring of employees for the specified business.
+     * Hires a minimum of 4 employees from the employment office's disoccupied people list 
+     * or up to the maximum number of employees allowed for the business.
+     * 
+     * @param business The business for which to handle employee hiring.
      */
-    public final void handleEmployeeHiring() {
-        List<Business> businessesThatCanHire = getBusinessesThatCanHire();
-        System.out.println("Businesses that can hire: " + businessesThatCanHire.size());
-
-        
-        if (!businessesThatCanHire.isEmpty()) {
-            Business randomBusiness = selectRandomBusiness(businessesThatCanHire);
-            List<DynamicPerson> peopleToHire = getPeopleToHire(randomBusiness);
-            System.out.println("People to hire: " + peopleToHire.size() + " for business " + randomBusiness.getRevenue());
-
-            hirePeople(randomBusiness, peopleToHire);
+    public final void handleEmployeeHiring(Business business) {
+        if (canHire(business)) {
+            List<DynamicPerson> peopleToHire = getPeopleToHire(business);
+            hirePeople(business, peopleToHire);
         }
     }
 
@@ -84,28 +74,8 @@ public class EmployymentOfficeManager {
     }
 
     /**
-     * Retrieves the list of businesses that can hire more employees.
-     * 
-     * @return the list of businesses that can hire.
-     */
-    private List<Business> getBusinessesThatCanHire() {
-        return businesses.stream()
-            .filter(this::canHire)
-            .collect(Collectors.toList());
-    }
-
-    /**
-     * Selects a random business from the list of businesses that can hire.
-     * 
-     * @param businessesThatCanHire the list of businesses that can hire.
-     * @return a randomly selected business.
-     */
-    private Business selectRandomBusiness(List<Business> businessesThatCanHire) {
-        return businessesThatCanHire.get(random.nextInt(businessesThatCanHire.size()));
-    }
-
-    /**
      * Retrieves a random number of disoccupied people to be hired by the business.
+     * Filters out people who live in the same zone as the business.
      * 
      * @param business the business that will hire the people.
      * @return the list of people to be hired.
@@ -113,11 +83,18 @@ public class EmployymentOfficeManager {
     private List<DynamicPerson> getPeopleToHire(Business business) {
         int availableSpots = business.getMaxEmployees() - business.getEmployees().size();
         List<DynamicPerson> disoccupiedPeople = employymentOffice.getDisoccupiedPeople();
-        int maxPeopleToHire = Math.min(availableSpots, disoccupiedPeople.size());
+        
+        // Filter out people who live in the same zone as the business
+        List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
+            .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
+            .collect(Collectors.toList());
+        
+        int minPeopleToHire = Math.min(4, availableSpots); 
+        int maxPeopleToHire = Math.min(availableSpots, eligiblePeople.size());
 
-        if (maxPeopleToHire > 0) {
-            int peopleToHireCount = random.nextInt(maxPeopleToHire) + 1;
-            return disoccupiedPeople.stream()
+        if (maxPeopleToHire >= minPeopleToHire) {
+            int peopleToHireCount = random.nextInt(maxPeopleToHire - minPeopleToHire + 1) + minPeopleToHire;
+            return eligiblePeople.stream()
                 .limit(peopleToHireCount)
                 .collect(Collectors.toList());
         }
@@ -133,20 +110,19 @@ public class EmployymentOfficeManager {
     private void hirePeople(Business business, List<DynamicPerson> peopleToHire) {
         peopleToHire.forEach(person -> {
             business.hire(new Employee(person, business));
-            System.out.println("Hiring person: " + person.getPersonData().name() + " to business: " + business.getRevenue());
 
             employymentOffice.removeDisoccupiedPerson(person);
         });
     }
 
     /**
-     * Retrieves a list of employees that should be fired.
+     * Retrieves a list of employees that should be fired from the specified business.
      * 
+     * @param business the business to check for employees to fire.
      * @return the list of employees to be fired.
      */
-    private List<Employee> getEmployeesToFire() {
-        return businesses.stream()
-            .flatMap(business -> business.getEmployees().stream())
+    private List<Employee> getEmployeesToFire(Business business) {
+        return business.getEmployees().stream()
             .filter(this::shouldFire)
             .collect(Collectors.toList());
     }
@@ -161,5 +137,14 @@ public class EmployymentOfficeManager {
             employymentOffice.addDisoccupiedPerson(employee.getPerson());
             employee.getBusiness().fire(employee);
         });
+    }
+    /**
+     * Handles the starting hiring process for employees.
+     * 
+     * 
+     */
+    private void handleEmployeeHiringStart() {
+
+        
     }
 }
