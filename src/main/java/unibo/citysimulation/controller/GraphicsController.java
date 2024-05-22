@@ -39,9 +39,13 @@ public class GraphicsController implements ClockObserver {
             graphicsModel.getPeopleStateCounts(cityModel.getAllPeople()), 
             graphicsModel.getTransportLinesCongestion(cityModel.getTransportLines()),
 
-            graphicsModel.getBusinessesOccupation(cityModel.getBusinesses()), //
+            graphicsModel.getBusinessesOccupation(cityModel.getBusinesses()),
+
+
+
 
             graphicsModel.getCounter());
+            System.out.println(cityModel.getTransportLines().stream().map(t -> "PERSONE PRESENTI : " + t.getPersonInLine()).collect(Collectors.toList()));
         
     }
 }
