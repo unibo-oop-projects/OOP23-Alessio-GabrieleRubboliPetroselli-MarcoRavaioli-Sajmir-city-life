@@ -5,8 +5,6 @@ import unibo.citysimulation.view.StyledPanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +22,7 @@ public class MapPanel extends StyledPanel {
     /**
      * Constructs a MapPanel with the specified background color.
      */
-    public MapPanel() {
+    public MapPanel(Color bgColor){
         super(bgColor);
     }
 

@@ -40,7 +40,7 @@ public class WindowView extends JFrame {
         setLayout(new BorderLayout());
 
         // Creiamo i componenti
-        mapPanel = new MapPanel();
+        mapPanel = new MapPanel(Color.WHITE);
         infoPanel = new InfoPanel(Color.GREEN);
         clockPanel = new ClockPanel(Color.RED);
         inputPanel = new InputPanel(new Color(50,50,50));
