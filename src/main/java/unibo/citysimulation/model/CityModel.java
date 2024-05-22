@@ -53,6 +53,7 @@ public class CityModel {
     private int frameHeight;
 
     private static final Random random = new Random();
+    private int totalBusinesses;
 
 
 
@@ -71,6 +72,7 @@ public class CityModel {
         this.businesses = new ArrayList<>();
 
         this.employymentOffice = new EmployymentOffice();
+        
 
     
     }
@@ -119,6 +121,8 @@ public class CityModel {
         ZoneTableCreation.createAndAddPairs(zones, transports);
 
 
+        int numberOfPeople = getInputModel().getNumberOfPeople();
+        calculateTotalBusinesses(numberOfPeople);
         // Create businesses
         createBusinesses();
 
@@ -154,13 +158,35 @@ public class CityModel {
         
     }
 
-    private final void createBusinesses() {
-        int businessNum = 25;
-        for (int i = 0; i < businessNum; i++) {
-            BusinessFactory.getRandomBusiness(zones).ifPresent(business -> {
+    public final void createBusinesses() {
+        int remainingBusinesses = totalBusinesses;
+
+    for (Zone zone : zones) {
+        int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
+        remainingBusinesses -= zoneBusinessCount;
+
+        for (int i = 0; i < zoneBusinessCount; i++) {
+            BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(business -> {
                 businesses.add(business);
             });
         }
+    }
+
+    for (int i = 0; remainingBusinesses > 0 && i < zones.size(); i++) {
+        Zone zone = zones.get(i);
+        BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(business -> {
+            businesses.add(business);
+        });
+        remainingBusinesses--;
+    }
+    }
+
+    public void calculateTotalBusinesses(int numberOfPeople) {
+        this.totalBusinesses = numberOfPeople / 10;
+    }
+
+    public int getTotalBusinesses() {
+        return this.totalBusinesses;
     }
     
 
