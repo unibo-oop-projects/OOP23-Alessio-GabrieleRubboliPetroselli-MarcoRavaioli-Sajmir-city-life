@@ -17,12 +17,13 @@ import java.awt.GridLayout;
  * Panel for displaying the clock and controlling simulation speed.
  */
 public class ClockPanel extends StyledPanel {
+    private static final long serialVersionUID = 1L;
     private final JLabel timeDay = new JLabel("Day: 1", SwingConstants.CENTER);
     private final JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
     private final JButton speedButton;
     private final JButton pauseButton;
     private final int[] speeds = ConstantAndResourceLoader.SPEEDS;
-    private int currentSpeedIndex = 0;
+    private int currentSpeedIndex;
 
     /**
      * Constructs a ClockPanel with the specified background color.

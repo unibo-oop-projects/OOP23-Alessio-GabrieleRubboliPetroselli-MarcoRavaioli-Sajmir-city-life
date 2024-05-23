@@ -55,4 +55,6 @@ public final class ConstantAndResourceLoader extends ClassLoader{
     public static final int WELCOME_SCREEN_MIN_WIDTH = 400;
 
     public static final int WELCOME_SCREEN_MIN_HEIGHT = 200;
+
+    public static final int INFO_PANEL_FONT_SIZE = 20;
 }
