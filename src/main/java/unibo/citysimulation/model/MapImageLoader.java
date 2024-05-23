@@ -28,7 +28,7 @@ public class MapImageLoader {
      */
     private void loadMapImage() {
         try {
-            URL imageUrl = getClass().getResource("/unibo/citysimulation/image3.png");
+            final URL imageUrl = getClass().getResource("/unibo/citysimulation/image3.png");
             if (imageUrl != null) {
                 image = ImageIO.read(imageUrl);
             } else {
@@ -44,7 +44,7 @@ public class MapImageLoader {
      *
      * @param e The IOException instance representing the error.
      */
-    private void handleImageLoadError(IOException e) {
+    private void handleImageLoadError(final IOException e) {
         JOptionPane.showMessageDialog(null, "Error loading map image: " + e.getMessage(), "Error",
             JOptionPane.ERROR_MESSAGE);
     }
