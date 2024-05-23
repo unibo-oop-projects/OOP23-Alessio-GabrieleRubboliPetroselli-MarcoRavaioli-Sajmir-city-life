@@ -1,11 +1,23 @@
 package unibo.citysimulation;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Represents the welcome screen of the application.
+ */
 public class WelcomeScreen extends JFrame {
+    /**
+     * Constructs a WelcomeScreen object.
+     */
     public WelcomeScreen() {
     // Set the title of the window
     setTitle("Welcome to city-simulation");

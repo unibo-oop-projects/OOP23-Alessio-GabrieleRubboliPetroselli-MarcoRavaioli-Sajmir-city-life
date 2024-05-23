@@ -13,11 +13,8 @@ public final class SimulationLauncher {
      * Starts the simulation by initializing the model, view, and controller.
      */
     public void start() {
-
         final CityModel cityModel = new CityModel();
-        
         final WindowView windowView = new WindowView();
-        
         new WindowController(windowView, cityModel);
     }
 }
