@@ -23,7 +23,7 @@ public class CloclObserverBusiness implements ClockObserver{
      */
     public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
         this.businesses = businesses;
-        this.employmentManager = new EmployymentOfficeManager(businesses, employymentOffice);
+        this.employmentManager = new EmployymentOfficeManager(employymentOffice);
 
         
     }
@@ -36,7 +36,7 @@ public class CloclObserverBusiness implements ClockObserver{
      */
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
-        for (Business business : businesses) {
+        for (final Business business : businesses) {
             if (currentTime.equals(business.getOpLocalTime())) {
                 employmentManager.handleEmployeeHiring(business);
             }
@@ -45,7 +45,7 @@ public class CloclObserverBusiness implements ClockObserver{
             }
         }
 
-        for (Business business : businesses) {
+        for (final Business business : businesses) {
             business.checkEmployeeDelays(currentTime);
         }
     }
