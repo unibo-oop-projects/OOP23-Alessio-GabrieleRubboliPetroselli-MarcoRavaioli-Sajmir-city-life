@@ -142,5 +142,6 @@ public class StaticPersonImpl implements StaticPerson {
             }
             tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
         }
+        System.out.println("in getTrip: " + tripDuration);
     }
 }

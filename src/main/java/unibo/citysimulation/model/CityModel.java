@@ -114,7 +114,10 @@ public class CityModel {
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
 
         // Create zone table
+
+
         ZoneTableCreation.createAndAddPairs(zones, transports);
+        
 
 
         final int numberOfPeople = getInputModel().getNumberOfPeople();
