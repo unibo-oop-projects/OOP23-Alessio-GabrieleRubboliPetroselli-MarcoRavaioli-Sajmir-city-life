@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
  * Represents the welcome screen of the application.
  */
 public class WelcomeScreen extends JFrame {
+    private static final long serialVersionUID = 1L;
     /**
      * Constructs a WelcomeScreen object.
      */
