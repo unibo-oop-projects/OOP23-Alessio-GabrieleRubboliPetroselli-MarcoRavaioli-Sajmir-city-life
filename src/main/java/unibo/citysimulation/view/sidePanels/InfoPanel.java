@@ -1,48 +1,40 @@
 package unibo.citysimulation.view.sidepanels;
 
-import unibo.citysimulation.model.transport.TransportFactory;
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
- * Panel for displaying information.
+ * Panel that displays information about the zone clicked.
  */
-public class InfoPanel extends StyledPanel {
-    private JLabel coordinates;
-    private JLabel numberOfPeople;
-    private JLabel zoneNJLabel;
-    private JLabel numberOfBusiness;
-    private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW, Color.PINK, Color.CYAN);
-    private List<TransportLine> transportLines;
-    private List<Zone> zones = ZoneFactory.createZonesFromFile();
+public final class InfoPanel extends StyledPanel {
+    private static final long serialVersionUID = 1L;
+    private final JLabel coordinates;
+    private final JLabel numberOfPeople;
+    private final JLabel zoneNJLabel;
+    private final JLabel numberOfBusiness;
 
     /**
      * Constructs an InfoPanel with the specified background color.
      *
      * @param bgColor The background color of the panel.
      */
-    public InfoPanel(Color bgColor) {
+    public InfoPanel(final Color bgColor) {
         super(bgColor);
-        //private List<Zone> zones = ZoneFactory.createZonesFromFile();
-        this.transportLines = TransportFactory.createTransportsFromFile(zones);
-        
 
         // Set the layout manager to GridBagLayout
         setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
 
         // Create a JLabel with the desired text
         zoneNJLabel = new JLabel("Zone:", SwingConstants.CENTER); // Align the text to the center
-        zoneNJLabel.setFont(new Font("Arial", Font.BOLD, 20)); // Set the font of the text
-
+        zoneNJLabel.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.INFO_PANEL_FONT_SIZE));
 
         // Add the JLabel to the panel
         gbc.gridx = 0;
@@ -51,15 +43,12 @@ public class InfoPanel extends StyledPanel {
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         add(zoneNJLabel, gbc);
-
         coordinates = new JLabel("Coordinates: ");
         gbc.gridy = 1;
         add(coordinates, gbc);
-
         numberOfPeople = new JLabel("Number of People: ");
         gbc.gridy = 2;
         add(numberOfPeople, gbc);
-        
         numberOfBusiness = new JLabel("Number of Business: ");
         gbc.gridy = 3;
         add(numberOfBusiness, gbc);
@@ -70,9 +59,8 @@ public class InfoPanel extends StyledPanel {
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      */
-    public void updatePositionInfo(int x, int y){
+    public void updatePositionInfo(final int x, final int y) {
         coordinates.setText("Coordinates: (" + x + ", " + y + ")");
-        System.out.println("Coordinates: (" + x + ", " + y + ")");
     }
 
     /**
@@ -80,15 +68,25 @@ public class InfoPanel extends StyledPanel {
      *
      * @param peopleNumber The number of people.
      */
-    public void updateNumberOfPeople(int peopleNumber){
+    public void updateNumberOfPeople(final int peopleNumber) {
         numberOfPeople.setText("Number of People: " + peopleNumber);
     }
 
-    public void updateZoneName(String zoneName){
+    /**
+     * Updates the zone name displayed on the panel.
+     *
+     * @param zoneName The name of the zone.
+     */
+    public void updateZoneName(final String zoneName) {
         zoneNJLabel.setText("Zone: " + zoneName);
     }
 
-    public void updateNumberOfBusiness(int businessNumber){
+    /**
+     * Updates the number of businesses displayed on the panel.
+     *
+     * @param businessNumber The number of businesses.
+     */
+    public void updateNumberOfBusiness(final int businessNumber) {
         numberOfBusiness.setText("Number of Business: " + businessNumber);
     }
 }

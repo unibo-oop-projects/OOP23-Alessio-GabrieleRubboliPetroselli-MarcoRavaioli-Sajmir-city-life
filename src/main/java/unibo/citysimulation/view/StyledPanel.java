@@ -10,6 +10,7 @@ import java.awt.Color;
  * Represents a styled panel with a background color.
  */
 public class StyledPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
     private static Color bgColor;
 
     /**
