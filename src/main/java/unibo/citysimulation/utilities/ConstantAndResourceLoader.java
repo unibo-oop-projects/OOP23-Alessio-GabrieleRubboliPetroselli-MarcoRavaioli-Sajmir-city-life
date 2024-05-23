@@ -51,4 +51,8 @@ public final class ConstantAndResourceLoader extends ClassLoader{
     public static final int CLOCK_PANEL_PANEL_HEIGHT = 50;
 
     public static final int CLOCK_PANEL_FONT_SIZE = 15;
+
+    public static final int WELCOME_SCREEN_MIN_WIDTH = 400;
+
+    public static final int WELCOME_SCREEN_MIN_HEIGHT = 200;
 }

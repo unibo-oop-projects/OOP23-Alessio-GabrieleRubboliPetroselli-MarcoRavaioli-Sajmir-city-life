@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -27,7 +30,8 @@ public class WelcomeScreen extends JFrame {
     // Set the layout manager to BorderLayout
     setLayout(new BorderLayout());
 
-    setMinimumSize(new Dimension(400, 200));
+    setMinimumSize(new Dimension(ConstantAndResourceLoader.WELCOME_SCREEN_MIN_WIDTH,
+            ConstantAndResourceLoader.WELCOME_SCREEN_MIN_HEIGHT));
 
     // Create a JLabel with the welcome message
     final JLabel welcomeLabel = new JLabel("Welcome to city-simulation", SwingConstants.CENTER);
@@ -71,26 +75,29 @@ public class WelcomeScreen extends JFrame {
         public void actionPerformed(final ActionEvent e) {
             // Show the about dialog
             JOptionPane.showMessageDialog(WelcomeScreen.this,
-                    "City-simulation is a project developed by the students of the Software Engineering course at the University of Bologna.\n" +
-                            "The project aims to simulate a city and its traffic, with the goal of improving the quality of life of its citizens.\n" +
-                            "The project is open-source and can be found on GitHub");
+                    "City-simulation is a project developed by the students of the Software Engineering course "
+                            + "at the University of Bologna.\n"
+                            + "The project aims to simulate a city and its traffic, with the goal of improving the "
+                            + "quality of life of its citizens.\n"
+                            + "The project is open-source and can be found on GitHub");
         }
     });
-
     buttonPanel.add(aboutButton);
-    
-
-
     // Set the default close operation
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // Set the size of the window
-    setSize(400, 200);
+    setSize(ConstantAndResourceLoader.WELCOME_SCREEN_MIN_WIDTH, ConstantAndResourceLoader.WELCOME_SCREEN_MIN_HEIGHT);
 
     // Center the window on the screen
     setLocationRelativeTo(null);
     }
 
+    /**
+     * The main method of the application.
+     *
+     * @param args The command-line arguments.
+     */
     public static void main(final String[] args) {
 
     // Create and show the welcome screen

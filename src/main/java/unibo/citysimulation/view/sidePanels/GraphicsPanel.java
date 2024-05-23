@@ -58,7 +58,7 @@ public class GraphicsPanel extends StyledPanel {
                 .collect(Collectors.toList());
     
         JPanel chartsPanel = new JPanel();
-        chartsPanel.setBackground(bgColor);
+        chartsPanel.setBackground(super.getBgColor());
         chartsPanel.setLayout(new GridLayout(plots.size(), 1)); // 1 colonna, tante righe quante sono i grafici
     
         synchronized (this) {
