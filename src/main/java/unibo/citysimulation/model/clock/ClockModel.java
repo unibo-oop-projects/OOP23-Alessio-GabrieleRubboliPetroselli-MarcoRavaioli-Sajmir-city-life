@@ -1,194 +1,90 @@
 package unibo.citysimulation.model.clock;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Timer;
-import java.util.TimerTask;
-import unibo.citysimulation.utilities.ConstantAndResourceLoader;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Represents the clock model for the simulation.
+ * This model has the responsibility to manage the simulation time.
+ * It can start, pause, stop and restart the simulation.
+ * It can also change the speed of the simulation.
  */
-public class ClockModel {
-
-    private final int totalDays;
-    private int hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
-    private Timer timer;
-    private int currentDay;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-    private LocalTime currentTime;
-    private final List<ClockObserver> observers;
-    private boolean isPaused;
-
-    /**
-     * Constructs a ClockModel object with the specified total number of simulation days.
-     * 
-     * @param totalDays The total number of simulation days
-     */
-    public ClockModel(final int totalDays) {
-        this.totalDays = totalDays;
-        this.observers = new ArrayList<>();
-    }
-
+public interface ClockModel {
     /**
      * Adds an observer to the clock model.
      * 
      * @param observer The observer to add
      */
-    public void addObserver(final ClockObserver observer) {
-        observers.add(observer);
-    }
+    void addObserver(ClockObserver observer);
 
     /**
      * Removes an observer from the clock model.
      * 
      * @param observer The observer to remove
      */
-    public void removeObserver(final ClockObserver observer) {
-        observers.remove(observer);
-    }
+    void removeObserver(ClockObserver observer);
 
     /**
      * Starts the simulation with the specified hour duration.
      * 
      * @param hourDuration The duration of each simulated hour in milliseconds
      */
-    public void startSimulation(final int hourDuration) {
-        if (timer != null) {
-            timer.cancel();
-        }
-        this.hourDuration = hourDuration;
-        this.timer = new Timer();
-        final TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                if (!isPaused) {
-                    if (currentDay <= totalDays) {
-                        currentTime = currentTime.plusMinutes(ConstantAndResourceLoader.MINUTES_IN_A_SECOND); 
-                        if (currentTime.getHour() == 0 && currentTime.getMinute() == 0) {
-                            currentDay++;
-                        }
-                        notifyObservers();
-                    } else {
-                        timer.cancel();
-                    }
-                }
-            }
-        };
-        timer.scheduleAtFixedRate(task, 0, hourDuration);
-    }
+    void startSimulation(int hourDuration);
 
     /**
-     * Restarts the simulation.
+     * Pauses the simulation.
      */
-    public void restartSimulation() {
-        if (timer != null) {
-            timer.cancel();
-        }
-        isPaused = false;
-        currentTime = LocalTime.of(0, 0);
-        currentDay = 1;
-        this.startSimulation(hourDuration);
-    }
+    void pauseSimulation();
 
     /**
-     * Pauses or resumes the simulation.
+     * Stops the simulation and makes possible to change input value.
      */
-    public void pauseSimulation() {
-        isPaused = !isPaused;
-    }
+    void stopSimulation();
 
     /**
-     * Stops the simulation and permits the user to change input values.
-     */
-    public void stopSimulation() {
-        if (timer != null) {
-            timer.cancel();
-        }
-        isPaused = true;
-    }
-
-    /**
-     * Notifies all observers of a time update.
-     */
-    private void notifyObservers() {
-        final List<ClockObserver> observersCopy = new ArrayList<>(observers);
-        for (final ClockObserver observer : observersCopy) {
-            observer.onTimeUpdate(currentTime, currentDay);
-        }
-    } 
-
-    /**
-     * Gets the current time of the simulation.
+     * Sets the current hourDuration of the simulation.
      * 
-     * @return The current time
+     * @param hourDuration The new hourDuration of the simulation
      */
-    public LocalTime getCurrentTime() {
-        return currentTime;
-    }
+    void setHourDuration(int hourDuration);
 
     /**
-     * Gets the formatted current time of the simulation.
-     * 
-     * @return The formatted current time
+     * re-start the simulation with the same hourDuration.
      */
-    public String getFormattedCurrentTime() {
-        return currentTime.format(formatter);
-    }
+    void restartSimulation();
 
     /**
-     * Gets the current time of the simulation as a double.
-     * 
-     * @return The current time as a double
+     * @return The current hour duration of the simulation.
      */
-    public double getDoubleCurrentTime() {
-        return (double) currentTime.toSecondOfDay();
-    }
+    int getHourDuration();
 
     /**
-     * Gets the current day of the simulation.
-     * 
-     * @return The current day
+     * @return The current day of the simulation.
      */
-    public int getCurrentDay() {
-        return currentDay;
-    }
+    int getCurrentDay();
 
     /**
-     * Gets the hour duration of the simulation.
-     * 
-     * @return The hour duration
+     * @return The current time of the simulation.
      */
-    public int getHourDuration() {
-        return hourDuration;
-    }
+    LocalTime getCurrentTime();
 
     /**
-     * Sets the hour duration of the simulation.
-     * 
-     * @param hourDuration The hour duration to set
+     * @return a boolean indicating either the simulation is paused or not.
      */
-    public void setHourDuration(final int hourDuration) {
-        this.hourDuration = hourDuration;
-    }
+    boolean isPaused();
 
     /**
-     * Gets the paused state of the simulation.
-     * 
-     * @return True if the simulation is paused, false otherwise
+     * @return the current time formatted as a string.
      */
-    public boolean isPaused() {
-        return isPaused;
-    }
+    String getFormattedCurrentTime();
 
     /**
-     * Gets the timer of the simulation.
-     * 
-     * @return The timer
+     * @return the current time as a double.
      */
-    public Timer getTimer() {
-        return timer;
-    }
+    double getDoubleCurrentTime();
+
+    /**
+     * @return the timer of the simulation.
+     */
+    Timer getTimer();
 }
