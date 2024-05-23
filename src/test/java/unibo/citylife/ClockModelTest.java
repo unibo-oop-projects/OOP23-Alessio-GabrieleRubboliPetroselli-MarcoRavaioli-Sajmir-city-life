@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import unibo.citysimulation.model.clock.ClockModel;
+import unibo.citysimulation.model.clock.ClockModelImpl;
 import unibo.citysimulation.model.clock.ClockObserver;
 
 import java.time.LocalTime;
@@ -18,7 +19,7 @@ public class ClockModelTest {
 
     @BeforeEach
     void setUp() {
-        clockModel = new ClockModel(totalDays);
+        clockModel = new ClockModelImpl(totalDays);
     }
 
     @Test

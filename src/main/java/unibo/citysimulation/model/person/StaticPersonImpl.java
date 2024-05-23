@@ -14,7 +14,7 @@ public class StaticPersonImpl implements StaticPerson {
     private Optional<Pair<Integer, Integer>> position;
     private final PersonData personData;
     private PersonState state;
-    private Pair<Integer, Integer> homePosition;
+    private final Pair<Integer, Integer> homePosition;
     private TransportLine[] transportLine;
     private int tripDuration;
 
@@ -142,6 +142,5 @@ public class StaticPersonImpl implements StaticPerson {
             }
             tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
         }
-        System.out.println("in getTrip: " + tripDuration);
     }
 }

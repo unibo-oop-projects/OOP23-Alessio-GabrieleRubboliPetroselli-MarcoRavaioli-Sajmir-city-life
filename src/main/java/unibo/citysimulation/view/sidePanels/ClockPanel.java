@@ -3,8 +3,16 @@ package unibo.citysimulation.view.sidepanels;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+
 /**
  * Panel for displaying the clock and controlling simulation speed.
  */
@@ -25,16 +33,18 @@ public class ClockPanel extends StyledPanel {
         super(bgColor);
         speedButton = new JButton("1x");
         speedButton.setForeground(Color.black);
-        speedButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+        speedButton.setPreferredSize(new Dimension(ConstantAndResourceLoader.CLOCK_PANEL_PANEL_WIDTH,
+                ConstantAndResourceLoader.CLOCK_PANEL_PANEL_HEIGHT)); // Set the preferred size
 
         pauseButton = new JButton("Pause");
         pauseButton.setForeground(Color.black);
-        pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+        pauseButton.setPreferredSize(new Dimension(ConstantAndResourceLoader.CLOCK_PANEL_PANEL_WIDTH,
+                ConstantAndResourceLoader.CLOCK_PANEL_PANEL_HEIGHT)); // Set the preferred size
 
         final JPanel timePanel = new JPanel(new GridLayout(2, 1));
         timePanel.setBackground(Color.RED);
-        timeDay.setFont(new Font("Arial", Font.BOLD, 15));
-        timeHour.setFont(new Font("Arial", Font.BOLD, 15));
+        timeDay.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.CLOCK_PANEL_FONT_SIZE));
+        timeHour.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.CLOCK_PANEL_FONT_SIZE));
         timePanel.add(timeDay);
         timePanel.add(timeHour);
 

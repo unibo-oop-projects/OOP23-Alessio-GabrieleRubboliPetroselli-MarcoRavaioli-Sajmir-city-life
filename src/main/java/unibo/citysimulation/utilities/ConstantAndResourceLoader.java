@@ -18,6 +18,8 @@ public final class ConstantAndResourceLoader extends ClassLoader{
 
     public static final int TIME_UPDATE_RATE = 500;
 
+    public static final int SIMULATION_TOTAL_DAYS = 365;
+
     public static final int[] SPEEDS = {1, 2, 10, 20};
     /**
      * Screen minimum size pixel
@@ -43,4 +45,10 @@ public final class ConstantAndResourceLoader extends ClassLoader{
     public static final int MAX_RANDOM_AGE = 62;
 
     public static final int MIN_AGE = 18;
+
+    public static final int CLOCK_PANEL_PANEL_WIDTH = 100;
+
+    public static final int CLOCK_PANEL_PANEL_HEIGHT = 50;
+
+    public static final int CLOCK_PANEL_FONT_SIZE = 15;
 }

@@ -46,14 +46,7 @@ public class WelcomeScreen extends JFrame {
 
             // Start the simulation
             final SimulationLauncher simulationLauncher = new SimulationLauncher();
-            try {
-                final java.lang.reflect.Method method = SimulationLauncher.class.getMethod("start");
-                if (method != null) {
-                    method.invoke(simulationLauncher);
-                }
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+            simulationLauncher.start();
         }
     });
     buttonPanel.add(startButton);
@@ -72,10 +65,10 @@ public class WelcomeScreen extends JFrame {
     // Add the button panel to the window
     add(buttonPanel, BorderLayout.SOUTH);
 
-    JButton aboutButton = new JButton("ABOUT");
+    final JButton aboutButton = new JButton("ABOUT");
     aboutButton.addActionListener(new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
             // Show the about dialog
             JOptionPane.showMessageDialog(WelcomeScreen.this,
                     "City-simulation is a project developed by the students of the Software Engineering course at the University of Bologna.\n" +
