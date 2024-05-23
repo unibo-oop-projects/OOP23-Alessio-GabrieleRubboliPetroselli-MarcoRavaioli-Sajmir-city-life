@@ -13,15 +13,17 @@ public class MediumBusiness extends Business {
      * Sets the opening time, closing time, revenue, maximum number of employees,
      * maximum age, minimum age, and maximum tardiness based on the configuration
      * values defined in the BusinessConfig class.
+     *
+     * @param zone the zone where the medium-sized business is located
      */
-    public MediumBusiness(Zone zone) {
+    public MediumBusiness(final Zone zone) {
         super(zone);
-        this.opLocalTime = BusinessConfig.MEDIUM_OPENING_TIME;
-        this.clLocalTime = BusinessConfig.MEDIUM_CLOSING_TIME;
-        this.revenue = BusinessConfig.MEDIUM_REVENUE;
-        this.maxEmployees = BusinessConfig.MAX_EMPLOYEES_MEDIUM_BUSINESS;
-        this.maxAge = BusinessConfig.MEDIUM_MAX_AGE;
-        this.minAge = BusinessConfig.MEDIUM_MIN_AGE;
-        this.maxTardiness = BusinessConfig.MEDIUM_MAX_TARDINESS;
+        setOpLocalTime(BusinessConfig.MEDIUM_OPENING_TIME);
+        setClLocalTime(BusinessConfig.MEDIUM_CLOSING_TIME);
+        setRevenue(BusinessConfig.MEDIUM_REVENUE);
+        setMaxEmployees(BusinessConfig.MAX_EMPLOYEES_MEDIUM_BUSINESS);
+        setMaxAge(BusinessConfig.MEDIUM_MAX_AGE);
+        setMinAge(BusinessConfig.MEDIUM_MIN_AGE);
+        setMaxTardiness(BusinessConfig.MEDIUM_MAX_TARDINESS);
     }
 }
