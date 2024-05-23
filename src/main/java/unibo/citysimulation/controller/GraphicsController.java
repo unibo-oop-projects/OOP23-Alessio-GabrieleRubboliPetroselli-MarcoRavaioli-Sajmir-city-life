@@ -13,22 +13,22 @@ import unibo.citysimulation.view.sidePanels.LegendPanel;
 import java.util.stream.Collectors;
 
 public class GraphicsController implements ClockObserver {
-    private CityModel cityModel;
-    private GraphicsModel graphicsModel;
+    private final CityModel cityModel;
+    private final GraphicsModel graphicsModel;
     
-    public GraphicsController(CityModel cityModel, GraphicsPanel graphicsPanel) {
+    public GraphicsController(final CityModel cityModel, final GraphicsPanel graphicsPanel) {
         this.cityModel = cityModel;
         graphicsModel = cityModel.getGraphicsModel();
 
         initialize(graphicsPanel);
     }
 
-    private void initialize(GraphicsPanel graphicsPanel) {
+    private void initialize(final GraphicsPanel graphicsPanel) {
         cityModel.getClockModel().addObserver(this);
 
         graphicsPanel.getLegendButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 new LegendPanel(graphicsPanel.getColors(), cityModel.getTransportLines().stream().map(t -> t.getName()).collect(Collectors.toList()));
             }
         });
@@ -37,7 +37,7 @@ public class GraphicsController implements ClockObserver {
     }
 
     @Override
-    public void onTimeUpdate(LocalTime currentTime, int currentDay) {
+    public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         graphicsModel.updateDataset(
             graphicsModel.getPeopleStateCounts(cityModel.getAllPeople()), 
             graphicsModel.getTransportLinesCongestion(cityModel.getTransportLines()),
