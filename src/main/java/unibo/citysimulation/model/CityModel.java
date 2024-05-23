@@ -114,7 +114,10 @@ public class CityModel {
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
 
         // Create zone table
+
+
         ZoneTableCreation.createAndAddPairs(zones, transports);
+        
 
 
         final int numberOfPeople = getInputModel().getNumberOfPeople();
@@ -271,5 +274,16 @@ public class CityModel {
         return this.frameHeight;
     }
 
-    
+    public int getPeopleInZone(String zoneName) {
+        return (int) people.stream()
+                           .flatMap(List::stream)
+                           .filter(p -> p.getPersonData().residenceZone().name().equals(zoneName))
+                           .count();
+    }
+
+    public int getBusinessesInZone(String zoneName) {
+        return (int) businesses.stream()
+                               .filter(b -> b.getZone().name().equals(zoneName))
+                               .count();
+    }
 }

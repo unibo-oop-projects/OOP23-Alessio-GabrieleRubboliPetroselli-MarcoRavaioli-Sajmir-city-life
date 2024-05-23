@@ -15,13 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * Panel for displaying graphics.
  */
 public class GraphicsPanel extends StyledPanel {
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
-            Color.PINK, Color.CYAN);
+            Color.PINK, Color.CYAN);        // da mettere nel model
+    private final JButton legendButton;
     private List<XYPlot> plots;
 
     /**
@@ -31,6 +33,22 @@ public class GraphicsPanel extends StyledPanel {
      */
     public GraphicsPanel(Color bgColor) {
         super(bgColor);
+
+        
+        this.legendButton = new JButton("?");
+        this.legendButton.setPreferredSize(new Dimension(70, 40)); // Set the preferred size of the button to make it small
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Create a new panel for the button
+        bottomPanel.setBackground(bgColor);
+        bottomPanel.add(this.legendButton); // Add the button to the panel
+    
+        // Add the bottom panel to this panel
+        this.setLayout(new BorderLayout()); // Set layout of GraphicsPanel
+        this.add(bottomPanel, BorderLayout.SOUTH); // Add the panel to the SOUTH position
+    }
+
+    public JButton getLegendButton(){
+        return this.legendButton;
     }
 
     public void createGraphics(List<String> names, List<XYSeriesCollection> datasets) {
@@ -38,15 +56,19 @@ public class GraphicsPanel extends StyledPanel {
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
                 .collect(Collectors.toList());
-                
-        setLayout(new GridLayout(names.size(), 1));
-
-        
-            plots.forEach(plot -> add(new ChartPanel(plot.getChart())));
-        
-
-        
+    
+        JPanel chartsPanel = new JPanel();
+        chartsPanel.setBackground(bgColor);
+        chartsPanel.setLayout(new GridLayout(plots.size(), 1)); // 1 colonna, tante righe quante sono i grafici
+    
+        synchronized (this) {
+            plots.forEach(plot -> chartsPanel.add(new ChartPanel(plot.getChart())));
+        }
+    
+    
+        this.add(chartsPanel, BorderLayout.CENTER);
     }
+    
 
     public List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
         List<JFreeChart> charts = new ArrayList<JFreeChart>();
@@ -93,5 +115,9 @@ public class GraphicsPanel extends StyledPanel {
             renderer.setSeriesStroke(i, new BasicStroke(2.0f));
         }
         return renderer;
+    }
+
+    public List<Color> getColors(){
+        return colors;
     }
 }
