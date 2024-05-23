@@ -1,19 +1,11 @@
 package unibo.citysimulation.model.zone;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Optional;
-
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ZoneTable {
     private static ZoneTable instance;
@@ -52,3 +44,4 @@ public class ZoneTable {
                              .sum();
     }
 }
+

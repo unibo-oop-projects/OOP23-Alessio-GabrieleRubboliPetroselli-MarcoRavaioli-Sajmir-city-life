@@ -14,8 +14,8 @@ import unibo.citysimulation.view.sidePanels.InputPanel;
  * Controller class responsible for managing the clock and its interactions with the user interface.
  */
 public class ClockController implements ClockObserver {
-    private ClockPanel clockPanel;
-    private ClockModel clockModel;
+    private final ClockPanel clockPanel;
+    private final ClockModel clockModel;
 
     /**
      * Constructs a ClockController object.
