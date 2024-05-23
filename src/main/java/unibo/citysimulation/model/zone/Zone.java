@@ -2,7 +2,6 @@ package unibo.citysimulation.model.zone;
 
 import java.util.Random;
 
-import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.utilities.Pair;
 
 public record Zone(String name, float personPercents, float businessPercents, Pair<Integer, Integer> wellfareMinMax,

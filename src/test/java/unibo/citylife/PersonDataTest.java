@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PersonDataTest {
     private List<Zone> zones = ZoneFactory.createZonesFromFile();
-    private List<Business> businesses = BusinessFactory.createBusinessesFromFile(zones);
+    private List<Business> businesses = BusinessFactory.createBusiness(null, null);
     private Random random = new Random();
     
 
