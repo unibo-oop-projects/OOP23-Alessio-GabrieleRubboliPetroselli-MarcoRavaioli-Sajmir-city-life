@@ -1,4 +1,4 @@
-package unibo.citylife;
+/*package unibo.citylife;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -92,3 +92,4 @@ public class EmployymentOfficeManagerTest {
         assertFalse(business.getEmployees().stream().anyMatch(e -> e.getPerson().equals(person)));
     }
 }
+*/

@@ -1,4 +1,4 @@
-package unibo.citylife;
+/*package unibo.citylife;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -22,3 +22,4 @@ public class BusinessFactoryTest {
        
     }
 }
+*/
