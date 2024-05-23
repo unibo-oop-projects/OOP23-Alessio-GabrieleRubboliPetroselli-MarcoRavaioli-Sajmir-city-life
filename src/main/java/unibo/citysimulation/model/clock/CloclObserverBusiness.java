@@ -10,11 +10,9 @@ import java.time.LocalTime;
 /**
  * A ClockObserver implementation that handles business-related operations based on time updates.
  */
-public class CloclObserverBusiness implements ClockObserver{
-    
+public class CloclObserverBusiness implements ClockObserver {
     private final List<Business> businesses;
     private final EmployymentOfficeManager employmentManager;
-    
     /**
      * Constructs a CloclObserverBusiness object with the given list of businesses and employment office.
      * 
@@ -24,10 +22,7 @@ public class CloclObserverBusiness implements ClockObserver{
     public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
         this.businesses = businesses;
         this.employmentManager = new EmployymentOfficeManager(employymentOffice);
-
-        
     }
-    
     /**
      * Handles business operations based on the current time and day.
      * 

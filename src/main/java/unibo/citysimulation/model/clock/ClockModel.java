@@ -56,66 +56,58 @@ public class ClockModel {
      * @param hourDuration The duration of each simulated hour in milliseconds.
      */
     public void startSimulation(final int hourDuration) {
-        if(timer!=null){
+        if (timer != null) {
             timer.cancel();
         }
-        
         this.hourDuration = hourDuration;
-
         this.timer = new Timer();
-    
         final TimerTask task = new TimerTask() {
-    
             @Override
             public void run() {
-                if(!isPaused){
+                if (!isPaused) {
                     if (currentDay <= totalDays) {
-                        currentTime = currentTime.plusMinutes(ConstantAndResourceLoader.MINUTES_IN_A_SECOND);
-        
-                        if (currentTime.getHour() == 0 && currentTime.getMinute() == 0){
+                        currentTime = currentTime.plusMinutes(ConstantAndResourceLoader.MINUTES_IN_A_SECOND); 
+                        if (currentTime.getHour() == 0 && currentTime.getMinute() == 0) {
                             currentDay++;
                         }
-    
-                        
                         notifyObservers();
-    
                     } else {
                         timer.cancel();
                     }
-
                 }
-                
             }
         };
-    
         timer.scheduleAtFixedRate(task, 0, hourDuration);
     }
 
     /**
      * Restarts the simulation.
      */
-    public void restartSimulation(){
-        if(timer!=null){
+    public void restartSimulation() {
+        if (timer != null) {
             timer.cancel();
         }
-        isPaused=false;
-        currentTime = LocalTime.of(0,0);
+        isPaused = false;
+        currentTime = LocalTime.of(0, 0);
         currentDay = 1;
         this.startSimulation(hourDuration);
     }
-    
+
     /**
      * Pauses or resumes the simulation.
      */
-    public void pauseSimulation(){
-        isPaused=!isPaused;
+    public void pauseSimulation() {
+        isPaused = !isPaused;
     }
 
-    public void stopSimulation(){
-        if(timer!=null){
+    /**
+     * Stops the simulation and permits the user to change input values.
+     */
+    public void stopSimulation() {
+        if (timer != null) {
             timer.cancel();
         }
-        isPaused=true;
+        isPaused = true;
     }
 
     /**
@@ -126,9 +118,7 @@ public class ClockModel {
         for (final ClockObserver observer : observersCopy) {
             observer.onTimeUpdate(currentTime, currentDay);
         }
-    }
-    
-    
+    } 
 
     /**
      * Gets the current time of the simulation.
@@ -148,6 +138,11 @@ public class ClockModel {
         return currentTime.format(formatter);
     }
 
+    /**
+     * Gets the current time of the simulation as a double.
+     * 
+     * @return The current time as a double.
+     */
     public double getDoubleCurrentTime() {
         return (double) currentTime.toSecondOfDay();
     }
@@ -184,11 +179,16 @@ public class ClockModel {
      * 
      * @return True if the simulation is paused, false otherwise.
      */
-    public boolean isPaused(){
+    public boolean isPaused() {
         return isPaused;
     }
 
-    public Timer getTimer(){
+    /**
+     * Gets the timer of the simulation.
+     * 
+     * @return The timer.
+     */
+    public Timer getTimer() {
         return timer;
     }
 }

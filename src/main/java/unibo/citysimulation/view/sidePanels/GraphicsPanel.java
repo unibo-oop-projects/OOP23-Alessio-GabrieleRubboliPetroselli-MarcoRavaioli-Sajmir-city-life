@@ -1,6 +1,5 @@
 package unibo.citysimulation.view.sidepanels;
 
-import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.view.StyledPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;

@@ -56,7 +56,6 @@ public class ClockController implements ClockObserver {
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         // Update the clock panel text with current time and day
         clockPanel.setClockText(Integer.toString(currentDay), currentTime.toString());
-        
     }
 
     /**
@@ -69,8 +68,6 @@ public class ClockController implements ClockObserver {
 
     /**
      * Sets the simulation speed based on the given speed value.
-     *
-     * @param speed The new simulation speed.
      */
     public void changeClockSpeed() {
         final int speed = clockPanel.changeSpeed();
