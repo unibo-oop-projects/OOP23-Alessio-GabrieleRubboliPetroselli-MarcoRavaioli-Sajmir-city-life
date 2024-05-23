@@ -256,9 +256,7 @@ public class CityModel {
     
 
     public boolean isBusinessesPresent() {
-        final boolean res = this.businesses != null;
-        //System.out.println("Businesses present: " + res);
-        return res;
+        return this.businesses != null;
     }
 
     public void setFrameSize(final Pair<Integer, Integer> frameSize) {
