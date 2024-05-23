@@ -150,8 +150,7 @@ public class CityModel {
             
         }
 
-        EmployymentOfficeManager employmentManager = new EmployymentOfficeManager(businesses, employymentOffice);
-
+        EmployymentOfficeManager employmentManager = new EmployymentOfficeManager(employymentOffice);
 
         
         
