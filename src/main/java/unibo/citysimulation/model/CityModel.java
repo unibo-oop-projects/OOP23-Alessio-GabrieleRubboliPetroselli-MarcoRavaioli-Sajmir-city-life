@@ -7,8 +7,6 @@ import unibo.citysimulation.model.clock.ClockObserverPerson;
 import unibo.citysimulation.model.clock.CloclObserverBusiness;
 import unibo.citysimulation.model.person.DynamicPerson;
 
-
-import unibo.citysimulation.model.business.BusinessType;
 import unibo.citysimulation.model.business.EmployymentOffice;
 import unibo.citysimulation.model.business.EmployymentOfficeManager;
 import unibo.citysimulation.model.person.PersonFactory;
@@ -17,7 +15,6 @@ import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
-import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
@@ -36,17 +33,17 @@ import java.util.Random;
  * Represents the model of the city simulation, containing zones, transports, businesses, and people.
  */
 public class CityModel {
-    private List<Zone> zones;
-    private List<TransportLine> transports;
+    private final List<Zone> zones;
+    private final List<TransportLine> transports;
    
-    private List<Business> businesses;
+    private final List<Business> businesses;
     private List<List<DynamicPerson>> people;
-    private MapModel mapModel;
-    private ClockModel clockModel;
-    private InputModel inputModel;
-    private GraphicsModel graphicsModel;
+    private final MapModel mapModel;
+    private final ClockModel clockModel;
+    private final InputModel inputModel;
+    private final GraphicsModel graphicsModel;
 
-    private EmployymentOffice employymentOffice;
+    private final EmployymentOffice employymentOffice;
     
 
     private int frameWidth;
@@ -82,16 +79,16 @@ public class CityModel {
         return zones.get(random.nextInt(zones.size()));
     }
 
-    public Optional<Zone> getZoneByPosition(Pair<Integer, Integer> position) {
+    public Optional<Zone> getZoneByPosition(final Pair<Integer, Integer> position) {
         return zones.stream()
                 .filter(zone -> isPositionInZone(position, zone))
                 .findFirst();
     }
 
-    private boolean isPositionInZone(Pair<Integer, Integer> position, Zone zone) {
-        int x = position.getFirst();
-        int y = position.getSecond();
-        Boundary boundary = zone.boundary();
+    private boolean isPositionInZone(final Pair<Integer, Integer> position, final Zone zone) {
+        final int x = position.getFirst();
+        final int y = position.getSecond();
+        final Boundary boundary = zone.boundary();
         return x >= boundary.getX() && x <= (boundary.getX() + boundary.getWidth())
                 && y >= boundary.getY() && y <= (boundary.getY() + boundary.getHeight());
     }
@@ -127,7 +124,7 @@ public class CityModel {
         this.people = new ArrayList<>();
         people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
-        for (List<DynamicPerson> group : people) {
+        for (final List<DynamicPerson> group : people) {
             for (DynamicPerson person : group) {
                 employymentOffice.addDisoccupiedPerson(person);
             }

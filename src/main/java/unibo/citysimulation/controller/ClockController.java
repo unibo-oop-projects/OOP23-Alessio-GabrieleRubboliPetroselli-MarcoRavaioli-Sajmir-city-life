@@ -22,9 +22,8 @@ public class ClockController implements ClockObserver {
      *
      * @param clockModel The ClockModel object representing the clock.
      * @param clockPanel The ClockPanel object representing the clock user interface.
-     * @param inputPanel The InputPanel object representing the input user interface.
      */
-    public ClockController(ClockModel clockModel, ClockPanel clockPanel, InputPanel inputPanel) {
+    public ClockController(ClockModel clockModel, ClockPanel clockPanel) {
         this.clockPanel = clockPanel;
         this.clockModel = clockModel;
 
@@ -55,7 +54,7 @@ public class ClockController implements ClockObserver {
      * @param currentDay  The current day.
      */
     @Override
-    public void onTimeUpdate(LocalTime currentTime, int currentDay) {
+    public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         // Update the clock panel text with current time and day
         clockPanel.setClockText(Integer.toString(currentDay), currentTime.toString());
         
@@ -75,7 +74,7 @@ public class ClockController implements ClockObserver {
      * @param speed The new simulation speed.
      */
     public void changeClockSpeed() {
-        int speed = clockPanel.changeSpeed();
+        final int speed = clockPanel.changeSpeed();
         // Start the simulation with the new speed
         if (clockModel.getTimer() != null) {
             clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
