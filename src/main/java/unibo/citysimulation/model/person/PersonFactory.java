@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 public class PersonFactory {
     private static Random random = new Random();
 
-    public static List<List<DynamicPerson>> createAllPeople(int numberOfPeople, List<Zone> zones,
-            List<Business> businesses) {
+    public static List<List<DynamicPerson>> createAllPeople(final int numberOfPeople, final List<Zone> zones,
+            final List<Business> businesses) {
         return zones.stream()
                 .map(zone -> PersonFactory.createGroupOfPeople(
                         zones.indexOf(zone),
@@ -23,13 +23,13 @@ public class PersonFactory {
                 .collect(Collectors.toList());
     }
 
-    private static List<DynamicPerson> createGroupOfPeople(int groupCounter, int numberOfPeople,
-            Pair<Integer, Integer> moneyMinMax,
-            List<Business> businesses, Zone residenceZone) {
-        List<DynamicPerson> people = new ArrayList<>();
+    private static List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
+            final Pair<Integer, Integer> moneyMinMax,
+            final List<Business> businesses, final Zone residenceZone) {
+        final List<DynamicPerson> people = new ArrayList<>();
         for (int i = 0; i < numberOfPeople; i++) {
             // Filtra i business per escludere quelli nella stessa zona della residenza
-            List<Business> eligibleBusinesses = businesses.stream()
+            final List<Business> eligibleBusinesses = businesses.stream()
                     .filter(b -> !b.getZone().equals(residenceZone)) ///
                     .collect(Collectors.toList());
 
@@ -37,14 +37,15 @@ public class PersonFactory {
                 throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
             }
 
-            Business business = eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size()));
+            final Business business = eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size()));
             people.add(createPerson("Person" + groupCounter + i, random.nextInt(62) + 18, business, residenceZone,
                     random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst()));
         }
         return people;
     }
 
-    private static DynamicPerson createPerson(String name, int age, Business business, Zone residenceZone, int money) {
+    private static DynamicPerson createPerson(final String name, final int age, final Business business,
+            final Zone residenceZone, final int money) {
         return new DynamicPersonImpl(new PersonData(name, age, business, residenceZone), money);
     }
 }

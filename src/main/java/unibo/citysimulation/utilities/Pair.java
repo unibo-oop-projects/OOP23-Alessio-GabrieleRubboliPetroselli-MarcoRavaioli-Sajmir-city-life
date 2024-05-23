@@ -3,12 +3,12 @@ package unibo.citysimulation.utilities;
 /**
  * Represents a generic pair of values.
  *
- * @param <T1> the type of the first value
- * @param <T2> the type of the second value
+ * @param <F> the type of the first value
+ * @param <S> the type of the second value
  */
-public class Pair<T1, T2> {
-    private T1 first;
-    private T2 second;
+public class Pair<F, S> {
+    private final F first;
+    private final S second;
 
     /**
      * Constructs a new Pair object with the specified values.
@@ -16,7 +16,7 @@ public class Pair<T1, T2> {
      * @param first  the first value
      * @param second the second value
      */
-    public Pair(T1 first, T2 second) {
+    public Pair(final F first, final S second) {
         this.first = first;
         this.second = second;
     }
@@ -26,7 +26,7 @@ public class Pair<T1, T2> {
      *
      * @return the first value
      */
-    public T1 getFirst() {
+    public F getFirst() {
         return first;
     }
 
@@ -35,7 +35,7 @@ public class Pair<T1, T2> {
      *
      * @return the second value
      */
-    public T2 getSecond() {
+    public S getSecond() {
         return second;
     }
 
@@ -46,9 +46,9 @@ public class Pair<T1, T2> {
      * @return true if the objects are equal, false otherwise
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof Pair) {
-            Pair<?, ?> other = (Pair<?, ?>) obj;
+            final Pair<?, ?> other = (Pair<?, ?>) obj;
             return this.first.equals(other.first) && this.second.equals(other.second);
         }
         return false;

@@ -1,4 +1,4 @@
-package unibo.citysimulation.view.sidePanels;
+package unibo.citysimulation.view.sidepanels;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
@@ -9,11 +9,11 @@ import java.awt.*;
  * Panel for displaying the clock and controlling simulation speed.
  */
 public class ClockPanel extends StyledPanel {
-    private JLabel timeDay = new JLabel("Day: 1", SwingConstants.CENTER);
-    private JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
-    private JButton speedButton;
-    private JButton pauseButton;
-    private int[] speeds = ConstantAndResourceLoader.SPEEDS;
+    private final JLabel timeDay = new JLabel("Day: 1", SwingConstants.CENTER);
+    private final JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
+    private final JButton speedButton;
+    private final JButton pauseButton;
+    private final int[] speeds = ConstantAndResourceLoader.SPEEDS;
     private int currentSpeedIndex = 0;
 
     /**
@@ -21,7 +21,7 @@ public class ClockPanel extends StyledPanel {
      *
      * @param bgColor The background color of the panel.
      */
-    public ClockPanel(Color bgColor) {
+    public ClockPanel(final Color bgColor) {
         super(bgColor);
         speedButton = new JButton("1x");
         speedButton.setForeground(Color.black);
@@ -31,7 +31,7 @@ public class ClockPanel extends StyledPanel {
         pauseButton.setForeground(Color.black);
         pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
 
-        JPanel timePanel = new JPanel(new GridLayout(2, 1));
+        final JPanel timePanel = new JPanel(new GridLayout(2, 1));
         timePanel.setBackground(Color.RED);
         timeDay.setFont(new Font("Arial", Font.BOLD, 15));
         timeHour.setFont(new Font("Arial", Font.BOLD, 15));
@@ -50,7 +50,7 @@ public class ClockPanel extends StyledPanel {
      * @param dayText  The text for the day label.
      * @param hourText The text for the hour label.
      */
-    public void setClockText(String dayText, String hourText) {
+    public void setClockText(final String dayText, final String hourText) {
         timeDay.setText("Day: " + dayText);
         timeHour.setText("Hour: " + hourText);
     }
@@ -60,7 +60,7 @@ public class ClockPanel extends StyledPanel {
      *
      * @param isPaused Boolean indicating if simulation is paused.
      */
-    public void updatePauseButton(boolean isPaused) {
+    public void updatePauseButton(final boolean isPaused) {
         pauseButton.setText(isPaused ? "Resume" : "Pause");
     }
 
@@ -89,7 +89,7 @@ public class ClockPanel extends StyledPanel {
      */
     public int changeSpeed() {
         currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-        int newSpeed = speeds[currentSpeedIndex];
+        final int newSpeed = speeds[currentSpeedIndex];
         speedButton.setText(newSpeed + "x");
         return newSpeed;
     }
