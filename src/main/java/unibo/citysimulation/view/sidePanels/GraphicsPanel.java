@@ -22,23 +22,22 @@ import javax.swing.*;
  */
 public class GraphicsPanel extends StyledPanel {
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
-            Color.PINK, Color.CYAN);        // da mettere nel model
+            Color.PINK, Color.CYAN);
     private final JButton legendButton;
-    private List<XYPlot> plots;
-
+    
     /**
      * Constructs a GraphicsPanel with the specified background color.
      *
      * @param bgColor The background color of the panel.
      */
-    public GraphicsPanel(Color bgColor) {
+    public GraphicsPanel(final Color bgColor) {
         super(bgColor);
 
         
         this.legendButton = new JButton("?");
         this.legendButton.setPreferredSize(new Dimension(70, 40)); // Set the preferred size of the button to make it small
 
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Create a new panel for the button
+        final JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Create a new panel for the button
         bottomPanel.setBackground(bgColor);
         bottomPanel.add(this.legendButton); // Add the button to the panel
     
@@ -51,13 +50,13 @@ public class GraphicsPanel extends StyledPanel {
         return this.legendButton;
     }
 
-    public void createGraphics(List<String> names, List<XYSeriesCollection> datasets) {
-        plots = createCharts(names, datasets).stream()
+    public void createGraphics(final List<String> names, final List<XYSeriesCollection> datasets) {
+        final List<XYPlot> plots = createCharts(names, datasets).stream()
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(createRenderer(plot.getSeriesCount())))
                 .collect(Collectors.toList());
     
-        JPanel chartsPanel = new JPanel();
+        final JPanel chartsPanel = new JPanel();
         chartsPanel.setBackground(super.getBgColor());
         chartsPanel.setLayout(new GridLayout(plots.size(), 1)); // 1 colonna, tante righe quante sono i grafici
     
@@ -70,8 +69,8 @@ public class GraphicsPanel extends StyledPanel {
     }
     
 
-    public List<JFreeChart> createCharts(List<String> names, List<XYSeriesCollection> datasets) {
-        List<JFreeChart> charts = new ArrayList<JFreeChart>();
+    public List<JFreeChart> createCharts(final List<String> names, final List<XYSeriesCollection> datasets) {
+        final List<JFreeChart> charts = new ArrayList<JFreeChart>();
 
         for (int i = 0; i < names.size(); i++) {
             charts.add(createChart(names.get(i), datasets.get(i)));
@@ -81,7 +80,7 @@ public class GraphicsPanel extends StyledPanel {
 
 
     // Method to create a chart
-    private JFreeChart createChart(String title, XYDataset dataset) {
+    private JFreeChart createChart(final String title, final XYDataset dataset) {
         JFreeChart chart = ChartFactory.createXYLineChart(
                 title,
                 null,
@@ -92,9 +91,9 @@ public class GraphicsPanel extends StyledPanel {
                 false,
                 false);
 
-        XYPlot plot = chart.getXYPlot();
-        ValueAxis domainAxis = plot.getDomainAxis();
-        ValueAxis rangeAxis = plot.getRangeAxis();
+        final XYPlot plot = chart.getXYPlot();
+        final ValueAxis domainAxis = plot.getDomainAxis();
+        final ValueAxis rangeAxis = plot.getRangeAxis();
 
         domainAxis.setTickLabelsVisible(false);
         domainAxis.setLowerMargin(0.01);
@@ -106,8 +105,8 @@ public class GraphicsPanel extends StyledPanel {
         return chart;
     }
 
-    private XYLineAndShapeRenderer createRenderer(int num) {
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+    private XYLineAndShapeRenderer createRenderer(final int num) {
+        final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 
         for (int i = 0; i < num; i++) {
             renderer.setSeriesPaint(i, colors.get(i));

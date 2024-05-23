@@ -20,14 +20,16 @@ import java.awt.event.ComponentAdapter;
  * Represents the main window of the application.
  */
 public class WindowView extends JFrame {
+    private static final long serialVersionUID = 1L;
+    
     private int width;                              // questi potrebbero non essere necessari, bisogna che nel createSidePanel
     private int height;                             // vengano passate le dimensioni, magari dal windowController, controllare l'ordine di istanziazione delle classi 
 
-    private MapPanel mapPanel;
-    private InfoPanel infoPanel;
-    private ClockPanel clockPanel;
-    private InputPanel inputPanel;
-    private GraphicsPanel graphicsPanel;
+    final private MapPanel mapPanel;
+    final private InfoPanel infoPanel;
+    final private ClockPanel clockPanel;
+    final private InputPanel inputPanel;
+    final private GraphicsPanel graphicsPanel;
 
 
     /**
@@ -64,14 +66,14 @@ public class WindowView extends JFrame {
      *
      * @param adapter The component adapter to add.
      */
-    public void addResizeListener(ComponentAdapter adapter) {
+    public void addResizeListener(final ComponentAdapter adapter) {
         addComponentListener(adapter);
     }
 
     /**
      * Updates the size of the panels based on the window size.
      */
-    public void updateFrame(int width, int height) {
+    public void updateFrame(final int width, final int height) {
         this.width = width;
         this.height = height;
 
@@ -102,13 +104,13 @@ public class WindowView extends JFrame {
      * Creates the side panels of the window.
      */
     private void createSidePanels() {
-        int sidePanelWidth = width / 4;
-        int sidePanelsHeight = height;
+        final int sidePanelWidth = width / 4;
+        final int sidePanelsHeight = height;
 
-        JPanel leftPanel = new JPanel(new GridBagLayout());
-        JPanel rightPanel = new JPanel(new GridBagLayout());
+        final JPanel leftPanel = new JPanel(new GridBagLayout());
+        final JPanel rightPanel = new JPanel(new GridBagLayout());
 
-        GridBagConstraints constraints = new GridBagConstraints();
+        final GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1;
 

@@ -20,9 +20,9 @@ public class StyledPanel extends JPanel {
      */
     public StyledPanel(final Color bgColor) {
         setLayout(new BorderLayout());
-        Border lineBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
-        Border emptyBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        Border compoundBorder = BorderFactory.createCompoundBorder(lineBorder, emptyBorder);
+        final Border lineBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
+        final Border emptyBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        final Border compoundBorder = BorderFactory.createCompoundBorder(lineBorder, emptyBorder);
         setBorder(compoundBorder);
         setBackground(bgColor);
     }
