@@ -50,7 +50,7 @@ public final class CityModel {
      * Constructs a CityModel object with default settings.
      */
     public CityModel() {
-        this.mapModel = new MapModel();
+        this.mapModel = new MapModelImpl();
         this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
         this.inputModel = new InputModel();
         this.graphicsModel = new GraphicsModel();

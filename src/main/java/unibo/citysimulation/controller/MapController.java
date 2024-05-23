@@ -69,8 +69,8 @@ public class MapController implements ClockObserver{
      * @param e The MouseEvent object representing the mouse event.
      */
     public void handleMouseclick(final MouseEvent e) {
-        int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
-        int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
+        final int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
+        final int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
 
         final List<Zone> zones = cityModel.getZones();
         String zoneName = ""; // Declare zoneName here
