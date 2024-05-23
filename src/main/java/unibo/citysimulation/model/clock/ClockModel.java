@@ -25,7 +25,7 @@ public class ClockModel {
     /**
      * Constructs a ClockModel object with the specified total number of simulation days.
      * 
-     * @param totalDays The total number of simulation days.
+     * @param totalDays The total number of simulation days
      */
     public ClockModel(final int totalDays) {
         this.totalDays = totalDays;
@@ -35,7 +35,7 @@ public class ClockModel {
     /**
      * Adds an observer to the clock model.
      * 
-     * @param observer The observer to add.
+     * @param observer The observer to add
      */
     public void addObserver(final ClockObserver observer) {
         observers.add(observer);
@@ -44,7 +44,7 @@ public class ClockModel {
     /**
      * Removes an observer from the clock model.
      * 
-     * @param observer The observer to remove.
+     * @param observer The observer to remove
      */
     public void removeObserver(final ClockObserver observer) {
         observers.remove(observer);
@@ -53,7 +53,7 @@ public class ClockModel {
     /**
      * Starts the simulation with the specified hour duration.
      * 
-     * @param hourDuration The duration of each simulated hour in milliseconds.
+     * @param hourDuration The duration of each simulated hour in milliseconds
      */
     public void startSimulation(final int hourDuration) {
         if (timer != null) {
@@ -123,7 +123,7 @@ public class ClockModel {
     /**
      * Gets the current time of the simulation.
      * 
-     * @return The current time.
+     * @return The current time
      */
     public LocalTime getCurrentTime() {
         return currentTime;
@@ -132,7 +132,7 @@ public class ClockModel {
     /**
      * Gets the formatted current time of the simulation.
      * 
-     * @return The formatted current time.
+     * @return The formatted current time
      */
     public String getFormattedCurrentTime() {
         return currentTime.format(formatter);
@@ -141,7 +141,7 @@ public class ClockModel {
     /**
      * Gets the current time of the simulation as a double.
      * 
-     * @return The current time as a double.
+     * @return The current time as a double
      */
     public double getDoubleCurrentTime() {
         return (double) currentTime.toSecondOfDay();
@@ -150,7 +150,7 @@ public class ClockModel {
     /**
      * Gets the current day of the simulation.
      * 
-     * @return The current day.
+     * @return The current day
      */
     public int getCurrentDay() {
         return currentDay;
@@ -159,7 +159,7 @@ public class ClockModel {
     /**
      * Gets the hour duration of the simulation.
      * 
-     * @return The hour duration.
+     * @return The hour duration
      */
     public int getHourDuration() {
         return hourDuration;
@@ -168,7 +168,7 @@ public class ClockModel {
     /**
      * Sets the hour duration of the simulation.
      * 
-     * @param hourDuration The hour duration to set.
+     * @param hourDuration The hour duration to set
      */
     public void setHourDuration(final int hourDuration) {
         this.hourDuration = hourDuration;
@@ -177,7 +177,7 @@ public class ClockModel {
     /**
      * Gets the paused state of the simulation.
      * 
-     * @return True if the simulation is paused, false otherwise.
+     * @return True if the simulation is paused, false otherwise
      */
     public boolean isPaused() {
         return isPaused;
@@ -186,7 +186,7 @@ public class ClockModel {
     /**
      * Gets the timer of the simulation.
      * 
-     * @return The timer.
+     * @return The timer
      */
     public Timer getTimer() {
         return timer;

@@ -30,4 +30,17 @@ public final class ConstantAndResourceLoader extends ClassLoader{
 
     public static final int MAX_COLUMNS = 150;
 
+    public static final int MAX_DEVIATION_RANGE = 41;
+
+    public static final int MAX_DEVIATION_OFFSET= 20;
+
+    public static final int CONGESTION_VALUE = 98;
+
+    public static final int MAX_MOVING_TIME_VARIATION = 13;
+
+    public static final int SECONDS_IN_A_MINUTE = 60;
+
+    public static final int MAX_RANDOM_AGE = 62;
+
+    public static final int MIN_AGE = 18;
 }

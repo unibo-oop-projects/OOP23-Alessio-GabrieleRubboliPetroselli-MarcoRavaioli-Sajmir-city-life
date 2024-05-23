@@ -2,19 +2,35 @@ package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class PersonFactory {
+/**
+ * The PersonCreation class is responsible for creating instances of
+ * DynamicPerson objects.
+ */
+public final class PersonCreation {
     private static Random random = new Random();
 
+    private PersonCreation() {
+    }
+
+    /**
+     * Creates a list of people based on the specified parameters.
+     *
+     * @param numberOfPeople The total number of people to create, given in input.
+     * @param zones          The list of available zones.
+     * @param businesses     The list of available businesses.
+     * @return A list of lists of DynamicPerson objects for every zone.
+     */
     public static List<List<DynamicPerson>> createAllPeople(final int numberOfPeople, final List<Zone> zones,
             final List<Business> businesses) {
         return zones.stream()
-                .map(zone -> PersonFactory.createGroupOfPeople(
+                .map(zone -> PersonCreation.createGroupOfPeople(
                         zones.indexOf(zone),
                         (int) (numberOfPeople * (zone.businessPercents() / 100)),
                         zone.wellfareMinMax(),
@@ -38,7 +54,9 @@ public class PersonFactory {
             }
 
             final Business business = eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size()));
-            people.add(createPerson("Person" + groupCounter + i, random.nextInt(62) + 18, business, residenceZone,
+            people.add(createPerson("Person" + groupCounter + i,
+                    random.nextInt(ConstantAndResourceLoader.MAX_RANDOM_AGE) + ConstantAndResourceLoader.MIN_AGE,
+                    business, residenceZone,
                     random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst()));
         }
         return people;

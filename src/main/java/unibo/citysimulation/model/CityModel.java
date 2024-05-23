@@ -6,10 +6,9 @@ import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
 import unibo.citysimulation.model.clock.CloclObserverBusiness;
 import unibo.citysimulation.model.person.DynamicPerson;
-
+import unibo.citysimulation.model.person.PersonCreation;
 import unibo.citysimulation.model.business.EmployymentOffice;
 import unibo.citysimulation.model.business.EmployymentOfficeManager;
-import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
@@ -126,7 +125,7 @@ public class CityModel {
 
         // Create people
         this.people = new ArrayList<>();
-        people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
+        people = PersonCreation.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
         for (final List<DynamicPerson> group : people) {
             for (final DynamicPerson person : group) {
