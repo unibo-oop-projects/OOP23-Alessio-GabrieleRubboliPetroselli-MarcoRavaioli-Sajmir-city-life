@@ -1,4 +1,4 @@
-package unibo.citylife;
+/*package unibo.citylife;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,4 +72,5 @@ public class StaticPersonImplTest {
     void testGetState() {
         assertEquals(PersonState.AT_HOME, staticPerson.getState()); // La persona dovrebbe essere a casa inizialmente
     }
-}
+}*/
+

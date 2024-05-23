@@ -11,7 +11,7 @@ import unibo.citysimulation.model.MapModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.view.sidePanels.InfoPanel;
+import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map.
@@ -25,15 +25,27 @@ public class MapController implements ClockObserver{
     /**
      * Constructs a MapController object.
      *
-     * @param model     The MapModel object containing the map data.
+     * @param cityModel The CityModel object containing the city data.
      * @param infoPanel The InfoPanel object to display additional information.
+     * @param mapPanel The MapPanel object to display the map.
      */
     public MapController(CityModel cityModel, InfoPanel infoPanel, MapPanel mapPanel) {
         this.cityModel = cityModel;
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;
         this.mapModel = cityModel.getMapModel();
-        //mapPanel.setZones(cityModel.getZones());
+
+        initialize();
+        
+
+    }
+
+    private void initialize(){
+        cityModel.getClockModel().addObserver(this);
+
+        mapModel.setTransportInfo(cityModel.getTransportLines());
+        mapModel.setTransportCongestion(cityModel.getTransportLines());
+
 
         mapPanel.setImage(mapModel.getImage());
 
@@ -44,13 +56,11 @@ public class MapController implements ClockObserver{
             }
         });
 
-        mapModel.setTransportInfos(cityModel.getTransportLines());
-        mapModel.setTransportNames(cityModel.getTransportLines());
-        mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
-        mapPanel.setCongestionsList(mapModel.getColorList());
+        
 
-        cityModel.getClockModel().addObserver(this);
-        mapPanel.SetTransportNames(mapModel.getTransportNames());
+        mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
+        mapPanel.setLinesColor(mapModel.getColorList());
+        
     }
 
     /**
@@ -62,13 +72,11 @@ public class MapController implements ClockObserver{
         int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
         int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
 
-        System.out.println("pressed coordinates: " + x + " " + y);  //queste rimangono uguali
         List<Zone> zones = cityModel.getZones();
         String zoneName = ""; // Declare zoneName here
         for (Zone zone : zones) {
             if (zone.boundary().isInside(x, y)) {
-                zoneName = zone.name(); // Assign value here
-                System.out.println("Clicked inside zone: " + zoneName);
+                zoneName = zone.name();
                 break;
             }
         }
@@ -78,8 +86,11 @@ public class MapController implements ClockObserver{
         mapModel.setLastClickedCoordinates(x, y);
 
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
-
         infoPanel.updateZoneName(zoneName);
+
+        infoPanel.updateNumberOfPeople(cityModel.getPeopleInZone(zoneName));
+
+        infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
 
     }
 
@@ -90,15 +101,9 @@ public class MapController implements ClockObserver{
     @Override
     public void onTimeUpdate(LocalTime currentTime, int currentDay) {
 
-        mapPanel.setPeopleMap(mapModel.getPersonInfos(cityModel.getAllPeople()));
-        
-        mapModel.setTransportInfos(cityModel.getTransportLines());
-        mapPanel.setLinesPoints(mapModel.getLinesPointsCoordinates());
-        mapPanel.setCongestionsList(mapModel.getColorList());
+        mapModel.setTransportCongestion(cityModel.getTransportLines());
 
-        mapPanel.setBusinessPoints(mapModel.getBusinessInfos(cityModel.getBusinesses()));
-        
-
-        mapPanel.repaint();
+        mapPanel.setLinesColor(mapModel.getColorList());
+        mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), mapModel.getBusinessInfos(cityModel.getBusinesses()));
     }
 }

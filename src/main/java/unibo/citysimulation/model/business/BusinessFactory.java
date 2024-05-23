@@ -1,60 +1,51 @@
 package unibo.citysimulation.model.business;
- 
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.transport.TransportLineImpl;
-import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.utilities.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import java.io.FileReader;
+import unibo.citysimulation.model.zone.Zone;
 
-import java.time.LocalTime;
- 
 /**
-* Factory for creating Business objects.
-* This factory creates a list of Business objects based on a list of Zone objects.
-*/
-public class BusinessFactory {
+ * The BusinessFactory class is responsible for creating instances of Business objects.
+ */
+public final class BusinessFactory {
+
+    private BusinessFactory() {
+    }
+
     /**
-     * Creates a list of Business objects based on a list of Zone objects.
+     * Creates a new Business object based on the specified BusinessType.
      *
-     * @param zones the list of Zone objects
-     * @return a list of Business objects
+     * @param type The type of business to create.
+     * @param zone The zone where the business is located.
+     * @return An Optional containing the created Business object, or an empty Optional if the type is invalid.
      */
-    public static List<Business> createBusinessesFromFile(List<Zone> zones) {
-        List<Business> businesses = new ArrayList<>();
-
-        try {
-            Gson gson = new Gson();
-
-            JsonArray jsonArray = gson.fromJson(
-                    new FileReader("src/main/resources/unibo/citysimulation/data/BusinessInfo.json"), JsonArray.class);
-
-            for (JsonElement jsonElement : jsonArray) {
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
-
-                businesses.add(
-                    new BusinessImpl(
-                        jsonObject.get("name").getAsString(),
-                        jsonObject.get("income").getAsInt(),
-                        jsonObject.get("wageRate").getAsDouble(),
-                        LocalTime.parse(jsonObject.get("openingTime").getAsString()),
-                        LocalTime.parse(jsonObject.get("closingTime").getAsString()),
-                        zones.get(jsonObject.get("zone").getAsInt())
-                    )
-                );
-            }
-            return businesses;
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static Optional<Business> createBusiness(final BusinessType type, final Zone zone) {
+        switch (type) {
+            case BIG:
+                return Optional.of(new BigBusiness(zone));
+            case MEDIUM:
+                return Optional.of(new MediumBusiness(zone));
+            case SMALL:
+                return Optional.of(new SmallBusiness(zone));     
+            default:
+                break;
         }
-        return null;
+        return Optional.empty();
+    }
+
+    /**
+     * Creates a random Business object.
+     *
+     * @param zones The list of available zones.
+     * @return An Optional containing the created Business object.
+     */
+    public static Optional<Business> getRandomBusiness(final List<Zone> zones) {
+        final Random random = new Random();
+        final BusinessType type = BusinessType.values()[random.nextInt(BusinessType.values().length)];
+        final Zone zone = zones.get(random.nextInt(zones.size()));
+        return createBusiness(type, zone);
     }
 }
+    

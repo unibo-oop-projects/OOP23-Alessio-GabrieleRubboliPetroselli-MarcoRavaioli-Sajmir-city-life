@@ -12,20 +12,19 @@ import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 
 public class GraphicsModel {
     private List<XYSeriesCollection> datasets;
     private List<String> names = Arrays.asList("Person State", "Transport Congestion", "Business Occupation");
     private int counter = 0;
-
     private int columnCount = 0;
 
     public GraphicsModel(){
         createDatasets(List.of(3, 7, 1));
-        System.out.println("in teoria qua ha già creato i datasets");
     }
 
-    public void createDatasets(List<Integer> numCollections) {
+    private void createDatasets(List<Integer> numCollections) {
         datasets =  IntStream.range(0, names.size())
                 .<XYSeriesCollection>mapToObj(i -> createDataset(numCollections.get(i)))
                 .collect(Collectors.toList());
@@ -46,23 +45,23 @@ public class GraphicsModel {
     }
 
     public void clearDatasets() {
-        synchronized (datasets) {
+        
             columnCount = 0; // Resetta anche il contatore delle colonne
             for (XYSeriesCollection dataset : datasets) {
                 for (int i = 0; i < dataset.getSeriesCount(); i++) {
                     dataset.getSeries(i).clear();
                 }
             }
-        }
+        
     }
 
-    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, Double employeesCount,
+    public void updateDataset(List<Integer> states, List<Double> congestions, List<Integer> businessOccupations,
             double counter) {
-        synchronized (datasets) {
-            if (columnCount > 150) {
-                int columnsToRemove = columnCount - 150;
+        
+            if (columnCount > ConstantAndResourceLoader.MAX_COLUMNS) {
+                int columnsToRemove = columnCount - ConstantAndResourceLoader.MAX_COLUMNS;
                 datasets.forEach(dataset -> {
-                    synchronized (dataset) {
+                    
                         IntStream.range(0, columnsToRemove).forEach(i -> {
                             IntStream.range(0, dataset.getSeriesCount()).forEach(j -> {
                                 XYSeries series = dataset.getSeries(j);
@@ -71,34 +70,30 @@ public class GraphicsModel {
                                 }
                             });
                         });
-                    }
+                    
                 });
-                columnCount = 150;
+                columnCount = ConstantAndResourceLoader.MAX_COLUMNS;
             }
 
             columnCount++;
 
-            for (int i = 0; i < datasets.get(0).getSeriesCount(); i++) {
-                synchronized (datasets.get(0)) {
-                    datasets.get(0).getSeries(i).add(counter, states.get(i));
-                    //maxStateHeight = states.get(i) > maxStateHeight ? states.get(i) : maxStateHeight;
-                }
-            }
-
-            for (int i = 0; i < datasets.get(1).getSeriesCount(); i++) {
-                synchronized (datasets.get(1)) {
-                    datasets.get(1).getSeries(i).add(counter, congestions.get(i));
-                    //maxCongestionHeight = congestions.get(i) > maxCongestionHeight ? congestions.get(i)
-                            //: maxCongestionHeight;
-                }
-            }
+            updateSeries(datasets.get(0), states, counter);
+            updateSeries(datasets.get(1), congestions, counter);
 
             
 
-            synchronized (datasets.get(2)) { // Sincronizza l'accesso al dataset corrente
-                datasets.get(2).getSeries(0).add(counter, employeesCount);
-            }
-        }
+            updateSeries(datasets.get(2), businessOccupations, counter);
+            
+
+            
+            
+        
+    }
+
+    private void updateSeries(XYSeriesCollection dataset, List<? extends Number> values, double counter) {
+        IntStream.range(0, dataset.getSeriesCount()).forEach(i -> {
+            dataset.getSeries(i).add(counter, values.get(i));
+        });
     }
 
     public List<Integer> getPeopleStateCounts(List<DynamicPerson> list){
@@ -114,11 +109,12 @@ public class GraphicsModel {
                 .collect(Collectors.toList());
     }
 
-    public Double getBusinessesEmployee(List<Business> businesses){
-        return businesses.stream()
-            .mapToInt(b -> b.getEmployees().size()).sum() / businesses.stream()
-                .mapToDouble(b -> b.getEmployees().size()).sum();
+    public List<Integer> getBusinessesOccupation(List<Business> list) { //
+        return list.stream()
+                .map(business -> (int) ((double) business.getEmployees().size() / business.getMaxEmployees() * 100))
+                .collect(Collectors.toList());
     }
+
     public List<XYSeriesCollection> getDatasets(){
         return datasets;
     }

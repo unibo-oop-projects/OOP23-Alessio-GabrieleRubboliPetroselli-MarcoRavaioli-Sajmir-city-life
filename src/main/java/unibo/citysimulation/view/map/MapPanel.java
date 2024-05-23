@@ -3,8 +3,15 @@ package unibo.citysimulation.view.map;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.awt.BasicStroke;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 /**
@@ -12,25 +19,22 @@ import java.util.Map;
  */
 public class MapPanel extends StyledPanel {
     private BufferedImage mapImage;
-
-    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
-    private List<Color> congestionsColorList;
-    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap;
-    private Map<String, Pair<Integer, Integer>> businessMap;
-
-    private List<String> transportLines;
+    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
+    private List<Color> congestionsColorList = Collections.emptyList();
+    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
+    private Map<Integer, Pair<Integer, Integer>> businessMap = Collections.emptyMap();
+    private List<String> linesName = Collections.emptyList();
 
     /**
      * Constructs a MapPanel with the specified background color.
      */
-    public MapPanel() {
+    public MapPanel(final Color bgColor){
         super(bgColor);
     }
 
     private void drawTransportLines(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         
-    
         for(int i = 0; i < linesPointsCoordinates.size(); i++) {
             int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
             int y1 = linesPointsCoordinates.get(i).getFirst().getSecond();
@@ -40,7 +44,7 @@ public class MapPanel extends StyledPanel {
             g2.setStroke(new BasicStroke(6));
             g2.drawLine(x1, y1, x2, y2);
     
-            String linename = transportLines.get(i);
+            String linename = linesName.get(i);
     
             int midX = (x1 + x2) / 2;
             int midY = (y1 + y2) / 2;
@@ -49,7 +53,7 @@ public class MapPanel extends StyledPanel {
             g2.setColor(Color.BLACK);
             g2.setStroke(new BasicStroke(2));
             Font currentFont = g2.getFont();
-            Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.2F); // 2 times the current size
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.2F);
             g2.setFont(newFont);
 
             FontMetrics fm = g2.getFontMetrics();
@@ -67,26 +71,23 @@ public class MapPanel extends StyledPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
 
-        for (var entry : peopleMap.entrySet()) {
-            Pair<Integer, Integer> point = entry.getValue().getFirst();
-            Color color = entry.getValue().getSecond();
-
+        peopleMap.forEach((name, info) -> {
+            Pair<Integer, Integer> point = info.getFirst();
+            Color color = info.getSecond();
             g2.setColor(color);
             g2.fillOval(point.getFirst(), point.getSecond(), 5, 5);
-        }
+        });
     }
 
     private void drawBusinesses(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
     
-        for (var entry : businessMap.entrySet()) {
-            Pair<Integer, Integer> point = entry.getValue();
+        businessMap.forEach((name, point) -> {
             Color color = new Color(139, 69, 19);
             g2.setColor(color);
-            // Disegna un quadrato (rettangolo con altezza e larghezza uguali)
             g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
-        }
+        });
     }
     
 
@@ -116,24 +117,26 @@ public class MapPanel extends StyledPanel {
         }
     }
 
-    public void setLinesPoints(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points) {
+    public void setLinesInfo(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points, List<String> names){
         this.linesPointsCoordinates = points;
-    }
-    public void SetTransportNames(List<String> lines){
-        transportLines = lines;      
+        this.linesName = names;
     }
 
-    public void setCongestionsList(List<Color> ColorList) {
-        this.congestionsColorList = ColorList;
+    public void setLinesColor(List<Color> colors){
+        this.congestionsColorList = colors;
     }
 
-    public void setPeopleMap(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap) {
+    public void setEntities(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, Map<Integer, Pair<Integer, Integer>> businessMap){
         this.peopleMap = peopleMap;
+        this.businessMap = businessMap;
+        repaint();
     }
 
-    public void setBusinessPoints(Map<String, Pair<Integer, Integer>> businessMap) {
+    public void setBusinessPoints(Map<Integer, Pair<Integer, Integer>> businessMap){
         this.businessMap = businessMap;
     }
+        
+
 
     /**
      * Sets the image to be displayed on the map panel.
@@ -158,4 +161,6 @@ public class MapPanel extends StyledPanel {
             return super.getPreferredSize();
         }
     }
+
+    
 }
