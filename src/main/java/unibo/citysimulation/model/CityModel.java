@@ -49,7 +49,7 @@ public class CityModel {
     private int frameWidth;
     private int frameHeight;
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
     private int totalBusinesses;
 
 
@@ -78,7 +78,7 @@ public class CityModel {
         if (zones.isEmpty()) {
             throw new IllegalStateException("No zones available.");
         }
-        return zones.get(random.nextInt(zones.size()));
+        return zones.get(RANDOM.nextInt(zones.size()));
     }
 
     public Optional<Zone> getZoneByPosition(final Pair<Integer, Integer> position) {
@@ -118,7 +118,7 @@ public class CityModel {
         ZoneTableCreation.createAndAddPairs(zones, transports);
 
 
-        int numberOfPeople = getInputModel().getNumberOfPeople();
+        final int numberOfPeople = getInputModel().getNumberOfPeople();
         calculateTotalBusinesses(numberOfPeople);
         // Create businesses
         createBusinesses();
@@ -129,7 +129,7 @@ public class CityModel {
         people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
         for (final List<DynamicPerson> group : people) {
-            for (DynamicPerson person : group) {
+            for (final DynamicPerson person : group) {
                 employymentOffice.addDisoccupiedPerson(person);
             }
         }
@@ -139,25 +139,15 @@ public class CityModel {
 
         clockModel.addObserver(new CloclObserverBusiness(businesses, employymentOffice));
 
-        
-
-        //System.out.println("People groups created. " + people.size());
-        for (var group : people) {
-            //System.out.println("Group size: " + group.size());
-            
-        }
-
         EmployymentOfficeManager employmentManager = new EmployymentOfficeManager(employymentOffice);
-
-        
-        
+       
     }
 
     public final void createBusinesses() {
         int remainingBusinesses = totalBusinesses;
 
-    for (Zone zone : zones) {
-        int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
+    for (final Zone zone : zones) {
+        final int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
         remainingBusinesses -= zoneBusinessCount;
 
         for (int i = 0; i < zoneBusinessCount; i++) {
@@ -168,7 +158,7 @@ public class CityModel {
     }
 
     for (int i = 0; remainingBusinesses > 0 && i < zones.size(); i++) {
-        Zone zone = zones.get(i);
+        final Zone zone = zones.get(i);
         BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(business -> {
             businesses.add(business);
         });
@@ -176,7 +166,7 @@ public class CityModel {
     }
     }
 
-    public void calculateTotalBusinesses(int numberOfPeople) {
+    public void calculateTotalBusinesses(final int numberOfPeople) {
         this.totalBusinesses = numberOfPeople / 10;
     }
 
@@ -191,15 +181,15 @@ public class CityModel {
 
     public Pair<Integer,Integer> getFrameSize(){
         // Get the screen size
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         // Calculate the maximum dimensions based on the screen size and a constant percentage
-        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        final int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        final int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
 
         // Calculate the frame dimensions based on the maximum dimensions
-        int frameHeight = maxHeight > (maxWidth / 2) ? maxWidth / 2 : maxHeight;
-        int frameWidth = frameHeight * 2;
+        final int frameHeight = maxHeight > (maxWidth / 2) ? maxWidth / 2 : maxHeight;
+        final int frameWidth = frameHeight * 2;
 
         // Create and return the window model with the calculated dimensions
         return new Pair<>(frameWidth, frameHeight);

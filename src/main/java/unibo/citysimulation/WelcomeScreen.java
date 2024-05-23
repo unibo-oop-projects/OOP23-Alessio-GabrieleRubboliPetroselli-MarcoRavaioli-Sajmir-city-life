@@ -37,10 +37,7 @@ public class WelcomeScreen extends JFrame {
                 if (method != null) {
                     method.invoke(simulationLauncher);
                 }
-            } catch (NoSuchMethodException noSuchMethodException) {
-                System.out.println("The start() method does not exist in SimulationLauncher.");
             } catch (Exception exception) {
-                System.out.println("An error occurred while trying to start the simulation.");
                 exception.printStackTrace();
             }
         }
@@ -71,7 +68,7 @@ public class WelcomeScreen extends JFrame {
     setLocationRelativeTo(null);
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
     // Create and show the welcome screen
     final WelcomeScreen welcomeScreen = new WelcomeScreen();
