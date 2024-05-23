@@ -37,7 +37,7 @@ public class CityModel {
    
     private final List<Business> businesses;
     private List<List<DynamicPerson>> people;
-    private final MapModel mapModel;
+    private final MapModelImpl mapModel;
     private final ClockModel clockModel;
     private final InputModel inputModel;
     private final GraphicsModel graphicsModel;
@@ -58,7 +58,7 @@ public class CityModel {
      * Constructs a CityModel object with default settings.
      */
     public CityModel() {
-        this.mapModel = new MapModel();
+        this.mapModel = new MapModelImpl();
         this.clockModel = new ClockModel(365);
         this.inputModel = new InputModel();
         this.graphicsModel = new GraphicsModel();
@@ -198,7 +198,7 @@ public class CityModel {
      * Gets the map model associated with this city model.
      * @return The map model.
      */
-    public MapModel getMapModel() {
+    public MapModelImpl getMapModel() {
         return this.mapModel;
     }
 

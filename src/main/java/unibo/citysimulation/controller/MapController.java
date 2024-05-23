@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.MapModel;
+import unibo.citysimulation.model.MapModelImpl;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.map.MapPanel;
@@ -19,7 +19,7 @@ import unibo.citysimulation.view.sidepanels.InfoPanel;
 public class MapController implements ClockObserver{
     private InfoPanel infoPanel;
     private MapPanel mapPanel;
-    private MapModel mapModel;
+    private MapModelImpl mapModel;
     private CityModel cityModel;
 
     /**
