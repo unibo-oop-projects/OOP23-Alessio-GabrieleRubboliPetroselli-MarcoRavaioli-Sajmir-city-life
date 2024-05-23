@@ -256,12 +256,12 @@ public class CityModel {
     
 
     public boolean isBusinessesPresent() {
-        boolean res = this.businesses != null;
+        final boolean res = this.businesses != null;
         //System.out.println("Businesses present: " + res);
         return res;
     }
 
-    public void setFrameSize(Pair<Integer, Integer> frameSize) {
+    public void setFrameSize(final Pair<Integer, Integer> frameSize) {
         this.frameWidth = frameSize.getFirst();
         this.frameHeight = frameSize.getSecond();
     }
