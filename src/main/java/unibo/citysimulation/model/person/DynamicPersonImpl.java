@@ -43,7 +43,6 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
                 this.lastArrivingTime = (currentTime + lineDuration) % 86400;
 
                 late = false;
-                attemptsToMove = 0;
                 return true;
             }
         }
