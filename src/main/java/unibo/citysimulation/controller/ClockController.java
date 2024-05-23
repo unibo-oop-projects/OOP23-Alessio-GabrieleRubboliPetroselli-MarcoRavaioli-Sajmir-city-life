@@ -8,7 +8,6 @@ import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidePanels.ClockPanel;
-import unibo.citysimulation.view.sidePanels.InputPanel;
 
 /**
  * Controller class responsible for managing the clock and its interactions with the user interface.
@@ -23,14 +22,14 @@ public class ClockController implements ClockObserver {
      * @param clockModel The ClockModel object representing the clock.
      * @param clockPanel The ClockPanel object representing the clock user interface.
      */
-    public ClockController(ClockModel clockModel, ClockPanel clockPanel) {
+    public ClockController(final ClockModel clockModel, final ClockPanel clockPanel) {
         this.clockPanel = clockPanel;
         this.clockModel = clockModel;
 
         // Add action listener for the pause button
         clockPanel.getPauseButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 pauseSimulation();
             }
         });
@@ -38,7 +37,7 @@ public class ClockController implements ClockObserver {
         // Add action listener for the speed button
         clockPanel.getSpeedButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 changeSpeed();
             }
         });
@@ -89,6 +88,6 @@ public class ClockController implements ClockObserver {
     public void pauseSimulation() {
         // Pause the simulation
         clockModel.pauseSimulation();
-        clockPanel.updatePauseButton(clockModel.getIsPaused());
+        clockPanel.updatePauseButton(clockModel.isPaused());
     }
 }

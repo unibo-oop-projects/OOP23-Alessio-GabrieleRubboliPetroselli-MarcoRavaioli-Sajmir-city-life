@@ -80,7 +80,7 @@ public class InputController {
         // Restart the clock simulation
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
-        clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
+        clockPanel.updatePauseButton(cityModel.getClockModel().isPaused());
 
         clockPanel.getPauseButton().setEnabled(true);
     }
@@ -90,7 +90,7 @@ public class InputController {
         cityModel.getClockModel().stopSimulation();
 
         // Update the pause button state on the clock panel
-        clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
+        clockPanel.updatePauseButton(cityModel.getClockModel().isPaused());
 
         clockPanel.getPauseButton().setEnabled(false);
     }

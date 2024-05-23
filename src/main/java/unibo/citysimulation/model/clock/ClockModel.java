@@ -13,22 +13,21 @@ import java.util.ArrayList;
  */
 public class ClockModel {
 
-    private int totalDays;
+    private final int totalDays;
     private int hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
     private Timer timer;
     private int currentDay;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     private LocalTime currentTime;
-    private List<ClockObserver> observers;
+    private final List<ClockObserver> observers;
     private boolean isPaused;
-    private TimerTask task;
 
     /**
      * Constructs a ClockModel object with the specified total number of simulation days.
      * 
      * @param totalDays The total number of simulation days.
      */
-    public ClockModel(int totalDays) {
+    public ClockModel(final int totalDays) {
         this.totalDays = totalDays;
         this.observers = new ArrayList<>();
     }
@@ -38,7 +37,7 @@ public class ClockModel {
      * 
      * @param observer The observer to add.
      */
-    public void addObserver(ClockObserver observer) {
+    public void addObserver(final ClockObserver observer) {
         observers.add(observer);
     }
 
@@ -47,7 +46,7 @@ public class ClockModel {
      * 
      * @param observer The observer to remove.
      */
-    public void removeObserver(ClockObserver observer) {
+    public void removeObserver(final ClockObserver observer) {
         observers.remove(observer);
     }
 
@@ -56,8 +55,7 @@ public class ClockModel {
      * 
      * @param hourDuration The duration of each simulated hour in milliseconds.
      */
-    public void startSimulation(int hourDuration) {
-        System.out.println("Simulation started");
+    public void startSimulation(final int hourDuration) {
         if(timer!=null){
             timer.cancel();
         }
@@ -66,7 +64,7 @@ public class ClockModel {
 
         this.timer = new Timer();
     
-        task = new TimerTask() {
+        final TimerTask task = new TimerTask() {
     
             @Override
             public void run() {
@@ -124,8 +122,8 @@ public class ClockModel {
      * Notifies all observers of a time update.
      */
     private void notifyObservers() {
-        List<ClockObserver> observersCopy = new ArrayList<>(observers);
-        for (ClockObserver observer : observersCopy) {
+        final List<ClockObserver> observersCopy = new ArrayList<>(observers);
+        for (final ClockObserver observer : observersCopy) {
             observer.onTimeUpdate(currentTime, currentDay);
         }
     }
@@ -177,7 +175,7 @@ public class ClockModel {
      * 
      * @param hourDuration The hour duration to set.
      */
-    public void setHourDuration(int hourDuration) {
+    public void setHourDuration(final int hourDuration) {
         this.hourDuration = hourDuration;
     }
 
@@ -186,7 +184,7 @@ public class ClockModel {
      * 
      * @return True if the simulation is paused, false otherwise.
      */
-    public boolean getIsPaused(){
+    public boolean isPaused(){
         return isPaused;
     }
 
