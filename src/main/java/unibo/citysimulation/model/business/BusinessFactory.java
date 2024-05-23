@@ -11,10 +11,14 @@ import unibo.citysimulation.model.zone.Zone;
  */
 public final class BusinessFactory {
 
+    private BusinessFactory() {
+    }
+
     /**
      * Creates a new Business object based on the specified BusinessType.
      *
      * @param type The type of business to create.
+     * @param zone The zone where the business is located.
      * @return An Optional containing the created Business object, or an empty Optional if the type is invalid.
      */
     public static Optional<Business> createBusiness(final BusinessType type, final Zone zone) {
@@ -34,6 +38,7 @@ public final class BusinessFactory {
     /**
      * Creates a random Business object.
      *
+     * @param zones The list of available zones.
      * @return An Optional containing the created Business object.
      */
     public static Optional<Business> getRandomBusiness(final List<Zone> zones) {

@@ -1,6 +1,6 @@
 package unibo.citysimulation.model.zone;
 
-import unibo.citysimulation.model.person.PersonFactory;
+
 import unibo.citysimulation.utilities.Pair;
 
 /**
@@ -11,20 +11,20 @@ public class ZoneImpl  {
     private float personPercents;
     private float businessPercents;
     private float wellfare;
-    private Pair<Integer, Integer> wellfareMinMax;
-    private Pair<Integer, Integer> ageMinMax;
+    final private Pair<Integer, Integer> wellfareMinMax;
 
-    public ZoneImpl(String name, float personPercents, float businessPercents, float wellfare, Pair<Integer, Integer> wellfareMinMax, Pair<Integer,Integer> ageMinMax) {
+
+    public ZoneImpl(final String name, final float personPercents, final float businessPercents, final float wellfare, final Pair<Integer, Integer> wellfareMinMax) {
         this.name = name;
         this.personPercents = personPercents;
         this.businessPercents = businessPercents;
         this.wellfare = wellfare;
         this.wellfareMinMax = wellfareMinMax;
-        this.ageMinMax = ageMinMax;
+
     }
 
     // Getter and setter for 'name'
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -33,7 +33,7 @@ public class ZoneImpl  {
     }
 
     // Getter and setter for 'personPercents'
-    public void setPersonPercents(float personPercents) {
+    public void setPersonPercents(final float personPercents) {
         this.personPercents = personPercents;
     }
 
@@ -42,7 +42,7 @@ public class ZoneImpl  {
     }
 
     // Getter and setter for 'businessPercents'
-    public void setBusinessPercents(float businessPercents) {
+    public void setBusinessPercents(final float businessPercents) {
         this.businessPercents = businessPercents;
     }
 
@@ -51,7 +51,7 @@ public class ZoneImpl  {
     }
 
     // Getter and setter for 'wellfare'
-    public void setWellfare(float wellfare) {
+    public void setWellfare(final float wellfare) {
         this.wellfare = wellfare;
     }
 

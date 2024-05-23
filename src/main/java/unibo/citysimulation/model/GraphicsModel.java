@@ -55,7 +55,7 @@ public class GraphicsModel {
         
     }
 
-    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, List<Integer> businessOccupations,
+    public void updateDataset(List<Integer> states, List<Double> congestions, List<Integer> businessOccupations,
             double counter) {
         
             if (columnCount > ConstantAndResourceLoader.MAX_COLUMNS) {
