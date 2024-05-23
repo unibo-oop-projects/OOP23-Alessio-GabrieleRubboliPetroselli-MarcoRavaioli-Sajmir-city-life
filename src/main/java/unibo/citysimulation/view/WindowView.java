@@ -7,8 +7,13 @@ import unibo.citysimulation.view.sidePanels.InfoPanel;
 import unibo.citysimulation.view.sidePanels.InputPanel;
 import unibo.citysimulation.view.map.MapPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ComponentAdapter;
 
 /**

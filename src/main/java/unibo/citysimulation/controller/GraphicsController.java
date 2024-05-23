@@ -19,15 +19,18 @@ public class GraphicsController implements ClockObserver {
     public GraphicsController(CityModel cityModel, GraphicsPanel graphicsPanel) {
         this.cityModel = cityModel;
         graphicsModel = cityModel.getGraphicsModel();
+
+        initialize(graphicsPanel);
+    }
+
+    private void initialize(GraphicsPanel graphicsPanel) {
         cityModel.getClockModel().addObserver(this);
 
         graphicsPanel.getLegendButton().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 new LegendPanel(graphicsPanel.getColors(), cityModel.getTransportLines().stream().map(t -> t.getName()).collect(Collectors.toList()));
             }
-            
         });
 
         graphicsPanel.createGraphics(graphicsModel.getNames(), graphicsModel.getDatasets());
@@ -38,10 +41,7 @@ public class GraphicsController implements ClockObserver {
         graphicsModel.updateDataset(
             graphicsModel.getPeopleStateCounts(cityModel.getAllPeople()), 
             graphicsModel.getTransportLinesCongestion(cityModel.getTransportLines()),
-
-            graphicsModel.getBusinessesOccupation(cityModel.getBusinesses()), //
-
+            graphicsModel.getBusinessesOccupation(cityModel.getBusinesses()),
             graphicsModel.getCounter());
-        
     }
 }

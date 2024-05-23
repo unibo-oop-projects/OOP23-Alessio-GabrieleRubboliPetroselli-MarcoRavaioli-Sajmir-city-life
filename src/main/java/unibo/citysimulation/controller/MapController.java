@@ -25,8 +25,9 @@ public class MapController implements ClockObserver{
     /**
      * Constructs a MapController object.
      *
-     * @param model     The MapModel object containing the map data.
+     * @param cityModel The CityModel object containing the city data.
      * @param infoPanel The InfoPanel object to display additional information.
+     * @param mapPanel The MapPanel object to display the map.
      */
     public MapController(CityModel cityModel, InfoPanel infoPanel, MapPanel mapPanel) {
         this.cityModel = cityModel;

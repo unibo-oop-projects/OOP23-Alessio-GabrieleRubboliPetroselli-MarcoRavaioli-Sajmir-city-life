@@ -3,8 +3,14 @@ package unibo.citysimulation.view.map;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.awt.BasicStroke;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +28,7 @@ public class MapPanel extends StyledPanel {
     /**
      * Constructs a MapPanel with the specified background color.
      */
-    public MapPanel(Color bgColor){
+    public MapPanel(final Color bgColor){
         super(bgColor);
     }
 
