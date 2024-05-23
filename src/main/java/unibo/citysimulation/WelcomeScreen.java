@@ -16,24 +16,24 @@ public class WelcomeScreen extends JFrame {
     setMinimumSize(new Dimension(400, 200));
 
     // Create a JLabel with the welcome message
-    JLabel welcomeLabel = new JLabel("Welcome to city-simulation", SwingConstants.CENTER);
+    final JLabel welcomeLabel = new JLabel("Welcome to city-simulation", SwingConstants.CENTER);
     add(welcomeLabel, BorderLayout.CENTER);
 
     // Create a panel for the buttons
-    JPanel buttonPanel = new JPanel(new FlowLayout());
+    final JPanel buttonPanel = new JPanel(new FlowLayout());
 
     // Create the START button
-    JButton startButton = new JButton("START");
+    final JButton startButton = new JButton("START");
     startButton.addActionListener(new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
             // Close the welcome screen
             dispose();
 
             // Start the simulation
-            SimulationLauncher simulationLauncher = new SimulationLauncher();
+            final SimulationLauncher simulationLauncher = new SimulationLauncher();
             try {
-                java.lang.reflect.Method method = SimulationLauncher.class.getMethod("start");
+                final java.lang.reflect.Method method = SimulationLauncher.class.getMethod("start");
                 if (method != null) {
                     method.invoke(simulationLauncher);
                 }
@@ -48,10 +48,10 @@ public class WelcomeScreen extends JFrame {
     buttonPanel.add(startButton);
 
     // Create the EXIT button
-    JButton exitButton = new JButton("EXIT");
+    final JButton exitButton = new JButton("EXIT");
     exitButton.addActionListener(new ActionListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
         // Exit the program
         System.exit(0);
         }
@@ -74,7 +74,7 @@ public class WelcomeScreen extends JFrame {
     public static void main(String[] args) {
 
     // Create and show the welcome screen
-    WelcomeScreen welcomeScreen = new WelcomeScreen();
+    final WelcomeScreen welcomeScreen = new WelcomeScreen();
     welcomeScreen.setVisible(true);
     }
 }
