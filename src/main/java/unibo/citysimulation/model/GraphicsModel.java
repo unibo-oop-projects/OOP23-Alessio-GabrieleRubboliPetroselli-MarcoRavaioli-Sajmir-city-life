@@ -45,23 +45,23 @@ public class GraphicsModel {
     }
 
     public void clearDatasets() {
-        synchronized (datasets) {
+        
             columnCount = 0; // Resetta anche il contatore delle colonne
             for (XYSeriesCollection dataset : datasets) {
                 for (int i = 0; i < dataset.getSeriesCount(); i++) {
                     dataset.getSeries(i).clear();
                 }
             }
-        }
+        
     }
 
-    public synchronized void updateDataset(List<Integer> states, List<Double> congestions, List<Integer> businessOccupations,
+    public void updateDataset(List<Integer> states, List<Double> congestions, List<Integer> businessOccupations,
             double counter) {
-        synchronized (datasets) {
+        
             if (columnCount > ConstantAndResourceLoader.MAX_COLUMNS) {
                 int columnsToRemove = columnCount - ConstantAndResourceLoader.MAX_COLUMNS;
                 datasets.forEach(dataset -> {
-                    synchronized (dataset) {
+                    
                         IntStream.range(0, columnsToRemove).forEach(i -> {
                             IntStream.range(0, dataset.getSeriesCount()).forEach(j -> {
                                 XYSeries series = dataset.getSeries(j);
@@ -70,7 +70,7 @@ public class GraphicsModel {
                                 }
                             });
                         });
-                    }
+                    
                 });
                 columnCount = ConstantAndResourceLoader.MAX_COLUMNS;
             }
@@ -87,7 +87,7 @@ public class GraphicsModel {
 
             
             
-        }
+        
     }
 
     private void updateSeries(XYSeriesCollection dataset, List<? extends Number> values, double counter) {

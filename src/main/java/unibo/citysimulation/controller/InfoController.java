@@ -1,7 +1,7 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.view.sidePanels.InfoPanel;
+import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 public class InfoController {
 

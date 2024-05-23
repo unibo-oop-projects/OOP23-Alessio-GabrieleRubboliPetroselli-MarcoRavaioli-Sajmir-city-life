@@ -1,10 +1,5 @@
-package unibo.citysimulation.view.sidePanels;
+package unibo.citysimulation.view.sidepanels;
 
-import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.transport.TransportFactory;
-import unibo.citysimulation.model.transport.TransportLine;
-import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.view.StyledPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;

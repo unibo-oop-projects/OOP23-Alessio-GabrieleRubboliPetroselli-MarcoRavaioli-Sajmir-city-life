@@ -2,8 +2,6 @@ package unibo.citysimulation.model.business;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import unibo.citysimulation.model.person.DynamicPerson;
 
 /**
@@ -15,8 +13,7 @@ public class EmployymentOffice {
     /**
      * A list of disoccupied people registered at the employment office.
      */
-    private List<DynamicPerson> disoccupiedPeople = new CopyOnWriteArrayList<>();
-
+    private final List<DynamicPerson> disoccupiedPeople;
 
     /**
      * Constructs a new EmploymentOffice object with an empty list of disoccupied people.
@@ -39,12 +36,16 @@ public class EmployymentOffice {
      * 
      * @param person the person to be added
      */
-    public final synchronized void addDisoccupiedPerson(DynamicPerson person) {
-        
+    public final void addDisoccupiedPerson(final DynamicPerson person) {
         this.disoccupiedPeople.add(person);
     }
 
-    public void removeDisoccupiedPerson(DynamicPerson person) {
+    /**
+     * Removes a disoccupied person from the employment office.
+     * 
+     * @param person the person to be removed
+     */
+    public final void removeDisoccupiedPerson(final DynamicPerson person) {
         this.disoccupiedPeople.remove(person);
     }
     

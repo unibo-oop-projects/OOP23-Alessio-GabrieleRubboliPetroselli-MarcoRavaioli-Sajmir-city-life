@@ -10,15 +10,9 @@ import java.time.LocalTime;
 /**
  * A ClockObserver implementation that handles business-related operations based on time updates.
  */
-public class CloclObserverBusiness implements ClockObserver{
-    
-    private static final int DEFAULT_DAY = 0;
-    private static final int WEEK = 7;
+public class CloclObserverBusiness implements ClockObserver {
     private final List<Business> businesses;
-    private int lastKnownDay = DEFAULT_DAY;
-
-    private EmployymentOfficeManager employmentManager;
-    
+    private final EmployymentOfficeManager employmentManager;
     /**
      * Constructs a CloclObserverBusiness object with the given list of businesses and employment office.
      * 
@@ -27,12 +21,8 @@ public class CloclObserverBusiness implements ClockObserver{
      */
     public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
         this.businesses = businesses;
-        this.employmentManager = new EmployymentOfficeManager(businesses, employymentOffice);
-
-        // Assumi dipendenti iniziali
-        this.employmentManager.handleEmployeeHiring();
+        this.employmentManager = new EmployymentOfficeManager(employymentOffice);
     }
-    
     /**
      * Handles business operations based on the current time and day.
      * 
@@ -40,17 +30,20 @@ public class CloclObserverBusiness implements ClockObserver{
      * @param currentDay the current day
      */
     @Override
-    public void onTimeUpdate(final LocalTime currentTime,final int currentDay) {
-        if (currentDay != lastKnownDay) {
-            employmentManager.handleEmployeeFiring();
-            lastKnownDay = currentDay;
+    public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
+        for (final Business business : businesses) {
+            if (currentTime.equals(business.getOpLocalTime())) {
+                employmentManager.handleEmployeeHiring(business);
+            }
+            if (currentTime.equals(business.getClLocalTime())) {
+                employmentManager.handleEmployeeFiring(business);
+            }
         }
-        if (currentDay % WEEK == 0) {
-            employmentManager.handleEmployeeHiring();
-        }
-        for (Business business : businesses) {
+
+        for (final Business business : businesses) {
             business.checkEmployeeDelays(currentTime);
         }
     }
 }
+
 

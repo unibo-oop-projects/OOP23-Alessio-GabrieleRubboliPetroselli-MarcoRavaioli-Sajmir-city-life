@@ -6,28 +6,29 @@ import java.util.List;
 
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.model.zone.Zone;
-
+    
 /**
  * The abstract class representing a business in the city simulation.
  */
-public abstract class Business implements BusinessEmployee{
+public abstract class Business implements BusinessEmployee {
 
-    protected final List<Employee> employees;
-    protected LocalTime opLocalTime;
-    protected LocalTime clLocalTime;
-    protected double revenue;
-    protected int maxEmployees;
+    private final List<Employee> employees;
+    private LocalTime opLocalTime;
+    private LocalTime clLocalTime;
+    private double revenue;
+    private int maxEmployees;
     private final Pair<Integer, Integer> position;
-    protected int minAge;
-    protected int maxAge;
-    protected int maxTardiness;
-    protected Zone zone;
-    
+    private int minAge;
+    private int maxAge;
+    private int maxTardiness;
+    private Zone zone;
 
     /**
      * Constructs a new Business object.
+     * 
+     * @param zone the zone in which the business is located
      */
-    public Business(Zone zone) {
+    public Business(final Zone zone) {
         this.employees = new ArrayList<>();
         this.zone = zone;
         this.position = zone.getRandomPosition();
@@ -40,13 +41,13 @@ public abstract class Business implements BusinessEmployee{
      */
     @Override
     public final void hire(final Employee employee) {
-        if(employee.getPerson().getPersonData().age() >= this.minAge && employee.getPerson().getPersonData().age() <= this.maxAge) {
-            if(employees.size() < getMaxEmployees()) {
-                employees.add(employee);
-            }
+        if (employee.getPerson().getPersonData().age() >= this.minAge &&
+            employee.getPerson().getPersonData().age() <= this.maxAge &&
+            employees.size() < getMaxEmployees()) {
+            employees.add(employee);
         }
     }
-    
+
     /**
      * Fires an employee from the business.
      * 
@@ -64,9 +65,9 @@ public abstract class Business implements BusinessEmployee{
      * 
      * @param currentTime the current time
      */
-    public void checkEmployeeDelays(LocalTime currentTime) {
+    public void checkEmployeeDelays(final LocalTime currentTime) {
         if (currentTime.equals(opLocalTime)) {
-            for (Employee employee : employees) {
+            for (final Employee employee : employees) {
                 if (employee.isLate(this.position)) {
                     employee.incrementDelayCount();
                 }
@@ -102,12 +103,30 @@ public abstract class Business implements BusinessEmployee{
     }
 
     /**
+     * Sets the opening time of the business.
+     * 
+     * @param opLocalTime the opening time to set
+     */
+    public final void setOpLocalTime(final LocalTime opLocalTime) {
+        this.opLocalTime = opLocalTime;
+    }
+
+    /**
      * Returns the closing time of the business.
      * 
      * @return the closing time
      */
     public final LocalTime getClLocalTime() {
         return clLocalTime;
+    }
+
+    /**
+     * Sets the closing time of the business.
+     * 
+     * @param clLocalTime the closing time to set
+     */
+    public final void setClLocalTime(final LocalTime clLocalTime) {
+        this.clLocalTime = clLocalTime;
     }
 
     /**
@@ -120,12 +139,30 @@ public abstract class Business implements BusinessEmployee{
     }
 
     /**
+     * Sets the maximum number of employees allowed in the business.
+     * 
+     * @param maxEmployees the maximum number of employees to set
+     */
+    public final void setMaxEmployees(final int maxEmployees) {
+        this.maxEmployees = maxEmployees;
+    }
+
+    /**
      * Returns the revenue of the business.
      * 
      * @return the revenue
      */
     public final double getRevenue() {
         return revenue;
+    }
+
+    /**
+     * Sets the revenue of the business.
+     * 
+     * @param revenue the revenue to set
+     */
+    public final void setRevenue(final double revenue) {
+        this.revenue = revenue;
     }
 
     /**
@@ -138,12 +175,30 @@ public abstract class Business implements BusinessEmployee{
     }
 
     /**
+     * Sets the minimum age requirement for employees in the business.
+     * 
+     * @param minAge the minimum age requirement to set
+     */
+    public final void setMinAge(final int minAge) {
+        this.minAge = minAge;
+    }
+
+    /**
      * Returns the maximum age requirement for employees in the business.
      * 
      * @return the maximum age requirement
      */
     public final int getMaxAge() {
         return maxAge;
+    }
+
+    /**
+     * Sets the maximum age requirement for employees in the business.
+     * 
+     * @param maxAge the maximum age requirement to set
+     */
+    public final void setMaxAge(final int maxAge) {
+        this.maxAge = maxAge;
     }
 
     /**
@@ -156,6 +211,15 @@ public abstract class Business implements BusinessEmployee{
     }
 
     /**
+     * Sets the maximum tardiness allowed for employees in the business.
+     * 
+     * @param maxTardiness the maximum tardiness to set
+     */
+    public final void setMaxTardiness(final int maxTardiness) {
+        this.maxTardiness = maxTardiness;
+    }
+
+    /**
      * Returns the zone in which the business is located.
      * 
      * @return the zone
@@ -163,8 +227,14 @@ public abstract class Business implements BusinessEmployee{
     public final Zone getZone() {
         return zone;
     }
-    
-}
 
-    
+    /**
+     * Sets the zone in which the business is located.
+     * 
+     * @param zone the zone to set
+     */
+    public final void setZone(final Zone zone) {
+        this.zone = zone;
+    }    
+}
 

@@ -13,15 +13,17 @@ public class SmallBusiness extends Business{
      * Initializes the opening time, closing time, revenue, maximum number of employees,
      * maximum age, minimum age, and maximum tardiness based on the configuration values
      * defined in the BusinessConfig class.
+     *
+     * @param zone the zone where the small business is located
      */
-    public SmallBusiness(Zone zone) {
+    public SmallBusiness(final Zone zone) {
         super(zone);
-        this.opLocalTime = BusinessConfig.SMALL_OPENING_TIME;
-        this.clLocalTime = BusinessConfig.SMALL_CLOSING_TIME;
-        this.revenue = BusinessConfig.SMALL_REVENUE;
-        this.maxEmployees = BusinessConfig.MAX_EMPLOYEES_SMALL_BUSINESS;
-        this.maxAge = BusinessConfig.SMALL_MAX_AGE;
-        this.minAge = BusinessConfig.SMALL_MIN_AGE;
-        this.maxTardiness = BusinessConfig.SMALL_MAX_TARDINESS;
+        setOpLocalTime(BusinessConfig.SMALL_OPENING_TIME);
+        setClLocalTime(BusinessConfig.SMALL_CLOSING_TIME);
+        setRevenue(BusinessConfig.SMALL_REVENUE);
+        setMaxEmployees(BusinessConfig.MAX_EMPLOYEES_SMALL_BUSINESS);
+        setMaxAge(BusinessConfig.SMALL_MAX_AGE);
+        setMinAge(BusinessConfig.SMALL_MIN_AGE);
+        setMaxTardiness(BusinessConfig.SMALL_MAX_TARDINESS);
     }
 }
