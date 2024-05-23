@@ -1,53 +1,52 @@
 package unibo.citysimulation.model.zone;
 
-import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+
+
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Optional;
+
+
+
+
 
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
-public class ZoneTable {
-    private static ZoneTable instance;
-    private static Map<Pair<Zone, Zone>, TransportLine[]> zonePairs;
+public final class ZoneTable {
+    private static final Map<Pair<Zone, Zone>, TransportLine[]> ZONE_PAIRS = new HashMap<>();
 
     private ZoneTable() {
-        zonePairs = new HashMap<>();
+    }
+
+    private static class Holder {
+        private static final ZoneTable INSTANCE = new ZoneTable();
     }
 
     public static ZoneTable getInstance() {
-        if (instance == null) {
-            instance = new ZoneTable();
-        }
-        return instance;
+        return Holder.INSTANCE;
     }
 
-    public void addPair(Zone zone1, Zone zone2, TransportLine[] transportLine) {
-        zonePairs.put(new Pair<>(zone1, zone2), transportLine);
-        zonePairs.put(new Pair<>(zone2, zone1), transportLine); // to ensure the table works both ways
-        System.out.println("Added pair: " + zone1.name() + " - " + zone2.name() + " with lines: " + Arrays.toString(transportLine));
+    public void addPair(final Zone zone1, final Zone zone2, final TransportLine[] transportLine) {
+        ZONE_PAIRS.put(new Pair<>(zone1, zone2), transportLine);
+        ZONE_PAIRS.put(new Pair<>(zone2, zone1), transportLine); // to ensure the table works both ways
+        //System.out.println("Added pair: " + zone1.name() + " - " + zone2.name() + " with lines: " + Arrays.toString(transportLine));
     }
 
-    public TransportLine[] getTransportLine(Zone zone1, Zone zone2) {
-        System.out.println("Getting pair: " + zone1.name() + " - " + zone2.name());
+    public TransportLine[] getTransportLine(final Zone zone1, final Zone zone2) {
+        //System.out.println("Getting pair: " + zone1.name() + " - " + zone2.name());
 
         //System.out.println("\n"+zonePairs);
         
-        System.out.println(zonePairs.get(new Pair<Zone,Zone>(zone1, zone2))[0].getName());
-        return zonePairs.get(new Pair<Zone,Zone>(zone1, zone2));
+        //System.out.println(zonePairs.get(new Pair<Zone,Zone>(zone1, zone2))[0].getName());
+        return ZONE_PAIRS.get(new Pair<Zone,Zone>(zone1, zone2));
     }
 
-    public int getTripDuration(TransportLine[] transportLines) {
+    public int getTripDuration(final TransportLine[] transportLines) {
         return Arrays.stream(transportLines)
-                             .mapToInt(transportLine -> transportLine.getDuration())
+                             .mapToInt(TransportLine::getDuration)
                              .map(duration -> duration * 60)
                              .sum();
     }

@@ -24,7 +24,7 @@ public class WindowController {
 
         new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
 
-        new ClockController(cityModel.getClockModel(), windowView.getClockPanel(), windowView.getInputPanel());
+        new ClockController(cityModel.getClockModel(), windowView.getClockPanel());
 
         new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(),
                 windowView.getClockPanel());

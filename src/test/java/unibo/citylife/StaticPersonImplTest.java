@@ -73,3 +73,4 @@ public class StaticPersonImplTest {
         assertEquals(PersonState.AT_HOME, staticPerson.getState()); // La persona dovrebbe essere a casa inizialmente
     }
 }*/
+

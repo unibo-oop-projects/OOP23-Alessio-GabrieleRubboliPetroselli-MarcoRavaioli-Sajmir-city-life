@@ -13,22 +13,21 @@ import java.util.ArrayList;
  */
 public class ClockModel {
 
-    private int totalDays;
+    private final int totalDays;
     private int hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
     private Timer timer;
     private int currentDay;
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     private LocalTime currentTime;
-    private List<ClockObserver> observers;
+    private final List<ClockObserver> observers;
     private boolean isPaused;
-    private TimerTask task;
 
     /**
      * Constructs a ClockModel object with the specified total number of simulation days.
      * 
-     * @param totalDays The total number of simulation days.
+     * @param totalDays The total number of simulation days
      */
-    public ClockModel(int totalDays) {
+    public ClockModel(final int totalDays) {
         this.totalDays = totalDays;
         this.observers = new ArrayList<>();
     }
@@ -36,106 +35,95 @@ public class ClockModel {
     /**
      * Adds an observer to the clock model.
      * 
-     * @param observer The observer to add.
+     * @param observer The observer to add
      */
-    public void addObserver(ClockObserver observer) {
+    public void addObserver(final ClockObserver observer) {
         observers.add(observer);
     }
 
     /**
      * Removes an observer from the clock model.
      * 
-     * @param observer The observer to remove.
+     * @param observer The observer to remove
      */
-    public void removeObserver(ClockObserver observer) {
+    public void removeObserver(final ClockObserver observer) {
         observers.remove(observer);
     }
 
     /**
      * Starts the simulation with the specified hour duration.
      * 
-     * @param hourDuration The duration of each simulated hour in milliseconds.
+     * @param hourDuration The duration of each simulated hour in milliseconds
      */
-    public void startSimulation(int hourDuration) {
-        System.out.println("Simulation started");
-        if(timer!=null){
+    public void startSimulation(final int hourDuration) {
+        if (timer != null) {
             timer.cancel();
         }
-        
         this.hourDuration = hourDuration;
-
         this.timer = new Timer();
-    
-        task = new TimerTask() {
-    
+        final TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if(!isPaused){
+                if (!isPaused) {
                     if (currentDay <= totalDays) {
-                        currentTime = currentTime.plusMinutes(ConstantAndResourceLoader.MINUTES_IN_A_SECOND);
-        
-                        if (currentTime.getHour() == 0 && currentTime.getMinute() == 0){
+                        currentTime = currentTime.plusMinutes(ConstantAndResourceLoader.MINUTES_IN_A_SECOND); 
+                        if (currentTime.getHour() == 0 && currentTime.getMinute() == 0) {
                             currentDay++;
                         }
-    
-                        
                         notifyObservers();
-    
                     } else {
                         timer.cancel();
                     }
-
                 }
-                
             }
         };
-    
         timer.scheduleAtFixedRate(task, 0, hourDuration);
     }
 
     /**
      * Restarts the simulation.
      */
-    public void restartSimulation(){
-        if(timer!=null){
+    public void restartSimulation() {
+        if (timer != null) {
             timer.cancel();
         }
-        isPaused=false;
-        currentTime = LocalTime.of(0,0);
+        isPaused = false;
+        currentTime = LocalTime.of(0, 0);
         currentDay = 1;
         this.startSimulation(hourDuration);
     }
-    
+
     /**
      * Pauses or resumes the simulation.
      */
-    public void pauseSimulation(){
-        isPaused=!isPaused;
+    public void pauseSimulation() {
+        isPaused = !isPaused;
     }
 
-    public void stopSimulation(){
-        if(timer!=null){
+    /**
+     * Stops the simulation and permits the user to change input values.
+     */
+    public void stopSimulation() {
+        if (timer != null) {
             timer.cancel();
         }
-        isPaused=true;
+        isPaused = true;
     }
 
     /**
      * Notifies all observers of a time update.
      */
     private void notifyObservers() {
-        List<ClockObserver> observersCopy = new ArrayList<>(observers);
-        for (ClockObserver observer : observersCopy) {
+        final List<ClockObserver> observersCopy = new ArrayList<>(observers);
+        for (final ClockObserver observer : observersCopy) {
             observer.onTimeUpdate(currentTime, currentDay);
         }
-    }
-    
-    
+    } 
 
     /**
      * Gets the current time of the simulation.
      * 
-     * @return The current time.
+     * @return The current time
      */
     public LocalTime getCurrentTime() {
         return currentTime;
@@ -144,12 +132,17 @@ public class ClockModel {
     /**
      * Gets the formatted current time of the simulation.
      * 
-     * @return The formatted current time.
+     * @return The formatted current time
      */
     public String getFormattedCurrentTime() {
         return currentTime.format(formatter);
     }
 
+    /**
+     * Gets the current time of the simulation as a double.
+     * 
+     * @return The current time as a double
+     */
     public double getDoubleCurrentTime() {
         return (double) currentTime.toSecondOfDay();
     }
@@ -157,7 +150,7 @@ public class ClockModel {
     /**
      * Gets the current day of the simulation.
      * 
-     * @return The current day.
+     * @return The current day
      */
     public int getCurrentDay() {
         return currentDay;
@@ -166,7 +159,7 @@ public class ClockModel {
     /**
      * Gets the hour duration of the simulation.
      * 
-     * @return The hour duration.
+     * @return The hour duration
      */
     public int getHourDuration() {
         return hourDuration;
@@ -175,22 +168,27 @@ public class ClockModel {
     /**
      * Sets the hour duration of the simulation.
      * 
-     * @param hourDuration The hour duration to set.
+     * @param hourDuration The hour duration to set
      */
-    public void setHourDuration(int hourDuration) {
+    public void setHourDuration(final int hourDuration) {
         this.hourDuration = hourDuration;
     }
 
     /**
      * Gets the paused state of the simulation.
      * 
-     * @return True if the simulation is paused, false otherwise.
+     * @return True if the simulation is paused, false otherwise
      */
-    public boolean getIsPaused(){
+    public boolean isPaused() {
         return isPaused;
     }
 
-    public Timer getTimer(){
+    /**
+     * Gets the timer of the simulation.
+     * 
+     * @return The timer
+     */
+    public Timer getTimer() {
         return timer;
     }
 }
