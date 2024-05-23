@@ -15,10 +15,18 @@ import com.google.gson.JsonObject;
  * This factory creates a list of TransportLine objects based on a list of Zone
  * objects.
  */
-public class TransportFactory {
+public final class TransportFactory {
+    private TransportFactory() {
+        // private constructor to prevent instantiation
+    }
 
-
-    public static List<TransportLine> createTransportsFromFile(List<Zone> zones) {
+    /**
+     * Create a list of TransportLine objects based on a list of Zone objects.
+     * 
+     * @param zones List of Zone objects.
+     * @return List of TransportLine objects.
+     */
+    public static List<TransportLine> createTransportsFromFile(final List<Zone> zones) {
         List<TransportLine> lines = new ArrayList<>();
 
         try {
