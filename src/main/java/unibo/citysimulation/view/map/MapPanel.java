@@ -29,11 +29,18 @@ public class MapPanel extends StyledPanel {
 
     /**
      * Constructs a MapPanel with the specified background color.
+     *
+     * @param bgColor the background color of the panel
      */
-    public MapPanel(final Color bgColor){
+    public MapPanel(final Color bgColor) {
         super(bgColor);
     }
 
+    /**
+     * Draws the transport lines on the map.
+     *
+     * @param g the Graphics context
+     */
     private void drawTransportLines(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
         
@@ -69,6 +76,11 @@ public class MapPanel extends StyledPanel {
         }
     }
 
+    /**
+     * Draws the people on the map.
+     *
+     * @param g the Graphics context
+     */
     private void drawPeople(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
@@ -81,6 +93,11 @@ public class MapPanel extends StyledPanel {
         });
     }
 
+    /**
+     * Draws the businesses on the map.
+     *
+     * @param g the Graphics context
+     */
     private void drawBusinesses(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
@@ -119,26 +136,46 @@ public class MapPanel extends StyledPanel {
         }
     }
 
-    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points, final List<String> names){
+    /**
+     * Sets the lines information for the map.
+     *
+     * @param points the coordinates of the transport lines
+     * @param names the names of the transport lines
+     */
+    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points, final List<String> names) {
         this.linesPointsCoordinates = points;
         this.linesName = names;
     }
 
-    public void setLinesColor(final List<Color> colors){
+    /**
+     * Sets the colors of the transport lines based on congestion.
+     *
+     * @param colors the colors of the transport lines
+     */
+    public void setLinesColor(final List<Color> colors) {
         this.congestionsColorList = colors;
     }
 
-    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, final Map<Integer, Pair<Integer, Integer>> businessMap){
+    /**
+     * Sets the entities to be displayed on the map.
+     *
+     * @param peopleMap the map of people with their coordinates and colors
+     * @param businessMap the map of businesses with their coordinates
+     */
+    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, final Map<Integer, Pair<Integer, Integer>> businessMap) {
         this.peopleMap = peopleMap;
         this.businessMap = businessMap;
         repaint();
     }
 
-    public void setBusinessPoints(final Map<Integer, Pair<Integer, Integer>> businessMap){
+    /**
+     * Sets the coordinates of businesses on the map.
+     *
+     * @param businessMap the map of businesses with their coordinates
+     */
+    public void setBusinessPoints(final Map<Integer, Pair<Integer, Integer>> businessMap) {
         this.businessMap = businessMap;
     }
-        
-
 
     /**
      * Sets the image to be displayed on the map panel.
@@ -163,6 +200,4 @@ public class MapPanel extends StyledPanel {
             return super.getPreferredSize();
         }
     }
-
-    
 }

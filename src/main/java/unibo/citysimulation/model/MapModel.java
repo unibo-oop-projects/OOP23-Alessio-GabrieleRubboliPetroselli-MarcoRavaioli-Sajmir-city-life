@@ -10,6 +10,9 @@ import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
+/**
+ * Model interface representing the map.
+ */
 public interface MapModel {
     
     /**

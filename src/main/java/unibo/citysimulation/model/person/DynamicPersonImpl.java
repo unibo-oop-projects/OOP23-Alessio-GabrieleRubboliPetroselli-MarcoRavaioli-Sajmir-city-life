@@ -40,7 +40,7 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
                 }
             }
             if (!congestioned) {
-                this.lastArrivingTime = (currentTime + lineDuration) % 86400;
+                this.lastArrivingTime = (currentTime + lineDuration) % ConstantAndResourceLoader.SECONDS_IN_A_DAY;
 
                 late = false;
                 return true;

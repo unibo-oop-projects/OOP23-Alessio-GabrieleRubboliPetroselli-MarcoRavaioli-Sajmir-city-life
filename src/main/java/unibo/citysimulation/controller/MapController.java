@@ -16,7 +16,7 @@ import unibo.citysimulation.view.sidepanels.InfoPanel;
 /**
  * Controller class responsible for handling mouse events on the map.
  */
-public class MapController implements ClockObserver{
+public class MapController implements ClockObserver {
     private final InfoPanel infoPanel;
     private final MapPanel mapPanel;
     private final MapModelImpl mapModel;
@@ -36,16 +36,13 @@ public class MapController implements ClockObserver{
         this.mapModel = cityModel.getMapModel();
 
         initialize();
-        
-
     }
 
-    private void initialize(){
+    private void initialize() {
         cityModel.getClockModel().addObserver(this);
 
         mapModel.setTransportInfo(cityModel.getTransportLines());
         mapModel.setTransportCongestion(cityModel.getTransportLines());
-
 
         mapPanel.setImage(mapModel.getImage());
 
@@ -56,11 +53,8 @@ public class MapController implements ClockObserver{
             }
         });
 
-        
-
         mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
         mapPanel.setLinesColor(mapModel.getColorList());
-        
     }
 
     /**
@@ -94,16 +88,28 @@ public class MapController implements ClockObserver{
 
     }
 
+    /**
+     * Returns the image of the map.
+     *
+     * @return the BufferedImage of the map.
+     */
     public BufferedImage getImage() {
         return mapModel.getImage();
     }
 
+    /**
+     * Updates the map model when the time is updated.
+     *
+     * @param currentTime the current time
+     * @param currentDay the current day
+     */
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
 
         mapModel.setTransportCongestion(cityModel.getTransportLines());
 
         mapPanel.setLinesColor(mapModel.getColorList());
-        mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), mapModel.getBusinessInfos(cityModel.getBusinesses()));
+        mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), 
+                             mapModel.getBusinessInfos(cityModel.getBusinesses()));
     }
 }
