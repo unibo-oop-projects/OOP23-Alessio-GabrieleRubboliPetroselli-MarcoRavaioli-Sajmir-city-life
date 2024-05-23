@@ -18,9 +18,9 @@ import unibo.citysimulation.utilities.Pair;
  * Model class representing the map.
  */
 public class MapModelImpl implements MapModel{
-    private MapImageLoader imageLoader;
-    private MapCoordinateHandler coordinateHandler;
-    private TransportManager transportManager;
+    final private MapImageLoader imageLoader;
+    final private MapCoordinateHandler coordinateHandler;
+    final private TransportManager transportManager;
 
     /**
      * Constructs a MapModel object and loads the map image.
@@ -42,9 +42,9 @@ public class MapModelImpl implements MapModel{
     }
 
     @Override
-    public Map<Integer, Pair<Integer, Integer>> getBusinessInfos(List<Business> businesses) {
-        int maxX = coordinateHandler.getMaxX();
-        int maxY = coordinateHandler.getMaxY();
+    public Map<Integer, Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
+        final int maxX = coordinateHandler.getMaxX();
+        final int maxY = coordinateHandler.getMaxY();
         return businesses.stream()
                 .collect(Collectors.toMap(
                         businesses::indexOf,
@@ -54,9 +54,9 @@ public class MapModelImpl implements MapModel{
     }
 
     @Override
-    public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {
-        int maxX = coordinateHandler.getMaxX();
-        int maxY = coordinateHandler.getMaxY();
+    public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(final List<DynamicPerson> people) {
+        final int maxX = coordinateHandler.getMaxX();
+        final int maxY = coordinateHandler.getMaxY();
         return people.stream()
                 .filter(person -> person.getPosition().isPresent())
                 .collect(Collectors.toMap(
@@ -67,7 +67,7 @@ public class MapModelImpl implements MapModel{
                                 getPersonColor(person))));
     }
 
-    private Color getPersonColor(DynamicPerson person) {
+    private Color getPersonColor(final DynamicPerson person) {
         return person.getState() == PersonState.AT_HOME ? Color.BLUE : Color.RED;
     }
 
@@ -78,7 +78,7 @@ public class MapModelImpl implements MapModel{
                 .collect(Collectors.toList());
     }
 
-    private Color getColor(Double perc) {
+    private Color getColor(final Double perc) {
         if (!transportManager.isSimulationStarted()) {
             return Color.GRAY;
         }
@@ -87,7 +87,7 @@ public class MapModelImpl implements MapModel{
             green = Math.max(0, Math.min(255, green));
             return new Color(0, green, 0);
         } else {
-            double adjustedPerc = (perc - 50) / 50;
+            final double adjustedPerc = (perc - 50) / 50;
             int red = (int) (255 * adjustedPerc);
             int green = (int) (255 * (1 - adjustedPerc));
             red = Math.max(0, Math.min(255, red)); // Ensure red is within the range
@@ -113,27 +113,27 @@ public class MapModelImpl implements MapModel{
     }
 
     @Override
-    public void setTransportCongestion(List<TransportLine> lines) {
+    public void setTransportCongestion(final List<TransportLine> lines) {
         transportManager.setTransportCongestion(lines);
     }
 
     @Override
-    public void setLastClickedCoordinates(int x, int y) {
+    public void setLastClickedCoordinates(final int x, final int y) {
         coordinateHandler.setLastClickedCoordinates(x, y);    
     }
 
     @Override
-    public void setMaxCoordinates(int x, int y) {
+    public void setMaxCoordinates(final int x, final int y) {
         coordinateHandler.setMaxCoordinates(x, y);
     }
 
     @Override
-    public int normalizeCoordinate(int c, int max) {
+    public int normalizeCoordinate(final int c, final int max) {
         return coordinateHandler.normalizeCoordinate(c, max);
     }
 
     @Override
-    public int denormalizeCoordinate(int c, int max) {
+    public int denormalizeCoordinate(final int c, final int max) {
         return coordinateHandler.denormalizeCoordinate(c, max);
     }
 

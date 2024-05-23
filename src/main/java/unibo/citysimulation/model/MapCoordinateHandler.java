@@ -22,7 +22,7 @@ public class MapCoordinateHandler {
      * @param x The x-coordinate of the click.
      * @param y The y-coordinate of the click.
      */
-    public void setLastClickedCoordinates(int x, int y) {
+    public void setLastClickedCoordinates(final int x, final int y) {
         normClickedX = x;
         normClickedY = y;
     }
@@ -33,7 +33,7 @@ public class MapCoordinateHandler {
      * @param x The maximum x-coordinate.
      * @param y The maximum y-coordinate.
      */
-    public void setMaxCoordinates(int x, int y) {
+    public void setMaxCoordinates(final int x, final int y) {
         maxX = x;
         maxY = y;
     }
@@ -45,11 +45,11 @@ public class MapCoordinateHandler {
      * @param max The maximum value of the coordinate.
      * @return The normalized coordinate.
      */
-    public int normalizeCoordinate(int c, int max) {
+    public int normalizeCoordinate(final int c, final int max) {
         return (int) (c / (double) max * 1000);
     }
 
-    public int denormalizeCoordinate(int c, int max) {
+    public int denormalizeCoordinate(final int c, final int max) {
         return (int) (c / 1000.0 * max);
     }
 

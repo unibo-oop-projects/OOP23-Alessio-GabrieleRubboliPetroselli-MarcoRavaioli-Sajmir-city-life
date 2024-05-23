@@ -56,7 +56,7 @@ public class GraphicsModel {
     }
 
     public void updateDataset(final List<Integer> states, final List<Double> congestions, final List<Integer> businessOccupations,
-            double counter) {
+            final double counter) {
 
         if (columnCount > ConstantAndResourceLoader.MAX_COLUMNS) {
             final int columnsToRemove = columnCount - ConstantAndResourceLoader.MAX_COLUMNS;
