@@ -59,9 +59,8 @@ public class GraphicsController implements ClockObserver {
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         graphicsModel.updateDataset(
-            graphicsModel.getPeopleStateCounts(cityModel.getAllPeople()), 
-            graphicsModel.getTransportLinesCongestion(cityModel.getTransportLines()),
-            graphicsModel.getBusinessesOccupation(cityModel.getBusinesses()),
-            graphicsModel.getCounter());
+            cityModel.getAllPeople(),
+            cityModel.getTransportLines(),
+            cityModel.getBusinesses());
     }
 }

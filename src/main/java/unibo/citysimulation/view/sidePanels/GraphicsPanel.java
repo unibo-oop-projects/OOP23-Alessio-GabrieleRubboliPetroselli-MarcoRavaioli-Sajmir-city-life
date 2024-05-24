@@ -60,17 +60,15 @@ public class GraphicsPanel extends StyledPanel {
         chartsPanel.setBackground(super.getBgColor());
         chartsPanel.setLayout(new GridLayout(plots.size(), 1)); // 1 colonna, tante righe quante sono i grafici
     
-        synchronized (this) {
-            plots.forEach(plot -> chartsPanel.add(new ChartPanel(plot.getChart())));
-        }
-    
+        
+        plots.forEach(plot -> chartsPanel.add(new ChartPanel(plot.getChart())));
     
         this.add(chartsPanel, BorderLayout.CENTER);
     }
     
 
     public List<JFreeChart> createCharts(final List<String> names, final List<XYSeriesCollection> datasets) {
-        final List<JFreeChart> charts = new ArrayList<JFreeChart>();
+        final List<JFreeChart> charts = new ArrayList<>();
 
         for (int i = 0; i < names.size(); i++) {
             charts.add(createChart(names.get(i), datasets.get(i)));
@@ -78,10 +76,9 @@ public class GraphicsPanel extends StyledPanel {
         return charts;
     }
 
-
     // Method to create a chart
     private JFreeChart createChart(final String title, final XYDataset dataset) {
-        JFreeChart chart = ChartFactory.createXYLineChart(
+        final JFreeChart chart = ChartFactory.createXYLineChart(
                 title,
                 null,
                 null,

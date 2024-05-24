@@ -27,7 +27,7 @@ public class TransportManager {
         return new ArrayList<>(linesPointsCoordinates);
     }
 
-    public void setTransportInfo(List<TransportLine> lines) {
+    public void setTransportInfo(final List<TransportLine> lines) {
         linesPointsCoordinates = lines.stream()
             .map(line -> {
                 final Pair<Integer, Integer> startPoint = line.getLinkedZones().getFirst().boundary().getCenter();
