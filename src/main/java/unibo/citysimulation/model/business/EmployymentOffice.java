@@ -48,5 +48,4 @@ public class EmployymentOffice {
     public final void removeDisoccupiedPerson(final DynamicPerson person) {
         this.disoccupiedPeople.remove(person);
     }
-    
 }

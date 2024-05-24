@@ -58,8 +58,9 @@ public class EmployymentOfficeManager {
      * @return true if the business can hire more employees, false otherwise.
      */
     private boolean canHire(final Business business) {
-        return business.getEmployees().size() < business.getMaxEmployees();
-    }
+        
+        boolean canHire = business.getEmployees().size() < business.getMaxEmployees();
+        return canHire;    }
 
     /**
      * Checks if an employee should be fired based on their delay count.
@@ -85,7 +86,6 @@ public class EmployymentOfficeManager {
         final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
             .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
             .collect(Collectors.toList());
-        
         final int minPeopleToHire = Math.min(4, availableSpots); 
         final int maxPeopleToHire = Math.min(availableSpots, eligiblePeople.size());
 
@@ -134,5 +134,4 @@ public class EmployymentOfficeManager {
             employee.getBusiness().fire(employee);
         });
     }
-    
 }

@@ -7,7 +7,7 @@ import unibo.citysimulation.utilities.Pair;
  * The Employee class represents an employee with a name and an ID.
  * It implements the EmployeeStatus interface.
  */
-public class Employee implements EmployeeStatus{
+public class Employee implements EmployeeStatus {
     
     private int countDelay;
     private final DynamicPerson person;
@@ -19,7 +19,7 @@ public class Employee implements EmployeeStatus{
      * @param person The person associated with the employee.
      * @param business The business associated with the employee.
      */
-    public Employee(final DynamicPerson person, final Business business){
+    public Employee(final DynamicPerson person, final Business business) {
         this.person = person;
         this.countDelay = 0;
         this.business = business;

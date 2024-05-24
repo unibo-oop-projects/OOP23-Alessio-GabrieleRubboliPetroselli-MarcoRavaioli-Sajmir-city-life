@@ -9,8 +9,7 @@ import unibo.citysimulation.utilities.Pair;
  */
 public record Zone(String name, float personPercents, float businessPercents, Pair<Integer, Integer> wellfareMinMax,
         Pair<Integer, Integer> ageMinMax, Boundary boundary) {
-    
-    final static Random RANDOM = new Random();
+    static final Random RANDOM = new Random();
 
     /**
      * Generates a random position within the zone's boundary.

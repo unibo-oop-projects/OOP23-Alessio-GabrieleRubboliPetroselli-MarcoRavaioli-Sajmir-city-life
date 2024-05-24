@@ -6,7 +6,7 @@ import unibo.citysimulation.model.zone.Zone;
  * Represents a small business in the city simulation.
  * Inherits from the Business class.
  */
-public class SmallBusiness extends Business{
+public class SmallBusiness extends Business {
 
     /**
      * Constructs a SmallBusiness object.

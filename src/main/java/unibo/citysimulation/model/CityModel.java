@@ -51,6 +51,7 @@ public class CityModel {
 
     private static final Random random = new Random();
     private int totalBusinesses;
+    private static final int PERCENTAGE = 100;
 
 
 
@@ -147,7 +148,6 @@ public class CityModel {
             
         }
 
-        EmployymentOfficeManager employmentManager = new EmployymentOfficeManager(employymentOffice);
 
         
         
@@ -157,7 +157,7 @@ public class CityModel {
         int remainingBusinesses = totalBusinesses;
 
     for (Zone zone : zones) {
-        int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
+        int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / PERCENTAGE);
         remainingBusinesses -= zoneBusinessCount;
 
         for (int i = 0; i < zoneBusinessCount; i++) {

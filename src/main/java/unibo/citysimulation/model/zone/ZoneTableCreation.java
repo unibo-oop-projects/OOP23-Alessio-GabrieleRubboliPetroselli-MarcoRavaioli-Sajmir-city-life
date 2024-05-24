@@ -5,7 +5,7 @@ import unibo.citysimulation.model.transport.TransportLine;
 import java.util.List;
 
 public final class ZoneTableCreation {
-
+    
     private ZoneTableCreation() {
     }
 

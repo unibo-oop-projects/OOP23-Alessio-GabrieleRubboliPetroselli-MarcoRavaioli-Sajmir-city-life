@@ -7,8 +7,7 @@ import unibo.citysimulation.utilities.Pair;
  * It defines the coordinates of the top-left corner (x1, y1) and the bottom-right corner (x2, y2).
  */
 public class Boundary {
-    
-    final Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> coordinates;
+    private final Pair<Pair<Integer, Integer>, Pair<Integer, Integer>> coordinates;
 
     /**
      * Constructs a Boundary object with the specified coordinates.
@@ -29,9 +28,9 @@ public class Boundary {
      * @param y the y-coordinate to check
      * @return true if the coordinates are inside the boundary, false otherwise
      */
-    public boolean isInside(final int x,final int y) {
-        return x >= coordinates.getFirst().getFirst() && x <= coordinates.getSecond().getFirst() &&
-                y >= coordinates.getFirst().getSecond() && y <= coordinates.getSecond().getSecond();
+    public boolean isInside(final int x, final int y) {
+        return x >= coordinates.getFirst().getFirst() && x <= coordinates.getSecond().getFirst() 
+        && y >= coordinates.getFirst().getSecond() && y <= coordinates.getSecond().getSecond();
     }
 
     /**
@@ -75,7 +74,7 @@ public class Boundary {
      *
      * @return the center coordinates as a Pair object
      */
-    public Pair<Integer, Integer> getCenter(){
+    public Pair<Integer, Integer> getCenter() {
         return new Pair<Integer, Integer>(getX() + getWidth() / 2, getY() + getHeight() / 2);
     }
 

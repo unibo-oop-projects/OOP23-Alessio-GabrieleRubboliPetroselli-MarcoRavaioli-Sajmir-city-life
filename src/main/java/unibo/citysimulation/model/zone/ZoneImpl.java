@@ -6,15 +6,16 @@ import unibo.citysimulation.utilities.Pair;
 /**
  * A class representing a zone in the city.
  */
-public class ZoneImpl  {
+public final class ZoneImpl  {
     private String name;
     private float personPercents;
     private float businessPercents;
     private float wellfare;
-    final private Pair<Integer, Integer> wellfareMinMax;
+    private final Pair<Integer, Integer> wellfareMinMax;
 
 
-    public ZoneImpl(final String name, final float personPercents, final float businessPercents, final float wellfare, final Pair<Integer, Integer> wellfareMinMax) {
+    public ZoneImpl(final String name, final float personPercents, final float businessPercents, final float wellfare, 
+    final Pair<Integer, Integer> wellfareMinMax) {
         this.name = name;
         this.personPercents = personPercents;
         this.businessPercents = businessPercents;

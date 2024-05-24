@@ -6,7 +6,7 @@ import unibo.citysimulation.model.zone.Zone;
  * Represents a big business in the city simulation.
  * Extends the Business class.
  */
-public class BigBusiness extends Business{
+public class BigBusiness extends Business {
 
     /**
      * Constructs a new instance of the BigBusiness class.
