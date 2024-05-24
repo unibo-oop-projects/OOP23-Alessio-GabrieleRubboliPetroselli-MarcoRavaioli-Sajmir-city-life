@@ -70,7 +70,7 @@ public class MapModel {
         int occupiedPositions = business.getEmployees().size();
         double occupationPercentage = (double) occupiedPositions / totalPositions * 100;
 
-        System.out.println("Business " + i + ": Occupation Percentage = " + occupationPercentage + "%");
+        //System.out.println("Business " + i + ": Occupation Percentage = " + occupationPercentage + "%");
 
         businessInfos.put(i, new Pair<>(x, y));
     }
