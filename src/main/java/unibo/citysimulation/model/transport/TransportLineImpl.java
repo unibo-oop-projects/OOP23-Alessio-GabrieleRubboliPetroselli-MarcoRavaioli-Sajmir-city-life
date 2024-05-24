@@ -75,6 +75,15 @@ public class TransportLineImpl implements TransportLine {
     public int getPersonInLine() {
         return personInLine;
     }
+
+    /**
+     * Resets the personInLine field.
+     */
+    @Override
+    public void resetPersonInLine() {
+        personInLine = 0;
+    }
+
     /**
      * Returns the congestion of the transport line as a percentage of the capacity.
      * This method can be safely overridden in subclasses, if any.

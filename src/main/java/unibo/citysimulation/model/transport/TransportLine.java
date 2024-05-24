@@ -57,6 +57,11 @@ public interface TransportLine {
      */
     int getPersonInLine();
     /**
+     *  Resets the personInLine field.
+     * 
+     */
+    void resetPersonInLine();
+    /**
      * Returns the pair of zones that the transport line links.
      *
      * @return the pair of zones that the transport line links

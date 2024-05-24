@@ -33,7 +33,7 @@ import java.util.Random;
  */
 public final class CityModel {
     private final List<Zone> zones;
-    private final List<TransportLine> transports;
+    private List<TransportLine> transports;
     private final List<Business> businesses;
     private List<List<DynamicPerson>> people;
     private final MapModelImpl mapModel;
@@ -100,6 +100,8 @@ public final class CityModel {
      */
     public void createEntities() {
         graphicsModel.clearDatasets();
+
+        transports = TransportFactory.createTransportsFromFile(zones);
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
 
         // Create zone table
