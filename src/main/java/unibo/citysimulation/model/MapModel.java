@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import java.awt.Color;
 import java.util.Map;
 import java.util.Collections;
+import java.util.HashMap;
+
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;
@@ -58,15 +60,24 @@ public class MapModel {
 
     public Map<Integer,Pair<Integer,Integer>> getBusinessInfos(List<Business> businesses) {
         
-        return businesses.stream()
-            .collect(Collectors.toMap(
-                businesses::indexOf,
-                business -> new Pair<>(
-                    denormalizeCoordinate(business.getPosition().getFirst(), maxX),
-                    denormalizeCoordinate(business.getPosition().getSecond(), maxY))));
+        Map<Integer, Pair<Integer, Integer>> businessInfos = new HashMap<>();
+
+        for (int i = 0; i < businesses.size(); i++) {
+        Business business = businesses.get(i);
+        int x = denormalizeCoordinate(business.getPosition().getFirst(), maxX);
+        int y = denormalizeCoordinate(business.getPosition().getSecond(), maxY);
+        int totalPositions = business.getMaxEmployees();
+        int occupiedPositions = business.getEmployees().size();
+        double occupationPercentage = (double) occupiedPositions / totalPositions * 100;
+
+        System.out.println("Business " + i + ": Occupation Percentage = " + occupationPercentage + "%");
+
+        businessInfos.put(i, new Pair<>(x, y));
+    }
+
+    return businessInfos;
         
-            
-            
+                        
     }
 
     public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(List<DynamicPerson> people) {
