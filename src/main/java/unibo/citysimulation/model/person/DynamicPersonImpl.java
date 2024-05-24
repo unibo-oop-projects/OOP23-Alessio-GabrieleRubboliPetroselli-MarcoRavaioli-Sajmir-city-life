@@ -16,6 +16,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     private PersonState lastDestination;
     private boolean late;
     private final Random random = new Random();
+    private final int businessBegin;
+    private final int businessEnd;
 
     /**
      * Constructs a new dynamic person with the given person data and money.
@@ -28,6 +30,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         super(personData, money);
         this.lastDestination = PersonState.WORKING;
         late = false;
+        businessBegin = updatedTime(super.getPersonData().business().getOpLocalTime());
+        businessEnd = updatedTime(super.getPersonData().business().getClLocalTime());
     }
 
     private boolean checkTimeToMove(final int currentTime, final int timeToMove, final int lineDuration) {
@@ -51,7 +55,7 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
 
     private void checkTimeToGoToWork(final LocalTime currentTime) {
         if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-                updatedTime(super.getPersonData().business().getOpLocalTime()) - super.getTripDuration(),
+                businessBegin - super.getTripDuration(),
                 super.getTripDuration())) {
             movePerson(PersonState.WORKING);
         }
@@ -59,7 +63,7 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
 
     private void checkTimeToGoHome(final LocalTime currentTime) {
         if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-                updatedTime(super.getPersonData().business().getClLocalTime()),
+                businessEnd,
                 super.getTripDuration())) {
             movePerson(PersonState.AT_HOME);
         }
@@ -115,5 +119,21 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         }
         this.lastDestination = newState;
         this.updatePosition();
+    }
+
+    /**
+     * Gets the business beginning time.
+     */
+    @Override
+    public int getBusinessBegin() {
+        return businessBegin;
+    }
+
+    /**
+     * Gets the business ending time.
+     */
+    @Override
+    public int getBusinessEnd() {
+        return businessEnd;
     }
 }

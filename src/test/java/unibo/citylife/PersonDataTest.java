@@ -1,4 +1,4 @@
-/*package unibo.citylife;
+package unibo.citylife;
 
 import org.junit.jupiter.api.Test;
 import unibo.citysimulation.model.business.Business;
@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PersonDataTest {
     private List<Zone> zones = ZoneFactory.createZonesFromFile();
-    private List<Business> businesses = BusinessFactory.createBusiness(null, null);
     private Random random = new Random();
     
 
@@ -23,7 +22,7 @@ public class PersonDataTest {
         String name = "John";
         int age = 30;
         Zone residenceZone = zones.get(random.nextInt(zones.size()));
-        Business business = businesses.get(random.nextInt(businesses.size()));
+        Business business = BusinessFactory.getRandomBusiness(zones).get();
 
         PersonData personData = new PersonData(name, age, business, residenceZone);
 
@@ -33,5 +32,5 @@ public class PersonDataTest {
         assertEquals(business, personData.business());
         assertEquals(residenceZone, personData.residenceZone());
     }
-}*/
+}
 

@@ -1,8 +1,5 @@
-/*package unibo.citylife;
+package unibo.citylife;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import unibo.citysimulation.model.business.Business;
 import unibo.citysimulation.model.business.BusinessFactory;
 import unibo.citysimulation.model.person.PersonData;
@@ -13,20 +10,20 @@ import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
-import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.Pair;
+
 import java.util.Optional;
 import java.util.Random;
 import java.util.List;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StaticPersonImplTest {
     private List<Zone> zones = ZoneFactory.createZonesFromFile();
     private List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
-    private List<Business> businesses = BusinessFactory.createBusinessesFromFile(zones);
     private Random random = new Random();
 
     private StaticPerson staticPerson;
@@ -34,7 +31,7 @@ public class StaticPersonImplTest {
     @BeforeEach
     void setUp() {
         Zone residenceZone = zones.get(random.nextInt(zones.size()));
-        Business business = businesses.get(random.nextInt(businesses.size()));
+        Business business = BusinessFactory.getRandomBusiness(zones).get();
         ZoneTableCreation.createAndAddPairs(zones, transports);
         // Simuliamo un dato di una persona per i test
         PersonData personData = new PersonData("Mario", 30, business, residenceZone);
@@ -72,5 +69,5 @@ public class StaticPersonImplTest {
     void testGetState() {
         assertEquals(PersonState.AT_HOME, staticPerson.getState()); // La persona dovrebbe essere a casa inizialmente
     }
-}*/
+}
 
