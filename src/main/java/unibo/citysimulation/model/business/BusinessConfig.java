@@ -24,13 +24,13 @@ public class BusinessConfig {
     public static final LocalTime SMALL_OPENING_TIME = LocalTime.of(START_TIME_SMALL_BUSINESS, MINUTES);
     public static final LocalTime SMALL_CLOSING_TIME = LocalTime.of(END_TIME_SMALL_BUSINESS, MINUTES);
 
-    public static final int MAX_EMPLOYEES_BIG_BUSINESS = 300;
-    public static final int MAX_EMPLOYEES_MEDIUM_BUSINESS = 100;
-    public static final int MAX_EMPLOYEES_SMALL_BUSINESS = 20;
+    public static final int MAX_EMPLOYEES_BIG_BUSINESS = 50;
+    public static final int MAX_EMPLOYEES_MEDIUM_BUSINESS = 20;
+    public static final int MAX_EMPLOYEES_SMALL_BUSINESS = 5;
 
     public static final int BIG_MAX_TARDINESS = 1;
-    public static final int MEDIUM_MAX_TARDINESS = 5;
-    public static final int SMALL_MAX_TARDINESS = 10;
+    public static final int MEDIUM_MAX_TARDINESS = 2;
+    public static final int SMALL_MAX_TARDINESS = 3;
 
     public static final int BIG_MIN_AGE = 35;
     public static final int MEDIUM_MIN_AGE = 27;

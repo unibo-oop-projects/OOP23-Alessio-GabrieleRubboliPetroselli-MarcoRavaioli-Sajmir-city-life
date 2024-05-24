@@ -180,7 +180,7 @@ public class CityModel {
     }
 
     public void calculateTotalBusinesses(int numberOfPeople) {
-        this.totalBusinesses = numberOfPeople / 10;
+        this.totalBusinesses = numberOfPeople / 20;
     }
 
     public int getTotalBusinesses() {
