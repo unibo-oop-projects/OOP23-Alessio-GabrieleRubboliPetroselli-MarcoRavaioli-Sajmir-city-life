@@ -1,8 +1,8 @@
 [
     {
         "name": "Tangenziale",
-        "capacity": 100,
-        "duration": 60,
+        "capacity": 50,
+        "duration": 40,
         "zone": {
             "a": 0,
             "b": 1
@@ -10,8 +10,8 @@
     },
     {
         "name": "Circolare",
-        "capacity": 50,
-        "duration": 10,
+        "capacity": 40,
+        "duration": 20,
         "zone": {
             "a": 0,
             "b": 2
@@ -19,8 +19,8 @@
     },
     {
         "name": "Statale",
-        "capacity": 50,
-        "duration": 2,
+        "capacity": 30,
+        "duration": 10,
         "zone": {
             "a": 0,
             "b": 3
@@ -28,8 +28,8 @@
     },
     {
         "name": "Statale 2",
-        "capacity": 50,
-        "duration": 10,
+        "capacity": 45,
+        "duration": 15,
         "zone": {
             "a": 0,
             "b": 4
@@ -37,7 +37,7 @@
     },
     {
         "name": "Statale 5",
-        "capacity": 50,
+        "capacity": 55,
         "duration": 20,
         "zone": {
             "a": 1,
@@ -46,8 +46,8 @@
     },
     {
         "name": "Statale 7",
-        "capacity": 50,
-        "duration": 60,
+        "capacity": 30,
+        "duration": 30,
         "zone": {
             "a": 2,
             "b": 3
@@ -55,8 +55,8 @@
     },
     {
         "name": "Statale 10",
-        "capacity": 50,
-        "duration": 2,
+        "capacity": 35,
+        "duration": 25,
         "zone": {
             "a": 3,
             "b": 4
