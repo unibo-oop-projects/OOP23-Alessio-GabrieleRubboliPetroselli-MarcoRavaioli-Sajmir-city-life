@@ -32,7 +32,7 @@ public final class PersonCreation {
         return zones.stream()
                 .map(zone -> PersonCreation.createGroupOfPeople(
                         zones.indexOf(zone),
-                        (int) (numberOfPeople * (zone.businessPercents() / 100)),
+                        (int) (numberOfPeople * (zone.personPercents() / 100)),
                         zone.wellfareMinMax(),
                         businesses,
                         zone))
