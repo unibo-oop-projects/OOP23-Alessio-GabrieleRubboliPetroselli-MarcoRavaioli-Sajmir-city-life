@@ -27,13 +27,15 @@ class DynamicPersonImplTest {
     @BeforeEach
     void setUp() {
         ZoneTableCreation.createAndAddPairs(zones, transports);
-        business = BusinessFactory.getRandomBusiness(zones).get();
     }
 
     @Test
     void testCheckTimeToGoToWork() throws InterruptedException {
-        // Creazione di un oggetto DynamicPersonImpl da testare
         final Zone residenceZone = zones.get(2);
+        do {
+            business = BusinessFactory.getRandomBusiness(zones).get();
+        } while (business.getZone().equals(residenceZone));
+        // Creazione di un oggetto DynamicPersonImpl da testare
         final PersonData personData = new PersonData("alberto casa", 60, business, residenceZone);
 
         final DynamicPersonImpl person = new DynamicPersonImpl(personData, 100);
