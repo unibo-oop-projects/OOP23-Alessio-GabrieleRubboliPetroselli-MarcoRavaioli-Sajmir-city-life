@@ -80,13 +80,15 @@ public class EmployymentOfficeManager {
      */
     private List<DynamicPerson> getPeopleToHire(final Business business) {
         final int availableSpots = business.getMaxEmployees() - business.getEmployees().size();
+        if (availableSpots < 10) {
+            return new ArrayList<>();
+        }
         final List<DynamicPerson> disoccupiedPeople = employymentOffice.getDisoccupiedPeople();
 
         final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
             .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
             .collect(Collectors.toList());
-        
-        final int minPeopleToHire = Math.min(4, availableSpots); 
+        final int minPeopleToHire = Math.min(10, availableSpots); 
         final int maxPeopleToHire = Math.min(availableSpots, eligiblePeople.size());
 
         if (maxPeopleToHire >= minPeopleToHire) {
