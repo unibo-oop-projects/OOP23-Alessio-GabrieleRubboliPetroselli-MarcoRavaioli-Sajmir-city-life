@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.person;
 
 import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.business.Employee;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
@@ -27,12 +28,8 @@ public class PersonFactory {
                                                        Pair<Integer, Integer> moneyMinMax, List<Business> businesses, Zone residenceZone) {
     List<DynamicPerson> people = new ArrayList<>();
 
-    // Determina il numero di persone che avranno già un'azienda assegnata
-    int assignedBusinessPeople = (int) (numberOfPeople * 0.75);  // il 75% delle persone avranno un'azienda assegnata
+        for (int i = 0; i < numberOfPeople; i++) {
 
-    for (int i = 0; i < numberOfPeople; i++) {
-        Business business = null;
-        if (i < assignedBusinessPeople) {
             List<Business> eligibleBusinesses = businesses.stream()
                     .filter(b -> !b.getZone().equals(residenceZone))
                     .collect(Collectors.toList());
@@ -41,14 +38,17 @@ public class PersonFactory {
                 throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
             }
 
-            business = eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size()));
-        }
+            Business business = eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size()));
 
-        people.add(createPerson("Person" + groupCounter + i, random.nextInt(64) + 16, business, residenceZone,
-                random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst()));
+            DynamicPerson person = createPerson("Person" + groupCounter + i, random.nextInt(60) + 18, business, residenceZone,
+                    random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst());
+            people.add(person);
+
+            business.hire(new Employee(person, business));
+        }
+        return people;
     }
-    return people;
-}
+
 
     private static DynamicPerson createPerson(String name, int age, Business business, Zone residenceZone, int money) {
         Optional<Business> businessOptional = Optional.ofNullable(business);

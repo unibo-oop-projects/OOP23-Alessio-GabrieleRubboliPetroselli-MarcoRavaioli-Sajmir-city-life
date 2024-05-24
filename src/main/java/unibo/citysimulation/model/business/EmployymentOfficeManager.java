@@ -80,24 +80,25 @@ public class EmployymentOfficeManager {
      */
     private List<DynamicPerson> getPeopleToHire(final Business business) {
         final int availableSpots = business.getMaxEmployees() - business.getEmployees().size();
-        if (availableSpots < 10) {
-            return new ArrayList<>();
-        }
-        final List<DynamicPerson> disoccupiedPeople = employymentOffice.getDisoccupiedPeople();
-
-        final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
-            .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
-            .collect(Collectors.toList());
-        final int minPeopleToHire = Math.min(10, availableSpots); 
-        final int maxPeopleToHire = Math.min(availableSpots, eligiblePeople.size());
-
-        if (maxPeopleToHire >= minPeopleToHire) {
-            final int peopleToHireCount = random.nextInt(maxPeopleToHire - minPeopleToHire + 1) + minPeopleToHire;
-            return eligiblePeople.stream()
-                .limit(peopleToHireCount)
-                .collect(Collectors.toList());
-        }
+    if (availableSpots < 1) {
         return new ArrayList<>();
+    }
+    final List<DynamicPerson> disoccupiedPeople = employymentOffice.getDisoccupiedPeople();
+
+    final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
+        .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
+        .collect(Collectors.toList());
+    
+    if (eligiblePeople.isEmpty()) {
+        return new ArrayList<>();
+    }
+
+    final int maxPeopleToHire = Math.min(availableSpots, eligiblePeople.size());
+    final int peopleToHireCount = random.nextInt(maxPeopleToHire) + 1;
+
+    return eligiblePeople.stream()
+        .limit(peopleToHireCount)
+        .collect(Collectors.toList());
     }
 
     /**
