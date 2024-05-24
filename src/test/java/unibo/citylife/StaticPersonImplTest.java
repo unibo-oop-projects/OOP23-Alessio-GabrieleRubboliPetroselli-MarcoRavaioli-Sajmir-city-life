@@ -21,26 +21,26 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class StaticPersonImplTest {
-    private List<Zone> zones = ZoneFactory.createZonesFromFile();
-    private List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
-    private Random random = new Random();
+class StaticPersonImplTest {
+    private final List<Zone> zones = ZoneFactory.createZonesFromFile();
+    private final List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
+    private final Random random = new Random();
 
     private StaticPerson staticPerson;
 
     @BeforeEach
     void setUp() {
-        Zone residenceZone = zones.get(random.nextInt(zones.size()));
-        Business business = BusinessFactory.getRandomBusiness(zones).get();
+        final Zone residenceZone = zones.get(random.nextInt(zones.size()));
+        final Business business = BusinessFactory.getRandomBusiness(zones).get();
         ZoneTableCreation.createAndAddPairs(zones, transports);
         // Simuliamo un dato di una persona per i test
-        PersonData personData = new PersonData("Mario", 30, business, residenceZone);
+        final PersonData personData = new PersonData("Mario", 30, business, residenceZone);
         staticPerson = new StaticPersonImpl(personData, 100);
     }
 
     @Test
     void testGetPersonData() {
-        PersonData personData = staticPerson.getPersonData();
+        final PersonData personData = staticPerson.getPersonData();
         assertEquals("Mario", personData.name());
         assertEquals(30, personData.age());
         // Testa altri attributi di personData se necessario
@@ -48,7 +48,7 @@ public class StaticPersonImplTest {
 
     @Test
     void testGetPosition() {
-        Optional<Pair<Integer, Integer>> position = staticPerson.getPosition();
+        final Optional<Pair<Integer, Integer>> position = staticPerson.getPosition();
         assertTrue(position.isPresent());
         assertTrue(staticPerson.getPersonData().residenceZone().boundary().isInside(position.get().getFirst(),
             position.get().getSecond()));

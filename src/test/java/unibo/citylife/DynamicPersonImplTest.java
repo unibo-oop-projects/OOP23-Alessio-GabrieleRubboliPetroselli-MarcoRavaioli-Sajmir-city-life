@@ -17,9 +17,10 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DynamicPersonImplTest {
+class DynamicPersonImplTest {
     private final List<Zone> zones = ZoneFactory.createZonesFromFile();
     private final List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
     private Business business;
@@ -33,24 +34,24 @@ public class DynamicPersonImplTest {
     @Test
     void testCheckTimeToGoToWork() throws InterruptedException {
         // Creazione di un oggetto DynamicPersonImpl da testare
-        Zone residenceZone = zones.get(2);
-        PersonData personData = new PersonData("alberto casa", 60, business, residenceZone);
+        final Zone residenceZone = zones.get(2);
+        final PersonData personData = new PersonData("alberto casa", 60, business, residenceZone);
 
-        DynamicPersonImpl person = new DynamicPersonImpl(personData, 100);
+        final DynamicPersonImpl person = new DynamicPersonImpl(personData, 100);
 
-        int businessBeginning = person.getBusinessBegin();
+        final int businessBeginning = person.getBusinessBegin();
 
-        int tripDuration = person.getTripDuration();
+        final int tripDuration = person.getTripDuration();
 
-        assertTrue(person.getState() == PersonState.AT_HOME);
+        assertSame(person.getState(), PersonState.AT_HOME);
         assertTrue(person.getPersonData().residenceZone().boundary().isInside(person.getPosition().get().getFirst(),
             person.getPosition().get().getSecond()));
         assertEquals(0, person.getTransportLine()[0].getPersonInLine());
 
         person.checkState(LocalTime.ofSecondOfDay(businessBeginning - tripDuration));
 
-        assertTrue(person.getState() == PersonState.MOVING);
-        assertTrue(person.getPosition().equals(Optional.empty()));
+        assertSame(person.getState(), PersonState.MOVING);
+        assertSame(person.getPosition(), Optional.empty());
         assertEquals(1, person.getTransportLine()[0].getPersonInLine());
     }
 }
