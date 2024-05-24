@@ -25,7 +25,6 @@ class StaticPersonImplTest {
     private final List<Zone> zones = ZoneFactory.createZonesFromFile();
     private final List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
     private final Random random = new Random();
-
     private StaticPerson staticPerson;
 
     @BeforeEach
@@ -41,9 +40,9 @@ class StaticPersonImplTest {
     @Test
     void testGetPersonData() {
         final PersonData personData = staticPerson.getPersonData();
+        final int expectedAge = 30;
         assertEquals("Mario", personData.name());
-        assertEquals(30, personData.age());
-        // Testa altri attributi di personData se necessario
+        assertEquals(expectedAge, personData.age());
     }
 
     @Test
@@ -56,18 +55,20 @@ class StaticPersonImplTest {
 
     @Test
     void testGetMoney() {
-        assertEquals(100, staticPerson.getMoney()); // La persona dovrebbe avere 100 di denaro inizialmente
+        assertEquals(100, staticPerson.getMoney());
     }
 
     @Test
     void testAddMoney() {
-        staticPerson.addMoney(50); // Aggiungiamo 50 di denaro
-        assertEquals(150, staticPerson.getMoney()); // Assicura che il denaro sia aumentato di 50
+        final int moneyToAdd = 50;
+        final int expectedMoney = 150;
+        staticPerson.addMoney(moneyToAdd);
+        assertEquals(expectedMoney, staticPerson.getMoney());
     }
 
     @Test
     void testGetState() {
-        assertEquals(PersonState.AT_HOME, staticPerson.getState()); // La persona dovrebbe essere a casa inizialmente
+        assertEquals(PersonState.AT_HOME, staticPerson.getState());
     }
 }
 

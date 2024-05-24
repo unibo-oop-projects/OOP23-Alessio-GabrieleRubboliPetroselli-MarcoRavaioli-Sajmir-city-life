@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class PersonDataTest {
     private final List<Zone> zones = ZoneFactory.createZonesFromFile();
     private final Random random = new Random();
-    
     @Test
     void testPersonDataConstructor() {
         final String name = "John";

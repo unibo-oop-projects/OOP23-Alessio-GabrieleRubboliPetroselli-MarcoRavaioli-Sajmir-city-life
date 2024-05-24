@@ -43,13 +43,11 @@ class CityModelTest {
         cityModel.createBusinesses();
         final List<Zone> zones = cityModel.getZones();
         final int totalBusinesses = cityModel.getBusinesses().size();
-        
         final int sumBusinessesByZone = zones.stream()
             .mapToInt(zone -> (int) cityModel.getBusinesses().stream()
                 .filter(business -> business.getZone().equals(zone))
                 .count())
             .sum();
-        
         assertEquals(totalBusinesses, sumBusinessesByZone);
     }
 

@@ -24,7 +24,6 @@ class DynamicPersonImplTest {
     private final List<Zone> zones = ZoneFactory.createZonesFromFile();
     private final List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
     private Business business;
-    
     @BeforeEach
     void setUp() {
         ZoneTableCreation.createAndAddPairs(zones, transports);

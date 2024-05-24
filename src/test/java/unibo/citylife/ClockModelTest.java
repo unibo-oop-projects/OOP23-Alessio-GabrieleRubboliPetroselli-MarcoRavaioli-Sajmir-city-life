@@ -2,7 +2,7 @@ package unibo.citylife;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockModelImpl;
@@ -31,8 +31,8 @@ class ClockModelTest {
         // Avvia la simulazione
         clockModel.restartSimulation(); // Durata di un'ora simulata in millisecondi
 
-        // Attendi finché il tempo corrente non è diverso da null (massimo 5 secondi)
-        observer.awaitInitialization(5, TimeUnit.SECONDS);
+        final int maxWaitTime = 5;
+        observer.awaitInitialization(maxWaitTime, TimeUnit.SECONDS);
 
         // Verifica che il tempo corrente non sia null
         assertNotNull(clockModel.getCurrentTime());
@@ -42,7 +42,7 @@ class ClockModelTest {
     }
 
     // Classe observer di test per monitorare gli aggiornamenti del tempo
-    private static class TestClockObserver implements ClockObserver {
+    private final class TestClockObserver implements ClockObserver {
         private final CountDownLatch latch = new CountDownLatch(1);
 
         @Override
