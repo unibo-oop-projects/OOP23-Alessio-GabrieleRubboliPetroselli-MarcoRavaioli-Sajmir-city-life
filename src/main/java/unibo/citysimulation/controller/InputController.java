@@ -49,8 +49,8 @@ public class InputController {
 
         inputPanel.getStopButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("PREMUTO IL TASTO STOP SIMULATION");
+            public void actionPerformed(final ActionEvent e) {
+                //System.out.println("PREMUTO IL TASTO STOP SIMULATION");
                 stopSimulation(clockPanel);
 
                 inputPanel.getPeopleSlider().setEnabled(true);
