@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class DynamicPersonImplTest {
     private final List<Zone> zones = ZoneFactory.createZonesFromFile();
     private final List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
-    private Business business;
     @BeforeEach
     void setUp() {
         ZoneTableCreation.createAndAddPairs(zones, transports);
@@ -32,6 +31,7 @@ class DynamicPersonImplTest {
     @Test
     void testCheckTimeToGoToWork() throws InterruptedException {
         final Zone residenceZone = zones.get(2);
+        Business business;
         do {
             business = BusinessFactory.getRandomBusiness(zones).get();
         } while (business.getZone().equals(residenceZone));
