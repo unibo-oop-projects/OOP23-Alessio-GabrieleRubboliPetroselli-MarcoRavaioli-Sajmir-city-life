@@ -8,18 +8,20 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class InputPanel extends StyledPanel {
-    private JButton startButton;
-    private JButton stopButton;
-    private JSlider peopleSlider;
-    private JSlider businessSlider;
-    private JSlider capacitySlider;
-    private JSlider richnessSlider;
+    private static final long serialVersionUID = 1L;
 
-    public InputPanel(Color bgColor) {
+    private final JButton startButton;
+    private final JButton stopButton;
+    private final JSlider peopleSlider;
+    private final JSlider businessSlider;
+    private final JSlider capacitySlider;
+    private final JSlider richnessSlider;
+
+    public InputPanel(final Color bgColor) {
         super(bgColor);
     
         setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
@@ -50,7 +52,7 @@ public class InputPanel extends StyledPanel {
         gbc.gridy = 4;
         add(richnessSlider, gbc);
     
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        final JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buttonPanel.setOpaque(false);
         buttonPanel.setBorder(new EmptyBorder(10, 0, 10, 0)); // Padding
     
@@ -106,9 +108,9 @@ public class InputPanel extends StyledPanel {
         return richnessSlider;
     }
 
-    private JSlider createSlider(String title, int min, int max) {
-        JSlider slider = new JSlider(min, max);
-        TitledBorder border = BorderFactory.createTitledBorder(title);
+    private JSlider createSlider(final String title, final int min, final int max) {
+        final JSlider slider = new JSlider(min, max);
+        final TitledBorder border = BorderFactory.createTitledBorder(title);
         border.setTitleColor(Color.WHITE);
         border.setTitleFont(new Font("SansSerif", Font.BOLD, 14));
         slider.setBorder(border);
@@ -121,8 +123,8 @@ public class InputPanel extends StyledPanel {
         return slider;
     }
 
-    private JButton createButton(String text, Color color) {
-        JButton button = new JButton(text);
+    private JButton createButton(final String text, final Color color) {
+        final JButton button = new JButton(text);
         button.setPreferredSize(new Dimension(100, 50));
         button.setBackground(color);
         button.setForeground(Color.WHITE);
