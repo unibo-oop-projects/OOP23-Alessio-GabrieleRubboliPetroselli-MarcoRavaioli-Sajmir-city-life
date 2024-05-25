@@ -125,8 +125,6 @@ public final class CityModel {
         clockModel.addObserver(new ClockObserverPerson(people));
 
         clockModel.addObserver(new CloclObserverBusiness(businesses, employymentOffice));
-
-        EmployymentOfficeManager employmentManager = new EmployymentOfficeManager(employymentOffice);
     }
 
     /**

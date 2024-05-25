@@ -21,6 +21,7 @@ import javax.swing.*;
  * Panel for displaying graphics.
  */
 public class GraphicsPanel extends StyledPanel {
+    private static final long serialVersionUID = 1L;
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
             Color.PINK, Color.CYAN);
     private final JButton legendButton;
@@ -70,8 +71,8 @@ public class GraphicsPanel extends StyledPanel {
     
 
     public List<JFreeChart> createCharts(final List<String> names, final List<XYSeriesCollection> datasets) {
-        final List<JFreeChart> charts = new ArrayList<JFreeChart>();
-
+        final List<JFreeChart> charts = new ArrayList<>();
+    
         for (int i = 0; i < names.size(); i++) {
             charts.add(createChart(names.get(i), datasets.get(i)));
         }
@@ -81,7 +82,7 @@ public class GraphicsPanel extends StyledPanel {
 
     // Method to create a chart
     private JFreeChart createChart(final String title, final XYDataset dataset) {
-        JFreeChart chart = ChartFactory.createXYLineChart(
+       final  JFreeChart chart = ChartFactory.createXYLineChart(
                 title,
                 null,
                 null,

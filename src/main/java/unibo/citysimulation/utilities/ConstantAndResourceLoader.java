@@ -94,7 +94,7 @@ public final class ConstantAndResourceLoader extends ClassLoader {
      * Number of seconds in a day.
      *
      */
-    public static final int SECONDS_IN_A_DAY = 86400;
+    public static final int SECONDS_IN_A_DAY = 86_400;
 
     /**
      * Maximum random age for people in the simulation.

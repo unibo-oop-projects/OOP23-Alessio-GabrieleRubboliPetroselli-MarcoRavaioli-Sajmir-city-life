@@ -108,7 +108,7 @@ public class MapModelImpl implements MapModel{
     }
 
     @Override
-    public void setTransportInfo(List<TransportLine> lines) {
+    public void setTransportInfo(final List<TransportLine> lines) {
     transportManager.setTransportInfo(lines);
     }
 
