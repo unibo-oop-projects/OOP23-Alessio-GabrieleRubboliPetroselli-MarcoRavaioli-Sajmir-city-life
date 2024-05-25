@@ -9,7 +9,6 @@ import unibo.citysimulation.model.clock.CloclObserverBusiness;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.PersonCreation;
 import unibo.citysimulation.model.business.EmployymentOffice;
-import unibo.citysimulation.model.business.EmployymentOfficeManager;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
