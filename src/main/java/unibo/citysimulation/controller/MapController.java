@@ -66,6 +66,8 @@ public class MapController implements ClockObserver {
         final int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
         final int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
 
+        //final String zoneName = getZoneNameAtCoordinates(x, y);
+
         final List<Zone> zones = cityModel.getZones();
         String zoneName = ""; // Declare zoneName here
         for (final Zone zone : zones) {

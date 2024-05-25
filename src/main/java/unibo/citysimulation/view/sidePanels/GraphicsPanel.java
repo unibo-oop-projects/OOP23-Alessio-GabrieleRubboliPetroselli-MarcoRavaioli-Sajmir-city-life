@@ -21,6 +21,8 @@ import javax.swing.*;
  * Panel for displaying graphics.
  */
 public class GraphicsPanel extends StyledPanel {
+    private static final long serialVersionUID = 1L;
+    
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
             Color.PINK, Color.CYAN);
     private final JButton legendButton;

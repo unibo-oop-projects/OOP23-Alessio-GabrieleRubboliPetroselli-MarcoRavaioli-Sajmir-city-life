@@ -47,6 +47,7 @@ public class GraphicsController implements ClockObserver {
                                                             .map(t -> t.getName()).collect(Collectors.toList()));
             }
         });
+        
         graphicsPanel.createGraphics(graphicsModel.getNames(), graphicsModel.getDatasets());
     }
 
