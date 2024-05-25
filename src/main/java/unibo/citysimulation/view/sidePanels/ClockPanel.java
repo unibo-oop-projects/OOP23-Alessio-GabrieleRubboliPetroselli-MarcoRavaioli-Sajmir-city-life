@@ -1,40 +1,51 @@
-package unibo.citysimulation.view.sidePanels;
+package unibo.citysimulation.view.sidepanels;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+
 /**
  * Panel for displaying the clock and controlling simulation speed.
  */
 public class ClockPanel extends StyledPanel {
-    private JLabel timeDay = new JLabel("Day: 1", SwingConstants.CENTER);
-    private JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
-    private JButton speedButton;
-    private JButton pauseButton;
-    private int[] speeds = ConstantAndResourceLoader.SPEEDS;
-    private int currentSpeedIndex = 0;
+    private static final long serialVersionUID = 1L;
+    private final JLabel timeDay = new JLabel("Day: 1", SwingConstants.CENTER);
+    private final JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
+    private final JButton speedButton;
+    private final JButton pauseButton;
+    private final int[] speeds = ConstantAndResourceLoader.SPEEDS;
+    private int currentSpeedIndex;
 
     /**
      * Constructs a ClockPanel with the specified background color.
      *
      * @param bgColor The background color of the panel.
      */
-    public ClockPanel(Color bgColor) {
+    public ClockPanel(final Color bgColor) {
         super(bgColor);
         speedButton = new JButton("1x");
         speedButton.setForeground(Color.black);
-        speedButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+        speedButton.setPreferredSize(new Dimension(ConstantAndResourceLoader.CLOCK_PANEL_PANEL_WIDTH,
+                ConstantAndResourceLoader.CLOCK_PANEL_PANEL_HEIGHT)); // Set the preferred size
 
         pauseButton = new JButton("Pause");
         pauseButton.setForeground(Color.black);
-        pauseButton.setPreferredSize(new Dimension(100, 50)); // Set the preferred size
+        pauseButton.setPreferredSize(new Dimension(ConstantAndResourceLoader.CLOCK_PANEL_PANEL_WIDTH,
+                ConstantAndResourceLoader.CLOCK_PANEL_PANEL_HEIGHT)); // Set the preferred size
 
-        JPanel timePanel = new JPanel(new GridLayout(2, 1));
+        final JPanel timePanel = new JPanel(new GridLayout(2, 1));
         timePanel.setBackground(Color.RED);
-        timeDay.setFont(new Font("Arial", Font.BOLD, 15));
-        timeHour.setFont(new Font("Arial", Font.BOLD, 15));
+        timeDay.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.CLOCK_PANEL_FONT_SIZE));
+        timeHour.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.CLOCK_PANEL_FONT_SIZE));
         timePanel.add(timeDay);
         timePanel.add(timeHour);
 
@@ -50,7 +61,7 @@ public class ClockPanel extends StyledPanel {
      * @param dayText  The text for the day label.
      * @param hourText The text for the hour label.
      */
-    public void setClockText(String dayText, String hourText) {
+    public void setClockText(final String dayText, final String hourText) {
         timeDay.setText("Day: " + dayText);
         timeHour.setText("Hour: " + hourText);
     }
@@ -60,7 +71,7 @@ public class ClockPanel extends StyledPanel {
      *
      * @param isPaused Boolean indicating if simulation is paused.
      */
-    public void updatePauseButton(boolean isPaused) {
+    public void updatePauseButton(final boolean isPaused) {
         pauseButton.setText(isPaused ? "Resume" : "Pause");
     }
 
@@ -89,7 +100,7 @@ public class ClockPanel extends StyledPanel {
      */
     public int changeSpeed() {
         currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-        int newSpeed = speeds[currentSpeedIndex];
+        final int newSpeed = speeds[currentSpeedIndex];
         speedButton.setText(newSpeed + "x");
         return newSpeed;
     }

@@ -1,7 +1,7 @@
 [
     {
       "name": "Centre",
-      "personPercents": 30,
+      "personPercents": 18,
       "businessPercents": 45,
       "wellfareMinMax": {
         "min": 3000,
@@ -20,7 +20,7 @@
     },
     {
       "name": "Industrial Area",
-      "personPercents": 20,
+      "personPercents": 15,
       "businessPercents": 35,
       "wellfareMinMax": {
         "min": 1500,
@@ -39,7 +39,7 @@
     },
     {
       "name": "Residencial Area",
-      "personPercents": 20,
+      "personPercents": 25,
       "businessPercents": 5,
       "wellfareMinMax": {
         "min": 2500,
@@ -58,7 +58,7 @@
     },
     {
       "name": "Hills",
-      "personPercents": 10,
+      "personPercents": 16,
       "businessPercents": 5,
       "wellfareMinMax": {
         "min": 6000,
@@ -77,7 +77,7 @@
     },
     {
       "name": "Suburbs",
-      "personPercents": 20,
+      "personPercents": 26,
       "businessPercents": 10,
       "wellfareMinMax": {
         "min": 700,

@@ -11,10 +11,10 @@ import java.awt.event.ComponentEvent;
  * Controller class responsible for managing the main window.
  */
 public class WindowController {
-    private WindowView windowView;
-    private CityModel cityModel;
+    final private WindowView windowView;
+    final private CityModel cityModel;
 
-    public WindowController(WindowView windowView, CityModel cityModel) {
+    public WindowController(final WindowView windowView, final CityModel cityModel) {
         this.windowView = windowView;
         this.cityModel = cityModel;
 
@@ -31,7 +31,7 @@ public class WindowController {
 
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
 
-        Pair<Integer, Integer> frameSize = cityModel.getFrameSize();
+        final Pair<Integer, Integer> frameSize = cityModel.getFrameSize();
         windowView.updateFrame(frameSize.getFirst(), frameSize.getSecond());
     }
 
@@ -40,7 +40,7 @@ public class WindowController {
      */
     private class ResizeListener extends ComponentAdapter {
         @Override
-        public void componentResized(ComponentEvent e) {
+        public void componentResized(final ComponentEvent e) {
             super.componentResized(e);
 
             // Ottieni le dimensioni del frame dopo il ridimensionamento

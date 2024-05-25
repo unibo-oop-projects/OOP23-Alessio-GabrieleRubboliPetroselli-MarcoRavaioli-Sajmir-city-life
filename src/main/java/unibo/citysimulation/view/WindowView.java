@@ -1,28 +1,35 @@
 package unibo.citysimulation.view;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
-import unibo.citysimulation.view.sidePanels.ClockPanel;
-import unibo.citysimulation.view.sidePanels.GraphicsPanel;
-import unibo.citysimulation.view.sidePanels.InfoPanel;
-import unibo.citysimulation.view.sidePanels.InputPanel;
 import unibo.citysimulation.view.map.MapPanel;
+import unibo.citysimulation.view.sidepanels.ClockPanel;
+import unibo.citysimulation.view.sidepanels.GraphicsPanel;
+import unibo.citysimulation.view.sidepanels.InfoPanel;
+import unibo.citysimulation.view.sidepanels.InputPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ComponentAdapter;
 
 /**
  * Represents the main window of the application.
  */
 public class WindowView extends JFrame {
+    private static final long serialVersionUID = 1L;
+    
     private int width;                              // questi potrebbero non essere necessari, bisogna che nel createSidePanel
     private int height;                             // vengano passate le dimensioni, magari dal windowController, controllare l'ordine di istanziazione delle classi 
 
-    private MapPanel mapPanel;
-    private InfoPanel infoPanel;
-    private ClockPanel clockPanel;
-    private InputPanel inputPanel;
-    private GraphicsPanel graphicsPanel;
+    final private MapPanel mapPanel;
+    final private InfoPanel infoPanel;
+    final private ClockPanel clockPanel;
+    final private InputPanel inputPanel;
+    final private GraphicsPanel graphicsPanel;
 
 
     /**
@@ -40,10 +47,10 @@ public class WindowView extends JFrame {
         setLayout(new BorderLayout());
 
         // Creiamo i componenti
-        mapPanel = new MapPanel();
+        mapPanel = new MapPanel(Color.WHITE);
         infoPanel = new InfoPanel(Color.GREEN);
         clockPanel = new ClockPanel(Color.RED);
-        inputPanel = new InputPanel(Color.BLUE);
+        inputPanel = new InputPanel(new Color(50,50,50));
         graphicsPanel = new GraphicsPanel(Color.YELLOW);
         
         createComponents();
@@ -59,14 +66,14 @@ public class WindowView extends JFrame {
      *
      * @param adapter The component adapter to add.
      */
-    public void addResizeListener(ComponentAdapter adapter) {
+    public void addResizeListener(final ComponentAdapter adapter) {
         addComponentListener(adapter);
     }
 
     /**
      * Updates the size of the panels based on the window size.
      */
-    public void updateFrame(int width, int height) {
+    public void updateFrame(final int width, final int height) {
         this.width = width;
         this.height = height;
 
@@ -97,13 +104,13 @@ public class WindowView extends JFrame {
      * Creates the side panels of the window.
      */
     private void createSidePanels() {
-        int sidePanelWidth = width / 4;
-        int sidePanelsHeight = height;
+        final int sidePanelWidth = width / 4;
+        final int sidePanelsHeight = height;
 
-        JPanel leftPanel = new JPanel(new GridBagLayout());
-        JPanel rightPanel = new JPanel(new GridBagLayout());
+        final JPanel leftPanel = new JPanel(new GridBagLayout());
+        final JPanel rightPanel = new JPanel(new GridBagLayout());
 
-        GridBagConstraints constraints = new GridBagConstraints();
+        final GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1;
 
@@ -120,13 +127,13 @@ public class WindowView extends JFrame {
 
         // Add clock panel and graphics panel to right panel
         constraints.gridy = 0;
-        constraints.weighty = 0.125;
-        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8));
+        constraints.weighty = 0.1; // Decrease the weight of the clock panel
+        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 10)); // Decrease the preferred size of the clock panel
         rightPanel.add(clockPanel, constraints);
 
         constraints.gridy = 1;
-        constraints.weighty = 0.875;
-        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 8 * 7));
+        constraints.weighty = 0.9; // Increase the weight of the graphics panel
+        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, sidePanelsHeight / 10 * 9)); // Increase the preferred size of the graphics panel
         rightPanel.add(graphicsPanel, constraints);
 
         // Add left and right panels to the window

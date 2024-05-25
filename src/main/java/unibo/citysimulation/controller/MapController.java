@@ -7,59 +7,54 @@ import java.time.LocalTime;
 import java.util.List;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.MapModel;
+import unibo.citysimulation.model.MapModelImpl;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.view.sidePanels.InfoPanel;
+import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map.
  */
-public class MapController implements ClockObserver{
-    private InfoPanel infoPanel;
-    private MapPanel mapPanel;
-    private MapModel mapModel;
-    private CityModel cityModel;
+public class MapController implements ClockObserver {
+    private final InfoPanel infoPanel;
+    private final MapPanel mapPanel;
+    private final MapModelImpl mapModel;
+    private final CityModel cityModel;
 
     /**
      * Constructs a MapController object.
      *
-     * @param model     The MapModel object containing the map data.
+     * @param cityModel The CityModel object containing the city data.
      * @param infoPanel The InfoPanel object to display additional information.
+     * @param mapPanel The MapPanel object to display the map.
      */
-    public MapController(CityModel cityModel, InfoPanel infoPanel, MapPanel mapPanel) {
+    public MapController(final CityModel cityModel, final InfoPanel infoPanel, final MapPanel mapPanel) {
         this.cityModel = cityModel;
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;
         this.mapModel = cityModel.getMapModel();
 
         initialize();
-        
-
     }
 
-    private void initialize(){
+    private void initialize() {
         cityModel.getClockModel().addObserver(this);
 
         mapModel.setTransportInfo(cityModel.getTransportLines());
         mapModel.setTransportCongestion(cityModel.getTransportLines());
 
-
         mapPanel.setImage(mapModel.getImage());
 
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(final MouseEvent e) {
                 handleMouseclick(e);
             }
         });
 
-        
-
         mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
         mapPanel.setLinesColor(mapModel.getColorList());
-        
     }
 
     /**
@@ -67,13 +62,13 @@ public class MapController implements ClockObserver{
      *
      * @param e The MouseEvent object representing the mouse event.
      */
-    public void handleMouseclick(MouseEvent e) {
-        int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
-        int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
+    public void handleMouseclick(final MouseEvent e) {
+        final int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
+        final int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
 
-        List<Zone> zones = cityModel.getZones();
+        final List<Zone> zones = cityModel.getZones();
         String zoneName = ""; // Declare zoneName here
-        for (Zone zone : zones) {
+        for (final Zone zone : zones) {
             if (zone.boundary().isInside(x, y)) {
                 zoneName = zone.name();
                 break;
@@ -87,18 +82,34 @@ public class MapController implements ClockObserver{
         infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
         infoPanel.updateZoneName(zoneName);
 
+        infoPanel.updateNumberOfPeople(cityModel.getPeopleInZone(zoneName));
+
+        infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
+
     }
 
+    /**
+     * Returns the image of the map.
+     *
+     * @return the BufferedImage of the map.
+     */
     public BufferedImage getImage() {
         return mapModel.getImage();
     }
 
+    /**
+     * Updates the map model when the time is updated.
+     *
+     * @param currentTime the current time
+     * @param currentDay the current day
+     */
     @Override
-    public void onTimeUpdate(LocalTime currentTime, int currentDay) {
+    public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
 
         mapModel.setTransportCongestion(cityModel.getTransportLines());
 
         mapPanel.setLinesColor(mapModel.getColorList());
-        mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), mapModel.getBusinessInfos(cityModel.getBusinesses()));
+        mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), 
+                             mapModel.getBusinessInfos(cityModel.getBusinesses()));
     }
 }

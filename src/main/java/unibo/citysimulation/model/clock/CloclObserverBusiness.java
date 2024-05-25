@@ -22,7 +22,6 @@ public class CloclObserverBusiness implements ClockObserver {
     public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
         this.businesses = businesses;
         this.employmentManager = new EmployymentOfficeManager(employymentOffice);
-      
     }
     /**
      * Handles business operations based on the current time and day.

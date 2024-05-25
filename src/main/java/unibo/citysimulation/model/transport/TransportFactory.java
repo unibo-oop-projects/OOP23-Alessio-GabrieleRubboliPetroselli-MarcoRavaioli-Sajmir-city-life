@@ -4,31 +4,46 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.Collections;
 
 /**
  * Factory for creating TransportLine objects.
  * This factory creates a list of TransportLine objects based on a list of Zone
  * objects.
  */
-public class TransportFactory {
+public final class TransportFactory {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportFactory.class);
 
+    private TransportFactory() {
+        // private constructor to prevent instantiation
+    }
 
-    public static List<TransportLine> createTransportsFromFile(List<Zone> zones) {
-        List<TransportLine> lines = new ArrayList<>();
+    /**
+     * Create a list of TransportLine objects based on a list of Zone objects.
+     * 
+     * @param zones List of Zone objects.
+     * @return List of TransportLine objects.
+     */
+    public static List<TransportLine> createTransportsFromFile(final List<Zone> zones) {
+        final List<TransportLine> lines = new ArrayList<>();
 
         try {
-            Gson gson = new Gson();
+            final Gson gson = new Gson();
 
-            JsonArray jsonArray = gson.fromJson(
+            final JsonArray jsonArray = gson.fromJson(
                     new FileReader("src/main/resources/unibo/citysimulation/data/TransportInfo.json"), JsonArray.class);
 
-            for (JsonElement jsonElement : jsonArray) {
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
+            for (final JsonElement jsonElement : jsonArray) {
+                final JsonObject jsonObject = jsonElement.getAsJsonObject();
 
                 lines.add(
                     new TransportLineImpl(
@@ -42,12 +57,13 @@ public class TransportFactory {
                     )
                 );
             }
-            return lines;
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            LOGGER.error("File not found: ", e);
+        } catch (JsonParseException e) {
+            LOGGER.error("Error parsing JSON: ", e);
         }
-        return null;
-    }
 
+        return lines.isEmpty() ? Collections.emptyList() : lines;
+    }
 }

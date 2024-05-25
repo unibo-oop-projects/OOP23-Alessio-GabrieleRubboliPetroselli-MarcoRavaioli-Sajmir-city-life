@@ -1,40 +1,39 @@
 package unibo.citysimulation.controller;
- 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
-import unibo.citysimulation.view.sidePanels.ClockPanel;
-import unibo.citysimulation.view.sidePanels.InputPanel;
- 
+import unibo.citysimulation.view.sidepanels.ClockPanel;
+import unibo.citysimulation.view.sidepanels.InputPanel;
+
 /**
 * Controller class responsible for handling user input from the input panel.
 */
 public class InputController {
-    private CityModel cityModel;
-    private InputModel inputModel;
+    private final CityModel cityModel;
+    private final InputModel inputModel;
+    private final InputPanel inputPanel;
+    private final ClockPanel clockPanel;
 
-    private InputPanel inputPanel;
- 
     /**
      * Constructs an InputController object.
      *
-     * @param cityModel   The CityModel object representing the city simulation.
-     * @param inputPanel  The InputPanel object representing the input panel.
-     * @param clockPanel  The ClockPanel object representing the clock panel.
+     * @param cityModel the city model
+     * @param inputModel the input model
+     * @param inputPanel the input panel
+     * @param clockPanel the clock panel
      */
-    public InputController(CityModel cityModel, InputModel inputModel, InputPanel inputPanel, ClockPanel clockPanel) {
+    public InputController(final CityModel cityModel, final InputModel inputModel, 
+    final InputPanel inputPanel, final ClockPanel clockPanel) {
         this.cityModel = cityModel;
-
         this.inputModel = inputModel;
-
         this.inputPanel = inputPanel;
+        this.clockPanel = clockPanel;
 
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("PREMUTO IL TASTO START SIMULATION");
+            public void actionPerformed(final ActionEvent e) {
                 startSimulation(clockPanel);
                 cityModel.getMapModel().startSimulation();
 
@@ -49,10 +48,8 @@ public class InputController {
 
         inputPanel.getStopButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("PREMUTO IL TASTO STOP SIMULATION");
+            public void actionPerformed(final ActionEvent e) {
                 stopSimulation(clockPanel);
-
                 inputPanel.getPeopleSlider().setEnabled(true);
                 inputPanel.getBusinessSlider().setEnabled(true);
                 inputPanel.getRichnessSlider().setEnabled(true);
@@ -62,37 +59,34 @@ public class InputController {
             }
         });
     }
- 
+
     /**
      * Starts the simulation when the start button is clicked.
      *
      * @param clockPanel The ClockPanel object representing the clock panel.
      */
-    private void startSimulation(ClockPanel clockPanel) {
-
-        inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());      //
-        inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());  // questi potrebbero essere dentro un metodo nel model
-        inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());          //
-        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());          //
-        
+    private void startSimulation(final ClockPanel clockPanel) {
+        inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());
+        inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());
+        inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
+        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());
         // Create entities
         cityModel.createEntities();
         // Restart the clock simulation
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
-        clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
-
+        clockPanel.updatePauseButton(cityModel.getClockModel().isPaused());
         clockPanel.getPauseButton().setEnabled(true);
     }
-    
-    private void stopSimulation(ClockPanel clockPanel) {
+
+    private void stopSimulation(final ClockPanel clockPanel) {
         // Restart the clock simulation
         cityModel.getClockModel().stopSimulation();
-
         // Update the pause button state on the clock panel
-        clockPanel.updatePauseButton(cityModel.getClockModel().getIsPaused());
-
+        clockPanel.updatePauseButton(cityModel.getClockModel().isPaused());
         clockPanel.getPauseButton().setEnabled(false);
     }
 }
- 
+
+// Note: Newline at the end of the file
+
