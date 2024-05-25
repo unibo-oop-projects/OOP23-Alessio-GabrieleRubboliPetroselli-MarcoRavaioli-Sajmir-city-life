@@ -12,10 +12,10 @@ import unibo.citysimulation.view.sidepanels.InputPanel;
 * Controller class responsible for handling user input from the input panel.
 */
 public class InputController {
-    private CityModel cityModel;
-    private InputModel inputModel;
+    private final CityModel cityModel;
+    private final InputModel inputModel;
 
-    private InputPanel inputPanel;
+    private final InputPanel inputPanel;
  
     /**
      * Constructs an InputController object.
@@ -24,7 +24,7 @@ public class InputController {
      * @param inputPanel  The InputPanel object representing the input panel.
      * @param clockPanel  The ClockPanel object representing the clock panel.
      */
-    public InputController(CityModel cityModel, InputModel inputModel, InputPanel inputPanel, ClockPanel clockPanel) {
+    public InputController(final CityModel cityModel, final InputModel inputModel, final InputPanel inputPanel, final ClockPanel clockPanel) {
         this.cityModel = cityModel;
 
         this.inputModel = inputModel;
@@ -33,8 +33,8 @@ public class InputController {
 
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("PREMUTO IL TASTO START SIMULATION");
+            public void actionPerformed(final ActionEvent e) {
+                //System.out.println("PREMUTO IL TASTO START SIMULATION");
                 startSimulation(clockPanel);
                 cityModel.getMapModel().startSimulation();
 
@@ -49,8 +49,8 @@ public class InputController {
 
         inputPanel.getStopButton().addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("PREMUTO IL TASTO STOP SIMULATION");
+            public void actionPerformed(final ActionEvent e) {
+                //System.out.println("PREMUTO IL TASTO STOP SIMULATION");
                 stopSimulation(clockPanel);
 
                 inputPanel.getPeopleSlider().setEnabled(true);
@@ -68,7 +68,7 @@ public class InputController {
      *
      * @param clockPanel The ClockPanel object representing the clock panel.
      */
-    private void startSimulation(ClockPanel clockPanel) {
+    private void startSimulation(final ClockPanel clockPanel) {
 
         inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());      //
         inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());  // questi potrebbero essere dentro un metodo nel model
@@ -85,7 +85,7 @@ public class InputController {
         clockPanel.getPauseButton().setEnabled(true);
     }
     
-    private void stopSimulation(ClockPanel clockPanel) {
+    private void stopSimulation(final ClockPanel clockPanel) {
         // Restart the clock simulation
         cityModel.getClockModel().stopSimulation();
 

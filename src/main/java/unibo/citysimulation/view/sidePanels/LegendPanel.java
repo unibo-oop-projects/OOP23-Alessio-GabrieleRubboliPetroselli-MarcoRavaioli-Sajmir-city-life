@@ -1,33 +1,33 @@
 package unibo.citysimulation.view.sidepanels;
 
 import javax.swing.*;
-
-import unibo.citysimulation.model.transport.TransportLine;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
-
+/**
+ * This class represents a legend panel for the city simulation.
+ * It extends JFrame to create a separate window for the legend.
+ */
 public class LegendPanel extends JFrame {
-    private List<Color> colors;
-    private List<String> linesName;
+    private static final long serialVersionUID = 1L;
 
-    public LegendPanel(List<Color> colors, List<String> linesName) {
-        this.colors = colors;
-        this.linesName = linesName;
+     /**
+     * Constructor for the LegendPanel class.
+     * @param colors The list of colors to be used in the legend.
+     * @param linesName The list of names for each line in the legend.
+     */
+    public LegendPanel(final List<Color> colors, final List<String> linesName) {
         this.setTitle("Legend");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(300, 300);
 
-        JPanel legendPanel = new JPanel();
+        final JPanel legendPanel = new JPanel();
         legendPanel.setLayout(new BoxLayout(legendPanel, BoxLayout.Y_AXIS));
 
-        JLabel title = new JLabel("Graph Legend");
+        final JLabel title = new JLabel("Graph Legend");
         title.setFont(new Font("Serif", Font.BOLD, 18));
         legendPanel.add(title);
         legendPanel.add(Box.createVerticalStrut(10)); // Spacing
-        JLabel divisionTitle = new JLabel("People State:");
+        final JLabel divisionTitle = new JLabel("People State:");
         divisionTitle.setFont(new Font("Serif", Font.BOLD, 18));
         legendPanel.add(divisionTitle);
 
@@ -36,26 +36,31 @@ public class LegendPanel extends JFrame {
         legendPanel.add(createLegendItem("MOVING", Color.YELLOW));
 
         legendPanel.add(Box.createVerticalStrut(10)); // Spacing
-        JLabel transportTitle = new JLabel("Transport Congestion:");
+        final JLabel transportTitle = new JLabel("Transport Congestion:");
         transportTitle.setFont(new Font("Serif", Font.BOLD, 18));
         legendPanel.add(transportTitle);
 
 
         for (int i = 0; i < linesName.size(); i++) {
-            String lineName = linesName.get(i);
-            Color color = colors.get(i % colors.size());
+            final String lineName = linesName.get(i);
+            final Color color = colors.get(i % colors.size());
             legendPanel.add(createLegendItem(lineName, color));
         }
 
-        JScrollPane scrollPane = new JScrollPane(legendPanel);
+        final JScrollPane scrollPane = new JScrollPane(legendPanel);
         add(scrollPane);
         setVisible(true);
     }
-
-    private JPanel createLegendItem(String text, Color color) {
-        JPanel itemPanel = new JPanel();
+     /**
+     * Creates a JPanel representing a single item in the legend.
+     * @param text The text for the legend item.
+     * @param color The color for the legend item.
+     * @return A JPanel representing the legend item.
+     */
+    private JPanel createLegendItem(final String text, final Color color) {
+        final JPanel itemPanel = new JPanel();
         itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        JLabel colorLabel = new JLabel();
+        final JLabel colorLabel = new JLabel();
         colorLabel.setOpaque(true);
         colorLabel.setBackground(color);
         colorLabel.setPreferredSize(new Dimension(10, 10));
@@ -63,6 +68,4 @@ public class LegendPanel extends JFrame {
         itemPanel.add(new JLabel(text));
         return itemPanel;
     }
-
-    // The rest of the methods for creating the legend frame go here
 }

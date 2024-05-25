@@ -9,10 +9,10 @@ import unibo.citysimulation.model.zone.Zone;
  */
 public class TransportLineImpl implements TransportLine {
     private int capacity;
-    private String name;
-    private int personInLine = 0;
-    private int duration;
-    private Pair<Zone, Zone> link;
+    private final String name;
+    private int personInLine;
+    private final int duration;
+    private final Pair<Zone, Zone> link;
     /**
      * Constructor for TransportLineImpl.
      * @param name
@@ -63,6 +63,7 @@ public class TransportLineImpl implements TransportLine {
      *
      * @return the name of this transport line
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -72,6 +73,7 @@ public class TransportLineImpl implements TransportLine {
      *
      * @return the number of people in line
      */
+    @Override
     public int getPersonInLine() {
         return personInLine;
     }
@@ -90,6 +92,7 @@ public class TransportLineImpl implements TransportLine {
      *
      * @return the congestion of the transport line
      */
+    @Override
     public double getCongestion() {
         return (double) (personInLine * 100 / capacity);
     }
@@ -99,6 +102,7 @@ public class TransportLineImpl implements TransportLine {
      *
      * @return the duration of the transport line
      */
+    @Override
     public int getDuration() {
         return duration;
     }
@@ -108,7 +112,7 @@ public class TransportLineImpl implements TransportLine {
      *
      * @return the pair of zones that the transport line links
      */
-
+    @Override
     public Pair<Zone, Zone> getLinkedZones() {
         return link;
     }
