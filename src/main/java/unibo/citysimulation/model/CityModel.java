@@ -266,11 +266,6 @@ public final class CityModel {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Checks if there are people present in the city model.
-     * 
-     * @return true if there are people present, false otherwise.
-     */
     public boolean isPeoplePresent() {
         return this.people != null;
     }
@@ -284,21 +279,11 @@ public final class CityModel {
         return this.businesses != null;
     }
 
-    /**
-     * Sets the frame size of the city model.
-     * 
-     * @param frameSize the frame size as a Pair of integers representing the width and height
-     */
     public void setFrameSize(final Pair<Integer, Integer> frameSize) {
         this.frameWidth = frameSize.getFirst();
         this.frameHeight = frameSize.getSecond();
     }
 
-    /**
-     * Gets the width of the frame in the city model.
-     * 
-     * @return the width of the frame
-     */
     public int getFrameWidth() {
         return this.frameWidth;
     }
