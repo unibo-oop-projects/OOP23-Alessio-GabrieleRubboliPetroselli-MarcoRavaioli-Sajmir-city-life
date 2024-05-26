@@ -1,8 +1,8 @@
 package unibo.citysimulation.model.clock;
 
-import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.business.EmployymentOffice;
-import unibo.citysimulation.model.business.EmployymentOfficeManager;
+import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
+import unibo.citysimulation.model.business.employye.impl.EmployymentOfficeManager;
+import unibo.citysimulation.model.business.impl.Business;
 
 import java.util.List;
 import java.time.LocalTime;
@@ -37,6 +37,7 @@ public class CloclObserverBusiness implements ClockObserver {
             }
             if (currentTime.equals(business.getClLocalTime())) {
                 employmentManager.handleEmployeeFiring(business);
+                employmentManager.handleEmployyePay(business);
             }
         }
 
