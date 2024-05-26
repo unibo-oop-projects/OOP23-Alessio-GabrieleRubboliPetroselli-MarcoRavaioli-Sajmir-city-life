@@ -40,12 +40,12 @@ public interface StaticPerson {
     /**
      * @return the money of the person.
      */
-    int getMoney();
+    double getMoney();
 
     /**
      * @param amount the amount of money to add.
      */
-    void addMoney(int amount);
+    void addMoney(double amount);
 
     /**
      * 

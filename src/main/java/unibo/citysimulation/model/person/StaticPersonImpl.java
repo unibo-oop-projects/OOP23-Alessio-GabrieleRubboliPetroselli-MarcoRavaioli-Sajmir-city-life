@@ -10,7 +10,7 @@ import unibo.citysimulation.utilities.Pair;
  * Represents a static person in the city simulation.
  */
 public class StaticPersonImpl implements StaticPerson {
-    private int money;
+    private double money;
     private Optional<Pair<Integer, Integer>> position;
     private final PersonData personData;
     private PersonState state;
@@ -24,7 +24,7 @@ public class StaticPersonImpl implements StaticPerson {
      * @param personData the data of the person.
      * @param money      the money of the person.
      */
-    public StaticPersonImpl(final PersonData personData, final int money) {
+    public StaticPersonImpl(final PersonData personData, final double money) {
         this.personData = personData;
         this.money = money;
         this.state = PersonState.AT_HOME;
@@ -53,7 +53,7 @@ public class StaticPersonImpl implements StaticPerson {
      * @return the money of the person.
      */
     @Override
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
@@ -63,7 +63,7 @@ public class StaticPersonImpl implements StaticPerson {
      * @param amount the amount of money to add.
      */
     @Override
-    public void addMoney(final int amount) {
+    public void addMoney(final double amount) {
         this.money += amount;
     }
 
