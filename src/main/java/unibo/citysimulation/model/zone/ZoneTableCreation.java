@@ -9,6 +9,12 @@ public final class ZoneTableCreation {
     private ZoneTableCreation() {
     }
 
+    /**
+     * Creates and adds pairs of zones and transport lines to the zone table.
+     * 
+     * @param zones      the list of zones
+     * @param transports the list of transport lines
+     */
     public static void createAndAddPairs(final List<Zone> zones, final List<TransportLine> transports) {
         final ZoneTable zoneTable = ZoneTable.getInstance();
         zoneTable.addPair(zones.get(0), zones.get(1), new TransportLine[]{transports.get(0)});

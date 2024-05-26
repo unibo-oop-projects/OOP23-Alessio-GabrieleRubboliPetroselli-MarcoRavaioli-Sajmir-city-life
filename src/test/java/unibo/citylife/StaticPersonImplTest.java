@@ -1,7 +1,7 @@
 package unibo.citylife;
 
-import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.business.BusinessFactory;
+import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.business.impl.BusinessFactory;
 import unibo.citysimulation.model.person.PersonData;
 import unibo.citysimulation.model.person.StaticPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;

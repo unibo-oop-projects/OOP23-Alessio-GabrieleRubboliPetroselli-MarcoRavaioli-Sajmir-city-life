@@ -1,14 +1,18 @@
+/**
+ * Represents the model of the city simulation, containing zones, transports,
+ * businesses, and people.
+ */
 package unibo.citysimulation.model;
 
-import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.business.BusinessFactory;
+import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
+import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.business.impl.BusinessFactory;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockModelImpl;
 import unibo.citysimulation.model.clock.ClockObserverPerson;
 import unibo.citysimulation.model.clock.CloclObserverBusiness;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.PersonCreation;
-import unibo.citysimulation.model.business.EmployymentOffice;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
@@ -127,7 +131,9 @@ public final class CityModel {
     }
 
     /**
-     * create a new list of businesses.
+     * Creates businesses in the city model based on the zones and their business percentages.
+     * The total number of businesses is distributed among the zones according to their business percentages.
+     * If there are remaining businesses after distributing among the zones, they are randomly assigned to the zones.
      */
     public void createBusinesses() {
         int remainingBusinesses = totalBusinesses;
@@ -150,14 +156,29 @@ public final class CityModel {
         }
     }
 
+    /**
+     * Calculates the total number of businesses in the city based on the given number of people.
+     *
+     * @param numberOfPeople the total number of people in the city
+     */
     public void calculateTotalBusinesses(final int numberOfPeople) {
         this.totalBusinesses = numberOfPeople / 10;
     }
 
+    /**
+     * Returns the total number of businesses in the city model.
+     *
+     * @return the total number of businesses
+     */
     public int getTotalBusinesses() {
         return this.totalBusinesses;
     }
 
+    /**
+     * Gets the frame size of the city model.
+     *
+     * @return the frame size as a Pair of integers representing the width and height
+     */
     public Pair<Integer, Integer> getFrameSize() {
         // Get the screen size
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -237,7 +258,7 @@ public final class CityModel {
     /**
      * Gets the list of all the people in the city model.
      * 
-     * @return a list with all the people from avery zone of the map.
+     * @return a list with all the people from every zone of the map.
      */
     public List<DynamicPerson> getAllPeople() {
         return people.stream()
@@ -245,19 +266,39 @@ public final class CityModel {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Checks if there are people present in the city model.
+     * 
+     * @return true if there are people present, false otherwise.
+     */
     public boolean isPeoplePresent() {
         return this.people != null;
     }
 
+    /**
+     * Checks if there are businesses present in the city model.
+     * 
+     * @return true if there are businesses present, false otherwise.
+     */
     public boolean isBusinessesPresent() {
         return this.businesses != null;
     }
 
+    /**
+     * Sets the frame size of the city model.
+     * 
+     * @param frameSize the frame size as a Pair of integers representing the width and height
+     */
     public void setFrameSize(final Pair<Integer, Integer> frameSize) {
         this.frameWidth = frameSize.getFirst();
         this.frameHeight = frameSize.getSecond();
     }
 
+    /**
+     * Gets the width of the frame in the city model.
+     * 
+     * @return the width of the frame
+     */
     public int getFrameWidth() {
         return this.frameWidth;
     }

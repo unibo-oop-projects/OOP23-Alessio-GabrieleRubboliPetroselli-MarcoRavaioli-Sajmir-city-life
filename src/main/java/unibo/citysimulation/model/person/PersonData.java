@@ -1,6 +1,6 @@
 package unibo.citysimulation.model.person;
 
-import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.zone.Zone;
 
 /**

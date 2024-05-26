@@ -1,8 +1,9 @@
 package unibo.citylife;
 
 import org.junit.jupiter.api.Test;
-import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.business.BusinessFactory;
+
+import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.business.impl.BusinessFactory;
 import unibo.citysimulation.model.person.PersonData;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
