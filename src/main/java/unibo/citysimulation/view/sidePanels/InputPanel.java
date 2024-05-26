@@ -1,4 +1,4 @@
-package unibo.citysimulation.view.sidepanels;
+package unibo.citysimulation.view.sidePanels;
 
 import unibo.citysimulation.view.StyledPanel;
 

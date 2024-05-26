@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import unibo.citysimulation.model.clock.ClockModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
-import unibo.citysimulation.view.sidepanels.ClockPanel;
+import unibo.citysimulation.view.sidePanels.ClockPanel;
 
 /**
  * Controller class responsible for managing the clock and its interactions with the user interface.

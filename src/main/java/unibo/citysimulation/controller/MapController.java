@@ -11,7 +11,7 @@ import unibo.citysimulation.model.MapModelImpl;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.view.sidepanels.InfoPanel;
+import unibo.citysimulation.view.sidePanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map.

@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 import java.awt.Color;
 import java.util.Map;
 import java.util.Collections;
-import unibo.citysimulation.model.business.Business;
+
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;

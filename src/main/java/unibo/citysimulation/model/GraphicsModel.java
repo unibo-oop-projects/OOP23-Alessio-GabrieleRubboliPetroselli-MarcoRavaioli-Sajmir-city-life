@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.person.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
@@ -102,6 +102,12 @@ public class GraphicsModel {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Calculates the occupation percentage for each business in the given list.
+     *
+     * @param list the list of businesses
+     * @return a list of integers representing the occupation percentage for each business
+     */
     public List<Integer> getBusinessesOccupation(final List<Business> list) { //
         return list.stream()
                 .map(business -> (int) ((double) business.getEmployees().size() / business.getMaxEmployees() * 100))

@@ -7,8 +7,8 @@ import java.time.LocalTime;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.GraphicsModel;
 import unibo.citysimulation.model.clock.ClockObserver;
-import unibo.citysimulation.view.sidepanels.GraphicsPanel;
-import unibo.citysimulation.view.sidepanels.LegendPanel;
+import unibo.citysimulation.view.sidePanels.GraphicsPanel;
+import unibo.citysimulation.view.sidePanels.LegendPanel;
 
 import java.util.stream.Collectors;
 

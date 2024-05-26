@@ -5,7 +5,7 @@ import java.util.Map;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import unibo.citysimulation.model.business.Business;
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
