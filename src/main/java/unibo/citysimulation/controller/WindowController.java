@@ -20,19 +20,18 @@ public class WindowController {
 
         this.windowView.addResizeListener(new ResizeListener());
 
-        cityModel.setFrameSize(cityModel.getFrameSize()); // questo comando potrebbe essere modificato, così funziona
+        cityModel.takeFrameSize();
 
+        initializeControllers();
+
+        windowView.updateFrame(cityModel.getFrameWidth(), cityModel.getFrameHeight());
+    }
+
+    private void initializeControllers() {
         new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
-
         new ClockController(cityModel.getClockModel(), windowView.getClockPanel());
-
-        new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(),
-                windowView.getClockPanel());
-
+        new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(), windowView.getClockPanel());
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
-
-        final Pair<Integer, Integer> frameSize = cityModel.getFrameSize();
-        windowView.updateFrame(frameSize.getFirst(), frameSize.getSecond());
     }
 
     /**
@@ -43,34 +42,36 @@ public class WindowController {
         public void componentResized(final ComponentEvent e) {
             super.componentResized(e);
 
-            // Ottieni le dimensioni del frame dopo il ridimensionamento
             int newWidth = e.getComponent().getWidth();
             int newHeight = e.getComponent().getHeight();
 
-            // Se la modifica è stata apportata all'altezza
             if (newHeight != cityModel.getFrameHeight()) {
                 newWidth = newHeight * 2;
-            } else { // Altrimenti, la modifica è stata apportata alla larghezza
+            } else {
                 newHeight = newWidth / 2;
             }
 
-
-            // Aggiorna le coordinate massime nel modello della mappa con le nuove dimensioni della mapPanel
-            cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(), windowView.getMapPanel().getHeight());   
-            // Aggiorna le informazioni sui trasporti nel modello della mappa                                                          
-            cityModel.getMapModel().setTransportInfo(cityModel.getTransportLines());                                                   
-            // Imposta le nuove dimensioni del frame nel modello della città
-            cityModel.setFrameSize(new Pair<>(newWidth, newHeight));
-
-            // Imposta le nuove coordinate delle linee nella mapPanel
-            windowView.getMapPanel().setLinesInfo(cityModel.getMapModel().getLinesPointsCoordinates(), cityModel.getMapModel().getTransportNames());
-
-            // Se sono presenti persone, imposta le nuove informazioni delle persone nella mapPanel
-            if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()){
-                windowView.getMapPanel().setEntities(cityModel.getMapModel().getPersonInfos(cityModel.getAllPeople()), cityModel.getMapModel().getBusinessInfos(cityModel.getBusinesses()));
-            }
-
+            updateCityModel(newWidth, newHeight);
+            updateMapPanel();
             windowView.updateFrame(newWidth, newHeight);
+        }
+    }
+
+    private void updateCityModel(final int newWidth, final int newHeight) {
+        cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(), windowView.getMapPanel().getHeight());
+        cityModel.getMapModel().setTransportInfo(cityModel.getTransportLines());
+        cityModel.setFrameSize(new Pair<>(newWidth, newHeight));
+    }
+
+    private void updateMapPanel() {
+        final var mapModel = cityModel.getMapModel();
+        final var mapPanel = windowView.getMapPanel();
+
+        mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
+
+        if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()) {
+            mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), 
+                                 mapModel.getBusinessInfos(cityModel.getBusinesses()));
         }
     }
 }

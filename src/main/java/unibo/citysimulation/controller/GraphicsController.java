@@ -1,7 +1,6 @@
 package unibo.citysimulation.controller;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 import unibo.citysimulation.model.CityModel;
@@ -28,7 +27,6 @@ public class GraphicsController implements ClockObserver {
     public GraphicsController(final CityModel cityModel, final GraphicsPanel graphicsPanel) {
         this.cityModel = cityModel;
         graphicsModel = cityModel.getGraphicsModel();
-
         initialize(graphicsPanel);
     }
 
@@ -40,15 +38,17 @@ public class GraphicsController implements ClockObserver {
     private void initialize(final GraphicsPanel graphicsPanel) {
         cityModel.getClockModel().addObserver(this);
 
-        graphicsPanel.getLegendButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                new LegendPanel(graphicsPanel.getColors(), cityModel.getTransportLines().stream()
-                                                            .map(t -> t.getName()).collect(Collectors.toList()));
-            }
-        });
-        
-        graphicsPanel.createGraphics(graphicsModel.getNames(), graphicsModel.getDatasets());
+        graphicsPanel.getLegendButton().addActionListener(this::showLegendPanel);
+        graphicsPanel.createGraphics(graphicsModel.getNames(), graphicsModel.getDatasets(), graphicsModel.getColors());
+    }
+
+    private void showLegendPanel(final ActionEvent e) {
+        new LegendPanel(
+            graphicsModel.getColors(),
+            cityModel.getTransportLines().stream()
+                     .map(t -> t.getName())
+                     .collect(Collectors.toList())
+        );
     }
 
     /**

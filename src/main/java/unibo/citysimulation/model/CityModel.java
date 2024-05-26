@@ -161,7 +161,7 @@ public final class CityModel {
         return this.totalBusinesses;
     }
 
-    public Pair<Integer, Integer> getFrameSize() {
+    public void takeFrameSize() {
         // Get the screen size
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -174,8 +174,8 @@ public final class CityModel {
         final int frameHeight = maxHeight > (maxWidth / 2) ? maxWidth / 2 : maxHeight;
         final int frameWidth = frameHeight * 2;
 
-        // Create and return the window model with the calculated dimensions
-        return new Pair<>(frameWidth, frameHeight);
+        this.frameHeight = frameHeight;
+        this.frameWidth = frameWidth;
     }
 
     /**
