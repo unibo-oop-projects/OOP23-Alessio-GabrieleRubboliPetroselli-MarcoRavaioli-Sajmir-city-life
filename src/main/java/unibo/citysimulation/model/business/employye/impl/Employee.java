@@ -1,5 +1,7 @@
-package unibo.citysimulation.model.business;
+package unibo.citysimulation.model.business.employye.impl;
 
+import unibo.citysimulation.model.business.employye.api.EmployeeStatus;
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
 import unibo.citysimulation.utilities.Pair;
 
@@ -8,7 +10,6 @@ import unibo.citysimulation.utilities.Pair;
  * It implements the EmployeeStatus interface.
  */
 public class Employee implements EmployeeStatus {
-    
     private int countDelay;
     private final DynamicPerson person;
     private final Business business;

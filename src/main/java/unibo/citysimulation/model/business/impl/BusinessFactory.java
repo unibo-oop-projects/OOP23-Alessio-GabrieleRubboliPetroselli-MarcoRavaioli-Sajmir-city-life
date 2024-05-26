@@ -1,9 +1,12 @@
-package unibo.citysimulation.model.business;
+package unibo.citysimulation.model.business.impl;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import unibo.citysimulation.model.business.utilities.BigBusiness;
+import unibo.citysimulation.model.business.utilities.MediumBusiness;
+import unibo.citysimulation.model.business.utilities.SmallBusiness;
 import unibo.citysimulation.model.zone.Zone;
 
 /**
@@ -29,12 +32,12 @@ public final class BusinessFactory {
                 return Optional.of(new MediumBusiness(zone));
             case SMALL:
                 return Optional.of(new SmallBusiness(zone));     
+                
             default:
                 break;
         }
         return Optional.empty();
     }
-
     /**
      * Creates a random Business object.
      *

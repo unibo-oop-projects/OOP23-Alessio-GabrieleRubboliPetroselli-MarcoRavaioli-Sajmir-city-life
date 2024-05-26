@@ -1,14 +1,16 @@
-package unibo.citysimulation.model.business;
+package unibo.citysimulation.model.business.employye.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import unibo.citysimulation.model.business.employye.api.HandleDisoccupiedPerson;
 import unibo.citysimulation.model.person.DynamicPerson;
 
 /**
  * The EmploymentOffice class represents an employment office in a city simulation.
  * It keeps track of disoccupied people and provides methods to add and remove them.
  */
-public class EmployymentOffice {
+public class EmployymentOffice implements HandleDisoccupiedPerson {
 
     /**
      * A list of disoccupied people registered at the employment office.
@@ -36,6 +38,7 @@ public class EmployymentOffice {
      * 
      * @param person the person to be added
      */
+    @Override
     public final void addDisoccupiedPerson(final DynamicPerson person) {
         this.disoccupiedPeople.add(person);
     }
@@ -45,6 +48,7 @@ public class EmployymentOffice {
      * 
      * @param person the person to be removed
      */
+    @Override
     public final void removeDisoccupiedPerson(final DynamicPerson person) {
         this.disoccupiedPeople.remove(person);
     }
