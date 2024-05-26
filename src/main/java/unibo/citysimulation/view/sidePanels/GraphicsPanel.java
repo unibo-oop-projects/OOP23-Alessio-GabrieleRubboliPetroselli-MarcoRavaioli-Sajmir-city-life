@@ -92,7 +92,6 @@ public class GraphicsPanel extends StyledPanel {
 
     public List<JFreeChart> createCharts(final List<String> names, final List<XYSeriesCollection> datasets) {
         final List<JFreeChart> charts = new ArrayList<>();
-
         for (int i = 0; i < names.size(); i++) {
             charts.add(createChart(names.get(i), datasets.get(i)));
         }
