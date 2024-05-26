@@ -7,9 +7,15 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
+/**
+ * Utility class to support MApModel to manage the image in background.
+ */
 public class MapImageLoader {
     private BufferedImage image;
 
+    /**
+     * Constructor to load the image map.
+     */
     public MapImageLoader() {
         loadMapImage();
     }
@@ -19,7 +25,7 @@ public class MapImageLoader {
      *
      * @return The BufferedImage object representing the map image.
      */
-    public BufferedImage getImage() {
+    protected BufferedImage getImage() {
         return image;
     }
 

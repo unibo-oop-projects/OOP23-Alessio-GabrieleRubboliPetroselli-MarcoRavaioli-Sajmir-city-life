@@ -69,13 +69,12 @@ public class GraphicsModel {
     }
 
     /**
-     * Updates datasets with new values.
-     *
-     * @param states List of state values.
-     * @param congestions List of congestion values.
-     * @param businessOccupations List of business occupation values.
-     * @param counter Current time or step counter.
-     */
+ * Updates the datasets with new values.
+ *
+ * @param people List of dynamic person objects representing the population.
+ * @param lines List of transport line objects representing the transportation network.
+ * @param businesses List of business objects representing the businesses.
+ */
     public void updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines, 
                 final List<Business> businesses) {
         final List<Integer> states = getPeopleStateCounts(people);
@@ -88,7 +87,7 @@ public class GraphicsModel {
         updateSeries(datasetsCopy.get(0), states, counter);
         updateSeries(datasetsCopy.get(1), congestions, counter);
         updateSeries(datasetsCopy.get(2), businessOccupations, counter);
-        
+
         columnCount++;
 
         if (columnCount > ConstantAndResourceLoader.MAX_COLUMNS) {
@@ -142,6 +141,11 @@ public class GraphicsModel {
                 .collect(Collectors.toList());
     }
 
+    /**
+ * Retrieves the datasets.
+ *
+ * @return The list of XYSeriesCollection datasets.
+ */
     public List<XYSeriesCollection> getDatasets() {
         return datasets;
     }

@@ -11,16 +11,20 @@ import java.awt.event.ComponentEvent;
  * Controller class responsible for managing the main window.
  */
 public class WindowController {
-    final private WindowView windowView;
-    final private CityModel cityModel;
+    private final WindowView windowView;
+    private final CityModel cityModel;
 
+    /**
+     * Constructor for initial window and initialize all the feature in the window.
+     * 
+     * @param windowView
+     * @param cityModel
+     */
     public WindowController(final WindowView windowView, final CityModel cityModel) {
         this.windowView = windowView;
-        this.cityModel = cityModel;
+        this.cityModel = cityModel; 
 
-        this.windowView.addResizeListener(new ResizeListener());
-
-        cityModel.takeFrameSize();
+        windowView.addResizeListener(new ResizeListener());
 
         initializeControllers();
 
@@ -37,7 +41,7 @@ public class WindowController {
     /**
      * Inner class responsible for handling component resize events.
      */
-    private class ResizeListener extends ComponentAdapter {
+    private final class ResizeListener extends ComponentAdapter {
         @Override
         public void componentResized(final ComponentEvent e) {
             super.componentResized(e);

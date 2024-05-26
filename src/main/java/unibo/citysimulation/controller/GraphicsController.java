@@ -1,14 +1,12 @@
 package unibo.citysimulation.controller;
 
-import java.awt.event.ActionEvent;
-import java.time.LocalTime;
-
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.GraphicsModel;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.view.sidepanels.GraphicsPanel;
 import unibo.citysimulation.view.sidepanels.LegendPanel;
 
+import java.time.LocalTime;
 import java.util.stream.Collectors;
 
 /**
@@ -38,11 +36,14 @@ public class GraphicsController implements ClockObserver {
     private void initialize(final GraphicsPanel graphicsPanel) {
         cityModel.getClockModel().addObserver(this);
 
-        graphicsPanel.getLegendButton().addActionListener(this::showLegendPanel);
+        graphicsPanel.getLegendButton().addActionListener(e -> showLegendPanel());
         graphicsPanel.createGraphics(graphicsModel.getNames(), graphicsModel.getDatasets(), graphicsModel.getColors());
     }
 
-    private void showLegendPanel(final ActionEvent e) {
+    /**
+     * Shows the legend panel when the legend button is pressed.
+     */
+    private void showLegendPanel() {
         new LegendPanel(
             graphicsModel.getColors(),
             cityModel.getTransportLines().stream()

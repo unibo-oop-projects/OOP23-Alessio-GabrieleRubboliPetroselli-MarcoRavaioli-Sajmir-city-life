@@ -9,6 +9,9 @@ public class MapCoordinateHandler {
     private int maxX;
     private int maxY;
 
+    /**
+     * Construct ana handler for coordinate normalization
+     */
     public MapCoordinateHandler() {
         normClickedX = -1;
         normClickedY = -1;

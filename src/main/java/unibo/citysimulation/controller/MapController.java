@@ -65,7 +65,7 @@ public class MapController implements ClockObserver {
         mapModel.setLastClickedCoordinates(x, y);
     }
 
-    private void updateZoneInfo(int x, int y) {
+    private void updateZoneInfo(final int x, final int y) {
     final String zoneName = cityModel.getZones().stream()
                 .filter(zone -> zone.boundary().isInside(x, y))
                 .findFirst().map(Zone::name).orElse("");

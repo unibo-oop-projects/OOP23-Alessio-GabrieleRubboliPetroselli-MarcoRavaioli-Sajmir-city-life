@@ -7,6 +7,7 @@ import unibo.citysimulation.view.sidepanels.GraphicsPanel;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
 
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -21,15 +22,17 @@ import java.awt.event.ComponentAdapter;
  */
 public class WindowView extends JFrame {
     private static final long serialVersionUID = 1L;
-
+    private static final List<Color> COLOR_LIST = List.of(
+        new Color(50, 50, 50),
+        new Color(159, 226, 191),
+        new Color(128, 0, 32),
+        new Color(0, 123, 167)
+    );
     private static final int PANEL_DIVISOR = 4;
     private static final double WEIGHT_INPUT_PANEL = 0.625;
     private static final double WEIGHT_INFO_PANEL = 0.375;
     private static final double WEIGHT_CLOCK_PANEL = 0.1;
     private static final double WEIGHT_GRAPHICS_PANEL = 0.9;
-    
-    private int width;                              // questi potrebbero non essere necessari, bisogna che nel createSidePanel
-    private int height;                             // vengano passate le dimensioni, magari dal windowController, controllare l'ordine di istanziazione delle classi 
 
     private final MapPanel mapPanel;
     private final InfoPanel infoPanel;
@@ -38,9 +41,13 @@ public class WindowView extends JFrame {
     private final GraphicsPanel graphicsPanel;
 
     /**
-     * Constructs a WindowView with the specified window model and map model.
+     * Constructs a WindowView with the specified window width and height.
+     *
+     * @param width the width of the window.
+     * @param height the height of the window.
      */
-    public WindowView() {
+
+    public WindowView(final int width, final int height) {
         setMinimumSize(new Dimension(ConstantAndResourceLoader.SCREEN_MINIMUM_WIDTH_PIXEL,
                 ConstantAndResourceLoader.SCREEN_MINIMUM_HEIGHT_PIXEL));
 
@@ -51,14 +58,13 @@ public class WindowView extends JFrame {
 
         setLayout(new BorderLayout());
 
-        // Creiamo i componenti
         mapPanel = new MapPanel(Color.WHITE);
-        infoPanel = new InfoPanel(Color.GREEN);
-        clockPanel = new ClockPanel(Color.RED);
-        inputPanel = new InputPanel(new Color(50,50,50));
-        graphicsPanel = new GraphicsPanel(Color.YELLOW);
+        inputPanel = new InputPanel(COLOR_LIST.get(0));
+        infoPanel = new InfoPanel(COLOR_LIST.get(1));
+        clockPanel = new ClockPanel(COLOR_LIST.get(2));
+        graphicsPanel = new GraphicsPanel(COLOR_LIST.get(3));
 
-        createComponents();
+        createComponents(width, height);
 
         setVisible(true);
 
@@ -82,8 +88,6 @@ public class WindowView extends JFrame {
      * @param height the new height of the window.
      */
     public void updateFrame(final int width, final int height) {
-        this.width = width;
-        this.height = height;
 
         setSize(new Dimension(width, height));
 
@@ -99,19 +103,23 @@ public class WindowView extends JFrame {
 
     /**
      * Creates the components of the window.
+     *
+     * @param width the width of the window.
+     * @param height the height of the window.
      */
-    private void createComponents() {
-        // Add the map panel to the center
+    private void createComponents(final int width, final int height) {
         add(mapPanel, BorderLayout.CENTER);
 
-        // Add the side panels
-        createSidePanels();
+        createSidePanels(width, height);
     }
 
     /**
      * Creates the side panels of the window.
+     *
+     * @param width the width of the window.
+     * @param height the height of the window.
      */
-    private void createSidePanels() {
+    private void createSidePanels(final int width, final int height) {
         final int sidePanelWidth = width / PANEL_DIVISOR;
         final int sidePanelsHeight = height;
 
@@ -122,36 +130,29 @@ public class WindowView extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1;
 
-        // Add input panel and info panel to left panel
         constraints.gridy = 0;
         constraints.weighty = WEIGHT_INPUT_PANEL;
-        inputPanel.setPreferredSize(new Dimension(sidePanelWidth, (int)(sidePanelsHeight * WEIGHT_INPUT_PANEL)));
+        inputPanel.setPreferredSize(new Dimension(sidePanelWidth, (int) (sidePanelsHeight * WEIGHT_INPUT_PANEL)));
         leftPanel.add(inputPanel, constraints);
 
         constraints.gridy = 1;
         constraints.weighty = WEIGHT_INFO_PANEL;
-        infoPanel.setPreferredSize(new Dimension(sidePanelWidth, (int)(sidePanelsHeight * WEIGHT_INFO_PANEL)));
+        infoPanel.setPreferredSize(new Dimension(sidePanelWidth, (int) (sidePanelsHeight * WEIGHT_INFO_PANEL)));
         leftPanel.add(infoPanel, constraints);
 
-        // Add clock panel and graphics panel to right panel
         constraints.gridy = 0;
-        constraints.weighty = WEIGHT_CLOCK_PANEL; // Decrease the weight of the clock panel
-        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, (int)(sidePanelsHeight * WEIGHT_CLOCK_PANEL)));
+        constraints.weighty = WEIGHT_CLOCK_PANEL;
+        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, (int) (sidePanelsHeight * WEIGHT_CLOCK_PANEL)));
         rightPanel.add(clockPanel, constraints);
 
         constraints.gridy = 1;
-        constraints.weighty = WEIGHT_GRAPHICS_PANEL; // Increase the weight of the graphics panel
-        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, (int)(sidePanelsHeight * WEIGHT_GRAPHICS_PANEL))); 
+        constraints.weighty = WEIGHT_GRAPHICS_PANEL;
+        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, (int) (sidePanelsHeight * WEIGHT_GRAPHICS_PANEL))); 
         rightPanel.add(graphicsPanel, constraints);
 
-
-
-
-        // Add left and right panels to the window
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
     }
-
 
     /**
      * Retrieves the info panel.

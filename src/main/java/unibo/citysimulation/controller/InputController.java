@@ -14,7 +14,6 @@ public class InputController {
     private final CityModel cityModel;
     private final InputModel inputModel;
     private final InputPanel inputPanel;
-    private final ClockPanel clockPanel;
 
     /**
      * Constructs an InputController object.
@@ -29,7 +28,6 @@ public class InputController {
         this.cityModel = cityModel;
         this.inputModel = inputModel;
         this.inputPanel = inputPanel;
-        this.clockPanel = clockPanel;
 
         inputPanel.getStartButton().addActionListener(new ActionListener() {
             @Override
