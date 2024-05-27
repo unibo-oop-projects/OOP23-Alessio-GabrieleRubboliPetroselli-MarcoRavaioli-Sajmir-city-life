@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.transport;
 
+
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
@@ -67,3 +68,4 @@ public final class TransportFactory {
         return lines.isEmpty() ? Collections.emptyList() : lines;
     }
 }
+

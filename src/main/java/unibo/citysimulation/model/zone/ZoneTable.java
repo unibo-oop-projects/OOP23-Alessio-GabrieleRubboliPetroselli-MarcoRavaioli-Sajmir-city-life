@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.Pair;
-
+/**
+ * Private constructor to prevent instantiation.
+ */
 public final class ZoneTable {
     private static final Map<Pair<Zone, Zone>, TransportLine[]> ZONE_PAIRS = new HashMap<>();
     private static final int MINUTES_IN_HOUR = 60;
@@ -46,7 +48,7 @@ public final class ZoneTable {
      * @return the transport lines connecting the two zones
      */
     public TransportLine[] getTransportLine(final Zone zone1, final Zone zone2) {
-        return ZONE_PAIRS.get(new Pair<Zone,Zone>(zone1, zone2));
+        return ZONE_PAIRS.get(new Pair<Zone, Zone>(zone1, zone2));
     }
     /**
      * Returns the duration of a trip given the transport lines.
