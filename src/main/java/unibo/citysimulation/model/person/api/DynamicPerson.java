@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.person;
+package unibo.citysimulation.model.person.api;
 
 import java.time.LocalTime;
 

@@ -7,13 +7,13 @@ package unibo.citysimulation.model;
 import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactory;
-import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.clock.ClockModelImpl;
-import unibo.citysimulation.model.clock.ClockObserverPerson;
-import unibo.citysimulation.model.clock.CloclObserverBusiness;
-import unibo.citysimulation.model.person.DynamicPerson;
-import unibo.citysimulation.model.person.PersonCreation;
-import unibo.citysimulation.model.transport.TransportFactory;
+import unibo.citysimulation.model.clock.api.ClockModel;
+import unibo.citysimulation.model.clock.impl.ClockModelImpl;
+import unibo.citysimulation.model.clock.impl.ClockObserverPerson;
+import unibo.citysimulation.model.clock.impl.CloclObserverBusiness;
+import unibo.citysimulation.model.person.api.DynamicPerson;
+import unibo.citysimulation.model.person.creation.PersonCreation;
+import unibo.citysimulation.model.transport.TransportCreation;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
@@ -60,7 +60,7 @@ public final class CityModel {
         this.inputModel = new InputModel();
         this.graphicsModel = new GraphicsModelImpl();
         this.zones = ZoneFactory.createZonesFromFile();
-        this.transports = TransportFactory.createTransportsFromFile(zones);
+        this.transports = TransportCreation.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
         this.employymentOffice = new EmployymentOffice();
     }
@@ -106,7 +106,7 @@ public final class CityModel {
     public void createEntities() {
         graphicsModel.clearDatasets();
 
-        transports = TransportFactory.createTransportsFromFile(zones);
+        transports = TransportCreation.createTransportsFromFile(zones);
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
 
         // Create zone table

@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
-import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.clock.ClockObserver;
+import unibo.citysimulation.model.clock.api.ClockModel;
+import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidepanels.ClockPanel;
 
@@ -38,7 +38,7 @@ public class ClockController implements ClockObserver {
         clockPanel.getSpeedButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                changeSpeed();
+                changeClockSpeed();
             }
         });
 
@@ -59,30 +59,22 @@ public class ClockController implements ClockObserver {
     }
 
     /**
-     * Changes the simulation speed.
-     */
-    private void changeSpeed() {
-        // Increment the speed index and set the new speed
-        changeClockSpeed();
-    }
-
-    /**
      * Sets the simulation speed based on the given speed value.
      */
-    public void changeClockSpeed() {
+    private void changeClockSpeed() {
         final int speed = clockPanel.changeSpeed();
         // Start the simulation with the new speed
         if (clockModel.getTimer() != null) {
             clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
         } else {
-            clockModel.setHourDuration(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
+            clockModel.setUpdateRate(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
         }
     }
 
     /**
      * Pauses the simulation.
      */
-    public void pauseSimulation() {
+    private void pauseSimulation() {
         // Pause the simulation
         clockModel.pauseSimulation();
         clockPanel.updatePauseButton(clockModel.isPaused());

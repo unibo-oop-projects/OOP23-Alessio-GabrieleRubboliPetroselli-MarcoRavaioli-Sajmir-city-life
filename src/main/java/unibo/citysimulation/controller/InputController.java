@@ -37,8 +37,6 @@ public class InputController {
 
                 inputPanel.getPeopleSlider().setEnabled(false);
                 inputPanel.getCapacitySlider().setEnabled(false);
-                inputPanel.getBusinessSlider().setEnabled(false);
-                inputPanel.getRichnessSlider().setEnabled(false);
                 inputPanel.getStartButton().setEnabled(false);
                 inputPanel.getStopButton().setEnabled(true);
             }
@@ -49,8 +47,6 @@ public class InputController {
             public void actionPerformed(final ActionEvent e) {
                 stopSimulation(clockPanel);
                 inputPanel.getPeopleSlider().setEnabled(true);
-                inputPanel.getBusinessSlider().setEnabled(true);
-                inputPanel.getRichnessSlider().setEnabled(true);
                 inputPanel.getCapacitySlider().setEnabled(true);
                 inputPanel.getStartButton().setEnabled(true);
                 inputPanel.getStopButton().setEnabled(false);
@@ -65,9 +61,7 @@ public class InputController {
      */
     private void startSimulation(final ClockPanel clockPanel) {
         inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());
-        inputModel.setNumberOfBusiness(inputPanel.getBusinessSlider().getValue());
         inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
-        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());
         // Create entities
         cityModel.createEntities();
         // Restart the clock simulation

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import unibo.citysimulation.model.business.employye.api.HandleDisoccupiedPerson;
-import unibo.citysimulation.model.person.DynamicPerson;
+import unibo.citysimulation.model.person.api.DynamicPerson;
 
 /**
  * The EmploymentOffice class represents an employment office in a city simulation.
