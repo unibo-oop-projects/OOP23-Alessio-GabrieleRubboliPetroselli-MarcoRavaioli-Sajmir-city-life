@@ -1,4 +1,4 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.map.impl;
 
 /**
  * Utility class for handling coordinate normalization and denormalization.

@@ -1,4 +1,4 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.map.impl;
 
 import java.awt.image.BufferedImage;
 
@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.map.api.MapModel;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.api.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;

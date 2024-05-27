@@ -1,4 +1,4 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.map.api;
 
 import java.util.List;
 import java.util.Map;

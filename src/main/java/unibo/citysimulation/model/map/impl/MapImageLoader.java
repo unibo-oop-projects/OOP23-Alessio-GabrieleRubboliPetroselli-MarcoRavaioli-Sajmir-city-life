@@ -1,4 +1,4 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.map.impl;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

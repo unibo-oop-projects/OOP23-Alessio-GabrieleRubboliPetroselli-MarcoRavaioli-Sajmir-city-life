@@ -11,6 +11,8 @@ import unibo.citysimulation.model.clock.api.ClockModel;
 import unibo.citysimulation.model.clock.impl.ClockModelImpl;
 import unibo.citysimulation.model.clock.impl.ClockObserverPerson;
 import unibo.citysimulation.model.clock.impl.CloclObserverBusiness;
+import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
+import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.creation.PersonCreation;
 import unibo.citysimulation.model.transport.TransportCreation;

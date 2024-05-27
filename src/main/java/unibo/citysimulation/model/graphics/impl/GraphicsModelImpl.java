@@ -1,4 +1,4 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.graphics.impl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,7 +6,8 @@ import java.awt.Color;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import unibo.citysimulation.model.business.impl.Business;
-import unibo.citysimulation.model.person.DynamicPerson;
+import unibo.citysimulation.model.graphics.api.GraphicsModel;
+import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.transport.TransportLine;
 
 /**
