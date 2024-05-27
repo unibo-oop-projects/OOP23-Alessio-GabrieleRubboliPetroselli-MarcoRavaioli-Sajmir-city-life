@@ -42,7 +42,7 @@ public final class CityModel {
     private final MapModelImpl mapModel;
     private final ClockModel clockModel;
     private final InputModel inputModel;
-    private final GraphicsModel graphicsModel;
+    private final GraphicsModelImpl graphicsModel;
     private final EmployymentOffice employymentOffice;
     private int frameWidth;
     private int frameHeight;
@@ -58,7 +58,7 @@ public final class CityModel {
         this.mapModel = new MapModelImpl();
         this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
         this.inputModel = new InputModel();
-        this.graphicsModel = new GraphicsModel();
+        this.graphicsModel = new GraphicsModelImpl();
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportFactory.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
@@ -219,7 +219,7 @@ public final class CityModel {
     /**
      * @return the graphics model.
      */
-    public GraphicsModel getGraphicsModel() {
+    public GraphicsModelImpl getGraphicsModel() {
         return this.graphicsModel;
     }
 

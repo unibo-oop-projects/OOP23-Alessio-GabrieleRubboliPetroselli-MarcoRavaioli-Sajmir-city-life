@@ -1,7 +1,7 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.GraphicsModel;
+import unibo.citysimulation.model.GraphicsModelImpl;
 import unibo.citysimulation.model.clock.ClockObserver;
 import unibo.citysimulation.view.sidepanels.GraphicsPanel;
 import unibo.citysimulation.view.sidepanels.LegendPanel;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public class GraphicsController implements ClockObserver {
     private final CityModel cityModel;
-    private final GraphicsModel graphicsModel;
+    private final GraphicsModelImpl graphicsModel;
 
     /**
      * Constructs a new GraphicsController with the specified CityModel and GraphicsPanel.
