@@ -38,7 +38,7 @@ public class ClockController implements ClockObserver {
         clockPanel.getSpeedButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                changeSpeed();
+                changeClockSpeed();
             }
         });
 
@@ -59,17 +59,9 @@ public class ClockController implements ClockObserver {
     }
 
     /**
-     * Changes the simulation speed.
-     */
-    private void changeSpeed() {
-        // Increment the speed index and set the new speed
-        changeClockSpeed();
-    }
-
-    /**
      * Sets the simulation speed based on the given speed value.
      */
-    public void changeClockSpeed() {
+    private void changeClockSpeed() {
         final int speed = clockPanel.changeSpeed();
         // Start the simulation with the new speed
         if (clockModel.getTimer() != null) {
@@ -82,7 +74,7 @@ public class ClockController implements ClockObserver {
     /**
      * Pauses the simulation.
      */
-    public void pauseSimulation() {
+    private void pauseSimulation() {
         // Pause the simulation
         clockModel.pauseSimulation();
         clockPanel.updatePauseButton(clockModel.isPaused());
