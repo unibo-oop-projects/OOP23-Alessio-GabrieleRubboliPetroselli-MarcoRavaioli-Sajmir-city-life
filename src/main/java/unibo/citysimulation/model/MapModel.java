@@ -14,7 +14,7 @@ import unibo.citysimulation.utilities.Pair;
  * Model interface representing the map.
  */
 public interface MapModel {
-    
+
     /**
      * Starts the simulation.
      */

@@ -43,7 +43,7 @@ public class ClockPanel extends StyledPanel {
                 ConstantAndResourceLoader.CLOCK_PANEL_PANEL_HEIGHT)); // Set the preferred size
 
         final JPanel timePanel = new JPanel(new GridLayout(2, 1));
-        timePanel.setBackground(Color.RED);
+        timePanel.setBackground(bgColor);
         timeDay.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.CLOCK_PANEL_FONT_SIZE));
         timeHour.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.CLOCK_PANEL_FONT_SIZE));
         timePanel.add(timeDay);

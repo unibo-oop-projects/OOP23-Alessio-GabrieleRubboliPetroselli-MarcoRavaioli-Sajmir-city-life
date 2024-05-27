@@ -53,6 +53,8 @@ public final class CityModel {
      * Constructs a CityModel object with default settings.
      */
     public CityModel() {
+        takeFrameSize();
+
         this.mapModel = new MapModelImpl();
         this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
         this.inputModel = new InputModel();
@@ -123,8 +125,6 @@ public final class CityModel {
                 employymentOffice.addDisoccupiedPerson(person);
             }
         }
-
-        // Add people as observers to clock model
         clockModel.addObserver(new ClockObserverPerson(people));
 
         clockModel.addObserver(new CloclObserverBusiness(businesses, employymentOffice));
@@ -175,16 +175,11 @@ public final class CityModel {
     }
 
     /**
-     * Gets the frame size of the city model.
-     *
-     * @return the frame size as a Pair of integers representing the width and height
-     */
-    public Pair<Integer, Integer> getFrameSize() {
+ * Adjusts the frame size based on the screen dimensions.
+ */
+    public void takeFrameSize() {
         // Get the screen size
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Calculate the maximum dimensions based on the screen size and a constant
-        // percentage
         final int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
         final int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
 
@@ -192,8 +187,8 @@ public final class CityModel {
         final int frameHeight = maxHeight > (maxWidth / 2) ? maxWidth / 2 : maxHeight;
         final int frameWidth = frameHeight * 2;
 
-        // Create and return the window model with the calculated dimensions
-        return new Pair<>(frameWidth, frameHeight);
+        this.frameHeight = frameHeight;
+        this.frameWidth = frameWidth;
     }
 
     /**
@@ -266,6 +261,11 @@ public final class CityModel {
                 .collect(Collectors.toList());
     }
 
+    /**
+ * Checks if people are present in the city model.
+ *
+ * @return True if people are present, false otherwise.
+ */
     public boolean isPeoplePresent() {
         return this.people != null;
     }
@@ -279,19 +279,40 @@ public final class CityModel {
         return this.businesses != null;
     }
 
+    /**
+ * Sets the frame size for the city model.
+ *
+ * @param frameSize A pair containing the width and height of the frame.
+ */
     public void setFrameSize(final Pair<Integer, Integer> frameSize) {
         this.frameWidth = frameSize.getFirst();
         this.frameHeight = frameSize.getSecond();
     }
 
+    /**
+ * Gets the frame width of the city model.
+ *
+ * @return The frame width.
+ */
     public int getFrameWidth() {
         return this.frameWidth;
     }
 
+    /**
+ * Gets the frame height of the city model.
+ *
+ * @return The frame height.
+ */
     public int getFrameHeight() {
         return this.frameHeight;
     }
 
+    /**
+ * Gets the number of people residing in a specific zone.
+ *
+ * @param zoneName The name of the zone.
+ * @return The number of people residing in the specified zone.
+ */
     public int getPeopleInZone(final String zoneName) {
         return (int) people.stream()
                 .flatMap(List::stream)
@@ -299,6 +320,12 @@ public final class CityModel {
                 .count();
     }
 
+    /**
+ * Gets the number of businesses in a specific zone.
+ *
+ * @param zoneName The name of the zone.
+ * @return The number of businesses in the specified zone.
+ */
     public int getBusinessesInZone(final String zoneName) {
         return (int) businesses.stream()
                 .filter(b -> b.getZone().name().equals(zoneName))

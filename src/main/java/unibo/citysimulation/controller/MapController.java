@@ -2,9 +2,7 @@ package unibo.citysimulation.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.time.LocalTime;
-import java.util.List;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.MapModelImpl;
@@ -57,44 +55,25 @@ public class MapController implements ClockObserver {
         mapPanel.setLinesColor(mapModel.getColorList());
     }
 
-    /**
-     * Handles mouse click events.
-     *
-     * @param e The MouseEvent object representing the mouse event.
-     */
-    public void handleMouseclick(final MouseEvent e) {
+    private void handleMouseclick(final MouseEvent e) {
         final int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
         final int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
 
-        final List<Zone> zones = cityModel.getZones();
-        String zoneName = ""; // Declare zoneName here
-        for (final Zone zone : zones) {
-            if (zone.boundary().isInside(x, y)) {
-                zoneName = zone.name();
-                break;
-            }
-        }
+        updateZoneInfo(x, y);
 
         mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
-
         mapModel.setLastClickedCoordinates(x, y);
-
-        infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
-        infoPanel.updateZoneName(zoneName);
-
-        infoPanel.updateNumberOfPeople(cityModel.getPeopleInZone(zoneName));
-
-        infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
-
     }
 
-    /**
-     * Returns the image of the map.
-     *
-     * @return the BufferedImage of the map.
-     */
-    public BufferedImage getImage() {
-        return mapModel.getImage();
+    private void updateZoneInfo(final int x, final int y) {
+    final String zoneName = cityModel.getZones().stream()
+                .filter(zone -> zone.boundary().isInside(x, y))
+                .findFirst().map(Zone::name).orElse("");
+
+    infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
+    infoPanel.updateZoneName(zoneName);
+    infoPanel.updateNumberOfPeople(cityModel.getPeopleInZone(zoneName));
+    infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
     }
 
     /**

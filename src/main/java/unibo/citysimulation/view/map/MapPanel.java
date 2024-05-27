@@ -19,7 +19,8 @@ import java.util.Map;
  */
 public class MapPanel extends StyledPanel {
     private static final long serialVersionUID = 1L;
-    
+    private static final Integer BASIC_STROKE_SIZE = 6;
+    private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
     private BufferedImage mapImage;
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
     private List<Color> congestionsColorList = Collections.emptyList();
@@ -35,80 +36,6 @@ public class MapPanel extends StyledPanel {
     public MapPanel(final Color bgColor) {
         super(bgColor);
     }
-
-    /**
-     * Draws the transport lines on the map.
-     *
-     * @param g the Graphics context
-     */
-    private void drawTransportLines(final Graphics g) {
-        final Graphics2D g2 = (Graphics2D) g;
-        
-        for(int i = 0; i < linesPointsCoordinates.size(); i++) {
-            final int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
-            final int y1 = linesPointsCoordinates.get(i).getFirst().getSecond();
-            final int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
-            final int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
-            g2.setColor(congestionsColorList.get(i));
-            g2.setStroke(new BasicStroke(6));
-            g2.drawLine(x1, y1, x2, y2);
-    
-            final String linename = linesName.get(i);
-    
-            final int midX = (x1 + x2) / 2;
-            final int midY = (y1 + y2) / 2;
-    
-            // Set color to black before drawing the string
-            g2.setColor(Color.BLACK);
-            g2.setStroke(new BasicStroke(2));
-            final Font currentFont = g2.getFont();
-            final Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.2F);
-            g2.setFont(newFont);
-
-            final FontMetrics fm = g2.getFontMetrics();
-            final int textWidth = fm.stringWidth(linename);
-            final int textX = midX - textWidth / 2;
-    
-            g2.drawString(linename, textX, midY);
-    
-            // Reset the font size for the next line
-            g2.setFont(currentFont);
-        }
-    }
-
-    /**
-     * Draws the people on the map.
-     *
-     * @param g the Graphics context
-     */
-    private void drawPeople(final Graphics g) {
-        final Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
-
-        peopleMap.forEach((name, info) -> {
-            final Pair<Integer, Integer> point = info.getFirst();
-            final Color color = info.getSecond();
-            g2.setColor(color);
-            g2.fillOval(point.getFirst(), point.getSecond(), 5, 5);
-        });
-    }
-
-    /**
-     * Draws the businesses on the map.
-     *
-     * @param g the Graphics context
-     */
-    private void drawBusinesses(final Graphics g) {
-        final Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
-    
-        businessMap.forEach((name, point) -> {
-            final Color color = new Color(139, 69, 19);
-            g2.setColor(color);
-            g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
-        });
-    }
-    
 
     /**
      * Paints the map image on the panel.
@@ -137,6 +64,79 @@ public class MapPanel extends StyledPanel {
     }
 
     /**
+     * Draws the transport lines on the map.
+     *
+     * @param g the Graphics context
+     */
+    private void drawTransportLines(final Graphics g) {
+        final Graphics2D g2 = (Graphics2D) g;
+
+        for (int i = 0; i < linesPointsCoordinates.size(); i++) {
+            final int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
+            final int y1 = linesPointsCoordinates.get(i).getFirst().getSecond();
+            final int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
+            final int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
+            g2.setColor(congestionsColorList.get(i));
+            g2.setStroke(new BasicStroke(BASIC_STROKE_SIZE));
+            g2.drawLine(x1, y1, x2, y2);
+
+            final String linename = linesName.get(i);
+
+            final int midX = (x1 + x2) / 2;
+            final int midY = (y1 + y2) / 2;
+
+            // Set color to black before drawing the string
+            g2.setColor(Color.BLACK);
+            g2.setStroke(new BasicStroke(2));
+            final Font currentFont = g2.getFont();
+            final Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.2F);
+            g2.setFont(newFont);
+
+            final FontMetrics fm = g2.getFontMetrics();
+            final int textWidth = fm.stringWidth(linename);
+            final int textX = midX - textWidth / 2;
+
+            g2.drawString(linename, textX, midY);
+
+            // Reset the font size for the next line
+            g2.setFont(currentFont);
+        }
+    }
+
+    /**
+     * Draws the people on the map.
+     *
+     * @param g the Graphics context
+     */
+    private void drawPeople(final Graphics g) {
+        final Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+
+        peopleMap.forEach((name, info) -> {
+            final Pair<Integer, Integer> point = info.getFirst();
+            final Color color = info.getSecond();
+            g2.setColor(color);
+            g2.fillOval(point.getFirst(), point.getSecond(), PEOPLE_SIZE.getFirst(), PEOPLE_SIZE.getSecond());
+        });
+    }
+
+    /**
+     * Draws the businesses on the map.
+     *
+     * @param g the Graphics context
+     */
+    private void drawBusinesses(final Graphics g) {
+        final Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+
+        businessMap.forEach((name, point) -> {
+            final Color color = new Color(139, 69, 19);
+            g2.setColor(color);
+            g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
+        });
+    }
+
+    /**
      * Sets the lines information for the map.
      *
      * @param points the coordinates of the transport lines
@@ -162,19 +162,11 @@ public class MapPanel extends StyledPanel {
      * @param peopleMap the map of people with their coordinates and colors
      * @param businessMap the map of businesses with their coordinates
      */
-    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, final Map<Integer, Pair<Integer, Integer>> businessMap) {
+    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, 
+                final Map<Integer, Pair<Integer, Integer>> businessMap) {
         this.peopleMap = peopleMap;
         this.businessMap = businessMap;
         repaint();
-    }
-
-    /**
-     * Sets the coordinates of businesses on the map.
-     *
-     * @param businessMap the map of businesses with their coordinates
-     */
-    public void setBusinessPoints(final Map<Integer, Pair<Integer, Integer>> businessMap) {
-        this.businessMap = businessMap;
     }
 
     /**

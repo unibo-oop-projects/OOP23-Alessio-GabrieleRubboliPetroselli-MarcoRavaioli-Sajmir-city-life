@@ -66,7 +66,8 @@ class CityModelTest {
 
     @Test
     void testFrameSizeCalculation() {
-        final Pair<Integer, Integer> frameSize = cityModel.getFrameSize();
+        cityModel.takeFrameSize();
+        final Pair<Integer, Integer> frameSize = new Pair<>(cityModel.getFrameWidth(), cityModel.getFrameHeight());
         assertNotNull(frameSize);
         assertTrue(frameSize.getFirst() > 0);
         assertTrue(frameSize.getSecond() > 0);

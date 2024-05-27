@@ -14,7 +14,7 @@ public final class SimulationLauncher {
      */
     public void start() {
         final CityModel cityModel = new CityModel();
-        final WindowView windowView = new WindowView();
+        final WindowView windowView = new WindowView(cityModel.getFrameWidth(), cityModel.getFrameHeight());
         new WindowController(windowView, cityModel);
     }
 }
