@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.awt.Color;
 import java.util.Map;
 import java.util.Collections;
+import java.util.HashMap;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.DynamicPerson;
@@ -46,14 +47,28 @@ public class MapModelImpl implements MapModel{
     public Map<Integer, Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
         final int maxX = coordinateHandler.getMaxX();
         final int maxY = coordinateHandler.getMaxY();
-        return businesses.stream()
-                .collect(Collectors.toMap(
-                        businesses::indexOf,
-                        business -> new Pair<>(
-                                denormalizeCoordinate(business.getPosition().getFirst(), maxX),
-                                denormalizeCoordinate(business.getPosition().getSecond(), maxY))));    
+    
+        Map<Integer, Pair<Integer, Integer>> businessInfoMap = new HashMap<>();
+        int totalEmployees = 0;
+        int totalMaxEmployees = 0;
+        for (int i = 0; i < businesses.size(); i++) {
+            Business business = businesses.get(i);
+    
+            int denormalizedX = denormalizeCoordinate(business.getPosition().getFirst(), maxX);
+            int denormalizedY = denormalizeCoordinate(business.getPosition().getSecond(), maxY);
+            businessInfoMap.put(i, new Pair<>(denormalizedX, denormalizedY));
+    
+            totalEmployees += business.getEmployees().size();
+            totalMaxEmployees += business.getMaxEmployees();
+            double occupancyRate = (business.getMaxEmployees() > 0) ? (double) business.getEmployees().size() / business.getMaxEmployees() : 0.0;
+        }
+    
+        double totalOccupancyRate = (totalMaxEmployees > 0) ? (double) totalEmployees / totalMaxEmployees : 0.0;
+        System.out.println("Total occupancy rate across all businesses: " + (totalOccupancyRate * 100) );
+    
+        return businessInfoMap;
     }
-
+    
     @Override
     public Map<String, Pair<Pair<Integer, Integer>, Color>> getPersonInfos(final List<DynamicPerson> people) {
         final int maxX = coordinateHandler.getMaxX();
