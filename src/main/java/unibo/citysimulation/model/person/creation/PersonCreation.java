@@ -1,7 +1,10 @@
-package unibo.citysimulation.model.person;
+package unibo.citysimulation.model.person.creation;
 
 import unibo.citysimulation.model.business.employye.impl.Employee;
 import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.person.api.DynamicPerson;
+import unibo.citysimulation.model.person.api.PersonData;
+import unibo.citysimulation.model.person.impl.DynamicPersonImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;

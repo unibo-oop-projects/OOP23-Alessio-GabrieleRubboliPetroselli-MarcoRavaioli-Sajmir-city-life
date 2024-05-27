@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.person;
+package unibo.citysimulation.model.person.api;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.zone.Zone;

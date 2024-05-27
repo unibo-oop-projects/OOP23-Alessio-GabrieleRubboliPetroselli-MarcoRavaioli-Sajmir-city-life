@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import unibo.citysimulation.model.business.employye.api.HandleEmployye;
 import unibo.citysimulation.model.business.impl.Business;
-import unibo.citysimulation.model.person.DynamicPerson;
+import unibo.citysimulation.model.person.api.DynamicPerson;
 
 /**
  * The EmploymentOfficeManager class manages the hiring and firing of employees for businesses.
