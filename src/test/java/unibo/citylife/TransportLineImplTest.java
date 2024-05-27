@@ -1,6 +1,8 @@
 package unibo.citylife;
+
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
@@ -9,7 +11,6 @@ import java.util.List;
 
 //test for class transportLineImpl
 class TransportLineImplTest {
-    
     private final List<Zone> zones = ZoneFactory.createZonesFromFile();
     private final List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
 
@@ -36,3 +37,4 @@ class TransportLineImplTest {
         assertEquals(0, line.getPersonInLine(), "The number of people in line should be 0 after decrementing");
     }
 }
+
