@@ -50,45 +50,44 @@ public final class PersonCreation {
     private static List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
             final Pair<Integer, Integer> moneyMinMax,
             final List<Business> businesses, final Zone residenceZone) {
-        List<DynamicPerson> people = new ArrayList<>();
-        for (int i = 0; i < numberOfPeople; i++) {
-            List<Business> eligibleBusinesses = new ArrayList<>();
-            for (Business business : businesses) {
-                if (!business.getZone().equals(residenceZone)) {
-                    eligibleBusinesses.add(business);
-                }
-            }
+                List<DynamicPerson> people = new ArrayList<>();
 
-            if (eligibleBusinesses.isEmpty()) {
-                throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
-            }
-
-            Optional<Business> optionalBusiness = Optional.ofNullable(
-                    eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size())));
-            DynamicPerson person = createPerson("Person" + groupCounter + i,
-                    random.nextInt(ConstantAndResourceLoader.MAX_RANDOM_AGE) + ConstantAndResourceLoader.MIN_AGE,
-                    optionalBusiness, residenceZone,
-                    random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst());
-
-            if (optionalBusiness.isPresent()) {
-                Business business = optionalBusiness.get();
-                int initialEmployeeCount = business.getEmployees().size();
-                Employee employee = new Employee(person, business);
-                business.hire(employee);
-
-                // Verifica se l'assunzione è avvenuta controllando l'incremento del numero di dipendenti
-                if (business.getEmployees().size() > initialEmployeeCount) {
+                for (int i = 0; i < numberOfPeople; i++) {
+                    List<Business> eligibleBusinesses = businesses.stream()
+                            .filter(business -> !business.getZone().equals(residenceZone))
+                            .collect(Collectors.toList());
+            
+                    if (eligibleBusinesses.isEmpty()) {
+                        throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
+                    }
+            
+                    Optional<Business> optionalBusiness = Optional.ofNullable(
+                            eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size())));
+            
+                    DynamicPerson person = createPerson(
+                            "Person" + groupCounter + i,
+                            random.nextInt(ConstantAndResourceLoader.MAX_RANDOM_AGE) + ConstantAndResourceLoader.MIN_AGE,
+                            optionalBusiness,
+                            residenceZone,
+                            random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst()
+                    );
+            
+                    optionalBusiness.ifPresent(business -> {
+                        int initialEmployeeCount = business.getEmployees().size();
+                        Employee employee = new Employee(person, business);
+                        business.hire(employee);
+            
+                        // Verifica se l'assunzione è avvenuta controllando l'incremento del numero di dipendenti
+                        if (business.getEmployees().size() <= initialEmployeeCount) {
+                            person.getPersonData().business();
+                            Optional.empty();
+                        }
+                    });
+            
                     people.add(person);
-                } else {
-                    person.getPersonData().business();
-                    Optional.empty();
-                    people.add(person);
                 }
-            } else {
-                people.add(person);
-            }
-        }
-        return people;
+            
+                return people;
     }
 
     private static DynamicPerson createPerson(final String name, final int age, final Optional<Business> business,
