@@ -25,11 +25,11 @@ public interface ClockModel {
     void removeObserver(ClockObserver observer);
 
     /**
-     * Starts the simulation with the specified hour duration.
+     * Starts the simulation with the specified update rate.
      * 
-     * @param hourDuration The duration of each simulated hour in milliseconds
+     * @param updateRate The update rate of the simulation, in milliseconds 
      */
-    void startSimulation(int hourDuration);
+    void startSimulation(int updateRate);
 
     /**
      * Pauses the simulation.
@@ -42,21 +42,21 @@ public interface ClockModel {
     void stopSimulation();
 
     /**
-     * Sets the current hourDuration of the simulation.
+     * Sets the current update rate of the simulation.
      * 
-     * @param hourDuration The new hourDuration of the simulation
+     * @param updateRate The new update rate
      */
-    void setHourDuration(int hourDuration);
+    void setUpdateRate(int hupdateRate);
 
     /**
-     * re-start the simulation with the same hourDuration.
+     * re-start the simulation with the same update rate.
      */
     void restartSimulation();
 
     /**
-     * @return The current hour duration of the simulation.
+     * @return The current update rate of the simulation.
      */
-    int getHourDuration();
+    int getUpdateRate();
 
     /**
      * @return The current day of the simulation.
