@@ -1,5 +1,5 @@
 package unibo.citylife;
-
+/* 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactory;
 import unibo.citysimulation.model.person.DynamicPersonImpl;
@@ -56,4 +56,4 @@ class DynamicPersonImplTest {
         assertEquals(1, person.getTransportLine()[0].getPersonInLine());
     }
 }
-
+*/

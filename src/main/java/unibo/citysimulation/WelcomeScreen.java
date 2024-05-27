@@ -75,7 +75,7 @@ public class WelcomeScreen extends JFrame {
         public void actionPerformed(final ActionEvent e) {
             // Show the about dialog
             JOptionPane.showMessageDialog(WelcomeScreen.this,
-                    "City-simulation is a project developed by the students of the Software Engineering course "
+                    "City-simulation is a project developed by the students of the Object Oriented Programing course "
                             + "at the University of Bologna.\n"
                             + "The project aims to simulate a city and its traffic, with the goal of improving the "
                             + "quality of life of its citizens.\n"

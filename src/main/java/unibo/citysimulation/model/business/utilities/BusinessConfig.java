@@ -75,15 +75,15 @@ public final class BusinessConfig {
     /**
      * The maximum number of employees for big businesses.
      */
-    public static final int MAX_EMPLOYEES_BIG_BUSINESS = 300;
+    public static final int MAX_EMPLOYEES_BIG_BUSINESS = 50;
     /**
      * The maximum number of employees for medium businesses.
      */
-    public static final int MAX_EMPLOYEES_MEDIUM_BUSINESS = 100;
+    public static final int MAX_EMPLOYEES_MEDIUM_BUSINESS = 25;
     /**
      * The maximum number of employees for small businesses.
      */
-    public static final int MAX_EMPLOYEES_SMALL_BUSINESS = 20;
+    public static final int MAX_EMPLOYEES_SMALL_BUSINESS = 5;
     /**
      * The maximum tardiness for big businesses.
      */

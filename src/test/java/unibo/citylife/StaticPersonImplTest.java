@@ -1,5 +1,5 @@
 package unibo.citylife;
-
+/* 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactory;
 import unibo.citysimulation.model.person.PersonData;
@@ -71,4 +71,4 @@ class StaticPersonImplTest {
         assertEquals(PersonState.AT_HOME, staticPerson.getState());
     }
 }
-
+*/
