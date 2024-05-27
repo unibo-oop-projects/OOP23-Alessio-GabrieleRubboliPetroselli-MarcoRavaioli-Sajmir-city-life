@@ -109,7 +109,7 @@ public class StaticPersonImpl implements StaticPerson {
                 this.position = Optional.empty();
                 break;
             case WORKING:
-                final Pair<Integer, Integer> businessPosition = personData.business().getPosition();
+                final Pair<Integer, Integer> businessPosition = personData.business().get().getPosition();
                 final int newX = businessPosition.getFirst() + getRandomDeviation();
                 final int newY = businessPosition.getSecond() + getRandomDeviation();
                 this.position = Optional.of(new Pair<>(newX, newY));
@@ -132,11 +132,11 @@ public class StaticPersonImpl implements StaticPerson {
     }
 
     private void calculateTrip() {
-        if (personData.residenceZone().equals(personData.business().getZone())) {
+        if (personData.residenceZone().equals(personData.business().get().getZone())) {
             this.tripDuration = 0;
         } else {
             this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(),
-                    personData.business().getZone());
+                    personData.business().get().getZone());
             if (this.transportLine == null) {
                 throw new IllegalStateException("No transport line found between the given zones.");
             }
