@@ -1,9 +1,12 @@
-package unibo.citysimulation.model.clock;
+package unibo.citysimulation.model.clock.impl;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import unibo.citysimulation.model.clock.api.ClockModel;
+import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import java.util.List;
 import java.util.ArrayList;

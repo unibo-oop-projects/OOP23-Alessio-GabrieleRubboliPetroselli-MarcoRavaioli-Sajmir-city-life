@@ -1,8 +1,9 @@
-package unibo.citysimulation.model.clock;
+package unibo.citysimulation.model.clock.impl;
 
 import java.time.LocalTime;
 import java.util.List;
 
+import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.person.DynamicPerson;
 
 /**

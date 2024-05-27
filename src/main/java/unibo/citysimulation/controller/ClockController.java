@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
-import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.clock.ClockObserver;
+import unibo.citysimulation.model.clock.api.ClockModel;
+import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.sidepanels.ClockPanel;
 

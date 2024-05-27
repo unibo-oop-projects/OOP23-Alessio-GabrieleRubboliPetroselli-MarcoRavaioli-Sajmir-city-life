@@ -2,7 +2,7 @@ package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.GraphicsModel;
-import unibo.citysimulation.model.clock.ClockObserver;
+import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.view.sidepanels.GraphicsPanel;
 import unibo.citysimulation.view.sidepanels.LegendPanel;
 

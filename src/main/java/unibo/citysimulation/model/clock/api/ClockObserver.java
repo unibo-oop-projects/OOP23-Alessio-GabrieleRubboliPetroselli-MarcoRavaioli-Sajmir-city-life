@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.clock;
+package unibo.citysimulation.model.clock.api;
 
 import java.time.LocalTime;
 
