@@ -32,11 +32,11 @@ public final class PersonCreation {
      */
     public static List<List<DynamicPerson>> createAllPeople(final int numberOfPeople, final List<Zone> zones,
             final List<Business> businesses) {
-        List<List<DynamicPerson>> allPeople = new ArrayList<>();
-        for (Zone zone : zones) {
-            int zoneIndex = zones.indexOf(zone);
-            int peopleInZone = (int) (numberOfPeople * (zone.personPercents() / 100.0));
-            List<DynamicPerson> peopleInCurrentZone = createGroupOfPeople(
+        final List<List<DynamicPerson>> allPeople = new ArrayList<>();
+        for (final Zone zone : zones) {
+            final int zoneIndex = zones.indexOf(zone);
+            final int peopleInZone = (int) (numberOfPeople * (zone.personPercents() / 100.0));
+            final List<DynamicPerson> peopleInCurrentZone = createGroupOfPeople(
                     zoneIndex,
                     peopleInZone,
                     zone.wellfareMinMax(),
@@ -50,43 +50,35 @@ public final class PersonCreation {
     private static List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
             final Pair<Integer, Integer> moneyMinMax,
             final List<Business> businesses, final Zone residenceZone) {
-                List<DynamicPerson> people = new ArrayList<>();
-
+                final List<DynamicPerson> people = new ArrayList<>();
                 for (int i = 0; i < numberOfPeople; i++) {
-                    List<Business> eligibleBusinesses = businesses.stream()
+                    final List<Business> eligibleBusinesses = businesses.stream()
                             .filter(business -> !business.getZone().equals(residenceZone))
                             .collect(Collectors.toList());
-            
                     if (eligibleBusinesses.isEmpty()) {
                         throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
                     }
-            
-                    Optional<Business> optionalBusiness = Optional.ofNullable(
+                    final Optional<Business> optionalBusiness = Optional.ofNullable(
                             eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size())));
-            
-                    DynamicPerson person = createPerson(
+                    final DynamicPerson person = createPerson(
                             "Person" + groupCounter + i,
                             random.nextInt(ConstantAndResourceLoader.MAX_RANDOM_AGE) + ConstantAndResourceLoader.MIN_AGE,
                             optionalBusiness,
                             residenceZone,
                             random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst()
                     );
-            
                     optionalBusiness.ifPresent(business -> {
-                        int initialEmployeeCount = business.getEmployees().size();
-                        Employee employee = new Employee(person, business);
+                        final int initialEmployeeCount = business.getEmployees().size();
+                        final Employee employee = new Employee(person, business);
                         business.hire(employee);
-            
                         // Verifica se l'assunzione è avvenuta controllando l'incremento del numero di dipendenti
                         if (business.getEmployees().size() <= initialEmployeeCount) {
                             person.getPersonData().business();
                             Optional.empty();
                         }
                     });
-            
                     people.add(person);
                 }
-            
                 return people;
     }
 

@@ -13,5 +13,5 @@ import java.util.Optional;
  * @param business      the business where the person works.
  * @param residenceZone the zone where the person lives.
  */
-public record PersonData(String name, int age, Optional <Business> business, Zone residenceZone) {
+public record PersonData(String name, int age, Optional<Business> business, Zone residenceZone) {
 }
