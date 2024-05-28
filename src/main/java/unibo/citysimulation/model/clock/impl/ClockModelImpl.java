@@ -1,9 +1,12 @@
-package unibo.citysimulation.model.clock;
+package unibo.citysimulation.model.clock.impl;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import unibo.citysimulation.model.clock.api.ClockModel;
+import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import java.util.List;
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.ArrayList;
 public class ClockModelImpl implements ClockModel {
 
     private final int totalDays;
-    private int hourDuration = ConstantAndResourceLoader.TIME_UPDATE_RATE;
+    private int updateRate = ConstantAndResourceLoader.TIME_UPDATE_RATE;
     private Timer timer;
     private int currentDay;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -53,16 +56,16 @@ public class ClockModelImpl implements ClockModel {
     }
 
     /**
-     * Starts the simulation with the specified hour duration.
+     * Starts the simulation with the specified update rate.
      * 
-     * @param hourDuration The duration of each simulated hour in milliseconds
+     * @param updateRate the update rate of the simulation, in milliseconds
      */
     @Override
-    public void startSimulation(final int hourDuration) {
+    public void startSimulation(final int updateRate) {
         if (timer != null) {
             timer.cancel();
         }
-        this.hourDuration = hourDuration;
+        this.updateRate = updateRate;
         this.timer = new Timer();
         final TimerTask task = new TimerTask() {
             @Override
@@ -80,7 +83,7 @@ public class ClockModelImpl implements ClockModel {
                 }
             }
         };
-        timer.scheduleAtFixedRate(task, 0, hourDuration);
+        timer.scheduleAtFixedRate(task, 0, updateRate);
     }
 
     /**
@@ -94,7 +97,7 @@ public class ClockModelImpl implements ClockModel {
         isPaused = false;
         currentTime = LocalTime.of(0, 0);
         currentDay = 1;
-        this.startSimulation(hourDuration);
+        this.startSimulation(updateRate);
     }
 
     /**
@@ -167,23 +170,23 @@ public class ClockModelImpl implements ClockModel {
     }
 
     /**
-     * Gets the hour duration of the simulation.
+     * Gets the update rate of the simulation.
      * 
-     * @return The hour duration
+     * @return The current update rate
      */
     @Override
-    public int getHourDuration() {
-        return hourDuration;
+    public int getUpdateRate() {
+        return updateRate;
     }
 
     /**
-     * Sets the hour duration of the simulation.
+     * Sets the update rate of the simulation.
      * 
-     * @param hourDuration The hour duration to set
+     * @param updateRate The update rate to set
      */
     @Override
-    public void setHourDuration(final int hourDuration) {
-        this.hourDuration = hourDuration;
+    public void setUpdateRate(final int updateRate) {
+        this.updateRate = updateRate;
     }
 
     /**

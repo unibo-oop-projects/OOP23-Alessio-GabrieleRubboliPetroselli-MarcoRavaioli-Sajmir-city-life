@@ -1,14 +1,24 @@
-package unibo.citysimulation.view.sidePanels;
+package unibo.citysimulation.view.sidepanels;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.util.List;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 /**
  * This class represents a legend panel for the city simulation.
  * It extends JFrame to create a separate window for the legend.
  */
 public class LegendPanel extends JFrame {
     private static final long serialVersionUID = 1L;
+    private static final int WINDOW_SIZE = 300;
+    private static final int FONT_SIZE = 18;
 
      /**
      * Constructor for the LegendPanel class.
@@ -18,17 +28,17 @@ public class LegendPanel extends JFrame {
     public LegendPanel(final List<Color> colors, final List<String> linesName) {
         this.setTitle("Legend");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(300, 300);
+        setSize(WINDOW_SIZE, WINDOW_SIZE);
 
         final JPanel legendPanel = new JPanel();
         legendPanel.setLayout(new BoxLayout(legendPanel, BoxLayout.Y_AXIS));
 
         final JLabel title = new JLabel("Graph Legend");
-        title.setFont(new Font("Serif", Font.BOLD, 18));
+        title.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
         legendPanel.add(title);
         legendPanel.add(Box.createVerticalStrut(10)); // Spacing
         final JLabel divisionTitle = new JLabel("People State:");
-        divisionTitle.setFont(new Font("Serif", Font.BOLD, 18));
+        divisionTitle.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
         legendPanel.add(divisionTitle);
 
         legendPanel.add(createLegendItem("WORKING", Color.RED));
@@ -37,7 +47,7 @@ public class LegendPanel extends JFrame {
 
         legendPanel.add(Box.createVerticalStrut(10)); // Spacing
         final JLabel transportTitle = new JLabel("Transport Congestion:");
-        transportTitle.setFont(new Font("Serif", Font.BOLD, 18));
+        transportTitle.setFont(new Font("Serif", Font.BOLD, FONT_SIZE));
         legendPanel.add(transportTitle);
 
 
@@ -69,3 +79,4 @@ public class LegendPanel extends JFrame {
         return itemPanel;
     }
 }
+

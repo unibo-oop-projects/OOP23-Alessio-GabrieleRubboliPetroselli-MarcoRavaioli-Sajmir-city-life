@@ -10,8 +10,8 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import unibo.citysimulation.model.business.impl.Business;
-import unibo.citysimulation.model.person.DynamicPerson;
-import unibo.citysimulation.model.person.StaticPerson.PersonState;
+import unibo.citysimulation.model.person.api.DynamicPerson;
+import unibo.citysimulation.model.person.api.StaticPerson.PersonState;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 

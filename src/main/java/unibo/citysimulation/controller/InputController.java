@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
-import unibo.citysimulation.view.sidePanels.ClockPanel;
-import unibo.citysimulation.view.sidePanels.InputPanel;
+import unibo.citysimulation.view.sidepanels.ClockPanel;
+import unibo.citysimulation.view.sidepanels.InputPanel;
 
 /**
 * Controller class responsible for handling user input from the input panel.
@@ -37,8 +37,6 @@ public class InputController {
 
                 inputPanel.getPeopleSlider().setEnabled(false);
                 inputPanel.getCapacitySlider().setEnabled(false);
-                inputPanel.getBusinessSlider().setEnabled(false);
-                inputPanel.getRichnessSlider().setEnabled(false);
                 inputPanel.getStartButton().setEnabled(false);
                 inputPanel.getStopButton().setEnabled(true);
             }
@@ -49,8 +47,6 @@ public class InputController {
             public void actionPerformed(final ActionEvent e) {
                 stopSimulation(clockPanel);
                 inputPanel.getPeopleSlider().setEnabled(true);
-                inputPanel.getBusinessSlider().setEnabled(true);
-                inputPanel.getRichnessSlider().setEnabled(true);
                 inputPanel.getCapacitySlider().setEnabled(true);
                 inputPanel.getStartButton().setEnabled(true);
                 inputPanel.getStopButton().setEnabled(false);
@@ -67,7 +63,6 @@ public class InputController {
         inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());
         inputModel.addNumberOfBusiness(inputPanel.getBusinessSlider().getValue());
         inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
-        inputModel.setRichness(inputPanel.getRichnessSlider().getValue());
         // Create entities
         cityModel.createEntities();
         // Restart the clock simulation

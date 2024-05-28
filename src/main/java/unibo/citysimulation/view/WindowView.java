@@ -2,10 +2,10 @@ package unibo.citysimulation.view;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.view.sidePanels.ClockPanel;
-import unibo.citysimulation.view.sidePanels.GraphicsPanel;
-import unibo.citysimulation.view.sidePanels.InfoPanel;
-import unibo.citysimulation.view.sidePanels.InputPanel;
+import unibo.citysimulation.view.sidepanels.ClockPanel;
+import unibo.citysimulation.view.sidepanels.GraphicsPanel;
+import unibo.citysimulation.view.sidepanels.InfoPanel;
+import unibo.citysimulation.view.sidepanels.InputPanel;
 
 import java.util.List;
 import javax.swing.JFrame;
@@ -29,8 +29,8 @@ public class WindowView extends JFrame {
         new Color(0, 123, 167)
     );
     private static final int PANEL_DIVISOR = 4;
-    private static final double WEIGHT_INPUT_PANEL = 0.625;
-    private static final double WEIGHT_INFO_PANEL = 0.375;
+    private static final double WEIGHT_INPUT_PANEL = 0.525;
+    private static final double WEIGHT_INFO_PANEL = 0.475;
     private static final double WEIGHT_CLOCK_PANEL = 0.1;
     private static final double WEIGHT_GRAPHICS_PANEL = 0.9;
 

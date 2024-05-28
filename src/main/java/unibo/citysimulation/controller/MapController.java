@@ -6,10 +6,10 @@ import java.time.LocalTime;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.MapModelImpl;
-import unibo.citysimulation.model.clock.ClockObserver;
+import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.view.sidePanels.InfoPanel;
+import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map.

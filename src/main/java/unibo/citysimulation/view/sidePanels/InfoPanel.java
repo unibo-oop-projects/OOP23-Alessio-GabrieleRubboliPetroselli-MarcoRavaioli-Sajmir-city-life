@@ -1,5 +1,6 @@
-package unibo.citysimulation.view.sidePanels;
+package unibo.citysimulation.view.sidepanels;
 
+import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
 
@@ -7,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.List;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -71,7 +73,6 @@ public final class InfoPanel extends StyledPanel {
     public void updateNumberOfPeople(final int peopleNumber) {
         numberOfPeople.setText("Number of People: " + peopleNumber);
     }
-
     /**
      * Updates the zone name displayed on the panel.
      *
@@ -80,7 +81,6 @@ public final class InfoPanel extends StyledPanel {
     public void updateZoneName(final String zoneName) {
         zoneNJLabel.setText("Zone: " + zoneName);
     }
-
     /**
      * Updates the number of businesses displayed on the panel.
      *

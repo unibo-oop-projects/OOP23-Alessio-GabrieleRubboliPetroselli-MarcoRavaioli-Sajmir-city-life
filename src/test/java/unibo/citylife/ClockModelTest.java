@@ -4,9 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.clock.ClockModelImpl;
-import unibo.citysimulation.model.clock.ClockObserver;
+import unibo.citysimulation.model.clock.api.ClockModel;
+import unibo.citysimulation.model.clock.api.ClockObserver;
+import unibo.citysimulation.model.clock.impl.ClockModelImpl;
 
 import java.time.LocalTime;
 import java.util.concurrent.CountDownLatch;

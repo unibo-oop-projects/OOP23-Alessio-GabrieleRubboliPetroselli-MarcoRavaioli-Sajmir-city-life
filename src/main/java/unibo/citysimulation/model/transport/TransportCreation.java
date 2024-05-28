@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.transport;
 
+
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ import java.util.Collections;
  * This factory creates a list of TransportLine objects based on a list of Zone
  * objects.
  */
-public final class TransportFactory {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TransportFactory.class);
+public final class TransportCreation {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportCreation.class);
 
-    private TransportFactory() {
+    private TransportCreation() {
         // private constructor to prevent instantiation
     }
 
@@ -67,3 +68,4 @@ public final class TransportFactory {
         return lines.isEmpty() ? Collections.emptyList() : lines;
     }
 }
+

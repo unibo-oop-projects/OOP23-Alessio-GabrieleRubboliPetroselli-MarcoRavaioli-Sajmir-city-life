@@ -2,7 +2,7 @@ package unibo.citysimulation.model.business.employye.impl;
 
 import unibo.citysimulation.model.business.employye.api.EmployeeStatus;
 import unibo.citysimulation.model.business.impl.Business;
-import unibo.citysimulation.model.person.DynamicPerson;
+import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.utilities.Pair;
 
 /**
