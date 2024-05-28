@@ -4,7 +4,6 @@
  */
 package unibo.citysimulation.model;
 
-import unibo.citysimulation.model.business.employye.impl.Employee;
 import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactory;
@@ -175,15 +174,13 @@ public final class CityModel {
 
     public double avaragePayZone(final Zone zone){
         double avarage = 0;
-        for (final Zone z : zones){
-            if(z.name().equals(zone.name())){
-            for(final Business business : businesses){
-                if(business.getZone().name().equals(zone.name())){
-                    avarage += business.getEmployees().size() * business.calculatePay();
-                }
-            }
-            } else {
-                avarage = 0;
+        int businessCount = 0;
+        for (Business business : businesses) {
+            if(business.getZone().equals(zone)){
+                businessCount++;
+                double sum = 0;
+                sum += business.getEmployees().size() * business.calculatePay();
+                avarage = sum/businessCount;
             }
         }
         return avarage;
