@@ -1,6 +1,5 @@
 package unibo.citysimulation.view.sidepanels;
 
-import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
 
@@ -8,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.List;
 import java.awt.Color;
 import java.awt.Font;
 
