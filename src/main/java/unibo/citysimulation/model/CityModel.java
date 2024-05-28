@@ -309,17 +309,20 @@ public final class CityModel {
         return this.frameHeight;
     }
 
-    /**
- * Gets the number of people residing in a specific zone.
- *
- * @param zoneName The name of the zone.
- * @return The number of people residing in the specified zone.
- */
-    public int getPeopleInZone(final String zoneName) {
-        return (int) people.stream()
-                .flatMap(List::stream)
-                .filter(p -> p.getPersonData().residenceZone().name().equals(zoneName))
-                .count();
+/**
+     * Gets the number of people residing in a specific zone.
+     *
+     * @param zoneName The name of the zone.
+     * @return An Optional containing the number of people residing in the specified zone,
+     *         or an empty Optional if people is null.
+     */
+    public Optional<Integer> getPeopleInZone(final String zoneName) {
+        return Optional.ofNullable(people)
+                .map(pList -> pList.stream()
+                        .flatMap(List::stream)
+                        .filter(p -> p.getPersonData().residenceZone().name().equals(zoneName))
+                        .count())
+                .map(Long::intValue);
     }
 
     /**

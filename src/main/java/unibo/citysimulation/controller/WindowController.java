@@ -22,47 +22,24 @@ public class WindowController {
      */
     public WindowController(final WindowView windowView, final CityModel cityModel) {
         this.windowView = windowView;
-        this.cityModel = cityModel; 
+        this.cityModel = cityModel;
 
         windowView.addResizeListener(new ResizeListener());
-
         initializeControllers();
-
         windowView.updateFrame(cityModel.getFrameWidth(), cityModel.getFrameHeight());
     }
 
     private void initializeControllers() {
         new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
         new ClockController(cityModel.getClockModel(), windowView.getClockPanel());
-        new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(), windowView.getClockPanel());
+        new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(),
+                windowView.getClockPanel());
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
     }
 
-    /**
-     * Inner class responsible for handling component resize events.
-     */
-    private final class ResizeListener extends ComponentAdapter {
-        @Override
-        public void componentResized(final ComponentEvent e) {
-            super.componentResized(e);
-
-            int newWidth = e.getComponent().getWidth();
-            int newHeight = e.getComponent().getHeight();
-
-            if (newHeight != cityModel.getFrameHeight()) {
-                newWidth = newHeight * 2;
-            } else {
-                newHeight = newWidth / 2;
-            }
-
-            updateCityModel(newWidth, newHeight);
-            updateMapPanel();
-            windowView.updateFrame(newWidth, newHeight);
-        }
-    }
-
     private void updateCityModel(final int newWidth, final int newHeight) {
-        cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(), windowView.getMapPanel().getHeight());
+        cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(),
+                windowView.getMapPanel().getHeight());
         cityModel.getMapModel().setTransportInfo(cityModel.getTransportLines());
         cityModel.setFrameSize(new Pair<>(newWidth, newHeight));
     }
@@ -74,8 +51,48 @@ public class WindowController {
         mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
 
         if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()) {
-            mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), 
-                                 mapModel.getBusinessInfos(cityModel.getBusinesses()));
+            mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
+                    mapModel.getBusinessInfos(cityModel.getBusinesses()));
+        }
+    }
+
+    /**
+     * Inner class responsible for handling component resize events.
+     */
+    private final class ResizeListener extends ComponentAdapter {
+        @Override
+        public void componentResized(final ComponentEvent e) {
+            int newWidth = e.getComponent().getWidth();
+            int newHeight = e.getComponent().getHeight();
+            int oldWidth = cityModel.getFrameWidth();
+            int oldHeight = cityModel.getFrameHeight();
+
+            boolean widthChanged = newWidth != oldWidth;
+            boolean heightChanged = newHeight != oldHeight;
+
+            // Maintain a 2:1 aspect ratio between width and height
+            if (widthChanged && heightChanged) {
+                // If both dimensions are changed, calculate the change ratios
+                double widthChangeRatio = (double) newWidth / oldWidth;
+                double heightChangeRatio = (double) newHeight / oldHeight;
+
+                // Adjust the dimension based on the larger change ratio
+                if (widthChangeRatio > heightChangeRatio) {
+                    newHeight = newWidth / 2;
+                } else {
+                    newWidth = newHeight * 2;
+                }
+            } else if (heightChanged) {
+                // If only the height has changed
+                newWidth = newHeight * 2;
+            } else if (widthChanged) {
+                // If only the width has changed
+                newHeight = newWidth / 2;
+            }
+
+            updateCityModel(newWidth, newHeight);
+            updateMapPanel();
+            windowView.updateFrame(newWidth, newHeight);
         }
     }
 }

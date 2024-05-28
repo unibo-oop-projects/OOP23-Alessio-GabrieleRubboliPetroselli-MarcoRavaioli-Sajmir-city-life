@@ -72,52 +72,12 @@ public interface MapModel {
     void setTransportCongestion(List<TransportLine> lines);
 
     /**
-     * Sets the last clicked coordinates after normalization.
-     *
-     * @param x The x-coordinate of the click.
-     * @param y The y-coordinate of the click.
-     */
-    void setLastClickedCoordinates(int x, int y);
-
-    /**
      * Sets the maximum coordinates of the map.
      *
      * @param x The maximum x-coordinate.
      * @param y The maximum y-coordinate.
      */
     void setMaxCoordinates(int x, int y);
-
-    /**
-     * Normalizes a coordinate based on the maximum value.
-     *
-     * @param c The coordinate to normalize.
-     * @param max The maximum value of the coordinate.
-     * @return The normalized coordinate.
-     */
-    int normalizeCoordinate(int c, int max);
-
-    /**
-     * Denormalizes a coordinate based on the maximum value.
-     *
-     * @param c The coordinate to denormalize.
-     * @param max The maximum value of the coordinate.
-     * @return The denormalized coordinate.
-     */
-    int denormalizeCoordinate(int c, int max);
-
-    /**
-     * Gets the normalized x-coordinate of the last click.
-     *
-     * @return The normalized x-coordinate.
-     */
-    int getNormX();
-
-    /**
-     * Gets the normalized y-coordinate of the last click.
-     *
-     * @return The normalized y-coordinate.
-     */
-    int getNormY();
 
     /**
      * Gets the maximum x-coordinate of the map.

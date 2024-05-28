@@ -23,7 +23,6 @@ import unibo.citysimulation.utilities.Pair;
 public class MapModelImpl implements MapModel {
     private static final int PERCENT_50 = 50;
     private static final int COLOR_MAX = 255;
-    private static final int GREEN_BASE = 128;
 
     private final MapImageLoader imageLoader;
     private final MapCoordinateHandler coordinateHandler;
@@ -73,9 +72,8 @@ public class MapModelImpl implements MapModel {
         for (int i = 0; i < businesses.size(); i++) {
             Business business = businesses.get(i);
     
-            int denormalizedX = denormalizeCoordinate(business.getPosition().getFirst(), maxX);
-            int denormalizedY = denormalizeCoordinate(business.getPosition().getSecond(), maxY);
-            businessInfoMap.put(i, new Pair<>(denormalizedX, denormalizedY));
+            Pair<Integer, Integer> denormalizedPosition = denormalizePosition(business.getPosition(), maxX, maxY);
+            businessInfoMap.put(i, denormalizedPosition);
     
             totalEmployees += business.getEmployees().size();
             totalMaxEmployees += business.getMaxEmployees();
@@ -103,8 +101,7 @@ public class MapModelImpl implements MapModel {
                 .collect(Collectors.toMap(
                         person -> person.getPersonData().name(),
                         person -> new Pair<>(
-                                new Pair<>(denormalizeCoordinate(person.getPosition().get().getFirst(), maxX),
-                                        denormalizeCoordinate(person.getPosition().get().getSecond(), maxY)),
+                                denormalizePosition(person.getPosition().get(), maxX, maxY),
                                 getPersonColor(person))));
     }
 
@@ -141,15 +138,14 @@ public class MapModelImpl implements MapModel {
             return Color.GRAY;
         }
         if (perc <= PERCENT_50) {
-            int green = (int) (GREEN_BASE + ((GREEN_BASE - 1) * perc / PERCENT_50));
-            green = Math.max(0, Math.min(COLOR_MAX, green));
+            // Green component decreases from 255 to 0 as percentage increases from 0 to 50
+            int green = (int) (COLOR_MAX - (perc / PERCENT_50) * COLOR_MAX);
             return new Color(0, green, 0);
         } else {
-            final double adjustedPerc = (perc - PERCENT_50) / PERCENT_50;
-            int red = (int) (COLOR_MAX * adjustedPerc);
-            int green = (int) (COLOR_MAX * (1 - adjustedPerc));
-            red = Math.max(0, Math.min(COLOR_MAX, red)); // Ensure red is within the range
-            green = Math.max(0, Math.min(COLOR_MAX, green));
+            // Red component increases from 0 to 255 and green component decreases from 255 to 0 as percentage increases from 50 to 100
+            double adjustedPerc = (perc - PERCENT_50) / PERCENT_50;
+            int red = (int) (adjustedPerc * COLOR_MAX);
+            int green = (int) ((1 - adjustedPerc) * COLOR_MAX);
             return new Color(red, green, 0);
         }
     }
@@ -161,13 +157,13 @@ public class MapModelImpl implements MapModel {
      */
     @Override
     public List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> getLinesPointsCoordinates() {
+        final int maxX = coordinateHandler.getMaxX();
+        final int maxY = coordinateHandler.getMaxY();
         return transportManager.getLinesPointsCoordinates().stream()
-        .map(pair -> new Pair<>(
-                new Pair<>(denormalizeCoordinate(pair.getFirst().getFirst(), coordinateHandler.getMaxX()),
-                        denormalizeCoordinate(pair.getFirst().getSecond(), coordinateHandler.getMaxY())),
-                new Pair<>(denormalizeCoordinate(pair.getSecond().getFirst(), coordinateHandler.getMaxX()),
-                        denormalizeCoordinate(pair.getSecond().getSecond(), coordinateHandler.getMaxY()))))
-        .collect(Collectors.toList());
+                .map(pair -> new Pair<>(
+                        denormalizePosition(pair.getFirst(), maxX, maxY),
+                        denormalizePosition(pair.getSecond(), maxX, maxY)))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -191,17 +187,6 @@ public class MapModelImpl implements MapModel {
     }
 
     /**
-     * Sets the last clicked coordinates.
-     *
-     * @param x the x-coordinate
-     * @param y the y-coordinate
-     */
-    @Override
-    public void setLastClickedCoordinates(final int x, final int y) {
-        coordinateHandler.setLastClickedCoordinates(x, y);    
-    }
-
-    /**
      * Sets the maximum coordinates.
      *
      * @param x the maximum x-coordinate
@@ -212,48 +197,14 @@ public class MapModelImpl implements MapModel {
         coordinateHandler.setMaxCoordinates(x, y);
     }
 
-    /**
-     * Normalizes the given coordinate based on the maximum value.
-     *
-     * @param c the coordinate to normalize
-     * @param max the maximum value for normalization
-     * @return the normalized coordinate
-     */
-    @Override
-    public int normalizeCoordinate(final int c, final int max) {
-        return coordinateHandler.normalizeCoordinate(c, max);
-    }
-
-    /**
-     * Denormalizes the given coordinate based on the maximum value.
-     *
-     * @param c the coordinate to denormalize
-     * @param max the maximum value for denormalization
-     * @return the denormalized coordinate
-     */
-    @Override
-    public int denormalizeCoordinate(final int c, final int max) {
+    private int denormalizeCoordinate(final int c, final int max) {
         return coordinateHandler.denormalizeCoordinate(c, max);
     }
 
-    /**
-     * Gets the normalized x-coordinate.
-     *
-     * @return the normalized x-coordinate
-     */
-    @Override
-    public int getNormX() {
-        return coordinateHandler.getNormX();
-    }
-
-    /**
-     * Gets the normalized y-coordinate.
-     *
-     * @return the normalized y-coordinate
-     */
-    @Override
-    public int getNormY() {
-        return coordinateHandler.getNormY();
+    private Pair<Integer, Integer> denormalizePosition(final Pair<Integer, Integer> position, final int maxX, final int maxY) {
+        return new Pair<>(
+                denormalizeCoordinate(position.getFirst(), maxX),
+                denormalizeCoordinate(position.getSecond(), maxY));
     }
 
     /**
