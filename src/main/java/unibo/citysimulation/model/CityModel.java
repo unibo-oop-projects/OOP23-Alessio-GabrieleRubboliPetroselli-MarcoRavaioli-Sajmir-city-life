@@ -4,7 +4,6 @@
  */
 package unibo.citysimulation.model;
 
-import unibo.citysimulation.model.business.employye.impl.Employee;
 import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactory;
@@ -158,9 +157,9 @@ public final class CityModel {
     }
 
     /**
-     * Calculates the total number of businesses in the city based on the given number of people.
-     *
-     * @param numberOfPeople the total number of people in the city
+     * Calculates the total number of businesses in the city model.
+     * @param numberOfPeople
+     * @param numberOfBusinesses
      */
     public void calculateTotalBusinesses(final int numberOfPeople, final int numberOfBusinesses) {
         this.totalBusinesses = numberOfPeople / 10 + numberOfBusinesses;
@@ -174,10 +173,15 @@ public final class CityModel {
     public int getTotalBusinesses() {
         return this.totalBusinesses;
     }
-    public double avaragePayZone(final Zone zone){
+    /**
+     * Returns the number of people in the city model.
+     * @param zone
+     * @return
+     */
+    public double avaragePayZone(final Zone zone) {
         double avarage = 0;
-        for(final Business business : businesses){
-            if(business.getZone().name().equals(zone.name())){
+        for (final Business business : businesses) {
+            if (business.getZone().name().equals(zone.name())) {
                 avarage += business.getEmployees().size() * business.calculatePay();
             }
         }

@@ -21,7 +21,11 @@ public final class InfoPanel extends StyledPanel {
     private final JLabel numberOfBusiness;
     private final JLabel numberOfAvaregePay;
     private final JLabel numberDirectLines;
-
+    private static final int COORDINATES_LABEL_GRID_Y = 1;
+    private static final int NUMBER_OF_PEOPLE_LABEL_GRID_Y = 2;
+    private static final int NUMBER_OF_BUSINESS_LABEL_GRID_Y = 3;
+    private static final int NUMBER_OF_AVAREGE_PAY_LABEL_GRID_Y = 4;
+    private static final int NUMBER_OF_DIRECT_LINES_LABEL_GRID_Y = 5;
     /**
      * Constructs an InfoPanel with the specified background color.
      *
@@ -29,17 +33,14 @@ public final class InfoPanel extends StyledPanel {
      */
     public InfoPanel(final Color bgColor) {
         super(bgColor);
-
         // Set the layout manager to GridBagLayout
         setLayout(new GridBagLayout());
         final GridBagConstraints gbc = new GridBagConstraints();
-
         // Create a JLabel with the desired text
         zoneNJLabel = new JLabel("Zone:", SwingConstants.CENTER); // Align the text to the center
         zoneNJLabel.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.INFO_PANEL_FONT_SIZE));
         //set color of the text
         zoneNJLabel.setForeground(Color.RED);
-
         // Add the JLabel to the panel
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -48,19 +49,19 @@ public final class InfoPanel extends StyledPanel {
         gbc.fill = GridBagConstraints.BOTH;
         add(zoneNJLabel, gbc);
         coordinates = new JLabel("Coordinates: ");
-        gbc.gridy = 1;
+        gbc.gridy = COORDINATES_LABEL_GRID_Y;
         add(coordinates, gbc);
         numberOfPeople = new JLabel("Number of People: ");
-        gbc.gridy = 2;
+        gbc.gridy = NUMBER_OF_PEOPLE_LABEL_GRID_Y;
         add(numberOfPeople, gbc);
         numberOfBusiness = new JLabel("Number of Business: ");
-        gbc.gridy = 3;
+        gbc.gridy = NUMBER_OF_BUSINESS_LABEL_GRID_Y;
         add(numberOfBusiness, gbc);
         numberOfAvaregePay = new JLabel("Avarage Pay: ");
-        gbc.gridy = 4;
+        gbc.gridy = NUMBER_OF_AVAREGE_PAY_LABEL_GRID_Y;
         add(numberOfAvaregePay, gbc);
         numberDirectLines = new JLabel("Number of Direct Lines: ");
-        gbc.gridy = 5;
+        gbc.gridy = NUMBER_OF_DIRECT_LINES_LABEL_GRID_Y;
         add(numberDirectLines, gbc);
     }
     /**
@@ -99,6 +100,7 @@ public final class InfoPanel extends StyledPanel {
     }
     /**
      * Updates the avarage pay displayed on the panel.
+     * @param avaragePay The avarage pay.
      */
     public void updateAvaragePay(final double avaragePay) {
         numberOfAvaregePay.setText(String.format("Average Pay: %.2f", avaragePay));
