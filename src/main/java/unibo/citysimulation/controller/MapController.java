@@ -3,11 +3,13 @@ package unibo.citysimulation.controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalTime;
+import java.util.Optional;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 
@@ -69,33 +71,19 @@ public class MapController implements ClockObserver {
     }
 
     private void updateZoneInfo(final int x, final int y) {
-        final String zoneName = getZoneNameAtCoordinates(x, y);
+        final Optional<Zone> selectedZone = cityModel.getZoneByPosition(new Pair<>(x, y));
+        final String zoneName = selectedZone.isPresent() ? selectedZone.get().name() : "";
 
         infoPanel.updatePositionInfo(x, y);
-        infoPanel.updateZoneName(zoneName);
-        cityModel.getPeopleInZone(zoneName)
-                .ifPresentOrElse(
-                        peopleCount -> infoPanel.updateNumberOfPeople(peopleCount),
-                        () -> infoPanel.updateNumberOfPeople(0));
-        infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
-    }
-
-    private String getZoneNameAtCoordinates(final int x, final int y) {
-        return cityModel.getZones().stream()
-                .filter(zone -> zone.boundary().isInside(x, y))
-                .findFirst().map(Zone::name).orElse("");
-    infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
-    infoPanel.updateZoneName(zoneName);
-    infoPanel.updateNumberOfPeople(cityModel.getPeopleInZone(zoneName));
-    infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
-    Zone selectedZone = cityModel.getZones().stream()
-                .filter(zone -> zone.name().equals(zoneName))
-                .findAny().orElse(null);
-    if (selectedZone != null) {
-        double averagePay = cityModel.avaragePayZone(selectedZone);
-        infoPanel.updateAvaragePay(averagePay);
-        int directLines = cityModel.getNumberOfDirectLinesFromZone(selectedZone);
-        infoPanel.updateNumberOfDirectLines(directLines);
+        if (selectedZone.isPresent()) {
+            infoPanel.updateZoneName(zoneName);
+            cityModel.getPeopleInZone(zoneName)
+                    .ifPresentOrElse(
+                            peopleCount -> infoPanel.updateNumberOfPeople(peopleCount),
+                            () -> infoPanel.updateNumberOfPeople(0));
+            infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
+            infoPanel.updateAvaragePay(cityModel.avaragePayZone(selectedZone.get()));
+            infoPanel.updateNumberOfDirectLines(cityModel.getNumberOfDirectLinesFromZone(selectedZone.get()));
         }
     }
 
