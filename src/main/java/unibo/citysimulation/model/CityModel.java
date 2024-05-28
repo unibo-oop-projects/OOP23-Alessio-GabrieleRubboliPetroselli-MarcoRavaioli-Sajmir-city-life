@@ -4,6 +4,7 @@
  */
 package unibo.citysimulation.model;
 
+import unibo.citysimulation.model.business.employye.impl.Employee;
 import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactory;
@@ -112,8 +113,10 @@ public final class CityModel {
         // Create zone table
         ZoneTableCreation.createAndAddPairs(zones, transports);
         final int numberOfPeople = getInputModel().getNumberOfPeople();
-        calculateTotalBusinesses(numberOfPeople);
-        // Create businesses
+
+        final int numberOfBusinesses = inputModel.getNumberOfBusiness();
+        calculateTotalBusinesses(numberOfPeople, numberOfBusinesses);
+
         createBusinesses();
 
         // Create people
@@ -142,16 +145,12 @@ public final class CityModel {
             final int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
             remainingBusinesses -= zoneBusinessCount;
             for (int i = 0; i < zoneBusinessCount; i++) {
-                BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(business -> {
-                    businesses.add(business);
-                });
+                BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(businesses::add);
             }
         }
         for (int i = 0; remainingBusinesses > 0 && i < zones.size(); i++) {
             final Zone zone = zones.get(i);
-            BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(business -> {
-                businesses.add(business);
-            });
+            BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(businesses::add);
             remainingBusinesses--;
         }
     }
@@ -161,8 +160,8 @@ public final class CityModel {
      *
      * @param numberOfPeople the total number of people in the city
      */
-    public void calculateTotalBusinesses(final int numberOfPeople) {
-        this.totalBusinesses = numberOfPeople / 10;
+    public void calculateTotalBusinesses(final int numberOfPeople, final int numberOfBusinesses) {
+        this.totalBusinesses = numberOfPeople / 10 + numberOfBusinesses;
     }
 
     /**
@@ -172,6 +171,22 @@ public final class CityModel {
      */
     public int getTotalBusinesses() {
         return this.totalBusinesses;
+    }
+
+    public double avaragePayZone(final Zone zone){
+        double avarage = 0;
+        for (final Zone z : zones){
+            if(z.name().equals(zone.name())){
+            for(final Business business : businesses){
+                if(business.getZone().name().equals(zone.name())){
+                    avarage += business.getEmployees().size() * business.calculatePay();
+                }
+            }
+            } else {
+                avarage = 0;
+            }
+        }
+        return avarage;
     }
 
     /**
