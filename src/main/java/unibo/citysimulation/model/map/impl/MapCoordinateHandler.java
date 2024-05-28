@@ -24,6 +24,7 @@ public class MapCoordinateHandler {
     public void setMaxCoordinates(final int x, final int y) {
         maxX = x;
         maxY = y;
+        System.out.println("MapCoordinates Max setted to " + maxX + " x " + maxY);
     }
 
     /**

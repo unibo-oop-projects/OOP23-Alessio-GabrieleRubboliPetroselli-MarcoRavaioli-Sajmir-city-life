@@ -80,20 +80,6 @@ public interface MapModel {
     void setMaxCoordinates(int x, int y);
 
     /**
-     * Gets the maximum x-coordinate of the map.
-     *
-     * @return The maximum x-coordinate.
-     */
-    int getMaxX();
-
-    /**
-     * Gets the maximum y-coordinate of the map.
-     *
-     * @return The maximum y-coordinate.
-     */
-    int getMaxY();
-
-    /**
      * Retrieves the image of the map.
      *
      * @return The BufferedImage object representing the map image.

@@ -1,7 +1,6 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 
 import java.awt.event.ComponentAdapter;
@@ -37,25 +36,6 @@ public class WindowController {
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
     }
 
-    private void updateCityModel(final int newWidth, final int newHeight) {
-        cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(),
-                windowView.getMapPanel().getHeight());
-        cityModel.getMapModel().setTransportInfo(cityModel.getTransportLines());
-        cityModel.setFrameSize(new Pair<>(newWidth, newHeight));
-    }
-
-    private void updateMapPanel() {
-        final var mapModel = cityModel.getMapModel();
-        final var mapPanel = windowView.getMapPanel();
-
-        mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
-
-        if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()) {
-            mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
-                    mapModel.getBusinessInfos(cityModel.getBusinesses()));
-        }
-    }
-
     /**
      * Inner class responsible for handling component resize events.
      */
@@ -64,32 +44,17 @@ public class WindowController {
         public void componentResized(final ComponentEvent e) {
             int newWidth = e.getComponent().getWidth();
             int newHeight = e.getComponent().getHeight();
-            final int oldWidth = cityModel.getFrameWidth();
-            final int oldHeight = cityModel.getFrameHeight();
+            cityModel.setScreenSize(newWidth, newHeight);
 
-            final boolean widthChanged = newWidth != oldWidth;
-            final boolean heightChanged = newHeight != oldHeight;
+            final var mapModel = cityModel.getMapModel();
+            final var mapPanel = windowView.getMapPanel();
 
-            // Maintain a 2:1 aspect ratio between width and height
-            if (widthChanged && heightChanged) {
-                // If both dimensions are changed, calculate the change ratios
-                // Adjust the dimension based on the larger change ratio
-                if ((double) newWidth / oldWidth > (double) newHeight / oldHeight) {
-                    newHeight = newWidth / 2;
-                } else {
-                    newWidth = newHeight * 2;
-                }
-            } else if (heightChanged) {
-                // If only the height has changed
-                newWidth = newHeight * 2;
-            } else if (widthChanged) {
-                // If only the width has changed
-                newHeight = newWidth / 2;
+            mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
+            if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()) {
+                mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
+                        mapModel.getBusinessInfos(cityModel.getBusinesses()));
             }
-
-            updateCityModel(newWidth, newHeight);
-            updateMapPanel();
-            windowView.updateFrame(newWidth, newHeight);
+            windowView.updateFrame(cityModel.getFrameWidth(), cityModel.getFrameHeight());
         }
     }
 }

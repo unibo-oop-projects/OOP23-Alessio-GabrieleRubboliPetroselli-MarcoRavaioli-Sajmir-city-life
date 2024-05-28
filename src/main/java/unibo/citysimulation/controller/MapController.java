@@ -58,33 +58,39 @@ public class MapController implements ClockObserver {
     }
 
     private void handleMouseClick(final MouseEvent e) {
-        final int x = normalizeCoordinate(e.getX(), mapModel.getMaxX());
-        final int y = normalizeCoordinate(e.getY(), mapModel.getMaxY());
+        final int x = (int) ((double) e.getX() / mapPanel.getWidth() * 1000);
+        final int y = (int) ((double) e.getY() / mapPanel.getHeight() * 1000);
 
         updateZoneInfo(x, y);
 
-        mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
-    }
-
-    private int normalizeCoordinate(final int c, final int max) {
-        return (int) (c / (double) max * 1000);
+        System.out.println("mapController.handleMouseClick.cityModel.getFrameWidth: " + cityModel.getFrameWidth() / 2);
+        mapModel.setMaxCoordinates((int) cityModel.getFrameWidth() / 2, (int) cityModel.getFrameHeight());
     }
 
     private void updateZoneInfo(final int x, final int y) {
         final Optional<Zone> selectedZone = cityModel.getZoneByPosition(new Pair<>(x, y));
-        final String zoneName = selectedZone.isPresent() ? selectedZone.get().name() : "";
+        selectedZone.ifPresentOrElse(zone -> updateInfoPanelWithZone(zone, x, y), () -> clearInfoPanel(x, y));
+    }
 
+    private void updateInfoPanelWithZone(final Zone zone, final int x, final int y) {
         infoPanel.updatePositionInfo(x, y);
-        if (selectedZone.isPresent()) {
-            infoPanel.updateZoneName(zoneName);
-            cityModel.getPeopleInZone(zoneName)
-                    .ifPresentOrElse(
-                            peopleCount -> infoPanel.updateNumberOfPeople(peopleCount),
-                            () -> infoPanel.updateNumberOfPeople(0));
-            infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
-            infoPanel.updateAvaragePay(cityModel.avaragePayZone(selectedZone.get()));
-            infoPanel.updateNumberOfDirectLines(cityModel.getNumberOfDirectLinesFromZone(selectedZone.get()));
-        }
+        infoPanel.updateZoneName(zone.name());
+        cityModel.getPeopleInZone(zone.name()).ifPresentOrElse(
+            infoPanel::updateNumberOfPeople,
+            () -> infoPanel.updateNumberOfPeople(0)
+        );
+        infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zone.name()));
+        infoPanel.updateAvaragePay(cityModel.avaragePayZone(zone));
+        infoPanel.updateNumberOfDirectLines(cityModel.getNumberOfDirectLinesFromZone(zone));
+    }
+
+    private void clearInfoPanel(final int x, final int y) {
+        infoPanel.updatePositionInfo(x, y);
+        infoPanel.updateZoneName("");
+        infoPanel.updateNumberOfPeople(0);
+        infoPanel.updateNumberOfBusiness(0);
+        infoPanel.updateAvaragePay(0);
+        infoPanel.updateNumberOfDirectLines(0);
     }
 
     /**

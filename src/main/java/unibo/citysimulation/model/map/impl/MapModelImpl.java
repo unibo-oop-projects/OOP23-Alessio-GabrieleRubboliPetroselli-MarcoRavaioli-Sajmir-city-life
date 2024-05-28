@@ -195,26 +195,6 @@ public class MapModelImpl implements MapModel {
     }
 
     /**
-     * Gets the maximum x-coordinate.
-     *
-     * @return the maximum x-coordinate
-     */
-    @Override
-    public int getMaxX() {
-        return coordinateHandler.getMaxX();
-    }
-
-    /**
-     * Gets the maximum y-coordinate.
-     *
-     * @return the maximum y-coordinate
-     */
-    @Override
-    public int getMaxY() {
-        return coordinateHandler.getMaxY();
-    }
-
-    /**
      * Gets the image of the map.
      *
      * @return the map image

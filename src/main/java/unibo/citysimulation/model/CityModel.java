@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
-import java.util.Random;
 
 /**
  * Represents the model of the city simulation, containing zones, transports,
@@ -48,7 +47,6 @@ public final class CityModel {
     private final EmployymentOffice employymentOffice;
     private int frameWidth;
     private int frameHeight;
-    private static final Random RANDOM = new Random();
     private int totalBusinesses;
 
     /**
@@ -65,16 +63,6 @@ public final class CityModel {
         this.transports = TransportCreation.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
         this.employymentOffice = new EmployymentOffice();
-    }
-
-    /**
-     * @return a random zone from the list of zones.
-     */
-    public Zone getRandomZone() {
-        if (zones.isEmpty()) {
-            throw new IllegalStateException("No zones available.");
-        }
-        return zones.get(RANDOM.nextInt(zones.size()));
     }
 
     /**
@@ -135,9 +123,12 @@ public final class CityModel {
     }
 
     /**
-     * Creates businesses in the city model based on the zones and their business percentages.
-     * The total number of businesses is distributed among the zones according to their business percentages.
-     * If there are remaining businesses after distributing among the zones, they are randomly assigned to the zones.
+     * Creates businesses in the city model based on the zones and their business
+     * percentages.
+     * The total number of businesses is distributed among the zones according to
+     * their business percentages.
+     * If there are remaining businesses after distributing among the zones, they
+     * are randomly assigned to the zones.
      */
     public void createBusinesses() {
         int remainingBusinesses = totalBusinesses;
@@ -158,6 +149,7 @@ public final class CityModel {
 
     /**
      * Calculates the total number of businesses in the city model.
+     * 
      * @param numberOfPeople
      * @param numberOfBusinesses
      */
@@ -173,8 +165,10 @@ public final class CityModel {
     public int getTotalBusinesses() {
         return this.totalBusinesses;
     }
+
     /**
      * Returns the number of people in the city model.
+     * 
      * @param zone
      * @return
      */
@@ -187,6 +181,7 @@ public final class CityModel {
         }
         return avarage;
     }
+
     /**
      * Returns the number of direct lines from a zone.
      *
@@ -202,9 +197,10 @@ public final class CityModel {
         }
         return numberOfDirectLines;
     }
+
     /**
- * Adjusts the frame size based on the screen dimensions.
- */
+     * Adjusts the frame size based on the screen dimensions.
+     */
     public void takeFrameSize() {
         // Get the screen size
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -217,6 +213,32 @@ public final class CityModel {
 
         this.frameHeight = frameHeight;
         this.frameWidth = frameWidth;
+    }
+
+    public void setScreenSize(int newWidth, int newHeight) {
+        final int oldWidth = frameWidth;
+        final int oldHeight = frameHeight;
+        boolean widthChanged = newWidth != oldWidth;
+        boolean heightChanged = newHeight != oldHeight;
+
+        if (widthChanged && heightChanged) {
+            if ((double) newWidth / oldWidth > (double) newHeight / oldHeight) {
+                newHeight = newWidth / 2;
+            } else {
+                newWidth = newHeight * 2;
+            }
+        } else if (heightChanged) {
+            newWidth = newHeight * 2;
+        } else if (widthChanged) {
+            newHeight = newWidth / 2;
+        }
+
+        frameWidth = newWidth;
+        frameHeight = newHeight;
+
+        mapModel.setMaxCoordinates(newWidth / 2, newWidth / 2);
+        mapModel.setTransportInfo(transports);
+        System.out.println("screenSize setted and passed to mapModel.setMaxCoordinates");
     }
 
     /**
@@ -290,10 +312,10 @@ public final class CityModel {
     }
 
     /**
- * Checks if people are present in the city model.
- *
- * @return True if people are present, false otherwise.
- */
+     * Checks if people are present in the city model.
+     *
+     * @return True if people are present, false otherwise.
+     */
     public boolean isPeoplePresent() {
         return this.people != null;
     }
@@ -308,38 +330,30 @@ public final class CityModel {
     }
 
     /**
- * Sets the frame size for the city model.
- *
- * @param frameSize A pair containing the width and height of the frame.
- */
-    public void setFrameSize(final Pair<Integer, Integer> frameSize) {
-        this.frameWidth = frameSize.getFirst();
-        this.frameHeight = frameSize.getSecond();
-    }
-
-    /**
- * Gets the frame width of the city model.
- *
- * @return The frame width.
- */
+     * Gets the frame width of the city model.
+     *
+     * @return The frame width.
+     */
     public int getFrameWidth() {
+        System.out.println("cityModel.getFrameWidth: " + this.frameWidth);
         return this.frameWidth;
     }
 
     /**
- * Gets the frame height of the city model.
- *
- * @return The frame height.
- */
+     * Gets the frame height of the city model.
+     *
+     * @return The frame height.
+     */
     public int getFrameHeight() {
         return this.frameHeight;
     }
 
-/**
+    /**
      * Gets the number of people residing in a specific zone.
      *
      * @param zoneName The name of the zone.
-     * @return An Optional containing the number of people residing in the specified zone,
+     * @return An Optional containing the number of people residing in the specified
+     *         zone,
      *         or an empty Optional if people is null.
      */
     public Optional<Integer> getPeopleInZone(final String zoneName) {
@@ -352,11 +366,11 @@ public final class CityModel {
     }
 
     /**
- * Gets the number of businesses in a specific zone.
- *
- * @param zoneName The name of the zone.
- * @return The number of businesses in the specified zone.
- */
+     * Gets the number of businesses in a specific zone.
+     *
+     * @param zoneName The name of the zone.
+     * @return The number of businesses in the specified zone.
+     */
     public int getBusinessesInZone(final String zoneName) {
         return (int) businesses.stream()
                 .filter(b -> b.getZone().name().equals(zoneName))
