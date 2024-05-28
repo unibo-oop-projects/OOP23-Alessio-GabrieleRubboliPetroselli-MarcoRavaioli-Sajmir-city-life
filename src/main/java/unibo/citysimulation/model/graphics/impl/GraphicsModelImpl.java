@@ -14,7 +14,7 @@ import unibo.citysimulation.model.transport.TransportLine;
  * Manages datasets for graphical representation of various simulation data.
  */
 public class GraphicsModelImpl implements GraphicsModel {
-    private DatasetManager datasetManager;
+    private final DatasetManager datasetManager;
     private final List<String> names = Arrays.asList("Person State", "Transport Congestion", "Business Occupation");
     private final List<Integer> seriesCount = List.of(3, 7, 1);
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
@@ -30,6 +30,7 @@ public class GraphicsModelImpl implements GraphicsModel {
     /**
      * Clears all datasets.
      */
+    @Override
     public void clearDatasets() {
         datasetManager.clearDatasets();
     }
@@ -42,6 +43,7 @@ public class GraphicsModelImpl implements GraphicsModel {
      *                   transportation network.
      * @param businesses List of business objects representing the businesses.
      */
+    @Override
     public void updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
             final List<Business> businesses) {
         datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
@@ -54,6 +56,7 @@ public class GraphicsModelImpl implements GraphicsModel {
      *
      * @return The list of XYSeriesCollection datasets.
      */
+    @Override
     public List<XYSeriesCollection> getDatasets() {
         return datasetManager.getDatasets();
     }
@@ -63,6 +66,7 @@ public class GraphicsModelImpl implements GraphicsModel {
      *
      * @return the number of columns
      */
+    @Override
     public List<String> getNames() {
         return names;
     }
@@ -72,6 +76,7 @@ public class GraphicsModelImpl implements GraphicsModel {
      *
      * @return the list of colors
      */
+    @Override
     public List<Color> getColors() {
         return colors;
     }

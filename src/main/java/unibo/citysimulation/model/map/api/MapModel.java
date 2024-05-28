@@ -33,7 +33,7 @@ public interface MapModel {
      * @param businesses The list of businesses.
      * @return A map where the key is the index of the business in the list and the value is the pair of denormalized coordinates.
      */
-    Map<Integer, Pair<Integer, Integer>> getBusinessInfos(List<Business> businesses);
+    List<Pair<Integer, Integer>> getBusinessInfos(List<Business> businesses);
 
     /**
      * Retrieves information about dynamic people.

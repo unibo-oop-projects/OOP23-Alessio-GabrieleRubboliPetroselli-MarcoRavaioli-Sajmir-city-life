@@ -9,11 +9,20 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
+/**
+ * Manages the datasets used for graphical representation in the city simulation.
+ */
 public class DatasetManager {
     private List<XYSeriesCollection> datasets;
     private int counter;
     private int columnCount;
 
+    /**
+     * Constructs a DatasetManager and initializes the datasets.
+     *
+     * @param seriesCount a list of integers representing the number of series for each dataset
+     * @param names       a list of strings representing the names of each dataset
+     */
     public DatasetManager(final List<Integer> seriesCount, final List<String> names) {
         counter = 0;
         columnCount = 0;
@@ -53,13 +62,12 @@ public class DatasetManager {
     }
 
     /**
-     * Updates the datasets with new values.
-     *
-     * @param people     List of dynamic person objects representing the population.
-     * @param lines      List of transport line objects representing the
-     *                   transportation network.
-     * @param businesses List of business objects representing the businesses.
-     */
+ * Updates the datasets with new values.
+ *
+ * @param peopleState          List of integers representing the state counts of people.
+ * @param linesCongestion      List of doubles representing the congestion levels of transport lines.
+ * @param businessesOccupation List of integers representing the occupation levels of businesses.
+ */
     public void updateDataset(final List<Integer> peopleState, final List<Double> linesCongestion,
             final List<Integer> businessesOccupation) {
         counter++;

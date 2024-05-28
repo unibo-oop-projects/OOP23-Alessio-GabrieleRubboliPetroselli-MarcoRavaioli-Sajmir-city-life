@@ -64,20 +64,17 @@ public class WindowController {
         public void componentResized(final ComponentEvent e) {
             int newWidth = e.getComponent().getWidth();
             int newHeight = e.getComponent().getHeight();
-            int oldWidth = cityModel.getFrameWidth();
-            int oldHeight = cityModel.getFrameHeight();
+            final int oldWidth = cityModel.getFrameWidth();
+            final int oldHeight = cityModel.getFrameHeight();
 
-            boolean widthChanged = newWidth != oldWidth;
-            boolean heightChanged = newHeight != oldHeight;
+            final boolean widthChanged = newWidth != oldWidth;
+            final boolean heightChanged = newHeight != oldHeight;
 
             // Maintain a 2:1 aspect ratio between width and height
             if (widthChanged && heightChanged) {
                 // If both dimensions are changed, calculate the change ratios
-                double widthChangeRatio = (double) newWidth / oldWidth;
-                double heightChangeRatio = (double) newHeight / oldHeight;
-
                 // Adjust the dimension based on the larger change ratio
-                if (widthChangeRatio > heightChangeRatio) {
+                if ((double) newWidth / oldWidth > (double) newHeight / oldHeight) {
                     newHeight = newWidth / 2;
                 } else {
                     newWidth = newHeight * 2;

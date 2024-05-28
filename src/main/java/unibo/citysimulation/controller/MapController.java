@@ -96,7 +96,6 @@ public class MapController implements ClockObserver {
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
 
         mapModel.setTransportCongestion(cityModel.getTransportLines());
-
         mapPanel.setLinesColor(mapModel.getColorList());
         mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
                 mapModel.getBusinessInfos(cityModel.getBusinesses()));

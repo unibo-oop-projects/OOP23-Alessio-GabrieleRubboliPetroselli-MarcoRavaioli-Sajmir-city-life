@@ -2,13 +2,11 @@ package unibo.citysimulation.model.map.impl;
 
 import java.awt.image.BufferedImage;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.awt.Color;
 import java.util.Map;
 import java.util.Collections;
-import java.util.HashMap;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.map.api.MapModel;
@@ -62,32 +60,18 @@ public class MapModelImpl implements MapModel {
      * @return a map of business indices to their coordinates
      */
     @Override
-    public Map<Integer, Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
+    public List<Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
         final int maxX = coordinateHandler.getMaxX();
         final int maxY = coordinateHandler.getMaxY();
-    
-        Map<Integer, Pair<Integer, Integer>> businessInfoMap = new HashMap<>();
-        int totalEmployees = 0;
-        int totalMaxEmployees = 0;
-        for (int i = 0; i < businesses.size(); i++) {
-            Business business = businesses.get(i);
-    
-            Pair<Integer, Integer> denormalizedPosition = denormalizePosition(business.getPosition(), maxX, maxY);
-            businessInfoMap.put(i, denormalizedPosition);
-    
-            totalEmployees += business.getEmployees().size();
-            totalMaxEmployees += business.getMaxEmployees();
-            double occupancyRate = (business.getMaxEmployees() > 0) ? (double) business.getEmployees().size() / business.getMaxEmployees() : 0.0;
-        }
-    
-        double totalOccupancyRate = (totalMaxEmployees > 0) ? (double) totalEmployees / totalMaxEmployees : 0.0;
-        System.out.println("Total occupancy rate across all businesses: " + (totalOccupancyRate * 100) );
-    
-        return businessInfoMap;
+
+        return businesses.stream()
+            .map(business -> denormalizePosition(business.getPosition(), maxX, maxY))
+            .collect(Collectors.toList());
     }
 
     /**
-     * Gets the information of people, mapping each person's name to their coordinates and color.
+     * Gets the information of people, mapping each person's name to their
+     * coordinates and color.
      *
      * @param people the list of dynamic people
      * @return a map of person names to their coordinates and color
@@ -139,13 +123,14 @@ public class MapModelImpl implements MapModel {
         }
         if (perc <= PERCENT_50) {
             // Green component decreases from 255 to 0 as percentage increases from 0 to 50
-            int green = (int) (COLOR_MAX - (perc / PERCENT_50) * COLOR_MAX);
+            final int green = (int) (COLOR_MAX - (perc / PERCENT_50) * COLOR_MAX);
             return new Color(0, green, 0);
         } else {
-            // Red component increases from 0 to 255 and green component decreases from 255 to 0 as percentage increases from 50 to 100
-            double adjustedPerc = (perc - PERCENT_50) / PERCENT_50;
-            int red = (int) (adjustedPerc * COLOR_MAX);
-            int green = (int) ((1 - adjustedPerc) * COLOR_MAX);
+            // Red component increases from 0 to 255 and green component decreases from 255
+            // to 0 as percentage increases from 50 to 100
+            final double adjustedPerc = (perc - PERCENT_50) / PERCENT_50;
+            final int red = (int) (adjustedPerc * COLOR_MAX);
+            final int green = (int) ((1 - adjustedPerc) * COLOR_MAX);
             return new Color(red, green, 0);
         }
     }
@@ -173,11 +158,12 @@ public class MapModelImpl implements MapModel {
      */
     @Override
     public void setTransportInfo(final List<TransportLine> lines) {
-    transportManager.setTransportInfo(lines);
+        transportManager.setTransportInfo(lines);
     }
 
     /**
-     * Sets the transport congestion information with the given list of transport lines.
+     * Sets the transport congestion information with the given list of transport
+     * lines.
      *
      * @param lines the list of transport lines
      */
@@ -201,7 +187,8 @@ public class MapModelImpl implements MapModel {
         return coordinateHandler.denormalizeCoordinate(c, max);
     }
 
-    private Pair<Integer, Integer> denormalizePosition(final Pair<Integer, Integer> position, final int maxX, final int maxY) {
+    private Pair<Integer, Integer> denormalizePosition(final Pair<Integer, Integer> position, final int maxX,
+            final int maxY) {
         return new Pair<>(
                 denormalizeCoordinate(position.getFirst(), maxX),
                 denormalizeCoordinate(position.getSecond(), maxY));

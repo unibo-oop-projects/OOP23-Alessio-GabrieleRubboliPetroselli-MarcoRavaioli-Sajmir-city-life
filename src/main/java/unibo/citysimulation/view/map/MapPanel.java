@@ -25,7 +25,7 @@ public class MapPanel extends StyledPanel {
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
     private List<Color> congestionsColorList = Collections.emptyList();
     private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
-    private Map<Integer, Pair<Integer, Integer>> businessMap = Collections.emptyMap();
+    private List<Pair<Integer, Integer>> businessPoints = Collections.emptyList();
     private List<String> linesName = Collections.emptyList();
 
     /**
@@ -54,7 +54,7 @@ public class MapPanel extends StyledPanel {
             drawPeople(g);
         }
 
-        if (businessMap != null) {
+        if (businessPoints != null) {
             drawBusinesses(g);
         }
 
@@ -129,7 +129,7 @@ public class MapPanel extends StyledPanel {
         final Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
 
-        businessMap.forEach((name, point) -> {
+        businessPoints.forEach(point -> {
             final Color color = new Color(139, 69, 19);
             g2.setColor(color);
             g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
@@ -160,12 +160,12 @@ public class MapPanel extends StyledPanel {
      * Sets the entities to be displayed on the map.
      *
      * @param peopleMap the map of people with their coordinates and colors
-     * @param businessMap the map of businesses with their coordinates
+     * @param businessPoints the map of businesses with their coordinates
      */
     public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, 
-                final Map<Integer, Pair<Integer, Integer>> businessMap) {
+                final List<Pair<Integer, Integer>> businessPoints) {
         this.peopleMap = peopleMap;
-        this.businessMap = businessMap;
+        this.businessPoints = businessPoints;
         repaint();
     }
 
