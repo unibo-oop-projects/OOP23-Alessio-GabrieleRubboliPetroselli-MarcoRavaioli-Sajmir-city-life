@@ -61,6 +61,7 @@ public class InputController {
      */
     private void startSimulation(final ClockPanel clockPanel) {
         inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());
+        inputModel.addNumberOfBusiness(inputPanel.getBusinessSlider().getValue());
         inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
         // Create entities
         cityModel.createEntities();

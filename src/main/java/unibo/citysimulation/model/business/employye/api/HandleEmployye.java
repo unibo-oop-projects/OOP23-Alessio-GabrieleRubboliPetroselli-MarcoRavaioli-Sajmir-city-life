@@ -10,7 +10,7 @@ public interface HandleEmployye {
      * 
      * @param business The business for which to handle employee firing.
      */
-    void handleEmployeeFiring(final Business business);
+    void handleEmployeeFiring(Business business);
     /**
      * Handles the hiring of employees for the specified business.
      * Hires a minimum of 4 employees from the employment office's disoccupied people list 
@@ -18,13 +18,13 @@ public interface HandleEmployye {
      * 
      * @param business The business for which to handle employee hiring.
      */
-    void handleEmployeeHiring(final Business business);
+    void handleEmployeeHiring(Business business);
     /**
      * Handles the payment of employees for the specified business.
      * Pays each employee in the business the amount of money they are owed.
      * 
      * @param business The business for which to handle employee payment.
      */
-    void handleEmployyePay(final Business business);
+    void handleEmployyePay(Business business);
 
 }

@@ -1,6 +1,5 @@
 package unibo.citysimulation.view.sidepanels;
 
-import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
 
@@ -8,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.List;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -21,6 +19,8 @@ public final class InfoPanel extends StyledPanel {
     private final JLabel numberOfPeople;
     private final JLabel zoneNJLabel;
     private final JLabel numberOfBusiness;
+    private final JLabel numberOfAvaregePay;
+    private final JLabel numberDirectLines;
 
     /**
      * Constructs an InfoPanel with the specified background color.
@@ -37,6 +37,8 @@ public final class InfoPanel extends StyledPanel {
         // Create a JLabel with the desired text
         zoneNJLabel = new JLabel("Zone:", SwingConstants.CENTER); // Align the text to the center
         zoneNJLabel.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.INFO_PANEL_FONT_SIZE));
+        //set color of the text
+        zoneNJLabel.setForeground(Color.RED);
 
         // Add the JLabel to the panel
         gbc.gridx = 0;
@@ -54,6 +56,12 @@ public final class InfoPanel extends StyledPanel {
         numberOfBusiness = new JLabel("Number of Business: ");
         gbc.gridy = 3;
         add(numberOfBusiness, gbc);
+        numberOfAvaregePay = new JLabel("Avarage Pay: ");
+        gbc.gridy = 4;
+        add(numberOfAvaregePay, gbc);
+        numberDirectLines = new JLabel("Number of Direct Lines: ");
+        gbc.gridy = 5;
+        add(numberDirectLines, gbc);
     }
     /**
      * Updates the position information displayed on the panel.
@@ -89,4 +97,19 @@ public final class InfoPanel extends StyledPanel {
     public void updateNumberOfBusiness(final int businessNumber) {
         numberOfBusiness.setText("Number of Business: " + businessNumber);
     }
+    /**
+     * Updates the avarage pay displayed on the panel.
+     */
+    public void updateAvaragePay(final double avaragePay) {
+        numberOfAvaregePay.setText(String.format("Average Pay: %.2f", avaragePay));
+    }
+    /**
+     * Updates the number of direct lines displayed on the panel.
+     *
+     * @param directLines The number of direct lines.
+     */
+    public void updateNumberOfDirectLines(final int directLines) {
+        numberDirectLines.setText("Number of Direct Lines: " + directLines);
+    }
 }
+

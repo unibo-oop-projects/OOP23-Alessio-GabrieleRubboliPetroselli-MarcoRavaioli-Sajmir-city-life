@@ -26,6 +26,7 @@ public class InputPanel extends StyledPanel {
     private final JButton stopButton;
     private final JSlider peopleSlider;
     private final JSlider capacitySlider;
+    private final JSlider businessSlider;
     private static final int BUTTON_PANEL_GRID_Y = 5;
     private static final int FONT_SIZE = 14;
     private static final int MAJOR_TICK_SPACING = 20;
@@ -58,9 +59,11 @@ public class InputPanel extends StyledPanel {
         gbc.weighty = 0.5;
         add(peopleSlider, gbc);
         // Create and add slider for the number of businesses
-        //businessSlider = createSlider("Number of Businesses", 0, 100);
+        businessSlider = createSlider("Number of Businesses", 0, 100); // Initialize businessSlider here
+        //set zero the value of the slider
+        businessSlider.setValue(0);
         gbc.gridy = 2;
-        //add(businessSlider, gbc);
+        add(businessSlider, gbc);
         // Create and add slider for the transport line capacities
         capacitySlider = createSlider("Transports' Capacity", 0, 100);
         gbc.gridy = 3;
@@ -129,8 +132,15 @@ public class InputPanel extends StyledPanel {
     public JSlider getCapacitySlider() {
         return capacitySlider;
     }
-
-
+    /**
+     * Returns the value of the business slider.
+     *
+     * @return the value of the business slider
+     */
+    public JSlider getBusinessSlider() {
+        return businessSlider;
+    }
+    
     private JSlider createSlider(final String title, final int min, final int max) {
         final JSlider slider = new JSlider(min, max);
         final TitledBorder border = BorderFactory.createTitledBorder(title);
@@ -161,3 +171,4 @@ public class InputPanel extends StyledPanel {
         return button;
     }
 }
+    

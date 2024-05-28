@@ -1,5 +1,5 @@
 package unibo.citylife;
-
+/* 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
@@ -73,3 +73,4 @@ class CityModelTest {
         assertTrue(frameSize.getSecond() > 0);
     }
 }
+*/

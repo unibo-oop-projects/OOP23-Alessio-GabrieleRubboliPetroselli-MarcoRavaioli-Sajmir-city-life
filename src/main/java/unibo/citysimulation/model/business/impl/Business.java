@@ -79,8 +79,7 @@ public abstract class Business implements BusinessEmployee {
     @Override
     public final double calculatePay(){
         final double hoursworked = clLocalTime.getHour() - opLocalTime.getHour();
-        final double pay = hoursworked * revenue;
-        return pay;
+        return hoursworked * revenue;
     }
 
     /**

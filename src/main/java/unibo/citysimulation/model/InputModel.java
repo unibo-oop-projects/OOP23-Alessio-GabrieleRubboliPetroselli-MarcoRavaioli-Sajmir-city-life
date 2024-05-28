@@ -9,7 +9,8 @@ public class InputModel {
     private int numberOfBusiness;
     private int capacity;
     private int richness;
-     /**
+
+    /**
      * Gets the number of people.
      *
      * @return the number of people
@@ -17,6 +18,7 @@ public class InputModel {
     public int getNumberOfPeople() {
         return numberOfPeople;
     }
+
     /**
      * Sets the number of people.
      *
@@ -29,6 +31,7 @@ public class InputModel {
         this.numberOfPeople = scaledPeople + ConstantAndResourceLoader.MIN_PEOPLE;
         //System.out.println(numberOfPeople);
     }
+
     /**
      * Gets the number of businesses.
      *
@@ -37,15 +40,16 @@ public class InputModel {
     public int getNumberOfBusiness() {
         return numberOfBusiness;
     }
+
     /**
      * Sets the number of businesses.
      *
      * @param numberOfBusiness the number of businesses
      */
-    public void setNumberOfBusiness(final int numberOfBusiness) {
+    public void addNumberOfBusiness(final int numberOfBusiness) {
         this.numberOfBusiness = numberOfBusiness;
-        //System.out.println(numberOfBusiness);
     }
+
     /**
      * Gets the capacity.
      *
@@ -54,6 +58,7 @@ public class InputModel {
     public int getCapacity() {
         return capacity;
     }
+
     /**
      * Sets the capacity.
      *
@@ -61,8 +66,8 @@ public class InputModel {
      */
     public void setCapacity(final int capacity) {
         this.capacity = capacity;
-        //System.out.println(capacity);
     }
+
     /**
      * Gets the richness.
      *
@@ -71,6 +76,7 @@ public class InputModel {
     public int getRichness() {
         return richness;
     }
+
     /**
      * Sets the richness.
      *
@@ -78,6 +84,5 @@ public class InputModel {
      */
     public void setRichness(final int richness) {
         this.richness = richness;
-        //System.out.println(richness);
     }
 }
