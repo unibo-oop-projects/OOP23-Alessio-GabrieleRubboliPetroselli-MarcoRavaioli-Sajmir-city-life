@@ -32,6 +32,7 @@ public class CloclObserverBusiness implements ClockObserver {
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         for (final Business business : businesses) {
+            business.checkEmployeeDelays(currentTime);
             if (currentTime.equals(business.getOpLocalTime())) {
                 employmentManager.handleEmployeeHiring(business);
             }
@@ -39,10 +40,6 @@ public class CloclObserverBusiness implements ClockObserver {
                 employmentManager.handleEmployeeFiring(business);
                 employmentManager.handleEmployyePay(business);
             }
-        }
-
-        for (final Business business : businesses) {
-            business.checkEmployeeDelays(currentTime);
         }
     }
 }
