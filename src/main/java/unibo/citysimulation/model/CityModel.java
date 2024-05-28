@@ -175,15 +175,9 @@ public final class CityModel {
 
     public double avaragePayZone(final Zone zone){
         double avarage = 0;
-        for (final Zone z : zones){
-            if(z.name().equals(zone.name())){
-            for(final Business business : businesses){
-                if(business.getZone().name().equals(zone.name())){
-                    avarage += business.getEmployees().size() * business.calculatePay();
-                }
-            }
-            } else {
-                avarage = 0;
+        for(final Business business : businesses){
+            if(business.getZone().name().equals(zone.name())){
+                avarage += business.getEmployees().size() * business.calculatePay();
             }
         }
         return avarage;

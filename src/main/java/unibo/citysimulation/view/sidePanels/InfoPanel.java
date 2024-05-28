@@ -19,6 +19,7 @@ public final class InfoPanel extends StyledPanel {
     private final JLabel numberOfPeople;
     private final JLabel zoneNJLabel;
     private final JLabel numberOfBusiness;
+    private final JLabel numberOfAvaregePay;
 
     /**
      * Constructs an InfoPanel with the specified background color.
@@ -52,6 +53,9 @@ public final class InfoPanel extends StyledPanel {
         numberOfBusiness = new JLabel("Number of Business: ");
         gbc.gridy = 3;
         add(numberOfBusiness, gbc);
+        numberOfAvaregePay = new JLabel("Avarage Pay: ");
+        gbc.gridy = 4;
+        add(numberOfAvaregePay, gbc);
     }
     /**
      * Updates the position information displayed on the panel.
@@ -87,4 +91,11 @@ public final class InfoPanel extends StyledPanel {
     public void updateNumberOfBusiness(final int businessNumber) {
         numberOfBusiness.setText("Number of Business: " + businessNumber);
     }
+    /**
+     * Updates the avarage pay displayed on the panel.
+     */
+    public void updateAvaragePay(final double avaragePay) {
+        numberOfAvaregePay.setText(String.format("Average Pay: %.2f", avaragePay));
+    }
 }
+
