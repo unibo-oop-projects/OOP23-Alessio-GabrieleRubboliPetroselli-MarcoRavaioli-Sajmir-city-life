@@ -73,13 +73,13 @@ public class MapController implements ClockObserver {
     infoPanel.updateZoneName(zoneName);
     infoPanel.updateNumberOfPeople(cityModel.getPeopleInZone(zoneName));
     infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zoneName));
-    Zone selectedZone = cityModel.getZones().stream()
+    final Zone selectedZone = cityModel.getZones().stream()
                 .filter(zone -> zone.name().equals(zoneName))
                 .findAny().orElse(null);
     if (selectedZone != null) {
-        double averagePay = cityModel.avaragePayZone(selectedZone);
+        final double averagePay = cityModel.avaragePayZone(selectedZone);
         infoPanel.updateAvaragePay(averagePay);
-        int directLines = cityModel.getNumberOfDirectLinesFromZone(selectedZone);
+        final int directLines = cityModel.getNumberOfDirectLinesFromZone(selectedZone);
         infoPanel.updateNumberOfDirectLines(directLines);
         }
     }

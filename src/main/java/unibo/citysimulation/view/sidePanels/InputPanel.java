@@ -140,7 +140,6 @@ public class InputPanel extends StyledPanel {
     public JSlider getBusinessSlider() {
         return businessSlider;
     }
-    
     private JSlider createSlider(final String title, final int min, final int max) {
         final JSlider slider = new JSlider(min, max);
         final TitledBorder border = BorderFactory.createTitledBorder(title);
@@ -170,5 +169,4 @@ public class InputPanel extends StyledPanel {
         button.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         return button;
     }
-}
-    
+} 

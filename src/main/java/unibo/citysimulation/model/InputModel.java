@@ -25,7 +25,7 @@ public class InputModel {
      * @param numberOfPeople the number of people
      */
     public void setNumberOfPeople(final int numberOfPeople) {
-        int range = ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE;
+        final int range = ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE;
         int scaledPeople = numberOfPeople * range;
         scaledPeople = scaledPeople / 100;
         this.numberOfPeople = scaledPeople + ConstantAndResourceLoader.MIN_PEOPLE;
