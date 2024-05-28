@@ -79,6 +79,8 @@ public class MapController implements ClockObserver {
     if (selectedZone != null) {
         double averagePay = cityModel.avaragePayZone(selectedZone);
         infoPanel.updateAvaragePay(averagePay);
+        int directLines = cityModel.getNumberOfDirectLinesFromZone(selectedZone);
+        infoPanel.updateNumberOfDirectLines(directLines);
         }
     }
 

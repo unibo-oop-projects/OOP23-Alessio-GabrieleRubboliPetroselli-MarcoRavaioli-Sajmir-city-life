@@ -20,6 +20,7 @@ public final class InfoPanel extends StyledPanel {
     private final JLabel zoneNJLabel;
     private final JLabel numberOfBusiness;
     private final JLabel numberOfAvaregePay;
+    private final JLabel numberDirectLines;
 
     /**
      * Constructs an InfoPanel with the specified background color.
@@ -36,6 +37,8 @@ public final class InfoPanel extends StyledPanel {
         // Create a JLabel with the desired text
         zoneNJLabel = new JLabel("Zone:", SwingConstants.CENTER); // Align the text to the center
         zoneNJLabel.setFont(new Font("Arial", Font.BOLD, ConstantAndResourceLoader.INFO_PANEL_FONT_SIZE));
+        //set color of the text
+        zoneNJLabel.setForeground(Color.RED);
 
         // Add the JLabel to the panel
         gbc.gridx = 0;
@@ -56,6 +59,9 @@ public final class InfoPanel extends StyledPanel {
         numberOfAvaregePay = new JLabel("Avarage Pay: ");
         gbc.gridy = 4;
         add(numberOfAvaregePay, gbc);
+        numberDirectLines = new JLabel("Number of Direct Lines: ");
+        gbc.gridy = 5;
+        add(numberDirectLines, gbc);
     }
     /**
      * Updates the position information displayed on the panel.
@@ -96,6 +102,14 @@ public final class InfoPanel extends StyledPanel {
      */
     public void updateAvaragePay(final double avaragePay) {
         numberOfAvaregePay.setText(String.format("Average Pay: %.2f", avaragePay));
+    }
+    /**
+     * Updates the number of direct lines displayed on the panel.
+     *
+     * @param directLines The number of direct lines.
+     */
+    public void updateNumberOfDirectLines(final int directLines) {
+        numberDirectLines.setText("Number of Direct Lines: " + directLines);
     }
 }
 

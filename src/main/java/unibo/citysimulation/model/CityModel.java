@@ -172,7 +172,6 @@ public final class CityModel {
     public int getTotalBusinesses() {
         return this.totalBusinesses;
     }
-
     public double avaragePayZone(final Zone zone){
         double avarage = 0;
         for(final Business business : businesses){
@@ -182,7 +181,21 @@ public final class CityModel {
         }
         return avarage;
     }
-
+    /**
+     * Returns the number of direct lines from a zone.
+     *
+     * @param zone the zone to check
+     * @return the number of direct lines from the zone
+     */
+    public int getNumberOfDirectLinesFromZone(final Zone zone) {
+        int numberOfDirectLines = 0;
+        for (final TransportLine transportLine : transports) {
+            if (transportLine.getLink().getFirst().equals(zone) || transportLine.getLink().getSecond().equals(zone)) {
+                numberOfDirectLines++;
+            }
+        }
+        return numberOfDirectLines;
+    }
     /**
  * Adjusts the frame size based on the screen dimensions.
  */

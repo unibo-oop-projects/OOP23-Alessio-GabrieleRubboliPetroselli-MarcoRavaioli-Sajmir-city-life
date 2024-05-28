@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.transport;
 
 import unibo.citysimulation.utilities.Pair;
+import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
 
 
