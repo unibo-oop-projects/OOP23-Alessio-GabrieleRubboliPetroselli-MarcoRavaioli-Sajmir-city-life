@@ -29,27 +29,24 @@ public class InputController {
         this.inputModel = inputModel;
         this.inputPanel = inputPanel;
 
-        inputPanel.getStartButton().addActionListener(new ActionListener() {
+        inputPanel.addStartButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 startSimulation(clockPanel);
                 cityModel.getMapModel().startSimulation();
-
-                inputPanel.getPeopleSlider().setEnabled(false);
-                inputPanel.getCapacitySlider().setEnabled(false);
-                inputPanel.getStartButton().setEnabled(false);
-                inputPanel.getStopButton().setEnabled(true);
+                inputPanel.setSlidersEnabled(false);
+                inputPanel.setStartButtonEnabled(false);
+                inputPanel.setStopButtonEnabled(true);
             }
         });
 
-        inputPanel.getStopButton().addActionListener(new ActionListener() {
+        inputPanel.addStopButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 stopSimulation(clockPanel);
-                inputPanel.getPeopleSlider().setEnabled(true);
-                inputPanel.getCapacitySlider().setEnabled(true);
-                inputPanel.getStartButton().setEnabled(true);
-                inputPanel.getStopButton().setEnabled(false);
+                inputPanel.setSlidersEnabled(true);
+                inputPanel.setStartButtonEnabled(true);
+                inputPanel.setStopButtonEnabled(false);
             }
         });
     }
@@ -60,9 +57,9 @@ public class InputController {
      * @param clockPanel The ClockPanel object representing the clock panel.
      */
     private void startSimulation(final ClockPanel clockPanel) {
-        inputModel.setNumberOfPeople(inputPanel.getPeopleSlider().getValue());
-        inputModel.addNumberOfBusiness(inputPanel.getBusinessSlider().getValue());
-        inputModel.setCapacity(inputPanel.getCapacitySlider().getValue());
+        inputModel.setNumberOfPeople(inputPanel.getPeopleSliderValue());
+        inputModel.addNumberOfBusiness(inputPanel.getBusinessSliderValue());
+        inputModel.setCapacity(inputPanel.getCapacitySliderValue());
         // Create entities
         cityModel.createEntities();
         // Restart the clock simulation

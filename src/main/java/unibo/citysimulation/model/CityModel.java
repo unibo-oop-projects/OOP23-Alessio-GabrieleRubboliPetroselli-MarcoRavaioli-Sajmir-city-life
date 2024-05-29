@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Collections;
 
 /**
  * Represents the model of the city simulation, containing zones, transports,
@@ -155,9 +156,9 @@ public final class CityModel {
     }
 
     /**
-     * Calculates the total number of businesses in the city based on the given number of people.
-     *
-     * @param numberOfPeople the total number of people in the city
+     * Calculates the total number of businesses in the city model.
+     * @param numberOfPeople
+     * @param numberOfBusinesses
      */
     public void calculateTotalBusinesses(final int numberOfPeople, final int numberOfBusinesses) {
         this.totalBusinesses = numberOfPeople / 10 + numberOfBusinesses;
@@ -171,8 +172,12 @@ public final class CityModel {
     public int getTotalBusinesses() {
         return this.totalBusinesses;
     }
-
-    public double avaragePayZone(final Zone zone){
+    /**
+     * Returns the number of people in the city model.
+     * @param zone
+     * @return
+     */
+    public double avaragePayZone(final Zone zone) {
         double avarage = 0;
         int businessCount = 0;
         for (Business business : businesses) {
@@ -185,7 +190,21 @@ public final class CityModel {
         }
         return avarage;
     }
-
+    /**
+     * Returns the number of direct lines from a zone.
+     *
+     * @param zone the zone to check
+     * @return the number of direct lines from the zone
+     */
+    public int getNumberOfDirectLinesFromZone(final Zone zone) {
+        int numberOfDirectLines = 0;
+        for (final TransportLine transportLine : transports) {
+            if (transportLine.getLink().getFirst().equals(zone) || transportLine.getLink().getSecond().equals(zone)) {
+                numberOfDirectLines++;
+            }
+        }
+        return numberOfDirectLines;
+    }
     /**
  * Adjusts the frame size based on the screen dimensions.
  */
@@ -241,7 +260,7 @@ public final class CityModel {
      * @return The list of zones.
      */
     public List<Zone> getZones() {
-        return this.zones;
+        return Collections.unmodifiableList(this.zones);
     }
 
     /**
@@ -250,7 +269,7 @@ public final class CityModel {
      * @return The list of transport lines.
      */
     public List<TransportLine> getTransportLines() {
-        return this.transports;
+        return Collections.unmodifiableList(this.transports);
     }
 
     /**
@@ -259,7 +278,7 @@ public final class CityModel {
      * @return The list of businesses.
      */
     public List<Business> getBusinesses() {
-        return this.businesses;
+        return Collections.unmodifiableList(this.businesses);
     }
 
     /**

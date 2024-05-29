@@ -16,6 +16,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 /**
  * This class represents the input panel.
  */
@@ -59,7 +60,9 @@ public class InputPanel extends StyledPanel {
         gbc.weighty = 0.5;
         add(peopleSlider, gbc);
         // Create and add slider for the number of businesses
-        businessSlider = createSlider("Add Business", 0, 100);
+        businessSlider = createSlider("Number of Businesses", 0, 100); // Initialize businessSlider here
+        //set zero the value of the slider
+        businessSlider.setValue(0);
         gbc.gridy = 2;
         add(businessSlider, gbc);
         // Create and add slider for the transport line capacities
@@ -82,21 +85,21 @@ public class InputPanel extends StyledPanel {
         gbc.gridwidth = 2; // Occupies two columns
         add(buttonPanel, gbc);
     }
-     /**
-     * Returns the start button.
+    /**
+     * Adds an action listener to the start button.
      *
-     * @return the start button
+     * @param listener the action listener to be added to the start button
      */
-    public JButton getStartButton() {
-        return startButton;
+    public void addStartButtonListener(ActionListener listener) {
+        startButton.addActionListener(listener);
     }
     /**
-     * Returns the stop button.
+     * Adds an action listener to the stop button.
      *
-     * @return the stop button
+     * @param listener the action listener to be added to the stop button
      */
-    public JButton getStopButton() {
-        return stopButton;
+    public void addStopButtonListener(ActionListener listener) {
+        stopButton.addActionListener(listener);
     }
     /**
      * Returns the value of the people slider.
@@ -115,30 +118,36 @@ public class InputPanel extends StyledPanel {
         return capacitySlider.getValue();
     }
     /**
-     * Returns the people slider.
-     *
-     * @return the people slider
-     */
-    public JSlider getPeopleSlider() {
-        return peopleSlider;
-    }
-    /**
-     * Returns the capacity slider.
-     *
-     * @return the capacity slider
-     */
-    public JSlider getCapacitySlider() {
-        return capacitySlider;
-    }
-    /**
      * Returns the value of the business slider.
      *
      * @return the value of the business slider
      */
-    public JSlider getBusinessSlider() {
-        return businessSlider;
+    public int getBusinessSliderValue() {
+        return businessSlider.getValue();
     }
-    
+    /**
+     * set the start button enabled or disabled
+     * @param enabled
+     */
+    public void setStartButtonEnabled(boolean enabled) {
+        startButton.setEnabled(enabled);
+    }
+    /**
+     * set the stop button enabled or disabled
+     * @param enabled
+     */
+    public void setStopButtonEnabled(boolean enabled) {
+        stopButton.setEnabled(enabled);
+    }
+    /**
+     * set the sliders enabled or disabled
+     * @param enabled
+     */
+    public void setSlidersEnabled(boolean enabled) {
+        peopleSlider.setEnabled(enabled);
+        capacitySlider.setEnabled(enabled);
+        businessSlider.setEnabled(enabled);
+    }
     private JSlider createSlider(final String title, final int min, final int max) {
         final JSlider slider = new JSlider(min, max);
         final TitledBorder border = BorderFactory.createTitledBorder(title);
@@ -168,5 +177,4 @@ public class InputPanel extends StyledPanel {
         button.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         return button;
     }
-}
-    
+} 

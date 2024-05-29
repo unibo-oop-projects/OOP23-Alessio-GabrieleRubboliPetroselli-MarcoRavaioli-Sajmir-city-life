@@ -61,7 +61,7 @@ public class WelcomeScreen extends JFrame {
         @Override
         public void actionPerformed(final ActionEvent e) {
         // Exit the program
-        System.exit(0);
+        WelcomeScreen.this.dispose();
         }
     });
     buttonPanel.add(exitButton);
