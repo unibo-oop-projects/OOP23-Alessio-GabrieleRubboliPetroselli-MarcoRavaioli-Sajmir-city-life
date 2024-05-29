@@ -13,7 +13,10 @@ import java.awt.image.BufferedImage;
 import java.awt.BasicStroke;
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Panel for displaying the map.
  */
@@ -21,12 +24,13 @@ public class MapPanel extends StyledPanel {
     private static final long serialVersionUID = 1L;
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
-    private BufferedImage mapImage;
-    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
-    private List<Color> congestionsColorList = Collections.emptyList();
-    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
-    private List<Pair<Integer, Integer>> businessPoints = Collections.emptyList();
-    private List<String> linesName = Collections.emptyList();
+    private transient BufferedImage mapImage;
+    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections
+            .emptyList();
+    private transient List<Color> congestionsColorList = Collections.emptyList();
+    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
+    private transient List<Pair<Integer, Integer>> businessPoints = Collections.emptyList();
+    private transient List<String> linesName = Collections.emptyList();
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -140,11 +144,12 @@ public class MapPanel extends StyledPanel {
      * Sets the lines information for the map.
      *
      * @param points the coordinates of the transport lines
-     * @param names the names of the transport lines
+     * @param names  the names of the transport lines
      */
-    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points, final List<String> names) {
-        this.linesPointsCoordinates = points;
-        this.linesName = names;
+    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points,
+            final List<String> names) {
+        this.linesPointsCoordinates = new ArrayList<>(points);
+        this.linesName = new ArrayList<>(names);
     }
 
     /**
@@ -153,19 +158,19 @@ public class MapPanel extends StyledPanel {
      * @param colors the colors of the transport lines
      */
     public void setLinesColor(final List<Color> colors) {
-        this.congestionsColorList = colors;
+        this.congestionsColorList = new ArrayList<>(colors);
     }
 
     /**
      * Sets the entities to be displayed on the map.
      *
-     * @param peopleMap the map of people with their coordinates and colors
+     * @param peopleMap      the map of people with their coordinates and colors
      * @param businessPoints the map of businesses with their coordinates
      */
-    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, 
-                final List<Pair<Integer, Integer>> businessPoints) {
-        this.peopleMap = peopleMap;
-        this.businessPoints = businessPoints;
+    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap,
+            final List<Pair<Integer, Integer>> businessPoints) {
+        this.peopleMap = new HashMap<>(peopleMap);
+        this.businessPoints = new ArrayList<>(businessPoints);
         repaint();
     }
 
@@ -175,7 +180,9 @@ public class MapPanel extends StyledPanel {
      * @param image The BufferedImage to set.
      */
     public void setImage(final BufferedImage image) {
-        mapImage = image;
+        Graphics g = this.mapImage.getGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
         repaint();
     }
 

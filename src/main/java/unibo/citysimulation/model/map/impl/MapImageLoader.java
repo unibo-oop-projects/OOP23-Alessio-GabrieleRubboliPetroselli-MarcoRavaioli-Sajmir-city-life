@@ -26,13 +26,13 @@ public class MapImageLoader {
      * @return The BufferedImage object representing the map image.
      */
     protected BufferedImage getImage() {
-        return image;
+        return image != null ? image : new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }
 
     /**
      * Loads the map image from the resources.
      */
-    private void loadMapImage() {
+    private final void loadMapImage() {
         try {
             final URL imageUrl = getClass().getResource("/unibo/citysimulation/images/mapImage.png");
             if (imageUrl != null) {
