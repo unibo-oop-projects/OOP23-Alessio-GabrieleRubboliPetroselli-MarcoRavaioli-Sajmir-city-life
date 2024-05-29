@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Collections;
 
 /**
  * Represents the model of the city simulation, containing zones, transports,
@@ -255,7 +256,7 @@ public final class CityModel {
      * @return The list of zones.
      */
     public List<Zone> getZones() {
-        return this.zones;
+        return Collections.unmodifiableList(this.zones);
     }
 
     /**
@@ -264,7 +265,7 @@ public final class CityModel {
      * @return The list of transport lines.
      */
     public List<TransportLine> getTransportLines() {
-        return this.transports;
+        return Collections.unmodifiableList(this.transports);
     }
 
     /**
@@ -273,7 +274,7 @@ public final class CityModel {
      * @return The list of businesses.
      */
     public List<Business> getBusinesses() {
-        return this.businesses;
+        return Collections.unmodifiableList(this.businesses);
     }
 
     /**
