@@ -242,5 +242,5 @@ public abstract class Business implements BusinessEmployee {
      */
     public final void setZone(final Zone zone) {
         this.zone = zone;
-    }    
+    } 
 }

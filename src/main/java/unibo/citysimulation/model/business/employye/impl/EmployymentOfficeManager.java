@@ -16,6 +16,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
 
     private final EmployymentOffice employymentOffice;
     private final Random random;
+    private static final double FIRING_RATE = 0.1;
 
     /**
      * Constructs an EmploymentOfficeManager with the given employment office.
@@ -43,7 +44,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
         if (hiredCount > 0) {
             maxToFire = Math.min(employeesToFire.size(), hiredCount - 1);
         } else {
-            maxToFire = Math.max(1, (int) Math.floor(business.getEmployees().size() * 0.1));
+            maxToFire = Math.max(1, (int) Math.floor(business.getEmployees().size() * FIRING_RATE));
         }
         if (maxToFire > 0) {
             final int numberToFire = random.nextInt(maxToFire) + 1;

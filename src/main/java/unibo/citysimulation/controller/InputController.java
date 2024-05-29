@@ -73,7 +73,7 @@ public class InputController {
         // Restart the clock simulation
         cityModel.getClockModel().stopSimulation();
 
-        int numberOfBusinesses = inputPanel.getBusinessSliderValue();
+        final int numberOfBusinesses = inputPanel.getBusinessSliderValue();
         cityModel.removeBusinesses(numberOfBusinesses);
 
         // Update the pause button state on the clock panel

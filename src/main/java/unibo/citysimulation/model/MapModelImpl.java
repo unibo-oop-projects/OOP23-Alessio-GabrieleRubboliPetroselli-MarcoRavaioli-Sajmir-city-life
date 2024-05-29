@@ -66,13 +66,13 @@ public class MapModelImpl implements MapModel {
     public Map<Integer, Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
         final int maxX = coordinateHandler.getMaxX();
         final int maxY = coordinateHandler.getMaxY();
-        Map<Integer, Pair<Integer, Integer>> businessInfoMap = new HashMap<>();
+        final Map<Integer, Pair<Integer, Integer>> businessInfoMap = new HashMap<>();
         int totalEmployees = ZERO;
         int totalMaxEmployees = ZERO;
         for (int i = 0; i < businesses.size(); i++) {
-            Business business = businesses.get(i);
-            int denormalizedX = denormalizeCoordinate(business.getPosition().getFirst(), maxX);
-            int denormalizedY = denormalizeCoordinate(business.getPosition().getSecond(), maxY);
+            final Business business = businesses.get(i);
+            final int denormalizedX = denormalizeCoordinate(business.getPosition().getFirst(), maxX);
+            final int denormalizedY = denormalizeCoordinate(business.getPosition().getSecond(), maxY);
             businessInfoMap.put(i, new Pair<>(denormalizedX, denormalizedY));
             totalEmployees += business.getEmployees().size();
             totalMaxEmployees += business.getMaxEmployees();
