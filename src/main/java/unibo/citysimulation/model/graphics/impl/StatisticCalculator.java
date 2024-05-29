@@ -25,14 +25,14 @@ public final class StatisticCalculator {
      * @return a list of integers representing the percentage of people in each
      *         state: AT_HOME, MOVING, and WORKING
      */
-    protected static List<Integer> getPeopleStateCounts(final List<DynamicPerson> people) {
+    static List<Integer> getPeopleStateCounts(final List<DynamicPerson> people) {
         return Arrays.asList(
                 calculatePercentage(people, PersonState.AT_HOME),
                 calculatePercentage(people, PersonState.MOVING),
                 calculatePercentage(people, PersonState.WORKING));
     }
 
-    private static int calculatePercentage(final List<DynamicPerson> people, final PersonState state) {
+    static int calculatePercentage(final List<DynamicPerson> people, final PersonState state) {
         return (int) (people.stream().filter(person -> person.getState() == state).count() * 100.0 / people.size());
     }
 
@@ -43,7 +43,7 @@ public final class StatisticCalculator {
      * @return a list of doubles representing the congestion level for each
      *         transport line
      */
-    protected static List<Double> getTransportLinesCongestion(final List<TransportLine> lines) {
+    static List<Double> getTransportLinesCongestion(final List<TransportLine> lines) {
         return lines.stream()
                 .map(TransportLine::getCongestion)
                 .collect(Collectors.toList());
@@ -56,7 +56,7 @@ public final class StatisticCalculator {
      * @return a list of integers representing the occupation percentage for each
      *         business
      */
-    protected static List<Integer> getBusinessesOccupation(final List<Business> businesses) {
+    static List<Integer> getBusinessesOccupation(final List<Business> businesses) {
         return businesses.stream()
                 .map(business -> (int) ((double) business.getEmployees().size() / business.getMaxEmployees() * 100))
                 .collect(Collectors.toList());

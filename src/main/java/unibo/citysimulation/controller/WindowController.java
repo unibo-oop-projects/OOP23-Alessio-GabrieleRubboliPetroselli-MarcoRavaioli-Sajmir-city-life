@@ -42,8 +42,8 @@ public class WindowController {
     private final class ResizeListener extends ComponentAdapter {
         @Override
         public void componentResized(final ComponentEvent e) {
-            int newWidth = e.getComponent().getWidth();
-            int newHeight = e.getComponent().getHeight();
+            final int newWidth = e.getComponent().getWidth();
+            final int newHeight = e.getComponent().getHeight();
             cityModel.setScreenSize(newWidth, newHeight);
 
             final var mapModel = cityModel.getMapModel();

@@ -167,10 +167,16 @@ public final class CityModel {
     }
 
     /**
-     * Returns the number of people in the city model.
-     * 
-     * @param zone
-     * @return
+     * Calculates the average pay for employees in the specified zone.
+     *
+     * <p>
+     * This method iterates over all businesses in the city model,
+     * checks if each business is in the specified zone, and sums the total pay
+     * for all employees in those businesses.
+     * </p>
+     *
+     * @param zone the zone for which to calculate the average pay
+     * @return the total pay for all employees in the specified zone
      */
     public double avaragePayZone(final Zone zone) {
         double avarage = 0;
@@ -215,30 +221,47 @@ public final class CityModel {
         this.frameWidth = frameWidth;
     }
 
+    /**
+     * Sets the screen size to the specified width and height, adjusting dimensions
+     * to maintain aspect ratio if needed. This method also updates the map model's
+     * maximum coordinates and transport information.
+     *
+     * <p>
+     * If both the width and height have changed, the method adjusts one of the
+     * dimensions to maintain the aspect ratio based on the larger proportional
+     * change.
+     * If only the height changes, the width is adjusted to twice the height.
+     * If only the width changes, the height is adjusted to half the width.
+     * </p>
+     *
+     * @param newWidth  the new width of the screen
+     * @param newHeight the new height of the screen
+     */
     public void setScreenSize(int newWidth, int newHeight) {
         final int oldWidth = frameWidth;
         final int oldHeight = frameHeight;
-        boolean widthChanged = newWidth != oldWidth;
-        boolean heightChanged = newHeight != oldHeight;
+        int width = newWidth;
+        int height = newHeight;
+        final boolean widthChanged = width != oldWidth;
+        final boolean heightChanged = height != oldHeight;
 
         if (widthChanged && heightChanged) {
-            if ((double) newWidth / oldWidth > (double) newHeight / oldHeight) {
-                newHeight = newWidth / 2;
+            if ((double) width / oldWidth > (double) height / oldHeight) {
+                height = width / 2;
             } else {
-                newWidth = newHeight * 2;
+                width = newHeight * 2;
             }
         } else if (heightChanged) {
-            newWidth = newHeight * 2;
+            width = height * 2;
         } else if (widthChanged) {
-            newHeight = newWidth / 2;
+            height = width / 2;
         }
 
-        frameWidth = newWidth;
-        frameHeight = newHeight;
+        frameWidth = width;
+        frameHeight = height;
 
         mapModel.setMaxCoordinates(newWidth / 2, newWidth / 2);
         mapModel.setTransportInfo(transports);
-        System.out.println("screenSize setted and passed to mapModel.setMaxCoordinates");
     }
 
     /**
@@ -335,7 +358,6 @@ public final class CityModel {
      * @return The frame width.
      */
     public int getFrameWidth() {
-        System.out.println("cityModel.getFrameWidth: " + this.frameWidth);
         return this.frameWidth;
     }
 

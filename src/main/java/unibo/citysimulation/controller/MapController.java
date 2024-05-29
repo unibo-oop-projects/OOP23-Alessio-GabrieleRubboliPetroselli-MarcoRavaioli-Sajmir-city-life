@@ -62,8 +62,6 @@ public class MapController implements ClockObserver {
         final int y = (int) ((double) e.getY() / mapPanel.getHeight() * 1000);
 
         updateZoneInfo(x, y);
-
-        System.out.println("mapController.handleMouseClick.cityModel.getFrameWidth: " + cityModel.getFrameWidth() / 2);
         mapModel.setMaxCoordinates((int) cityModel.getFrameWidth() / 2, (int) cityModel.getFrameHeight());
     }
 
