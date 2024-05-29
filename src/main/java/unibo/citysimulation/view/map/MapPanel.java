@@ -187,18 +187,18 @@ public class MapPanel extends StyledPanel {
      * @param original The original BufferedImage.
      * @return A new BufferedImage with the same dimensions and type as the original.
      */
-    public static BufferedImage createImageDefensiveCopy(BufferedImage original) {
+    public static BufferedImage createImageDefensiveCopy(final BufferedImage original) {
         if (original == null) {
             throw new IllegalArgumentException("The original image cannot be null");
         }
         // Create a new BufferedImage with the same dimensions and type as the original
-        BufferedImage copy = new BufferedImage(
+        final BufferedImage copy = new BufferedImage(
             original.getWidth(),
             original.getHeight(),
             original.getType()
         );
         // Draw the original image onto the copy
-        Graphics2D g = copy.createGraphics();
+        final Graphics2D g = copy.createGraphics();
         g.drawImage(original, 0, 0, null);
         g.dispose();
         return copy;

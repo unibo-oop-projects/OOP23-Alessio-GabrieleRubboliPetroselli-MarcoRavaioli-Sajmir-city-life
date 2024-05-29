@@ -6,7 +6,6 @@ import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -44,7 +43,9 @@ public final class TransportCreation {
         final Gson gson = new Gson();
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream("src/main/resources/unibo/citysimulation/data/TransportInfo.json"), StandardCharsets.UTF_8))) {
+                new InputStreamReader(
+                    new FileInputStream("src/main/resources/unibo/citysimulation/data/TransportInfo.json"),
+                        StandardCharsets.UTF_8))) {
             final JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for (final JsonElement jsonElement : jsonArray) {
                 final JsonObject jsonObject = jsonElement.getAsJsonObject();
