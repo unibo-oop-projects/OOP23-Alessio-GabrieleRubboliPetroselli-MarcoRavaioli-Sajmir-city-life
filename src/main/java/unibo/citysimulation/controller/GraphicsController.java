@@ -36,7 +36,7 @@ public class GraphicsController implements ClockObserver {
     private void initialize(final GraphicsPanel graphicsPanel) {
         cityModel.getClockModel().addObserver(this);
 
-        graphicsPanel.getLegendButton().addActionListener(e -> showLegendPanel());
+        graphicsPanel.addLegendButtonActionListener(e -> showLegendPanel());
         graphicsPanel.createGraphics(graphicsModel.getNames(), graphicsModel.getDatasets(), graphicsModel.getColors());
     }
 

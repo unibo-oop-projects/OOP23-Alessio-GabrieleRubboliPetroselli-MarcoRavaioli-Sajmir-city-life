@@ -15,6 +15,7 @@ import com.google.gson.JsonParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Collections;
+import java.io.IOException;
 
 /**
  * Factory for creating TransportLine objects.
@@ -36,12 +37,10 @@ public final class TransportCreation {
      */
     public static List<TransportLine> createTransportsFromFile(final List<Zone> zones) {
         final List<TransportLine> lines = new ArrayList<>();
+        final Gson gson = new Gson();
 
-        try {
-            final Gson gson = new Gson();
-
-            final JsonArray jsonArray = gson.fromJson(
-                    new FileReader("src/main/resources/unibo/citysimulation/data/TransportInfo.json"), JsonArray.class);
+        try (FileReader reader = new FileReader("src/main/resources/unibo/citysimulation/data/TransportInfo.json")) {
+            final JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
 
             for (final JsonElement jsonElement : jsonArray) {
                 final JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -52,8 +51,8 @@ public final class TransportCreation {
                         jsonObject.get("capacity").getAsInt(),
                         jsonObject.get("duration").getAsInt(),
                         new Pair<Zone, Zone>(
-                                zones.get(jsonObject.get("zone").getAsJsonObject().get("a").getAsInt()),
-                                zones.get(jsonObject.get("zone").getAsJsonObject().get("b").getAsInt())
+                            zones.get(jsonObject.get("zone").getAsJsonObject().get("a").getAsInt()),
+                            zones.get(jsonObject.get("zone").getAsJsonObject().get("b").getAsInt())
                         )
                     )
                 );
@@ -63,6 +62,8 @@ public final class TransportCreation {
             LOGGER.error("File not found: ", e);
         } catch (JsonParseException e) {
             LOGGER.error("Error parsing JSON: ", e);
+        } catch (IOException e) {
+            LOGGER.error("Error reading file: ", e);
         }
 
         return lines.isEmpty() ? Collections.emptyList() : lines;

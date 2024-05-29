@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.BasicStroke;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.awt.event.ActionListener;
 
 /**
  * Panel for displaying graphics.
@@ -56,12 +57,12 @@ public class GraphicsPanel extends StyledPanel {
     }
 
     /**
-     * Returns the legend button used in the graphics panel.
+     * Adds an action listener to the legend button.
      *
-     * @return the JButton that opens the legend panel
+     * @param listener The action listener to be added to the legend button.
      */
-    public JButton getLegendButton() {
-        return this.legendButton;
+    public void addLegendButtonActionListener(ActionListener listener) {
+        legendButton.addActionListener(listener);
     }
 
     /**
