@@ -69,6 +69,7 @@ public class MapModelImpl implements MapModel {
         Map<Integer, Pair<Integer, Integer>> businessInfoMap = new HashMap<>();
         int totalEmployees = 0;
         int totalMaxEmployees = 0;
+    
         for (int i = 0; i < businesses.size(); i++) {
             Business business = businesses.get(i);
     
@@ -78,12 +79,8 @@ public class MapModelImpl implements MapModel {
     
             totalEmployees += business.getEmployees().size();
             totalMaxEmployees += business.getMaxEmployees();
-            double occupancyRate = (business.getMaxEmployees() > 0) ? (double) business.getEmployees().size() / business.getMaxEmployees() : 0.0;
         }
-    
-        double totalOccupancyRate = (totalMaxEmployees > 0) ? (double) totalEmployees / totalMaxEmployees : 0.0;
-        System.out.println("Total occupancy rate across all businesses: " + (totalOccupancyRate * 100) );
-    
+        
         return businessInfoMap;
     }
 

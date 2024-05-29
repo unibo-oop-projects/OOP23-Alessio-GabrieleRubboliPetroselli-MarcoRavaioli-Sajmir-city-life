@@ -9,16 +9,20 @@ public interface HandleEmployye {
      * and fires the employee from their business.
      * 
      * @param business The business for which to handle employee firing.
+     * @param hiredCount The number of people hired previously.
      */
-    void handleEmployeeFiring(Business business);
+    void handleEmployeeFiring(Business business, int hiredCount);
+    
     /**
      * Handles the hiring of employees for the specified business.
      * Hires a minimum of 4 employees from the employment office's disoccupied people list 
      * or up to the maximum number of employees allowed for the business.
      * 
      * @param business The business for which to handle employee hiring.
+     * @return The number of people hired.
      */
-    void handleEmployeeHiring(Business business);
+    int handleEmployeeHiring(Business business);
+    
     /**
      * Handles the payment of employees for the specified business.
      * Pays each employee in the business the amount of money they are owed.
@@ -26,5 +30,4 @@ public interface HandleEmployye {
      * @param business The business for which to handle employee payment.
      */
     void handleEmployyePay(Business business);
-
 }

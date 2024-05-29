@@ -343,4 +343,10 @@ public final class CityModel {
                 .filter(b -> b.getZone().name().equals(zoneName))
                 .count();
     }
+
+    public void removeBusinesses(int numberOfBusinesses) {
+        for (int i = 0; i < numberOfBusinesses; i++) {
+            businesses.remove(businesses.size() - 1);
+        }
+    }
 }
