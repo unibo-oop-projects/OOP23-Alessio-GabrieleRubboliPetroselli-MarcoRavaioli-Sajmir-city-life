@@ -13,7 +13,9 @@ import java.awt.image.BufferedImage;
 import java.awt.BasicStroke;
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 /**
  * Panel for displaying the map.
  */
@@ -143,8 +145,8 @@ public class MapPanel extends StyledPanel {
      * @param names the names of the transport lines
      */
     public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points, final List<String> names) {
-        this.linesPointsCoordinates = points;
-        this.linesName = names;
+        this.linesPointsCoordinates = new ArrayList<>(points);
+        this.linesName = new ArrayList<>(names);
     }
 
     /**
@@ -153,7 +155,7 @@ public class MapPanel extends StyledPanel {
      * @param colors the colors of the transport lines
      */
     public void setLinesColor(final List<Color> colors) {
-        this.congestionsColorList = colors;
+        this.congestionsColorList = new ArrayList<>(colors);
     }
 
     /**
@@ -164,8 +166,8 @@ public class MapPanel extends StyledPanel {
      */
     public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, 
                 final Map<Integer, Pair<Integer, Integer>> businessMap) {
-        this.peopleMap = peopleMap;
-        this.businessMap = businessMap;
+        this.peopleMap = new HashMap<>(peopleMap);
+        this.businessMap = new HashMap<>(businessMap);
         repaint();
     }
 
@@ -175,8 +177,31 @@ public class MapPanel extends StyledPanel {
      * @param image The BufferedImage to set.
      */
     public void setImage(final BufferedImage image) {
-        mapImage = image;
+        mapImage = createImageDefensiveCopy(image);
         repaint();
+    }
+
+    /**
+     * Creates a defensive copy of the specified BufferedImage.
+     *
+     * @param original The original BufferedImage.
+     * @return A new BufferedImage with the same dimensions and type as the original.
+     */
+    public static BufferedImage createImageDefensiveCopy(BufferedImage original) {
+        if (original == null) {
+            throw new IllegalArgumentException("The original image cannot be null");
+        }
+        // Create a new BufferedImage with the same dimensions and type as the original
+        BufferedImage copy = new BufferedImage(
+            original.getWidth(),
+            original.getHeight(),
+            original.getType()
+        );
+        // Draw the original image onto the copy
+        Graphics2D g = copy.createGraphics();
+        g.drawImage(original, 0, 0, null);
+        g.dispose();
+        return copy;
     }
 
     /**

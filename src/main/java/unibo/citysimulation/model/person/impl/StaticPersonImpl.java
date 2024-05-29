@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.person.impl;
 
 import java.util.Optional;
+import java.util.Arrays;
 
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.StaticPerson;
@@ -92,7 +93,7 @@ public class StaticPersonImpl implements StaticPerson {
      */
     @Override
     public TransportLine[] getTransportLine() {
-        return transportLine.clone();
+        return Arrays.copyOf(transportLine, transportLine.length);
     }
 
     /**

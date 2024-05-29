@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Factory for creating TransportLine objects.
@@ -39,9 +43,9 @@ public final class TransportCreation {
         final List<TransportLine> lines = new ArrayList<>();
         final Gson gson = new Gson();
 
-        try (FileReader reader = new FileReader("src/main/resources/unibo/citysimulation/data/TransportInfo.json")) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream("src/main/resources/unibo/citysimulation/data/TransportInfo.json"), StandardCharsets.UTF_8))) {
             final JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
-
             for (final JsonElement jsonElement : jsonArray) {
                 final JsonObject jsonObject = jsonElement.getAsJsonObject();
 

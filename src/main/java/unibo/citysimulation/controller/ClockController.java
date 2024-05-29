@@ -41,9 +41,6 @@ public class ClockController implements ClockObserver {
                 changeClockSpeed();
             }
         });
-
-        // Add this controller as an observer of the clock model
-        clockModel.addObserver(this);
     }
 
     /**
