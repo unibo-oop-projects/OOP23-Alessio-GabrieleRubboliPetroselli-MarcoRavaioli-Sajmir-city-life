@@ -173,9 +173,9 @@ public final class CityModel {
         return this.totalBusinesses;
     }
     /**
-     * Returns the number of people in the city model.
+     * Returns the avarage pay of a zone.
      * @param zone
-     * @return
+     * @return the avarage pay of a zone
      */
     public double avaragePayZone(final Zone zone) {
         double avarage = 0;

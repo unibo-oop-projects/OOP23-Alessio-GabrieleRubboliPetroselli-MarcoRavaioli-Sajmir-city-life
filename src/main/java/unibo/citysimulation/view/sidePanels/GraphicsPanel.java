@@ -61,7 +61,7 @@ public class GraphicsPanel extends StyledPanel {
      *
      * @param listener The action listener to be added to the legend button.
      */
-    public void addLegendButtonActionListener(ActionListener listener) {
+    public void addLegendButtonActionListener(final ActionListener listener) {
         legendButton.addActionListener(listener);
     }
 

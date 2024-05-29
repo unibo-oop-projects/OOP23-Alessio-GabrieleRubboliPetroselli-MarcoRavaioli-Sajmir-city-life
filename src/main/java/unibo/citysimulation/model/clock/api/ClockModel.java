@@ -46,8 +46,7 @@ public interface ClockModel {
      * 
      * @param updateRate The new update rate
      */
-    void setUpdateRate(int hupdateRate);
-
+    void setUpdateRate(int updateRate);
     /**
      * re-start the simulation with the same update rate.
      */

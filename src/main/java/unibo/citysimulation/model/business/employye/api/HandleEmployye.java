@@ -1,7 +1,9 @@
 package unibo.citysimulation.model.business.employye.api;
 
 import unibo.citysimulation.model.business.impl.Business;
-
+/**
+ * The HandleEmployye interface defines methods for handling the hiring, firing, and payment of employees for businesses.
+ */
 public interface HandleEmployye {
     /**
      * Handles the firing of employees for the specified business.

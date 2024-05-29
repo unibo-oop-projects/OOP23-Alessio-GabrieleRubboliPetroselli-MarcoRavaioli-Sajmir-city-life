@@ -135,8 +135,12 @@ public final class ConstantAndResourceLoader extends ClassLoader {
      * Width of the info panel in pixels.
      */
     public static final int INFO_PANEL_FONT_SIZE = 20;
-
+    /**
+     * maximum number of business in the simulation.
+     */
     public static final int MAX_BUSINESS = 100;
-
+    /**
+     * minimum number of business in the simulation.
+     */
     public static final int MIN_BUSINESS = 0;
 }

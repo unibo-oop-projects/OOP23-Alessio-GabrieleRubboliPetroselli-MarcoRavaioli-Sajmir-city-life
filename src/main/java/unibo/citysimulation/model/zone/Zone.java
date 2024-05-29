@@ -6,6 +6,13 @@ import unibo.citysimulation.utilities.Pair;
 
 /**
  * Represents a zone in a city simulation.
+ *
+ * @param name The name of the zone.
+ * @param personPercents The percentage of people in the zone.
+ * @param businessPercents The percentage of businesses in the zone.
+ * @param wellfareMinMax The minimum and maximum welfare values in the zone.
+ * @param ageMinMax The minimum and maximum age values in the zone.
+ * @param boundary The boundary of the zone.
  */
 public record Zone(String name, float personPercents, float businessPercents, Pair<Integer, Integer> wellfareMinMax,
         Pair<Integer, Integer> ageMinMax, Boundary boundary) {

@@ -136,6 +136,16 @@ public class EmployymentOfficeManager implements HandleEmployye {
             employee.getBusiness().fire(employee);
         });
     }
+    /**
+     * Handles the payment of an employee. This method should be overridden by subclasses
+     * to provide specific payment handling logic.
+     *
+     * Subclasses should ensure that the payment amount is not negative and that the employee
+     * is not null. If the payment amount is negative or the employee is null, subclasses should
+     * throw an IllegalArgumentException.
+     *
+     * @param business the business for which to handle employee payment
+     */
     @Override
     public void handleEmployyePay(final Business business) {
         business.getEmployees().forEach(employee -> {

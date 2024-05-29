@@ -65,28 +65,31 @@ public class MapModelImpl implements MapModel {
     public Map<Integer, Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
         final int maxX = coordinateHandler.getMaxX();
         final int maxY = coordinateHandler.getMaxY();
-    
-        Map<Integer, Pair<Integer, Integer>> businessInfoMap = new HashMap<>();
+        final Map<Integer, Pair<Integer, Integer>> businessInfoMap = new HashMap<>();
         int totalEmployees = 0;
         int totalMaxEmployees = 0;
         for (int i = 0; i < businesses.size(); i++) {
-            Business business = businesses.get(i);
-    
-            int denormalizedX = denormalizeCoordinate(business.getPosition().getFirst(), maxX);
-            int denormalizedY = denormalizeCoordinate(business.getPosition().getSecond(), maxY);
+            final Business business = businesses.get(i);
+            final int denormalizedX = denormalizeCoordinate(business.getPosition().getFirst(), maxX);
+            final int denormalizedY = denormalizeCoordinate(business.getPosition().getSecond(), maxY);
             businessInfoMap.put(i, new Pair<>(denormalizedX, denormalizedY));
-    
             totalEmployees += business.getEmployees().size();
             totalMaxEmployees += business.getMaxEmployees();
-            double occupancyRate = (business.getMaxEmployees() > 0) ? (double) business.getEmployees().size() / business.getMaxEmployees() : 0.0;
+            //final int maxEmployees = business.getMaxEmployees();
+            //final int currentEmployees = business.getEmployees().size();
+            //double occupancyRate;
+            /*if (maxEmployees > 0) {
+                occupancyRate = (double) currentEmployees / maxEmployees;
+            } else {
+                occupancyRate = 0.0;
+            }
+             * 
+             */
         }
-    
-        double totalOccupancyRate = (totalMaxEmployees > 0) ? (double) totalEmployees / totalMaxEmployees : 0.0;
-        System.out.println("Total occupancy rate across all businesses: " + (totalOccupancyRate * 100) );
-    
+        //final double totalOccupancyRate = totalMaxEmployees > 0 ? (double) totalEmployees / totalMaxEmployees : 0.0;
+        //System.out.println("Total occupancy rate across all businesses: " + (totalOccupancyRate * 100));
         return businessInfoMap;
     }
-
     /**
      * Gets the information of people, mapping each person's name to their coordinates and color.
      *
@@ -106,7 +109,6 @@ public class MapModelImpl implements MapModel {
                                         denormalizeCoordinate(person.getPosition().get().getSecond(), maxY)),
                                 getPersonColor(person))));
     }
-
     /**
      * Gets the color of a person based on their state.
      *
@@ -116,7 +118,6 @@ public class MapModelImpl implements MapModel {
     private Color getPersonColor(final DynamicPerson person) {
         return person.getState() == PersonState.AT_HOME ? Color.BLUE : Color.RED;
     }
-
     /**
      * Gets the list of colors representing congestion levels.
      *
@@ -128,7 +129,6 @@ public class MapModelImpl implements MapModel {
                 .map(this::getColor)
                 .collect(Collectors.toList());
     }
-
     /**
      * Gets the color representing the congestion percentage.
      *
@@ -152,7 +152,6 @@ public class MapModelImpl implements MapModel {
             return new Color(red, green, 0);
         }
     }
-
     /**
      * Gets the coordinates of line points for all transport lines.
      *
@@ -168,7 +167,6 @@ public class MapModelImpl implements MapModel {
                         denormalizeCoordinate(pair.getSecond().getSecond(), coordinateHandler.getMaxY()))))
         .collect(Collectors.toList());
     }
-
     /**
      * Sets the transport information with the given list of transport lines.
      *
@@ -178,7 +176,6 @@ public class MapModelImpl implements MapModel {
     public void setTransportInfo(final List<TransportLine> lines) {
     transportManager.setTransportInfo(lines);
     }
-
     /**
      * Sets the transport congestion information with the given list of transport lines.
      *
@@ -188,7 +185,6 @@ public class MapModelImpl implements MapModel {
     public void setTransportCongestion(final List<TransportLine> lines) {
         transportManager.setTransportCongestion(lines);
     }
-
     /**
      * Sets the last clicked coordinates.
      *
@@ -197,9 +193,8 @@ public class MapModelImpl implements MapModel {
      */
     @Override
     public void setLastClickedCoordinates(final int x, final int y) {
-        coordinateHandler.setLastClickedCoordinates(x, y);    
+        coordinateHandler.setLastClickedCoordinates(x, y);
     }
-
     /**
      * Sets the maximum coordinates.
      *
@@ -210,7 +205,6 @@ public class MapModelImpl implements MapModel {
     public void setMaxCoordinates(final int x, final int y) {
         coordinateHandler.setMaxCoordinates(x, y);
     }
-
     /**
      * Normalizes the given coordinate based on the maximum value.
      *
@@ -222,7 +216,6 @@ public class MapModelImpl implements MapModel {
     public int normalizeCoordinate(final int c, final int max) {
         return coordinateHandler.normalizeCoordinate(c, max);
     }
-
     /**
      * Denormalizes the given coordinate based on the maximum value.
      *
@@ -234,7 +227,6 @@ public class MapModelImpl implements MapModel {
     public int denormalizeCoordinate(final int c, final int max) {
         return coordinateHandler.denormalizeCoordinate(c, max);
     }
-
     /**
      * Gets the normalized x-coordinate.
      *
@@ -244,7 +236,6 @@ public class MapModelImpl implements MapModel {
     public int getNormX() {
         return coordinateHandler.getNormX();
     }
-
     /**
      * Gets the normalized y-coordinate.
      *
@@ -254,7 +245,6 @@ public class MapModelImpl implements MapModel {
     public int getNormY() {
         return coordinateHandler.getNormY();
     }
-
     /**
      * Gets the maximum x-coordinate.
      *
@@ -264,7 +254,6 @@ public class MapModelImpl implements MapModel {
     public int getMaxX() {
         return coordinateHandler.getMaxX();
     }
-
     /**
      * Gets the maximum y-coordinate.
      *
@@ -274,7 +263,6 @@ public class MapModelImpl implements MapModel {
     public int getMaxY() {
         return coordinateHandler.getMaxY();
     }
-
     /**
      * Gets the image of the map.
      *
@@ -284,5 +272,5 @@ public class MapModelImpl implements MapModel {
     public BufferedImage getImage() {
         return imageLoader.getImage();
     }
-
 }
+

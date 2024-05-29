@@ -27,7 +27,10 @@ public final class ZoneFactory {
 
     private ZoneFactory() {
     }
-
+    /**
+     * Creates a list of Zone objects from a JSON file.
+     * @return the list of Zone objects
+     */
     public static List<Zone> createZonesFromFile() {
         final List<Zone> zones = new ArrayList<>();
 
