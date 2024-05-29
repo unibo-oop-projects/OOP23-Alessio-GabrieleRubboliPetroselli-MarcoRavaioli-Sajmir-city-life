@@ -15,11 +15,9 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 /**
- * Factory for creating Zone objects.
- * This factory creates a list of Zone objects with predefined information.
+ * The ZoneFactory class is responsible for creating zones from a JSON file.
+ * It provides a static method to create zones and a private helper method to create a single zone.
  */
 public final class ZoneFactory {
 
@@ -27,9 +25,11 @@ public final class ZoneFactory {
 
     private ZoneFactory() {
     }
+
     /**
-     * Creates a list of Zone objects from a JSON file.
-     * @return the list of Zone objects
+     * Creates a list of zones from a JSON file.
+     *
+     * @return the list of created zones
      */
     public static List<Zone> createZonesFromFile() {
         final List<Zone> zones = new ArrayList<>();
@@ -55,6 +55,12 @@ public final class ZoneFactory {
         return new ArrayList<>();
     }
 
+    /**
+     * Creates a single zone from a JSON object.
+     *
+     * @param jsonObject the JSON object representing the zone
+     * @return the created zone
+     */
     private static Zone createZone(final JsonObject jsonObject) {
 
         final String name = "boundary";

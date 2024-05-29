@@ -173,15 +173,20 @@ public final class CityModel {
         return this.totalBusinesses;
     }
     /**
-     * Returns the avarage pay of a zone.
-     * @param zone
-     * @return the avarage pay of a zone
+     * Calculates the average pay in a specific zone of the city.
+     *
+     * @param zone The zone for which to calculate the average pay.
+     * @return The average pay in the specified zone.
      */
     public double avaragePayZone(final Zone zone) {
         double avarage = 0;
+        int businessCount = 0;
         for (final Business business : businesses) {
-            if (business.getZone().name().equals(zone.name())) {
-                avarage += business.getEmployees().size() * business.calculatePay();
+            if (business.getZone().equals(zone)) {
+                businessCount++;
+                double sum = 0;
+                sum += business.getEmployees().size() * business.calculatePay();
+                avarage = sum / businessCount;
             }
         }
         return avarage;
@@ -357,5 +362,15 @@ public final class CityModel {
         return (int) businesses.stream()
                 .filter(b -> b.getZone().name().equals(zoneName))
                 .count();
+    }
+    /**
+     * Removes a specified number of businesses from the city model.
+     *
+     * @param numberOfBusinesses the number of businesses to remove
+     */
+    public void removeBusinesses(final int numberOfBusinesses) {
+        for (int i = 0; i < numberOfBusinesses; i++) {
+            businesses.remove(businesses.size() - 1);
+        }
     }
 }

@@ -14,21 +14,28 @@ public interface BusinessEmployee {
      * @param employee the employee to be hired
      */
     void hire(Employee employee);
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 9ee7a6477585951395ee9b0caa71acdbf109f2c0
     /**
      * Fires an employee from the business.
      * 
      * @param employee the employee to be fired
      */
     void fire(Employee employee);
+
     /**
-     * Checks the delays of the employees.
+     * Checks the delays of the employee based on the current time.
      * 
      * @param currentTime the current time
      */
     void checkEmployeeDelays(LocalTime currentTime);
+
     /**
-     * Pays the employees.
-     * @return the total amount of money paid to the employees
+     * Calculates the pay for the employee.
+     * 
+     * @return the pay amount
      */
     double calculatePay();
 }

@@ -7,6 +7,8 @@ import unibo.citysimulation.model.clock.api.ClockObserver;
 
 import java.util.List;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A ClockObserver implementation that handles business-related operations based on time updates.
@@ -14,6 +16,8 @@ import java.time.LocalTime;
 public class CloclObserverBusiness implements ClockObserver {
     private final List<Business> businesses;
     private final EmployymentOfficeManager employmentManager;
+    private final Map<Business, Integer> businessHiredCountMap;
+
     /**
      * Constructs a CloclObserverBusiness object with the given list of businesses and employment office.
      * 
@@ -23,7 +27,9 @@ public class CloclObserverBusiness implements ClockObserver {
     public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
         this.businesses = businesses;
         this.employmentManager = new EmployymentOfficeManager(employymentOffice);
+        this.businessHiredCountMap = new HashMap<>();
     }
+
     /**
      * Handles business operations based on the current time and day.
      * 
@@ -35,14 +41,14 @@ public class CloclObserverBusiness implements ClockObserver {
         for (final Business business : businesses) {
             business.checkEmployeeDelays(currentTime);
             if (currentTime.equals(business.getOpLocalTime())) {
-                employmentManager.handleEmployeeHiring(business);
+                final int hiredCount = employmentManager.handleEmployeeHiring(business);
+                businessHiredCountMap.put(business, hiredCount);
             }
             if (currentTime.equals(business.getClLocalTime())) {
-                employmentManager.handleEmployeeFiring(business);
+                final int hiredCount = businessHiredCountMap.getOrDefault(business, 0);
+                employmentManager.handleEmployeeFiring(business, hiredCount);
                 employmentManager.handleEmployyePay(business);
             }
         }
     }
 }
-
-

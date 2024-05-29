@@ -3,16 +3,15 @@ package unibo.citysimulation.model.zone;
 import java.util.Random;
 
 import unibo.citysimulation.utilities.Pair;
-
 /**
- * Represents a zone in a city simulation.
- *
- * @param name The name of the zone.
- * @param personPercents The percentage of people in the zone.
- * @param businessPercents The percentage of businesses in the zone.
- * @param wellfareMinMax The minimum and maximum welfare values in the zone.
- * @param ageMinMax The minimum and maximum age values in the zone.
- * @param boundary The boundary of the zone.
+ * Represents a zone in the city simulation.
+ * 
+ * @param name            the name of the zone
+ * @param personPercents  the percentage of people in the zone
+ * @param businessPercents the percentage of businesses in the zone
+ * @param wellfareMinMax  the minimum and maximum wellfare values in the zone
+ * @param ageMinMax       the minimum and maximum age values in the zone
+ * @param boundary        the boundary of the zone
  */
 public record Zone(String name, float personPercents, float businessPercents, Pair<Integer, Integer> wellfareMinMax,
         Pair<Integer, Integer> ageMinMax, Boundary boundary) {
