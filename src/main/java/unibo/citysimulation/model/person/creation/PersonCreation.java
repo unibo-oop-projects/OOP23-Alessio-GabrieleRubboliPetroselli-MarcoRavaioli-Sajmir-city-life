@@ -70,16 +70,11 @@ public final class PersonCreation {
                             residenceZone,
                             random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst()
                     );
-                    optionalBusiness.ifPresent(business -> {
-                        final int initialEmployeeCount = business.getEmployees().size();
-                        final Employee employee = new Employee(person, business);
-                        business.hire(employee);
-                        // Verifica se l'assunzione è avvenuta controllando l'incremento del numero di dipendenti
-                        if (business.getEmployees().size() <= initialEmployeeCount) {
-                            person.getPersonData().business();
-                            Optional.empty();
-                        }
-                    });
+                    optionalBusiness.ifPresentOrElse(
+                        business -> {
+                            business.hire(new Employee(person, business));
+                        }, 
+                    () -> Optional.empty());
                     people.add(person);
                 }
                 return people;
