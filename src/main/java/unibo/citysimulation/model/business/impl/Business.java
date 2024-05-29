@@ -77,7 +77,7 @@ public abstract class Business implements BusinessEmployee {
         }
     }
     @Override
-    public final double calculatePay(){
+    public final double calculatePay() {
         final double hoursworked = clLocalTime.getHour() - opLocalTime.getHour();
         return hoursworked * revenue;
     }
@@ -243,5 +243,4 @@ public abstract class Business implements BusinessEmployee {
     public final void setZone(final Zone zone) {
         this.zone = zone;
     }    
-
 }

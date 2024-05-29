@@ -41,16 +41,14 @@ public class CloclObserverBusiness implements ClockObserver {
         for (final Business business : businesses) {
             business.checkEmployeeDelays(currentTime);
             if (currentTime.equals(business.getOpLocalTime())) {
-                int hiredCount = employmentManager.handleEmployeeHiring(business);
+                final int hiredCount = employmentManager.handleEmployeeHiring(business);
                 businessHiredCountMap.put(business, hiredCount);
             }
             if (currentTime.equals(business.getClLocalTime())) {
-                int hiredCount = businessHiredCountMap.getOrDefault(business, 0);
+                final int hiredCount = businessHiredCountMap.getOrDefault(business, 0);
                 employmentManager.handleEmployeeFiring(business, hiredCount);
                 employmentManager.handleEmployyePay(business);
             }
         }
     }
 }
-
-

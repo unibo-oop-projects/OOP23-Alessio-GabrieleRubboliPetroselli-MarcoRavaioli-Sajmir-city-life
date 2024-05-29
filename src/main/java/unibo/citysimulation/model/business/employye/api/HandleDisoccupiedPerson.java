@@ -2,6 +2,10 @@ package unibo.citysimulation.model.business.employye.api;
 
 import unibo.citysimulation.model.person.api.DynamicPerson;
 
+/**
+ * The HandleDisoccupiedPerson interface represents an employment office that handles disoccupied persons.
+ * It provides methods to add and remove disoccupied persons from the employment office.
+ */
 public interface HandleDisoccupiedPerson {
 
     /**

@@ -37,16 +37,14 @@ public class EmployymentOfficeManager implements HandleEmployye {
      * @param hiredCount The number of people hired previously.
      */
     @Override
-    public final void handleEmployeeFiring(final Business business, int hiredCount) {
+    public final void handleEmployeeFiring(final Business business, final int hiredCount) {
         final List<Employee> employeesToFire = getEmployeesToFire(business);
-        int maxToFire = 0;
-    
+        int maxToFire;
         if (hiredCount > 0) {
             maxToFire = Math.min(employeesToFire.size(), hiredCount - 1);
         } else {
             maxToFire = Math.max(1, (int) Math.floor(business.getEmployees().size() * 0.1));
         }
-    
         if (maxToFire > 0) {
             final int numberToFire = random.nextInt(maxToFire) + 1;
             final List<Employee> selectedToFire = employeesToFire.stream()
@@ -103,15 +101,12 @@ public class EmployymentOfficeManager implements HandleEmployye {
         final int availableSpots = business.getMaxEmployees() - business.getEmployees().size();
         if (availableSpots > 0) {
             final List<DynamicPerson> disoccupiedPeople = employymentOffice.getDisoccupiedPeople();
-        
             final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
                 .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
                 .collect(Collectors.toList());
-        
             final int maxPeopleToHire = Math.min(availableSpots, eligiblePeople.size());
-        
             if (maxPeopleToHire > 0) {
-                final int peopleToHireCount = random.nextInt(maxPeopleToHire) + 1; // Assunzioni minime come numero casuale tra 1 e maxPeopleToHire
+                final int peopleToHireCount = random.nextInt(maxPeopleToHire) + 1; 
                 return Optional.of(eligiblePeople.stream()
                     .limit(peopleToHireCount)
                     .collect(Collectors.toList()));
@@ -129,7 +124,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
      */
     private int hirePeople(final Business business, final Optional<List<DynamicPerson>> peopleToHire) {
         if (peopleToHire.isPresent()) {
-            List<DynamicPerson> people = peopleToHire.get();
+            final List<DynamicPerson> people = peopleToHire.get();
             people.forEach(person -> {
                 final Employee employee = new Employee(person, business);
                 business.hire(employee);
@@ -163,9 +158,14 @@ public class EmployymentOfficeManager implements HandleEmployye {
             employee.getBusiness().fire(employee);
         });
     }
-
+    /**
+     * Handles the payment for all employees in the given business.
+     * Calculates the pay for each employee and adds it to their personal account.
+     *
+     * @param business the business for which the payment is being handled
+     */
     @Override
-    public void handleEmployyePay(final Business business) {
+    public final void handleEmployyePay(final Business business) {
         business.getEmployees().forEach(employee -> {
             final double pay = business.calculatePay();
             employee.getPerson().addMoney(pay);

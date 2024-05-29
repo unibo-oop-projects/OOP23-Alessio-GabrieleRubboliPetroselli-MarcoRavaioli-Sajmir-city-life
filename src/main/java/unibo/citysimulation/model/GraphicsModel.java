@@ -144,9 +144,9 @@ public class GraphicsModel {
     public List<Integer> getBusinessesOccupation(final List<Business> list) { //
         return list.stream()
             .map(business -> {
-                int maxEmployees = business.getMaxEmployees();
-                int currentEmployees = business.getEmployees().size();
-                return (maxEmployees > 0) ? (int) ((double) currentEmployees / maxEmployees * 100) : 0;
+                final int maxEmployees = business.getMaxEmployees();
+                final int currentEmployees = business.getEmployees().size();
+                return maxEmployees > 0 ? (int) ((double) currentEmployees / maxEmployees * 100) : 0;
             })
             .collect(Collectors.toList());
     }

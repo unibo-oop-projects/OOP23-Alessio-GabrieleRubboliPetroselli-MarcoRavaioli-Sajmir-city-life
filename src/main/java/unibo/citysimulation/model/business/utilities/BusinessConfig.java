@@ -6,8 +6,6 @@ import java.time.LocalTime;
  * The {@code BusinessConfig} class contains constants and configurations related to businesses in the city simulation.
  */
 public final class BusinessConfig {
-
-    private BusinessConfig() {}    
     /**
      * The start time for big businesses.
      */
@@ -120,4 +118,5 @@ public final class BusinessConfig {
      * The maximum age for employees in small businesses.
      */
     public static final int SMALL_MAX_AGE = 29;
+    private BusinessConfig() { }
 }

@@ -23,6 +23,7 @@ public class MapModelImpl implements MapModel {
     private static final int PERCENT_50 = 50;
     private static final int COLOR_MAX = 255;
     private static final int GREEN_BASE = 128;
+    private static final int ZERO = 0;
 
     private final MapImageLoader imageLoader;
     private final MapCoordinateHandler coordinateHandler;
@@ -65,22 +66,17 @@ public class MapModelImpl implements MapModel {
     public Map<Integer, Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
         final int maxX = coordinateHandler.getMaxX();
         final int maxY = coordinateHandler.getMaxY();
-    
         Map<Integer, Pair<Integer, Integer>> businessInfoMap = new HashMap<>();
-        int totalEmployees = 0;
-        int totalMaxEmployees = 0;
-    
+        int totalEmployees = ZERO;
+        int totalMaxEmployees = ZERO;
         for (int i = 0; i < businesses.size(); i++) {
             Business business = businesses.get(i);
-    
             int denormalizedX = denormalizeCoordinate(business.getPosition().getFirst(), maxX);
             int denormalizedY = denormalizeCoordinate(business.getPosition().getSecond(), maxY);
             businessInfoMap.put(i, new Pair<>(denormalizedX, denormalizedY));
-    
             totalEmployees += business.getEmployees().size();
             totalMaxEmployees += business.getMaxEmployees();
         }
-        
         return businessInfoMap;
     }
 
