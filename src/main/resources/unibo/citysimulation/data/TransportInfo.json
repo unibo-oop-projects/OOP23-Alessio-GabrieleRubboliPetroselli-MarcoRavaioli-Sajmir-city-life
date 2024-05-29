@@ -1,6 +1,6 @@
 [
     {
-        "name": "Tangenziale",
+        "name": "Ring Road",
         "capacity": 50,
         "duration": 40,
         "zone": {
@@ -9,7 +9,7 @@
         }
     },
     {
-        "name": "Circolare",
+        "name": "Circular Road",
         "capacity": 40,
         "duration": 20,
         "zone": {
@@ -18,7 +18,7 @@
         }
     },
     {
-        "name": "Statale",
+        "name": "State Road 1",
         "capacity": 30,
         "duration": 10,
         "zone": {
@@ -27,7 +27,7 @@
         }
     },
     {
-        "name": "Statale 2",
+        "name": "State Road 2",
         "capacity": 45,
         "duration": 15,
         "zone": {
@@ -36,7 +36,7 @@
         }
     },
     {
-        "name": "Statale 5",
+        "name": "State Road 3",
         "capacity": 55,
         "duration": 20,
         "zone": {
@@ -45,7 +45,7 @@
         }
     },
     {
-        "name": "Statale 7",
+        "name": "State Road 7",
         "capacity": 30,
         "duration": 30,
         "zone": {
@@ -54,7 +54,7 @@
         }
     },
     {
-        "name": "Statale 10",
+        "name": "State Road 10",
         "capacity": 35,
         "duration": 25,
         "zone": {
