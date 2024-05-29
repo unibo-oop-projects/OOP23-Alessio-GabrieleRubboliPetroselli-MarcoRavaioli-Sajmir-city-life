@@ -180,9 +180,13 @@ public final class CityModel {
      */
     public double avaragePayZone(final Zone zone) {
         double avarage = 0;
+        int businessCount = 0;
         for (final Business business : businesses) {
-            if (business.getZone().name().equals(zone.name())) {
-                avarage += business.getEmployees().size() * business.calculatePay();
+            if (business.getZone().equals(zone)) {
+                businessCount++;
+                double sum = 0;
+                sum += business.getEmployees().size() * business.calculatePay();
+                avarage = sum / businessCount;
             }
         }
         return avarage;
@@ -302,7 +306,7 @@ public final class CityModel {
      * @return The list of zones.
      */
     public List<Zone> getZones() {
-        return this.zones;
+        return Collections.unmodifiableList(this.zones);
     }
 
     /**
@@ -311,7 +315,7 @@ public final class CityModel {
      * @return The list of transport lines.
      */
     public List<TransportLine> getTransportLines() {
-        return this.transports;
+        return Collections.unmodifiableList(this.transports);
     }
 
     /**
@@ -320,7 +324,7 @@ public final class CityModel {
      * @return The list of businesses.
      */
     public List<Business> getBusinesses() {
-        return this.businesses;
+        return Collections.unmodifiableList(this.businesses);
     }
 
     /**
@@ -397,5 +401,15 @@ public final class CityModel {
         return (int) businesses.stream()
                 .filter(b -> b.getZone().name().equals(zoneName))
                 .count();
+    }
+    /**
+     * Removes a specified number of businesses from the city model.
+     *
+     * @param numberOfBusinesses the number of businesses to remove
+     */
+    public void removeBusinesses(final int numberOfBusinesses) {
+        for (int i = 0; i < numberOfBusinesses; i++) {
+            businesses.remove(businesses.size() - 1);
+        }
     }
 }

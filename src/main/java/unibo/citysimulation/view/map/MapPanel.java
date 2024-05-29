@@ -14,6 +14,7 @@ import java.awt.BasicStroke;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -159,6 +160,7 @@ public class MapPanel extends StyledPanel {
      */
     public void setLinesColor(final List<Color> colors) {
         this.congestionsColorList = new ArrayList<>(colors);
+        this.congestionsColorList = new ArrayList<>(colors);
     }
 
     /**
@@ -180,10 +182,31 @@ public class MapPanel extends StyledPanel {
      * @param image The BufferedImage to set.
      */
     public void setImage(final BufferedImage image) {
-        Graphics g = this.mapImage.getGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
+        mapImage = createImageDefensiveCopy(image);
         repaint();
+    }
+
+    /**
+     * Creates a defensive copy of the specified BufferedImage.
+     *
+     * @param original The original BufferedImage.
+     * @return A new BufferedImage with the same dimensions and type as the original.
+     */
+    public static BufferedImage createImageDefensiveCopy(final BufferedImage original) {
+        if (original == null) {
+            throw new IllegalArgumentException("The original image cannot be null");
+        }
+        // Create a new BufferedImage with the same dimensions and type as the original
+        final BufferedImage copy = new BufferedImage(
+            original.getWidth(),
+            original.getHeight(),
+            original.getType()
+        );
+        // Draw the original image onto the copy
+        final Graphics2D g = copy.createGraphics();
+        g.drawImage(original, 0, 0, null);
+        g.dispose();
+        return copy;
     }
 
     /**

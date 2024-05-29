@@ -31,8 +31,7 @@ public final class BusinessFactory {
             case MEDIUM:
                 return Optional.of(new MediumBusiness(zone));
             case SMALL:
-                return Optional.of(new SmallBusiness(zone));     
-                
+                return Optional.of(new SmallBusiness(zone));
             default:
                 break;
         }

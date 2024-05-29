@@ -68,7 +68,6 @@ public class MapModelImpl implements MapModel {
             .map(business -> denormalizePosition(business.getPosition(), maxX, maxY))
             .collect(Collectors.toList());
     }
-
     /**
      * Gets the information of people, mapping each person's name to their
      * coordinates and color.
@@ -88,7 +87,6 @@ public class MapModelImpl implements MapModel {
                                 denormalizePosition(person.getPosition().get(), maxX, maxY),
                                 getPersonColor(person))));
     }
-
     /**
      * Gets the color of a person based on their state.
      *
@@ -98,7 +96,6 @@ public class MapModelImpl implements MapModel {
     private Color getPersonColor(final DynamicPerson person) {
         return person.getState() == PersonState.AT_HOME ? Color.BLUE : Color.RED;
     }
-
     /**
      * Gets the list of colors representing congestion levels.
      *
@@ -110,7 +107,6 @@ public class MapModelImpl implements MapModel {
                 .map(this::getColor)
                 .collect(Collectors.toList());
     }
-
     /**
      * Gets the color representing the congestion percentage.
      *
@@ -134,7 +130,6 @@ public class MapModelImpl implements MapModel {
             return new Color(red, green, 0);
         }
     }
-
     /**
      * Gets the coordinates of line points for all transport lines.
      *
@@ -150,7 +145,6 @@ public class MapModelImpl implements MapModel {
                         denormalizePosition(pair.getSecond(), maxX, maxY)))
                 .collect(Collectors.toList());
     }
-
     /**
      * Sets the transport information with the given list of transport lines.
      *
@@ -160,7 +154,6 @@ public class MapModelImpl implements MapModel {
     public void setTransportInfo(final List<TransportLine> lines) {
         transportManager.setTransportInfo(lines);
     }
-
     /**
      * Sets the transport congestion information with the given list of transport
      * lines.
@@ -193,7 +186,6 @@ public class MapModelImpl implements MapModel {
                 denormalizeCoordinate(position.getFirst(), maxX),
                 denormalizeCoordinate(position.getSecond(), maxY));
     }
-
     /**
      * Gets the image of the map.
      *
@@ -203,5 +195,5 @@ public class MapModelImpl implements MapModel {
     public BufferedImage getImage() {
         return imageLoader.getImage();
     }
-
 }
+

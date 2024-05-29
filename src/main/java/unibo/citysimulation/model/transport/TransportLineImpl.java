@@ -94,7 +94,7 @@ public class TransportLineImpl implements TransportLine {
      */
     @Override
     public double getCongestion() {
-        return (double) (personInLine * 100 / capacity);
+        return (double) personInLine * 100 / capacity;
     }
     /**
      * Returns the duration of the transport line.
