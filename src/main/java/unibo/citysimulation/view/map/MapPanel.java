@@ -23,12 +23,12 @@ public class MapPanel extends StyledPanel {
     private static final long serialVersionUID = 1L;
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
-    private BufferedImage mapImage;
-    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
-    private List<Color> congestionsColorList = Collections.emptyList();
-    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
-    private Map<Integer, Pair<Integer, Integer>> businessMap = Collections.emptyMap();
-    private List<String> linesName = Collections.emptyList();
+    private transient BufferedImage mapImage;
+    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
+    private transient List<Color> congestionsColorList = Collections.emptyList();
+    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap;
+    private transient Map<Integer, Pair<Integer, Integer>> businessMap;
+    private transient List<String> linesName;
 
     /**
      * Constructs a MapPanel with the specified background color.

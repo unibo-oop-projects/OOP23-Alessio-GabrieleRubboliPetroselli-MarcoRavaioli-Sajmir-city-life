@@ -32,10 +32,13 @@ public class MapController implements ClockObserver {
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;
         this.mapModel = cityModel.getMapModel();
-
+    }
+    /**
+     * Initializes the map controller.
+     */
+    public void init() {
         initialize();
     }
-
     private void initialize() {
         cityModel.getClockModel().addObserver(this);
 
