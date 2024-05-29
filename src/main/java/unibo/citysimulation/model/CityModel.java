@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
+import java.util.Collections;
 
 /**
  * Represents the model of the city simulation, containing zones, transports,
@@ -241,7 +242,7 @@ public final class CityModel {
      * @param newWidth  the new width of the screen
      * @param newHeight the new height of the screen
      */
-    public void setScreenSize(int newWidth, int newHeight) {
+    public void setScreenSize(final int newWidth, final int newHeight) {
         final int oldWidth = frameWidth;
         final int oldHeight = frameHeight;
         int width = newWidth;

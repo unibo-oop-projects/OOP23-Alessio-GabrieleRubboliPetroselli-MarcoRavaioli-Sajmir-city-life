@@ -32,7 +32,7 @@ public class MapImageLoader {
     /**
      * Loads the map image from the resources.
      */
-    private final void loadMapImage() {
+    private void loadMapImage() {
         try {
             final URL imageUrl = getClass().getResource("/unibo/citysimulation/images/mapImage.png");
             if (imageUrl != null) {
