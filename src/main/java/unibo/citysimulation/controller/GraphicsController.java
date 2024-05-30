@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.GraphicsModel;
 import unibo.citysimulation.model.clock.ClockObserver;
-import unibo.citysimulation.view.sidePanels.GraphicsPanel;
+import unibo.citysimulation.view.sidepanels.GraphicsPanel;
 
 public class GraphicsController implements ClockObserver {
     private CityModel cityModel;
