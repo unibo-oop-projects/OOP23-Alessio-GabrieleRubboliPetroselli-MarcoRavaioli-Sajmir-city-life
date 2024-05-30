@@ -33,7 +33,7 @@ public class WindowController {
 
     private void initializeControllers() {
         final MapController mapController = new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
-        mapController.init();
+        mapController.initialize();
         cityModel.getClockModel().addObserver(new ClockController(cityModel.getClockModel(), windowView.getClockPanel()));
         new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(), windowView.getClockPanel());
         new GraphicsController(cityModel, windowView.getGraphicsPanel());

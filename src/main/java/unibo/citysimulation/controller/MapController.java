@@ -36,12 +36,8 @@ public class MapController implements ClockObserver {
     /**
      * Initializes the map controller.
      */
-    public void init() {
-        initialize();
-    }
-    private void initialize() {
+    public void initialize() {
         cityModel.getClockModel().addObserver(this);
-
         mapModel.setTransportInfo(cityModel.getTransportLines());
         mapModel.setTransportCongestion(cityModel.getTransportLines());
 
