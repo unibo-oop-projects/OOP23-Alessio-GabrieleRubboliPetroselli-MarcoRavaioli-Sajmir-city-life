@@ -1,7 +1,7 @@
 package unibo.citysimulation.model.clock;
 
 import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.business.EmployymentOffice;
+import unibo.citysimulation.model.business.EmploymentOfficeData;
 import unibo.citysimulation.model.business.EmployymentOfficeManager;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class CloclObserverBusiness implements ClockObserver{
      * @param businesses the list of businesses
      * @param employymentOffice the employment office
      */
-    public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
+    public CloclObserverBusiness(final List<Business> businesses, final EmploymentOfficeData employymentOffice) {
         this.businesses = businesses;
         this.employmentManager = new EmployymentOfficeManager(employymentOffice);
 

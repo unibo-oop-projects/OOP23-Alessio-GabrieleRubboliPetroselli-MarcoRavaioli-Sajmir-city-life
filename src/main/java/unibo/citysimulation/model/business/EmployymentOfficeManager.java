@@ -12,17 +12,17 @@ import unibo.citysimulation.model.person.DynamicPerson;
  */
 public class EmployymentOfficeManager {
 
-    private final EmployymentOffice employymentOffice;
     private final Random random;
+    private final EmploymentOfficeData employymentOffice;
 
     /**
      * Constructs an EmploymentOfficeManager with the given employment office.
      * 
      * @param employymentOffice The employment office to interact with.
      */
-    public EmployymentOfficeManager(final EmployymentOffice employymentOffice) {
-        this.employymentOffice = employymentOffice;
+    public EmployymentOfficeManager(final EmploymentOfficeData employymentOffice) {
         this.random = new Random();
+        this.employymentOffice = employymentOffice;
     }
 
     /**
@@ -83,7 +83,7 @@ public class EmployymentOfficeManager {
     if (availableSpots < 1) {
         return new ArrayList<>();
     }
-    final List<DynamicPerson> disoccupiedPeople = employymentOffice.getDisoccupiedPeople();
+    final List<DynamicPerson> disoccupiedPeople = employymentOffice.disoccupied();
 
     final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
         .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
@@ -110,7 +110,7 @@ public class EmployymentOfficeManager {
     private void hirePeople(final Business business, final List<DynamicPerson> peopleToHire) {
         peopleToHire.forEach(person -> {
             business.hire(new Employee(person, business));
-            employymentOffice.removeDisoccupiedPerson(person);
+            employymentOffice.disoccupied().remove(person);
         });
     }
 
@@ -133,7 +133,7 @@ public class EmployymentOfficeManager {
      */
     private void fireEmployees(final List<Employee> employeesToFire) {
         employeesToFire.forEach(employee -> {
-            employymentOffice.addDisoccupiedPerson(employee.getPerson());
+            employymentOffice.disoccupied().add(employee.getPerson());
             employee.getBusiness().fire(employee);
         });
     }
