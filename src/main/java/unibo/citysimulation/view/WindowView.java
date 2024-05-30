@@ -67,7 +67,11 @@ public class WindowView extends JFrame {
         createComponents(width, height);
 
         setVisible(true);
-
+    }
+    /**
+     * Finalizes the window.
+     */
+    public void finalizeWindow() {
         validate();
         pack();
     }

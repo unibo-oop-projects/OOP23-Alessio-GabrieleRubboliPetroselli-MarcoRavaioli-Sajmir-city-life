@@ -35,6 +35,7 @@ public class MapImageLoader {
     private void loadMapImage() {
         try {
             final URL imageUrl = getClass().getResource("/unibo/citysimulation/images/mapImage.png");
+            final URL imageUrlll = MapImageLoader.class.getResource("/unibo/citysimulation/mapImage.png");
             if (imageUrl != null) {
                 image = ImageIO.read(imageUrl);
             } else {

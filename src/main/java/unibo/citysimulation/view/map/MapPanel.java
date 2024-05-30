@@ -10,8 +10,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.awt.BasicStroke;
-import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -66,7 +67,21 @@ public class MapPanel extends StyledPanel {
             drawTransportLines(g);
         }
     }
-
+    /**
+     * Custom serialization logic for the MapPanel class.
+     *
+     * @param ois the ObjectInputStream
+     * @throws IOException if an I/O error occurs
+     * @throws ClassNotFoundException if the class of the serialized object cannot be found
+     */
+    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        congestionsColorList = new ArrayList<>();
+        linesPointsCoordinates = new ArrayList<>();
+        peopleMap = new HashMap<>();
+        businessMap = new HashMap<>();
+        linesName = new ArrayList<>();
+    }
     /**
      * Draws the transport lines on the map.
      *
