@@ -29,7 +29,7 @@ public class MapPanel extends StyledPanel {
     private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = new ArrayList<>();
     private transient List<Color> congestionsColorList = new ArrayList<>();
     private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = new HashMap<>();
-    private transient Map<Integer, Pair<Integer, Integer>> businessMap = new HashMap<>();
+    private transient List<Pair<Integer, Integer>> businessPoints = new ArrayList<>();
     private transient List<String> linesName = new ArrayList<>();
 
     /**
@@ -78,7 +78,7 @@ public class MapPanel extends StyledPanel {
         congestionsColorList = new ArrayList<>();
         linesPointsCoordinates = new ArrayList<>();
         peopleMap = new HashMap<>();
-        businessMap = new HashMap<>();
+        businessPoints = new ArrayList<>();
         linesName = new ArrayList<>();
     }
     /**
