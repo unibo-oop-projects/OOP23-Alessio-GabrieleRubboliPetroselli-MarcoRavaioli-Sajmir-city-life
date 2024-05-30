@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.List;
 
 /**
  * Panel for displaying the clock and controlling simulation speed.
@@ -22,8 +23,8 @@ public class ClockPanel extends StyledPanel {
     private final JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
     private final JButton speedButton;
     private final JButton pauseButton;
-    private final int[] speeds = ConstantAndResourceLoader.SPEEDS;
-    private int currentSpeedIndex;
+    private final List<Integer> speeds = ConstantAndResourceLoader.SPEEDS;
+    private int currentSpeedIndex = 0;
 
     /**
      * Constructs a ClockPanel with the specified background color.
@@ -99,8 +100,8 @@ public class ClockPanel extends StyledPanel {
      * @return The new simulation speed.
      */
     public int changeSpeed() {
-        currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-        final int newSpeed = speeds[currentSpeedIndex];
+        currentSpeedIndex = (currentSpeedIndex + 1) % speeds.size();
+        final int newSpeed = speeds.get(currentSpeedIndex);
         speedButton.setText(newSpeed + "x");
         return newSpeed;
     }

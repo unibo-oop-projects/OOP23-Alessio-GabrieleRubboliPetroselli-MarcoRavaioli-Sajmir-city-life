@@ -1,5 +1,9 @@
 package unibo.citysimulation.utilities;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * A utility class that contains constants and methods for loading resources.
  */
@@ -38,7 +42,7 @@ public final class ConstantAndResourceLoader extends ClassLoader {
     /**
      * Array of available simulation speeds.
      */
-    public static final int[] SPEEDS = {1, 2, 10, 20};
+    public static final List<Integer> SPEEDS = Collections.unmodifiableList(Arrays.asList(1, 2, 10, 20));
 
     /**
      * Minimum screen width in pixels.
