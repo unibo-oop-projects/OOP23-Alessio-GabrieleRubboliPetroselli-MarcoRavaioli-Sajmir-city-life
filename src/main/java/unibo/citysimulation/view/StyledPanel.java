@@ -11,7 +11,7 @@ import java.awt.Color;
  */
 public class StyledPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private static Color bgColor;
+    private final Color bgColor;
 
     /**
      * Constructs a StyledPanel object with the specified background color.
@@ -19,6 +19,7 @@ public class StyledPanel extends JPanel {
      * @param bgColor The background color.
      */
     public StyledPanel(final Color bgColor) {
+        this.bgColor = bgColor;
         setLayout(new BorderLayout());
         final Border lineBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
         final Border emptyBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);

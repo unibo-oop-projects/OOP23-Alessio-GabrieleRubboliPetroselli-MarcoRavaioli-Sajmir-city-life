@@ -90,7 +90,7 @@ public class InputPanel extends StyledPanel {
      *
      * @param listener the action listener to be added to the start button
      */
-    public void addStartButtonListener(ActionListener listener) {
+    public void addStartButtonListener(final ActionListener listener) {
         startButton.addActionListener(listener);
     }
     /**
@@ -98,7 +98,7 @@ public class InputPanel extends StyledPanel {
      *
      * @param listener the action listener to be added to the stop button
      */
-    public void addStopButtonListener(ActionListener listener) {
+    public void addStopButtonListener(final ActionListener listener) {
         stopButton.addActionListener(listener);
     }
     /**
@@ -126,24 +126,24 @@ public class InputPanel extends StyledPanel {
         return businessSlider.getValue();
     }
     /**
-     * set the start button enabled or disabled
+     * set the start button enabled or disabled.
      * @param enabled
      */
-    public void setStartButtonEnabled(boolean enabled) {
+    public void setStartButtonEnabled(final boolean enabled) {
         startButton.setEnabled(enabled);
     }
     /**
-     * set the stop button enabled or disabled
+     * set the stop button enabled or disabled.
      * @param enabled
      */
-    public void setStopButtonEnabled(boolean enabled) {
+    public void setStopButtonEnabled(final boolean enabled) {
         stopButton.setEnabled(enabled);
     }
     /**
-     * set the sliders enabled or disabled
+     * set the sliders enabled or disabled.
      * @param enabled
      */
-    public void setSlidersEnabled(boolean enabled) {
+    public void setSlidersEnabled(final boolean enabled) {
         peopleSlider.setEnabled(enabled);
         capacitySlider.setEnabled(enabled);
         businessSlider.setEnabled(enabled);

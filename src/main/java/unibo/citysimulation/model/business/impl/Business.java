@@ -23,6 +23,8 @@ public abstract class Business implements BusinessEmployee {
     private int maxAge;
     private int maxTardiness;
     private Zone zone;
+    private static final int DEFAULT_OPENING_HOUR = 9;
+    private static final int DEFAULT_CLOSING_HOUR = 17;
 
     /**
      * Constructs a new Business object.
@@ -33,6 +35,8 @@ public abstract class Business implements BusinessEmployee {
         this.employees = new ArrayList<>();
         this.zone = zone;
         this.position = zone.getRandomPosition();
+        this.opLocalTime = LocalTime.of(DEFAULT_OPENING_HOUR, 0);
+        this.clLocalTime = LocalTime.of(DEFAULT_CLOSING_HOUR, 0);
     }
 
     /**
@@ -242,5 +246,5 @@ public abstract class Business implements BusinessEmployee {
      */
     public final void setZone(final Zone zone) {
         this.zone = zone;
-    }    
+    } 
 }

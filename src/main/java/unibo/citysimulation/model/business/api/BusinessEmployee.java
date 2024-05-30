@@ -14,7 +14,6 @@ public interface BusinessEmployee {
      * @param employee the employee to be hired
      */
     void hire(Employee employee);
-    
     /**
      * Fires an employee from the business.
      * 

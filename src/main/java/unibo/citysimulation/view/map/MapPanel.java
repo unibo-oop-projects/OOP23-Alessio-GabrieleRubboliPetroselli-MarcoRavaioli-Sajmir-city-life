@@ -10,10 +10,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.awt.BasicStroke;
-import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Panel for displaying the map.
  */
@@ -21,12 +25,12 @@ public class MapPanel extends StyledPanel {
     private static final long serialVersionUID = 1L;
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
-    private BufferedImage mapImage;
-    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
-    private List<Color> congestionsColorList = Collections.emptyList();
-    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
-    private Map<Integer, Pair<Integer, Integer>> businessMap = Collections.emptyMap();
-    private List<String> linesName = Collections.emptyList();
+    private transient BufferedImage mapImage;
+    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = new ArrayList<>();
+    private transient List<Color> congestionsColorList = new ArrayList<>();
+    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = new HashMap<>();
+    private transient List<Pair<Integer, Integer>> businessPoints = new ArrayList<>();
+    private transient List<String> linesName = new ArrayList<>();
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -54,7 +58,7 @@ public class MapPanel extends StyledPanel {
             drawPeople(g);
         }
 
-        if (businessMap != null) {
+        if (businessPoints != null) {
             drawBusinesses(g);
         }
 
@@ -62,7 +66,21 @@ public class MapPanel extends StyledPanel {
             drawTransportLines(g);
         }
     }
-
+    /**
+     * Custom serialization logic for the MapPanel class.
+     *
+     * @param ois the ObjectInputStream
+     * @throws IOException if an I/O error occurs
+     * @throws ClassNotFoundException if the class of the serialized object cannot be found
+     */
+    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        congestionsColorList = new ArrayList<>();
+        linesPointsCoordinates = new ArrayList<>();
+        peopleMap = new HashMap<>();
+        businessPoints = new ArrayList<>();
+        linesName = new ArrayList<>();
+    }
     /**
      * Draws the transport lines on the map.
      *
@@ -129,7 +147,7 @@ public class MapPanel extends StyledPanel {
         final Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
 
-        businessMap.forEach((name, point) -> {
+        businessPoints.forEach(point -> {
             final Color color = new Color(139, 69, 19);
             g2.setColor(color);
             g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
@@ -140,11 +158,12 @@ public class MapPanel extends StyledPanel {
      * Sets the lines information for the map.
      *
      * @param points the coordinates of the transport lines
-     * @param names the names of the transport lines
+     * @param names  the names of the transport lines
      */
-    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points, final List<String> names) {
-        this.linesPointsCoordinates = points;
-        this.linesName = names;
+    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points,
+            final List<String> names) {
+        this.linesPointsCoordinates = new ArrayList<>(points);
+        this.linesName = new ArrayList<>(names);
     }
 
     /**
@@ -153,19 +172,20 @@ public class MapPanel extends StyledPanel {
      * @param colors the colors of the transport lines
      */
     public void setLinesColor(final List<Color> colors) {
-        this.congestionsColorList = colors;
+        this.congestionsColorList = new ArrayList<>(colors);
+        this.congestionsColorList = new ArrayList<>(colors);
     }
 
     /**
      * Sets the entities to be displayed on the map.
      *
-     * @param peopleMap the map of people with their coordinates and colors
-     * @param businessMap the map of businesses with their coordinates
+     * @param peopleMap      the map of people with their coordinates and colors
+     * @param businessPoints the map of businesses with their coordinates
      */
-    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, 
-                final Map<Integer, Pair<Integer, Integer>> businessMap) {
-        this.peopleMap = peopleMap;
-        this.businessMap = businessMap;
+    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap,
+            final List<Pair<Integer, Integer>> businessPoints) {
+        this.peopleMap = new HashMap<>(peopleMap);
+        this.businessPoints = new ArrayList<>(businessPoints);
         repaint();
     }
 
@@ -175,8 +195,31 @@ public class MapPanel extends StyledPanel {
      * @param image The BufferedImage to set.
      */
     public void setImage(final BufferedImage image) {
-        mapImage = image;
+        mapImage = createImageDefensiveCopy(image);
         repaint();
+    }
+
+    /**
+     * Creates a defensive copy of the specified BufferedImage.
+     *
+     * @param original The original BufferedImage.
+     * @return A new BufferedImage with the same dimensions and type as the original.
+     */
+    public static BufferedImage createImageDefensiveCopy(final BufferedImage original) {
+        if (original == null) {
+            throw new IllegalArgumentException("The original image cannot be null");
+        }
+        // Create a new BufferedImage with the same dimensions and type as the original
+        final BufferedImage copy = new BufferedImage(
+            original.getWidth(),
+            original.getHeight(),
+            original.getType()
+        );
+        // Draw the original image onto the copy
+        final Graphics2D g = copy.createGraphics();
+        g.drawImage(original, 0, 0, null);
+        g.dispose();
+        return copy;
     }
 
     /**

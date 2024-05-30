@@ -2,6 +2,7 @@ package unibo.citysimulation.model.clock.impl;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.ArrayList;
 
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.person.api.DynamicPerson;
@@ -18,7 +19,7 @@ public class ClockObserverPerson implements ClockObserver {
      * @param people The list of people to observe.
      */
     public ClockObserverPerson(final List<List<DynamicPerson>> people) {
-        this.people = people;
+        this.people = new ArrayList<>(people);
     }
 
     /**

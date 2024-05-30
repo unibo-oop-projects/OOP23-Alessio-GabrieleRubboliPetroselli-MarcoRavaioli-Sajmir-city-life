@@ -1,8 +1,8 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.GraphicsModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
+import unibo.citysimulation.model.graphics.api.GraphicsModel;
 import unibo.citysimulation.view.sidepanels.GraphicsPanel;
 import unibo.citysimulation.view.sidepanels.LegendPanel;
 
@@ -17,9 +17,10 @@ public class GraphicsController implements ClockObserver {
     private final GraphicsModel graphicsModel;
 
     /**
-     * Constructs a new GraphicsController with the specified CityModel and GraphicsPanel.
+     * Constructs a new GraphicsController with the specified CityModel and
+     * GraphicsPanel.
      *
-     * @param cityModel the city model
+     * @param cityModel     the city model
      * @param graphicsPanel the graphics panel
      */
     public GraphicsController(final CityModel cityModel, final GraphicsPanel graphicsPanel) {
@@ -45,24 +46,23 @@ public class GraphicsController implements ClockObserver {
      */
     private void showLegendPanel() {
         new LegendPanel(
-            graphicsModel.getColors(),
-            cityModel.getTransportLines().stream()
-                     .map(t -> t.getName())
-                     .collect(Collectors.toList())
-        );
+                graphicsModel.getColors(),
+                cityModel.getTransportLines().stream()
+                        .map(t -> t.getName())
+                        .collect(Collectors.toList()));
     }
 
     /**
      * Updates the graphics model when the time is updated.
      *
      * @param currentTime the current time
-     * @param currentDay the current day
+     * @param currentDay  the current day
      */
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         graphicsModel.updateDataset(
-            cityModel.getAllPeople(),
-            cityModel.getTransportLines(),
-            cityModel.getBusinesses());
+                cityModel.getAllPeople(),
+                cityModel.getTransportLines(),
+                cityModel.getBusinesses());
     }
 }
