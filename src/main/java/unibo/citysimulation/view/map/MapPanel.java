@@ -10,8 +10,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.awt.BasicStroke;
-import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -24,11 +25,11 @@ public class MapPanel extends StyledPanel {
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
     private transient BufferedImage mapImage;
-    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates;
-    private transient List<Color> congestionsColorList = Collections.emptyList();
-    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap;
-    private transient Map<Integer, Pair<Integer, Integer>> businessMap;
-    private transient List<String> linesName;
+    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = new ArrayList<>();
+    private transient List<Color> congestionsColorList = new ArrayList<>();
+    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = new HashMap<>();
+    private transient Map<Integer, Pair<Integer, Integer>> businessMap = new HashMap<>();
+    private transient List<String> linesName = new ArrayList<>();
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -64,7 +65,21 @@ public class MapPanel extends StyledPanel {
             drawTransportLines(g);
         }
     }
-
+    /**
+     * Custom serialization logic for the MapPanel class.
+     *
+     * @param ois the ObjectInputStream
+     * @throws IOException if an I/O error occurs
+     * @throws ClassNotFoundException if the class of the serialized object cannot be found
+     */
+    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        congestionsColorList = new ArrayList<>();
+        linesPointsCoordinates = new ArrayList<>();
+        peopleMap = new HashMap<>();
+        businessMap = new HashMap<>();
+        linesName = new ArrayList<>();
+    }
     /**
      * Draws the transport lines on the map.
      *
