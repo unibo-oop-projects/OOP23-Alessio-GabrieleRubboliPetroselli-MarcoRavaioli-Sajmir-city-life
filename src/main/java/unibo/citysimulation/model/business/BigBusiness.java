@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.business;
 
+import java.util.LinkedList;
+
 import unibo.citysimulation.model.zone.Zone;
 
 /**
@@ -16,7 +18,8 @@ public class BigBusiness extends Business{
      * @param zone the zone where the big business is located
      */
     public BigBusiness(final Zone zone) {
-        super(zone);
+        setZone(zone);
+        setEmployees(new LinkedList<>());
         setOpLocalTime(BusinessConfig.BIG_OPENING_TIME);
         setClLocalTime(BusinessConfig.BIG_CLOSING_TIME);
         setRevenue(BusinessConfig.BIG_REVENUE);
