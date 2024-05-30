@@ -1,16 +1,21 @@
+/**
+ * Represents the model of the city simulation, containing zones, transports,
+ * businesses, and people.
+ */
 package unibo.citysimulation.model;
 
-import unibo.citysimulation.model.business.Business;
-import unibo.citysimulation.model.business.BusinessFactory;
-import unibo.citysimulation.model.clock.ClockModel;
-import unibo.citysimulation.model.clock.ClockObserverPerson;
-import unibo.citysimulation.model.clock.CloclObserverBusiness;
-import unibo.citysimulation.model.person.DynamicPerson;
-
-
-import unibo.citysimulation.model.business.EmploymentOfficeData;
-import unibo.citysimulation.model.person.PersonFactory;
-import unibo.citysimulation.model.transport.TransportFactory;
+import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
+import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.business.impl.BusinessFactory;
+import unibo.citysimulation.model.clock.api.ClockModel;
+import unibo.citysimulation.model.clock.impl.ClockModelImpl;
+import unibo.citysimulation.model.clock.impl.ClockObserverPerson;
+import unibo.citysimulation.model.clock.impl.CloclObserverBusiness;
+import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
+import unibo.citysimulation.model.map.impl.MapModelImpl;
+import unibo.citysimulation.model.person.api.DynamicPerson;
+import unibo.citysimulation.model.person.creation.PersonCreation;
+import unibo.citysimulation.model.transport.TransportCreation;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
@@ -24,260 +29,388 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import java.util.Optional;
-import java.util.Random;
-
+import java.util.Collections;
 
 /**
- * Represents the model of the city simulation, containing zones, transports, businesses, and people.
+ * Represents the model of the city simulation, containing zones, transports,
+ * businesses, and people.
  */
-public class CityModel {
-    private List<Zone> zones;
+public final class CityModel {
+    private final List<Zone> zones;
     private List<TransportLine> transports;
-   
-    private List<Business> businesses;
+    private final List<Business> businesses;
     private List<List<DynamicPerson>> people;
-    private MapModel mapModel;
-    private ClockModel clockModel;
-    private InputModel inputModel;
-    private GraphicsModel graphicsModel;
-
-    private EmploymentOfficeData employymentOffice;
-    
-
+    private final MapModelImpl mapModel;
+    private final ClockModel clockModel;
+    private final InputModel inputModel;
+    private final GraphicsModelImpl graphicsModel;
+    private final EmployymentOffice employymentOffice;
     private int frameWidth;
     private int frameHeight;
-
-    private static final Random random = new Random();
     private int totalBusinesses;
-
-
-
 
     /**
      * Constructs a CityModel object with default settings.
      */
     public CityModel() {
-        this.mapModel = new MapModel();
-        this.clockModel = new ClockModel(365);
+        takeFrameSize();
+
+        this.mapModel = new MapModelImpl();
+        this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
         this.inputModel = new InputModel();
-        this.graphicsModel = new GraphicsModel();
-
+        this.graphicsModel = new GraphicsModelImpl();
         this.zones = ZoneFactory.createZonesFromFile();
-        this.transports = TransportFactory.createTransportsFromFile(zones);
+        this.transports = TransportCreation.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
-
-        this.employymentOffice = new EmploymentOfficeData(new ArrayList<>());
-        
-
-    
+        this.employymentOffice = new EmployymentOffice();
     }
 
-    public Zone getRandomZone() {
-        if (zones.isEmpty()) {
-            throw new IllegalStateException("No zones available.");
-        }
-        return zones.get(random.nextInt(zones.size()));
-    }
-
-    public Optional<Zone> getZoneByPosition(Pair<Integer, Integer> position) {
+    /**
+     * @return the zone from a position, if present.
+     * 
+     * @param position the position to check.
+     */
+    public Optional<Zone> getZoneByPosition(final Pair<Integer, Integer> position) {
         return zones.stream()
                 .filter(zone -> isPositionInZone(position, zone))
                 .findFirst();
     }
 
-    private boolean isPositionInZone(Pair<Integer, Integer> position, Zone zone) {
-        int x = position.getFirst();
-        int y = position.getSecond();
-        Boundary boundary = zone.boundary();
+    /**
+     * @return if a position is inside a certain zone or not.
+     * 
+     * @param position the position to check.
+     * @param zone     the zone to check.
+     */
+    private boolean isPositionInZone(final Pair<Integer, Integer> position, final Zone zone) {
+        final int x = position.getFirst();
+        final int y = position.getSecond();
+        final Boundary boundary = zone.boundary();
         return x >= boundary.getX() && x <= (boundary.getX() + boundary.getWidth())
                 && y >= boundary.getY() && y <= (boundary.getY() + boundary.getHeight());
     }
 
-    //istanzo businessfactory chiamo la create e le meto random
-
     /**
-     * Creates entities such as zones, transports, businesses, and people.
-     * @param numberOfPeople The number of people to create in the simulation.
+     * Creates the remaining entities missing in the simulation start process.
      */
-    
-
-        // Create businesses
-        
-    
-
-        // Create zones
-        //this.zones = ZoneFactory.createZonesFromFile();
     public void createEntities() {
         graphicsModel.clearDatasets();
 
+        transports = TransportCreation.createTransportsFromFile(zones);
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
 
         // Create zone table
         ZoneTableCreation.createAndAddPairs(zones, transports);
+        final int numberOfPeople = getInputModel().getNumberOfPeople();
 
+        final int numberOfBusinesses = inputModel.getNumberOfBusiness();
+        calculateTotalBusinesses(numberOfPeople, numberOfBusinesses);
 
-        int numberOfPeople = getInputModel().getNumberOfPeople();
-        calculateTotalBusinesses(numberOfPeople);
-        // Create businesses
         createBusinesses();
-
 
         // Create people
         this.people = new ArrayList<>();
-        people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
+        people = PersonCreation.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
-        for (List<DynamicPerson> group : people) {
-            for (DynamicPerson person : group) {
-                employymentOffice.disoccupied().add(person);
+        for (final List<DynamicPerson> group : people) {
+            for (final DynamicPerson person : group) {
+                employymentOffice.addDisoccupiedPerson(person);
             }
         }
-
-        // Add people as observers to clock model
         clockModel.addObserver(new ClockObserverPerson(people));
 
         clockModel.addObserver(new CloclObserverBusiness(businesses, employymentOffice));
-
-        
-
-        
-
-
-        
-        
     }
 
-    public final void createBusinesses() {
+    /**
+     * Creates businesses in the city model based on the zones and their business
+     * percentages.
+     * The total number of businesses is distributed among the zones according to
+     * their business percentages.
+     * If there are remaining businesses after distributing among the zones, they
+     * are randomly assigned to the zones.
+     */
+    public void createBusinesses() {
         int remainingBusinesses = totalBusinesses;
 
-    for (Zone zone : zones) {
-        int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
-        remainingBusinesses -= zoneBusinessCount;
-
-        for (int i = 0; i < zoneBusinessCount; i++) {
-            BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(business -> {
-                businesses.add(business);
-            });
+        for (final Zone zone : zones) {
+            final int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
+            remainingBusinesses -= zoneBusinessCount;
+            for (int i = 0; i < zoneBusinessCount; i++) {
+                BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(businesses::add);
+            }
+        }
+        for (int i = 0; remainingBusinesses > 0 && i < zones.size(); i++) {
+            final Zone zone = zones.get(i);
+            BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(businesses::add);
+            remainingBusinesses--;
         }
     }
 
-    for (int i = 0; remainingBusinesses > 0 && i < zones.size(); i++) {
-        Zone zone = zones.get(i);
-        BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(business -> {
-            businesses.add(business);
-        });
-        remainingBusinesses--;
-    }
-    }
-
-    public void calculateTotalBusinesses(int numberOfPeople) {
-        this.totalBusinesses = numberOfPeople / 20;
+    /**
+     * Calculates the total number of businesses in the city model.
+     * 
+     * @param numberOfPeople
+     * @param numberOfBusinesses
+     */
+    public void calculateTotalBusinesses(final int numberOfPeople, final int numberOfBusinesses) {
+        this.totalBusinesses = numberOfPeople / 10 + numberOfBusinesses;
     }
 
+    /**
+     * Returns the total number of businesses in the city model.
+     *
+     * @return the total number of businesses
+     */
     public int getTotalBusinesses() {
         return this.totalBusinesses;
     }
-    
 
-    
+    /**
+     * Calculates the average pay for employees in the specified zone.
+     *
+     * <p>
+     * This method iterates over all businesses in the city model,
+     * checks if each business is in the specified zone, and sums the total pay
+     * for all employees in those businesses.
+     * </p>
+     *
+     * @param zone the zone for which to calculate the average pay
+     * @return the total pay for all employees in the specified zone
+     */
+    public double avaragePayZone(final Zone zone) {
+        double avarage = 0;
+        int businessCount = 0;
+        for (final Business business : businesses) {
+            if (business.getZone().equals(zone)) {
+                businessCount++;
+                double sum = 0;
+                sum += business.getEmployees().size() * business.calculatePay();
+                avarage = sum / businessCount;
+            }
+        }
+        return avarage;
+    }
 
-    
+    /**
+     * Returns the number of direct lines from a zone.
+     *
+     * @param zone the zone to check
+     * @return the number of direct lines from the zone
+     */
+    public int getNumberOfDirectLinesFromZone(final Zone zone) {
+        int numberOfDirectLines = 0;
+        for (final TransportLine transportLine : transports) {
+            if (transportLine.getLink().getFirst().equals(zone) || transportLine.getLink().getSecond().equals(zone)) {
+                numberOfDirectLines++;
+            }
+        }
+        return numberOfDirectLines;
+    }
 
-    public Pair<Integer,Integer> getFrameSize(){
+    /**
+     * Adjusts the frame size based on the screen dimensions.
+     */
+    public void takeFrameSize() {
         // Get the screen size
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Calculate the maximum dimensions based on the screen size and a constant percentage
-        int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
-        int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final int maxWidth = (int) (screenSize.getWidth() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
+        final int maxHeight = (int) (screenSize.getHeight() * ConstantAndResourceLoader.SCREEN_SIZE_PERCENTAGE);
 
         // Calculate the frame dimensions based on the maximum dimensions
-        int frameHeight = maxHeight > (maxWidth / 2) ? maxWidth / 2 : maxHeight;
-        int frameWidth = frameHeight * 2;
+        final int frameHeight = maxHeight > (maxWidth / 2) ? maxWidth / 2 : maxHeight;
+        final int frameWidth = frameHeight * 2;
 
-        // Create and return the window model with the calculated dimensions
-        return new Pair<>(frameWidth, frameHeight);
+        this.frameHeight = frameHeight;
+        this.frameWidth = frameWidth;
+    }
+
+    /**
+     * Sets the screen size to the specified width and height, adjusting dimensions
+     * to maintain aspect ratio if needed. This method also updates the map model's
+     * maximum coordinates and transport information.
+     *
+     * <p>
+     * If both the width and height have changed, the method adjusts one of the
+     * dimensions to maintain the aspect ratio based on the larger proportional
+     * change.
+     * If only the height changes, the width is adjusted to twice the height.
+     * If only the width changes, the height is adjusted to half the width.
+     * </p>
+     *
+     * @param newWidth  the new width of the screen
+     * @param newHeight the new height of the screen
+     */
+    public void setScreenSize(final int newWidth, final int newHeight) {
+        final int oldWidth = frameWidth;
+        final int oldHeight = frameHeight;
+        int width = newWidth;
+        int height = newHeight;
+        final boolean widthChanged = width != oldWidth;
+        final boolean heightChanged = height != oldHeight;
+
+        if (widthChanged && heightChanged) {
+            if ((double) width / oldWidth > (double) height / oldHeight) {
+                height = width / 2;
+            } else {
+                width = newHeight * 2;
+            }
+        } else if (heightChanged) {
+            width = height * 2;
+        } else if (widthChanged) {
+            height = width / 2;
+        }
+
+        frameWidth = width;
+        frameHeight = height;
+
+        mapModel.setMaxCoordinates(newWidth / 2, newWidth / 2);
+        mapModel.setTransportInfo(transports);
     }
 
     /**
      * Gets the map model associated with this city model.
+     * 
      * @return The map model.
      */
-    public MapModel getMapModel() {
+    public MapModelImpl getMapModel() {
         return this.mapModel;
     }
 
     /**
      * Gets the clock model associated with this city model.
+     * 
      * @return The clock model.
      */
     public ClockModel getClockModel() {
         return this.clockModel;
     }
 
+    /**
+     * @return the input model.
+     */
     public InputModel getInputModel() {
         return this.inputModel;
     }
 
-    public GraphicsModel getGraphicsModel() {
+    /**
+     * @return the graphics model.
+     */
+    public GraphicsModelImpl getGraphicsModel() {
         return this.graphicsModel;
     }
 
     /**
      * Gets the list of zones in the city model.
+     * 
      * @return The list of zones.
      */
     public List<Zone> getZones() {
-        return this.zones;
+        return Collections.unmodifiableList(this.zones);
     }
 
     /**
      * Gets the list of transport lines in the city model.
+     * 
      * @return The list of transport lines.
      */
     public List<TransportLine> getTransportLines() {
-        return this.transports;
+        return Collections.unmodifiableList(this.transports);
     }
 
     /**
      * Gets the list of businesses in the city model.
+     * 
      * @return The list of businesses.
      */
     public List<Business> getBusinesses() {
-        return this.businesses;
+        return Collections.unmodifiableList(this.businesses);
     }
 
+    /**
+     * Gets the list of all the people in the city model.
+     * 
+     * @return a list with all the people from every zone of the map.
+     */
     public List<DynamicPerson> getAllPeople() {
-        return people.stream()              // Stream<List<DynamicPerson>>
-                     .flatMap(List::stream) // Stream<DynamicPerson>
-                     .collect(Collectors.toList()); // Converti in List<DynamicPerson>
+        return people.stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
-    
 
+    /**
+     * Checks if people are present in the city model.
+     *
+     * @return True if people are present, false otherwise.
+     */
     public boolean isPeoplePresent() {
-        return this.people != null;                                                         // questo null è da togliere (come tutti gli altri)
+        return this.people != null;
     }
-    
 
+    /**
+     * Checks if there are businesses present in the city model.
+     * 
+     * @return true if there are businesses present, false otherwise.
+     */
     public boolean isBusinessesPresent() {
-        boolean res = this.businesses != null;
-        //System.out.println("Businesses present: " + res);
-        return res;
+        return this.businesses != null;
     }
 
-    public void setFrameSize(Pair<Integer, Integer> frameSize) {
-        this.frameWidth = frameSize.getFirst();
-        this.frameHeight = frameSize.getSecond();
-    }
-
-    public int getFrameWidth(){
+    /**
+     * Gets the frame width of the city model.
+     *
+     * @return The frame width.
+     */
+    public int getFrameWidth() {
         return this.frameWidth;
     }
 
-    public int getFrameHeight(){
+    /**
+     * Gets the frame height of the city model.
+     *
+     * @return The frame height.
+     */
+    public int getFrameHeight() {
         return this.frameHeight;
     }
 
-    
+    /**
+     * Gets the number of people residing in a specific zone.
+     *
+     * @param zoneName The name of the zone.
+     * @return An Optional containing the number of people residing in the specified
+     *         zone,
+     *         or an empty Optional if people is null.
+     */
+    public Optional<Integer> getPeopleInZone(final String zoneName) {
+        return Optional.ofNullable(people)
+                .map(pList -> pList.stream()
+                        .flatMap(List::stream)
+                        .filter(p -> p.getPersonData().residenceZone().name().equals(zoneName))
+                        .count())
+                .map(Long::intValue);
+    }
+
+    /**
+     * Gets the number of businesses in a specific zone.
+     *
+     * @param zoneName The name of the zone.
+     * @return The number of businesses in the specified zone.
+     */
+    public int getBusinessesInZone(final String zoneName) {
+        return (int) businesses.stream()
+                .filter(b -> b.getZone().name().equals(zoneName))
+                .count();
+    }
+    /**
+     * Removes a specified number of businesses from the city model.
+     *
+     * @param numberOfBusinesses the number of businesses to remove
+     */
+    public void removeBusinesses(final int numberOfBusinesses) {
+        for (int i = 0; i < numberOfBusinesses; i++) {
+            businesses.remove(businesses.size() - 1);
+        }
+    }
 }

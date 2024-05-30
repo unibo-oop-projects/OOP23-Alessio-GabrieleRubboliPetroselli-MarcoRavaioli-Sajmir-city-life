@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.transport;
 
+
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 
@@ -30,18 +31,49 @@ public interface TransportLine {
      * @return the duration of the transport line
      */
     int getDuration();
-
+    /**
+     * Increments the number of people in line by one.
+     */
     void incrementPersonInLine();
-
+    /**
+     * Decrements the number of people in line by one.
+     */
     void decrementPersonInLine();
-
+    /**
+     * Returns the capacity of the transport line.
+     *
+     * @return the capacity of the transport line
+     */
     int getCapacity();
-
+    /**
+     * Returns the pair of zones that the transport line links.
+     *
+     * @return the pair of zones that the transport line links
+     */
     Pair<Zone, Zone> getLink();
-
+    /**
+     * Returns the number of people in line.
+     *
+     * @return the number of people in line
+     */
     int getPersonInLine();
-
-    Pair<Zone,Zone> getLinkedZones();
-
+    /**
+     *  Resets the personInLine field.
+     * 
+     */
+    void resetPersonInLine();
+    /**
+     * Returns the pair of zones that the transport line links.
+     *
+     * @return the pair of zones that the transport line links
+     */
+    Pair<Zone, Zone> getLinkedZones();
+    /**
+     * Sets the capacity of the transport line.
+     *
+     * @param capacity the new capacity of the transport line
+     */
     void setCapacity(int capacity);
 }
+
+

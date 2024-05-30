@@ -3,89 +3,43 @@ package unibo.citysimulation.view.map;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Collections;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.awt.BasicStroke;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Panel for displaying the map.
  */
 public class MapPanel extends StyledPanel {
-    private BufferedImage mapImage;
-    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
-    private List<Color> congestionsColorList = Collections.emptyList();
-    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
-    private Map<Integer, Pair<Integer, Integer>> businessMap = Collections.emptyMap();
-    private List<String> linesName = Collections.emptyList();
+    private static final long serialVersionUID = 1L;
+    private static final Integer BASIC_STROKE_SIZE = 6;
+    private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
+    private transient BufferedImage mapImage;
+    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = new ArrayList<>();
+    private transient List<Color> congestionsColorList = new ArrayList<>();
+    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = new HashMap<>();
+    private transient List<Pair<Integer, Integer>> businessPoints = new ArrayList<>();
+    private transient List<String> linesName = new ArrayList<>();
 
     /**
      * Constructs a MapPanel with the specified background color.
+     *
+     * @param bgColor the background color of the panel
      */
-    public MapPanel() {
+    public MapPanel(final Color bgColor) {
         super(bgColor);
     }
-
-    private void drawTransportLines(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        
-        for(int i = 0; i < linesPointsCoordinates.size(); i++) {
-            int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
-            int y1 = linesPointsCoordinates.get(i).getFirst().getSecond();
-            int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
-            int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
-            g2.setColor(congestionsColorList.get(i));
-            g2.setStroke(new BasicStroke(6));
-            g2.drawLine(x1, y1, x2, y2);
-    
-            String linename = linesName.get(i);
-    
-            int midX = (x1 + x2) / 2;
-            int midY = (y1 + y2) / 2;
-    
-            // Set color to black before drawing the string
-            g2.setColor(Color.BLACK);
-            g2.setStroke(new BasicStroke(2));
-            Font currentFont = g2.getFont();
-            Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.2F);
-            g2.setFont(newFont);
-
-            FontMetrics fm = g2.getFontMetrics();
-            int textWidth = fm.stringWidth(linename);
-            int textX = midX - textWidth / 2;
-    
-            g2.drawString(linename, textX, midY);
-    
-            // Reset the font size for the next line
-            g2.setFont(currentFont);
-        }
-    }
-
-    private void drawPeople(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
-
-        peopleMap.forEach((name, info) -> {
-            Pair<Integer, Integer> point = info.getFirst();
-            Color color = info.getSecond();
-            g2.setColor(color);
-            g2.fillOval(point.getFirst(), point.getSecond(), 5, 5);
-        });
-    }
-
-    private void drawBusinesses(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
-    
-        businessMap.forEach((name, point) -> {
-            Color color = new Color(139, 69, 19);
-            g2.setColor(color);
-            g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
-        });
-    }
-    
 
     /**
      * Paints the map image on the panel.
@@ -93,7 +47,7 @@ public class MapPanel extends StyledPanel {
      * @param g The Graphics context.
      */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         // Draws the image on the JPanel
         if (mapImage != null) {
@@ -104,7 +58,7 @@ public class MapPanel extends StyledPanel {
             drawPeople(g);
         }
 
-        if (businessMap != null) {
+        if (businessPoints != null) {
             drawBusinesses(g);
         }
 
@@ -112,35 +66,160 @@ public class MapPanel extends StyledPanel {
             drawTransportLines(g);
         }
     }
+    /**
+     * Custom serialization logic for the MapPanel class.
+     *
+     * @param ois the ObjectInputStream
+     * @throws IOException if an I/O error occurs
+     * @throws ClassNotFoundException if the class of the serialized object cannot be found
+     */
+    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        congestionsColorList = new ArrayList<>();
+        linesPointsCoordinates = new ArrayList<>();
+        peopleMap = new HashMap<>();
+        businessPoints = new ArrayList<>();
+        linesName = new ArrayList<>();
+    }
+    /**
+     * Draws the transport lines on the map.
+     *
+     * @param g the Graphics context
+     */
+    private void drawTransportLines(final Graphics g) {
+        final Graphics2D g2 = (Graphics2D) g;
 
-    public void setLinesInfo(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points, List<String> names){
-        this.linesPointsCoordinates = points;
-        this.linesName = names;
+        for (int i = 0; i < linesPointsCoordinates.size(); i++) {
+            final int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
+            final int y1 = linesPointsCoordinates.get(i).getFirst().getSecond();
+            final int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
+            final int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
+            g2.setColor(congestionsColorList.get(i));
+            g2.setStroke(new BasicStroke(BASIC_STROKE_SIZE));
+            g2.drawLine(x1, y1, x2, y2);
+
+            final String linename = linesName.get(i);
+
+            final int midX = (x1 + x2) / 2;
+            final int midY = (y1 + y2) / 2;
+
+            // Set color to black before drawing the string
+            g2.setColor(Color.BLACK);
+            g2.setStroke(new BasicStroke(2));
+            final Font currentFont = g2.getFont();
+            final Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.2F);
+            g2.setFont(newFont);
+
+            final FontMetrics fm = g2.getFontMetrics();
+            final int textWidth = fm.stringWidth(linename);
+            final int textX = midX - textWidth / 2;
+
+            g2.drawString(linename, textX, midY);
+
+            // Reset the font size for the next line
+            g2.setFont(currentFont);
+        }
     }
 
-    public void setLinesColor(List<Color> colors){
-        this.congestionsColorList = colors;
+    /**
+     * Draws the people on the map.
+     *
+     * @param g the Graphics context
+     */
+    private void drawPeople(final Graphics g) {
+        final Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+
+        peopleMap.forEach((name, info) -> {
+            final Pair<Integer, Integer> point = info.getFirst();
+            final Color color = info.getSecond();
+            g2.setColor(color);
+            g2.fillOval(point.getFirst(), point.getSecond(), PEOPLE_SIZE.getFirst(), PEOPLE_SIZE.getSecond());
+        });
     }
 
-    public void setEntities(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, Map<Integer, Pair<Integer, Integer>> businessMap){
-        this.peopleMap = peopleMap;
-        this.businessMap = businessMap;
+    /**
+     * Draws the businesses on the map.
+     *
+     * @param g the Graphics context
+     */
+    private void drawBusinesses(final Graphics g) {
+        final Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(4));
+
+        businessPoints.forEach(point -> {
+            final Color color = new Color(139, 69, 19);
+            g2.setColor(color);
+            g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
+        });
     }
 
-    public void setBusinessPoints(Map<Integer, Pair<Integer, Integer>> businessMap){
-        this.businessMap = businessMap;
+    /**
+     * Sets the lines information for the map.
+     *
+     * @param points the coordinates of the transport lines
+     * @param names  the names of the transport lines
+     */
+    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points,
+            final List<String> names) {
+        this.linesPointsCoordinates = new ArrayList<>(points);
+        this.linesName = new ArrayList<>(names);
     }
-        
 
+    /**
+     * Sets the colors of the transport lines based on congestion.
+     *
+     * @param colors the colors of the transport lines
+     */
+    public void setLinesColor(final List<Color> colors) {
+        this.congestionsColorList = new ArrayList<>(colors);
+        this.congestionsColorList = new ArrayList<>(colors);
+    }
+
+    /**
+     * Sets the entities to be displayed on the map.
+     *
+     * @param peopleMap      the map of people with their coordinates and colors
+     * @param businessPoints the map of businesses with their coordinates
+     */
+    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap,
+            final List<Pair<Integer, Integer>> businessPoints) {
+        this.peopleMap = new HashMap<>(peopleMap);
+        this.businessPoints = new ArrayList<>(businessPoints);
+        repaint();
+    }
 
     /**
      * Sets the image to be displayed on the map panel.
      *
      * @param image The BufferedImage to set.
      */
-    public void setImage(BufferedImage image) {
-        mapImage = image;
+    public void setImage(final BufferedImage image) {
+        mapImage = createImageDefensiveCopy(image);
         repaint();
+    }
+
+    /**
+     * Creates a defensive copy of the specified BufferedImage.
+     *
+     * @param original The original BufferedImage.
+     * @return A new BufferedImage with the same dimensions and type as the original.
+     */
+    public static BufferedImage createImageDefensiveCopy(final BufferedImage original) {
+        if (original == null) {
+            throw new IllegalArgumentException("The original image cannot be null");
+        }
+        // Create a new BufferedImage with the same dimensions and type as the original
+        final BufferedImage copy = new BufferedImage(
+            original.getWidth(),
+            original.getHeight(),
+            original.getType()
+        );
+        // Draw the original image onto the copy
+        final Graphics2D g = copy.createGraphics();
+        g.drawImage(original, 0, 0, null);
+        g.dispose();
+        return copy;
     }
 
     /**
@@ -156,6 +235,4 @@ public class MapPanel extends StyledPanel {
             return super.getPreferredSize();
         }
     }
-
-    
 }

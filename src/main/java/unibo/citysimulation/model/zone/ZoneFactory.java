@@ -7,19 +7,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
-
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
- * Factory for creating Zone objects.
- * This factory creates a list of Zone objects with predefined information.
+ * The ZoneFactory class is responsible for creating zones from a JSON file.
+ * It provides a static method to create zones and a private helper method to create a single zone.
  */
 public final class ZoneFactory {
 
@@ -28,22 +28,23 @@ public final class ZoneFactory {
     private ZoneFactory() {
     }
 
+    /**
+     * Creates a list of zones from a JSON file.
+     *
+     * @return the list of created zones
+     */
     public static List<Zone> createZonesFromFile() {
         final List<Zone> zones = new ArrayList<>();
-
-        try {
+        try (InputStreamReader reader = new InputStreamReader(
+                new FileInputStream("src/main/resources/unibo/citysimulation/data/ZoneInfo.json"),
+                StandardCharsets.UTF_8)) {
             final Gson gson = new Gson();
-
-            final JsonArray jsonArray = gson.fromJson(
-                    new FileReader("src/main/resources/unibo/citysimulation/data/ZoneInfo.json"), JsonArray.class);
-
+            final JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
             for (final JsonElement jsonElement : jsonArray) {
                 final JsonObject jsonObject = jsonElement.getAsJsonObject();
-
                 zones.add(createZone(jsonObject));
             }
             return zones;
-
         } catch (IOException e) {
             LOGGER.error("Error reading the JSON file: {}", e.getMessage(), e);
         } catch (JsonSyntaxException e) {
@@ -52,6 +53,12 @@ public final class ZoneFactory {
         return new ArrayList<>();
     }
 
+    /**
+     * Creates a single zone from a JSON object.
+     *
+     * @param jsonObject the JSON object representing the zone
+     * @return the created zone
+     */
     private static Zone createZone(final JsonObject jsonObject) {
 
         final String name = "boundary";
@@ -66,7 +73,8 @@ public final class ZoneFactory {
                 new Pair<>(
                         jsonObject.get("ageMinMax").getAsJsonObject().get("min").getAsInt(),
                         jsonObject.get("ageMinMax").getAsJsonObject().get("max").getAsInt()),
-                new Boundary(jsonObject.get(name).getAsJsonObject().get("x1").getAsInt(),
+                new Boundary(
+                        jsonObject.get(name).getAsJsonObject().get("x1").getAsInt(),
                         jsonObject.get(name).getAsJsonObject().get("y1").getAsInt(),
                         jsonObject.get(name).getAsJsonObject().get("x2").getAsInt(),
                         jsonObject.get(name).getAsJsonObject().get("y2").getAsInt()));

@@ -1,5 +1,6 @@
 /*package unibo.citylife;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -12,14 +13,13 @@ import unibo.citysimulation.model.business.Employee;
 
 
 public class BusinessFactoryTest {
-    
     @Test
     public void testCreateBigBusiness() {
         //arrange
-        BusinessFactory factory = new BusinessFactory();
-       
-
-       
+        BusinessFactory factory = new BusinessFactory(); 
     }
 }
 */
+
+
+

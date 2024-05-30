@@ -2,103 +2,110 @@ package unibo.citysimulation.controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Optional;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.MapModel;
-import unibo.citysimulation.model.clock.ClockObserver;
+import unibo.citysimulation.model.clock.api.ClockObserver;
+import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map.
  */
-public class MapController implements ClockObserver{
-    private InfoPanel infoPanel;
-    private MapPanel mapPanel;
-    private MapModel mapModel;
-    private CityModel cityModel;
+public class MapController implements ClockObserver {
+    private final InfoPanel infoPanel;
+    private final MapPanel mapPanel;
+    private final MapModelImpl mapModel;
+    private final CityModel cityModel;
 
     /**
      * Constructs a MapController object.
      *
-     * @param model     The MapModel object containing the map data.
+     * @param cityModel The CityModel object containing the city data.
      * @param infoPanel The InfoPanel object to display additional information.
+     * @param mapPanel  The MapPanel object to display the map.
      */
-    public MapController(CityModel cityModel, InfoPanel infoPanel, MapPanel mapPanel) {
+    public MapController(final CityModel cityModel, final InfoPanel infoPanel, final MapPanel mapPanel) {
         this.cityModel = cityModel;
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;
         this.mapModel = cityModel.getMapModel();
-
-        initialize();
-        
-
     }
-
-    private void initialize(){
+    /**
+     * Initializes the map controller.
+     */
+    public void init() {
+        initialize();
+    }
+    private void initialize() {
         cityModel.getClockModel().addObserver(this);
 
         mapModel.setTransportInfo(cityModel.getTransportLines());
         mapModel.setTransportCongestion(cityModel.getTransportLines());
 
-
         mapPanel.setImage(mapModel.getImage());
 
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                handleMouseclick(e);
+            public void mouseClicked(final MouseEvent e) {
+                handleMouseClick(e);
             }
         });
 
-        
-
         mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
         mapPanel.setLinesColor(mapModel.getColorList());
-        
+    }
+
+    private void handleMouseClick(final MouseEvent e) {
+        final int x = (int) ((double) e.getX() / mapPanel.getWidth() * 1000);
+        final int y = (int) ((double) e.getY() / mapPanel.getHeight() * 1000);
+
+        updateZoneInfo(x, y);
+        mapModel.setMaxCoordinates((int) cityModel.getFrameWidth() / 2, (int) cityModel.getFrameHeight());
+    }
+
+    private void updateZoneInfo(final int x, final int y) {
+        final Optional<Zone> selectedZone = cityModel.getZoneByPosition(new Pair<>(x, y));
+        selectedZone.ifPresentOrElse(zone -> updateInfoPanelWithZone(zone, x, y), () -> clearInfoPanel(x, y));
+    }
+
+    private void updateInfoPanelWithZone(final Zone zone, final int x, final int y) {
+        infoPanel.updatePositionInfo(x, y);
+        infoPanel.updateZoneName(zone.name());
+        cityModel.getPeopleInZone(zone.name()).ifPresentOrElse(
+            infoPanel::updateNumberOfPeople,
+            () -> infoPanel.updateNumberOfPeople(0)
+        );
+        infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zone.name()));
+        infoPanel.updateAvaragePay(cityModel.avaragePayZone(zone));
+        infoPanel.updateNumberOfDirectLines(cityModel.getNumberOfDirectLinesFromZone(zone));
+    }
+
+    private void clearInfoPanel(final int x, final int y) {
+        infoPanel.updatePositionInfo(x, y);
+        infoPanel.updateZoneName("");
+        infoPanel.updateNumberOfPeople(0);
+        infoPanel.updateNumberOfBusiness(0);
+        infoPanel.updateAvaragePay(0);
+        infoPanel.updateNumberOfDirectLines(0);
     }
 
     /**
-     * Handles mouse click events.
+     * Updates the map model when the time is updated.
      *
-     * @param e The MouseEvent object representing the mouse event.
+     * @param currentTime the current time
+     * @param currentDay  the current day
      */
-    public void handleMouseclick(MouseEvent e) {
-        int x = mapModel.normalizeCoordinate(e.getX(), mapModel.getMaxX());
-        int y = mapModel.normalizeCoordinate(e.getY(), mapModel.getMaxY());
-
-        List<Zone> zones = cityModel.getZones();
-        String zoneName = ""; // Declare zoneName here
-        for (Zone zone : zones) {
-            if (zone.boundary().isInside(x, y)) {
-                zoneName = zone.name();
-                break;
-            }
-        }
-
-        mapModel.setMaxCoordinates((int) mapPanel.getSize().getWidth(), (int) mapPanel.getSize().getHeight());
-
-        mapModel.setLastClickedCoordinates(x, y);
-
-        infoPanel.updatePositionInfo(mapModel.getNormX(), mapModel.getNormY());
-        infoPanel.updateZoneName(zoneName);
-
-    }
-
-    public BufferedImage getImage() {
-        return mapModel.getImage();
-    }
-
     @Override
-    public void onTimeUpdate(LocalTime currentTime, int currentDay) {
+    public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
 
         mapModel.setTransportCongestion(cityModel.getTransportLines());
-
         mapPanel.setLinesColor(mapModel.getColorList());
-        mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), mapModel.getBusinessInfos(cityModel.getBusinesses()));
+        mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
+                mapModel.getBusinessInfos(cityModel.getBusinesses()));
     }
 }
