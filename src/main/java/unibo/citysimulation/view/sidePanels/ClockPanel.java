@@ -22,7 +22,7 @@ public class ClockPanel extends StyledPanel {
     private final JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
     private final JButton speedButton;
     private final JButton pauseButton;
-    private final int[] speeds = ConstantAndResourceLoader.SPEEDS;
+    private final int[] speeds = ConstantAndResourceLoader.getSpeeds();
     private int currentSpeedIndex;
 
     /**

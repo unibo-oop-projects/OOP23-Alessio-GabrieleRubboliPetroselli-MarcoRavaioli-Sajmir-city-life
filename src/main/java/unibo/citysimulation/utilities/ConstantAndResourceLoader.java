@@ -38,7 +38,7 @@ public final class ConstantAndResourceLoader extends ClassLoader {
     /**
      * Array of available simulation speeds.
      */
-    public static final int[] SPEEDS = {1, 2, 10, 20};
+    private static final int[] SPEEDS = {1, 2, 10, 20};
 
     /**
      * Minimum screen width in pixels.
@@ -145,4 +145,10 @@ public final class ConstantAndResourceLoader extends ClassLoader {
      * Minimum number of businesses in the simulation.
      */
     public static final int MIN_BUSINESS = 0;
+    /**
+     * @return Returns a copy of the SPEEDS array.
+     */
+    public static int[] getSpeeds() {
+        return SPEEDS.clone();
+    }
 }
