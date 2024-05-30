@@ -8,16 +8,13 @@ import unibo.citysimulation.model.clock.CloclObserverBusiness;
 import unibo.citysimulation.model.person.DynamicPerson;
 
 
-import unibo.citysimulation.model.business.BusinessType;
-import unibo.citysimulation.model.business.EmployymentOffice;
-import unibo.citysimulation.model.business.EmployymentOfficeManager;
+import unibo.citysimulation.model.business.EmploymentOfficeData;
 import unibo.citysimulation.model.person.PersonFactory;
 import unibo.citysimulation.model.transport.TransportFactory;
 import unibo.citysimulation.model.transport.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
-import unibo.citysimulation.model.zone.ZoneTable;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
@@ -46,7 +43,7 @@ public class CityModel {
     private InputModel inputModel;
     private GraphicsModel graphicsModel;
 
-    private EmployymentOffice employymentOffice;
+    private EmploymentOfficeData employymentOffice;
     
 
     private int frameWidth;
@@ -71,7 +68,7 @@ public class CityModel {
         this.transports = TransportFactory.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
 
-        this.employymentOffice = new EmployymentOffice();
+        this.employymentOffice = new EmploymentOfficeData(new ArrayList<>());
         
 
     
@@ -133,7 +130,7 @@ public class CityModel {
 
         for (List<DynamicPerson> group : people) {
             for (DynamicPerson person : group) {
-                employymentOffice.addDisoccupiedPerson(person);
+                employymentOffice.disoccupied().add(person);
             }
         }
 
@@ -144,13 +141,8 @@ public class CityModel {
 
         
 
-        //System.out.println("People groups created. " + people.size());
-        for (var group : people) {
-            //System.out.println("Group size: " + group.size());
-            
-        }
+        
 
-        EmployymentOfficeManager employmentManager = new EmployymentOfficeManager(employymentOffice);
 
         
         
