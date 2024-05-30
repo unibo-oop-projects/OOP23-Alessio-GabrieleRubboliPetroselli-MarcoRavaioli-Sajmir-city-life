@@ -12,27 +12,16 @@ import unibo.citysimulation.model.zone.Zone;
  */
 public abstract class Business implements BusinessEmployee {
 
-    private final List<Employee> employees;
+    private List<Employee> employees;
     private LocalTime opLocalTime;
     private LocalTime clLocalTime;
     private double revenue;
     private int maxEmployees;
-    private final Pair<Integer, Integer> position;
+    private Pair<Integer, Integer> position;
     private int minAge;
     private int maxAge;
     private int maxTardiness;
     private Zone zone;
-
-    /**
-     * Constructs a new Business object.
-     * 
-     * @param zone the zone in which the business is located
-     */
-    public Business(final Zone zone) {
-        this.employees = new ArrayList<>();
-        this.zone = zone;
-        this.position = zone.getRandomPosition();
-    }
 
     /**
      * Hires an employee for the business.
@@ -84,6 +73,11 @@ public abstract class Business implements BusinessEmployee {
         return position;
     }
 
+    public final Pair<Integer, Integer> setPosition(Pair <Integer, Integer> position){
+        return this.position = position;
+
+    }
+
     /**
      * Returns the list of employees in the business.
      * 
@@ -91,6 +85,10 @@ public abstract class Business implements BusinessEmployee {
      */
     public final List<Employee> getEmployees() {
         return employees != null ? employees : new ArrayList<>();
+    }
+
+    public final void setEmployees(List<Employee> employees){
+        this.employees = employees;
     }
 
     /**
@@ -236,5 +234,7 @@ public abstract class Business implements BusinessEmployee {
     public final void setZone(final Zone zone) {
         this.zone = zone;
     }    
+
+
 }
 
