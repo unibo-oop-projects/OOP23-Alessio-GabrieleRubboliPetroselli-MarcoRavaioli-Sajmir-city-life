@@ -1,7 +1,6 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 
 import java.awt.event.ComponentAdapter;
@@ -22,12 +21,10 @@ public class WindowController {
      */
     public WindowController(final WindowView windowView, final CityModel cityModel) {
         this.windowView = windowView;
-        this.cityModel = cityModel; 
+        this.cityModel = cityModel;
 
         windowView.addResizeListener(new ResizeListener());
-
         initializeControllers();
-
         windowView.updateFrame(cityModel.getFrameWidth(), cityModel.getFrameHeight());
     }
 
@@ -45,38 +42,19 @@ public class WindowController {
     private final class ResizeListener extends ComponentAdapter {
         @Override
         public void componentResized(final ComponentEvent e) {
-            super.componentResized(e);
+            final int newWidth = e.getComponent().getWidth();
+            final int newHeight = e.getComponent().getHeight();
+            cityModel.setScreenSize(newWidth, newHeight);
 
-            int newWidth = e.getComponent().getWidth();
-            int newHeight = e.getComponent().getHeight();
+            final var mapModel = cityModel.getMapModel();
+            final var mapPanel = windowView.getMapPanel();
 
-            if (newHeight != cityModel.getFrameHeight()) {
-                newWidth = newHeight * 2;
-            } else {
-                newHeight = newWidth / 2;
+            mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
+            if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()) {
+                mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
+                        mapModel.getBusinessInfos(cityModel.getBusinesses()));
             }
-
-            updateCityModel(newWidth, newHeight);
-            updateMapPanel();
-            windowView.updateFrame(newWidth, newHeight);
-        }
-    }
-
-    private void updateCityModel(final int newWidth, final int newHeight) {
-        cityModel.getMapModel().setMaxCoordinates(windowView.getMapPanel().getWidth(), windowView.getMapPanel().getHeight());
-        cityModel.getMapModel().setTransportInfo(cityModel.getTransportLines());
-        cityModel.setFrameSize(new Pair<>(newWidth, newHeight));
-    }
-
-    private void updateMapPanel() {
-        final var mapModel = cityModel.getMapModel();
-        final var mapPanel = windowView.getMapPanel();
-
-        mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
-
-        if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()) {
-            mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()), 
-                                 mapModel.getBusinessInfos(cityModel.getBusinesses()));
+            windowView.updateFrame(cityModel.getFrameWidth(), cityModel.getFrameHeight());
         }
     }
 }

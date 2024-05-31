@@ -1,11 +1,9 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.map.impl;
 
 /**
  * Utility class for handling coordinate normalization and denormalization.
  */
 public class MapCoordinateHandler {
-    private int normClickedX;
-    private int normClickedY;
     private int maxX;
     private int maxY;
 
@@ -13,21 +11,8 @@ public class MapCoordinateHandler {
      * Construct ana handler for coordinate normalization.
      */
     public MapCoordinateHandler() {
-        normClickedX = -1;
-        normClickedY = -1;
         maxX = -1;
         maxY = -1;
-    }
-
-    /**
-     * Sets the last clicked coordinates after normalization.
-     *
-     * @param x The x-coordinate of the click.
-     * @param y The y-coordinate of the click.
-     */
-    public void setLastClickedCoordinates(final int x, final int y) {
-        normClickedX = x;
-        normClickedY = y;
     }
 
     /**
@@ -41,17 +26,6 @@ public class MapCoordinateHandler {
         maxY = y;
     }
 
-        /**
-     * Normalizes a coordinate based on the maximum value.
-     *
-     * @param c   The coordinate to normalize.
-     * @param max The maximum value of the coordinate.
-     * @return The normalized coordinate.
-     */
-    public int normalizeCoordinate(final int c, final int max) {
-        return (int) (c / (double) max * 1000);
-    }
-
     /**
      * Denormalizes a coordinate based on the maximum value.
      *
@@ -61,24 +35,6 @@ public class MapCoordinateHandler {
      */
     public int denormalizeCoordinate(final int c, final int max) {
         return (int) (c / 1000.0 * max);
-    }
-
-    /**
-     * Gets the normalized x-coordinate of the last click.
-     *
-     * @return The normalized x-coordinate.
-     */
-    public int getNormX() {
-        return normClickedX;
-    }
-
-    /**
-     * Gets the normalized y-coordinate of the last click.
-     *
-     * @return The normalized y-coordinate.
-     */
-    public int getNormY() {
-        return normClickedY;
     }
 
     /**

@@ -1,4 +1,4 @@
-package unibo.citysimulation.model;
+package unibo.citysimulation.model.map.impl;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class MapImageLoader {
      * @return The BufferedImage object representing the map image.
      */
     protected BufferedImage getImage() {
-        return image;
+        return image != null ? image : new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }
 
     /**
@@ -34,7 +34,8 @@ public class MapImageLoader {
      */
     private void loadMapImage() {
         try {
-            final URL imageUrl = MapImageLoader.class.getResource("/unibo/citysimulation/mapImage.png");
+            final URL imageUrl = getClass().getResource("/unibo/citysimulation/images/mapImage.png");
+            final URL imageUrlll = MapImageLoader.class.getResource("/unibo/citysimulation/mapImage.png");
             if (imageUrl != null) {
                 image = ImageIO.read(imageUrl);
             } else {

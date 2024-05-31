@@ -99,8 +99,7 @@ public class WindowView extends JFrame {
         infoPanel.setPreferredSize(new Dimension(width / 4, height));
         clockPanel.setPreferredSize(new Dimension(width / 4, height));
         graphicsPanel.setPreferredSize(new Dimension(width / 4, height));
-        mapPanel.setPreferredSize(new Dimension(width / 2, height));
-
+        mapPanel.setSize(width / 2, height);
         revalidate();
         repaint();
     }

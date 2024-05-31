@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+
 /**
  * Panel for displaying the map.
  */
@@ -25,11 +26,12 @@ public class MapPanel extends StyledPanel {
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
     private transient BufferedImage mapImage;
-    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = new ArrayList<>();
-    private transient List<Color> congestionsColorList = new ArrayList<>();
-    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = new HashMap<>();
-    private transient Map<Integer, Pair<Integer, Integer>> businessMap = new HashMap<>();
-    private transient List<String> linesName = new ArrayList<>();
+    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections
+            .emptyList();
+    private transient List<Color> congestionsColorList = Collections.emptyList();
+    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
+    private transient List<Pair<Integer, Integer>> businessPoints = Collections.emptyList();
+    private transient List<String> linesName = Collections.emptyList();
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -57,7 +59,7 @@ public class MapPanel extends StyledPanel {
             drawPeople(g);
         }
 
-        if (businessMap != null) {
+        if (businessPoints != null) {
             drawBusinesses(g);
         }
 
@@ -146,7 +148,7 @@ public class MapPanel extends StyledPanel {
         final Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
 
-        businessMap.forEach((name, point) -> {
+        businessPoints.forEach(point -> {
             final Color color = new Color(139, 69, 19);
             g2.setColor(color);
             g2.fillRect(point.getFirst(), point.getSecond(), 10, 10);
@@ -157,9 +159,10 @@ public class MapPanel extends StyledPanel {
      * Sets the lines information for the map.
      *
      * @param points the coordinates of the transport lines
-     * @param names the names of the transport lines
+     * @param names  the names of the transport lines
      */
-    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points, final List<String> names) {
+    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points,
+            final List<String> names) {
         this.linesPointsCoordinates = new ArrayList<>(points);
         this.linesName = new ArrayList<>(names);
     }
@@ -171,18 +174,19 @@ public class MapPanel extends StyledPanel {
      */
     public void setLinesColor(final List<Color> colors) {
         this.congestionsColorList = new ArrayList<>(colors);
+        this.congestionsColorList = new ArrayList<>(colors);
     }
 
     /**
      * Sets the entities to be displayed on the map.
      *
-     * @param peopleMap the map of people with their coordinates and colors
-     * @param businessMap the map of businesses with their coordinates
+     * @param peopleMap      the map of people with their coordinates and colors
+     * @param businessPoints the map of businesses with their coordinates
      */
-    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap, 
-                final Map<Integer, Pair<Integer, Integer>> businessMap) {
+    public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap,
+            final List<Pair<Integer, Integer>> businessPoints) {
         this.peopleMap = new HashMap<>(peopleMap);
-        this.businessMap = new HashMap<>(businessMap);
+        this.businessPoints = new ArrayList<>(businessPoints);
         repaint();
     }
 
