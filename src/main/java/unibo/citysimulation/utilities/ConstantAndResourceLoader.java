@@ -152,7 +152,7 @@ public final class ConstantAndResourceLoader extends ClassLoader {
     /**
      * @return Returns a copy of the SPEEDS array.
      */
-    public static int[] getSpeeds() {
-        return SPEEDS.clone();
+    public static List<Integer> getSpeeds() {
+        return SPEEDS;
     }
 }

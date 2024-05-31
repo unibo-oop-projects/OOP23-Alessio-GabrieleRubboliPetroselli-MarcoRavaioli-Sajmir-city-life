@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collections;
 
 /**
  * Panel for displaying the map.
@@ -79,7 +80,7 @@ public class MapPanel extends StyledPanel {
         congestionsColorList = new ArrayList<>();
         linesPointsCoordinates = new ArrayList<>();
         peopleMap = new HashMap<>();
-        businessMap = new HashMap<>();
+        businessPoints = new ArrayList<>();
         linesName = new ArrayList<>();
     }
     /**
