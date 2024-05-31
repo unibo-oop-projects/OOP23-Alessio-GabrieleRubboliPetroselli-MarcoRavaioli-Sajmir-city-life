@@ -4,7 +4,7 @@
  */
 package unibo.citysimulation.model;
 
-import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
+import unibo.citysimulation.model.business.employye.api.EmploymentOfficeData;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactory;
 import unibo.citysimulation.model.clock.api.ClockModel;
@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
 import java.util.Collections;
+import java.util.LinkedList;
 
 /**
  * Represents the model of the city simulation, containing zones, transports,
@@ -45,7 +46,7 @@ public final class CityModel {
     private final ClockModel clockModel;
     private final InputModel inputModel;
     private final GraphicsModelImpl graphicsModel;
-    private final EmployymentOffice employymentOffice;
+    private final EmploymentOfficeData employymentOffice;
     private int frameWidth;
     private int frameHeight;
     private int totalBusinesses;
@@ -63,7 +64,7 @@ public final class CityModel {
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportCreation.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
-        this.employymentOffice = new EmployymentOffice();
+        this.employymentOffice = new EmploymentOfficeData(new LinkedList<>());
     }
 
     /**
@@ -115,7 +116,7 @@ public final class CityModel {
 
         for (final List<DynamicPerson> group : people) {
             for (final DynamicPerson person : group) {
-                employymentOffice.addDisoccupiedPerson(person);
+                employymentOffice.disoccupied().add(person);
             }
         }
         clockModel.addObserver(new ClockObserverPerson(people));

@@ -1,12 +1,15 @@
 package unibo.citysimulation.model.clock.impl;
 
-import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
+import unibo.citysimulation.model.business.employye.api.EmploymentOfficeData;
 import unibo.citysimulation.model.business.employye.impl.EmployymentOfficeManager;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 
 import java.util.List;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +27,8 @@ public class CloclObserverBusiness implements ClockObserver {
      * @param businesses the list of businesses
      * @param employymentOffice the employment office
      */
-    public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
-        this.businesses = businesses;
+    public CloclObserverBusiness(final List<Business> businesses, final EmploymentOfficeData employymentOffice) {
+        this.businesses = Collections.unmodifiableList(businesses);
         this.employmentManager = new EmployymentOfficeManager(employymentOffice);
         this.businessHiredCountMap = new HashMap<>();
     }

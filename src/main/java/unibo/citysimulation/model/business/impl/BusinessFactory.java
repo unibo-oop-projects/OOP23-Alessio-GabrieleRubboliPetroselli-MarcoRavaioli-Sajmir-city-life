@@ -14,6 +14,8 @@ import unibo.citysimulation.model.zone.Zone;
  */
 public final class BusinessFactory {
 
+    private static final Random RANDOM = new Random();
+
     private BusinessFactory() {
     }
 
@@ -45,7 +47,7 @@ public final class BusinessFactory {
      */
     public static Optional<Business> getRandomBusiness(final List<Zone> zones) {
         final Random random = new Random();
-        final BusinessType type = BusinessType.values()[random.nextInt(BusinessType.values().length)];
+        final BusinessType type = BusinessType.values()[RANDOM.nextInt(BusinessType.values().length)];
         final Zone zone = zones.get(random.nextInt(zones.size()));
         return createBusiness(type, zone);
     }

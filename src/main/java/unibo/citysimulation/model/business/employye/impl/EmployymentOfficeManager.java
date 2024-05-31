@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
+import unibo.citysimulation.model.business.employye.api.EmploymentOfficeData;
 import unibo.citysimulation.model.business.employye.api.HandleEmployye;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.DynamicPerson;
@@ -14,7 +15,7 @@ import unibo.citysimulation.model.person.api.DynamicPerson;
  */
 public class EmployymentOfficeManager implements HandleEmployye {
 
-    private final EmployymentOffice employymentOffice;
+    private final EmploymentOfficeData employymentOffice;
     private final Random random;
     private static final double FIRING_RATE = 0.1;
 
@@ -23,7 +24,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
      * 
      * @param employymentOffice The employment office to interact with.
      */
-    public EmployymentOfficeManager(final EmployymentOffice employymentOffice) {
+    public EmployymentOfficeManager(final EmploymentOfficeData employymentOffice) {
         this.employymentOffice = employymentOffice;
         this.random = new Random();
     }
@@ -101,7 +102,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
     private Optional<List<DynamicPerson>> getPeopleToHire(final Business business) {
         final int availableSpots = business.getMaxEmployees() - business.getEmployees().size();
         if (availableSpots > 0) {
-            final List<DynamicPerson> disoccupiedPeople = employymentOffice.getDisoccupiedPeople();
+            final List<DynamicPerson> disoccupiedPeople = employymentOffice.disoccupied();
             final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
                 .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
                 .collect(Collectors.toList());
@@ -129,7 +130,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
             people.forEach(person -> {
                 final Employee employee = new Employee(person, business);
                 business.hire(employee);
-                employymentOffice.removeDisoccupiedPerson(person);
+                employymentOffice.disoccupied().remove(person);
             });
             return people.size();
         }
@@ -155,7 +156,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
      */
     private void fireEmployees(final List<Employee> employeesToFire) {
         employeesToFire.forEach(employee -> {
-            employymentOffice.addDisoccupiedPerson(employee.getPerson());
+            employymentOffice.disoccupied().add(employee.getPerson());
             employee.getBusiness().fire(employee);
         });
     }
