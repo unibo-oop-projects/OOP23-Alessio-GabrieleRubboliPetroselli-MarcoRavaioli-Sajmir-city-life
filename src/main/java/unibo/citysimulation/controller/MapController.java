@@ -1,7 +1,7 @@
 package unibo.citysimulation.controller;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.time.LocalTime;
 import java.util.Optional;
 
@@ -16,7 +16,7 @@ import unibo.citysimulation.view.sidepanels.InfoPanel;
 /**
  * Controller class responsible for handling mouse events on the map.
  */
-public class MapController implements ClockObserver {
+public class MapController implements MouseListener, ClockObserver {
     private final InfoPanel infoPanel;
     private final MapPanel mapPanel;
     private final MapModelImpl mapModel;
@@ -34,6 +34,8 @@ public class MapController implements ClockObserver {
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;
         this.mapModel = cityModel.getMapModel();
+
+        mapPanel.addMouseListener(this);
     }
     /**
      * Initializes the map controller.
@@ -44,13 +46,6 @@ public class MapController implements ClockObserver {
         mapModel.setTransportCongestion(cityModel.getTransportLines());
 
         mapPanel.setImage(mapModel.getImage());
-
-        mapPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(final MouseEvent e) {
-                handleMouseClick(e);
-            }
-        });
 
         mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
         mapPanel.setLinesColor(mapModel.getColorList());
@@ -104,4 +99,20 @@ public class MapController implements ClockObserver {
         mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
                 mapModel.getBusinessInfos(cityModel.getBusinesses()));
     }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        handleMouseClick(e);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) { }
+
+    @Override
+    public void mouseReleased(MouseEvent e) { }
+
+    @Override
+    public void mouseEntered(MouseEvent e) { }
+
+    @Override
+    public void mouseExited(MouseEvent e) { }
 }

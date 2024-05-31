@@ -23,40 +23,40 @@ public interface WindowView {
      * @param width the new width of the window.
      * @param height the new height of the window.
      */
-    public void updateFrame(final int width, final int height);
+    void updateFrame(final int width, final int height);
 
     /**
      * Retrieves the info panel.
      *
      * @return The info panel.
      */
-    public InfoPanel getInfoPanel();
+    InfoPanel getInfoPanel();
 
     /**
      * Retrieves the clock panel.
      *
      * @return The clock panel.
      */
-    public ClockPanel getClockPanel();
+    ClockPanel getClockPanel();
 
     /**
      * Retrieves the input panel.
      *
      * @return The input panel.
      */
-    public InputPanel getInputPanel();
+    InputPanel getInputPanel();
 
     /**
      * Retrieves the graphics panel.
      *
      * @return The graphics panel.
      */
-    public GraphicsPanel getGraphicsPanel();
+    GraphicsPanel getGraphicsPanel();
 
     /**
      * Retrieves the map panel.
      *
      * @return The map panel.
      */
-    public MapPanel getMapPanel();
+    MapPanel getMapPanel();
 }

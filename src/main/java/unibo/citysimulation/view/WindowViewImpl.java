@@ -2,8 +2,10 @@ package unibo.citysimulation.view;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
+import unibo.citysimulation.view.map.MapPanelImpl;
 import unibo.citysimulation.view.sidepanels.ClockPanel;
 import unibo.citysimulation.view.sidepanels.GraphicsPanel;
+import unibo.citysimulation.view.sidepanels.GraphicsPanelImpl;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
 
@@ -58,11 +60,11 @@ public class WindowViewImpl extends JFrame implements WindowView{
 
         setLayout(new BorderLayout());
 
-        mapPanel = new MapPanel(Color.WHITE);
+        mapPanel = new MapPanelImpl(Color.WHITE);
         inputPanel = new InputPanel(COLOR_LIST.get(0));
         infoPanel = new InfoPanel(COLOR_LIST.get(1));
         clockPanel = new ClockPanel(COLOR_LIST.get(2));
-        graphicsPanel = new GraphicsPanel(COLOR_LIST.get(3));
+        graphicsPanel = new GraphicsPanelImpl(COLOR_LIST.get(3));
 
         createComponents(width, height);
 
@@ -82,14 +84,13 @@ public class WindowViewImpl extends JFrame implements WindowView{
         inputPanel.setPreferredSize(new Dimension(width / 4, height));
         infoPanel.setPreferredSize(new Dimension(width / 4, height));
         clockPanel.setPreferredSize(new Dimension(width / 4, height));
-        graphicsPanel.setPreferredSize(new Dimension(width / 4, height));
-        mapPanel.setSize(width / 2, height);
+        graphicsPanel.setPreferredSize(width / 4, height);
         revalidate();
         repaint();
     }
 
     private void createComponents(final int width, final int height) {
-        add(mapPanel, BorderLayout.CENTER);
+        add((JPanel) mapPanel, BorderLayout.CENTER);
 
         createSidePanels(width, height);
     }
@@ -122,8 +123,8 @@ public class WindowViewImpl extends JFrame implements WindowView{
 
         constraints.gridy = 1;
         constraints.weighty = WEIGHT_GRAPHICS_PANEL;
-        graphicsPanel.setPreferredSize(new Dimension(sidePanelWidth, (int) (sidePanelsHeight * WEIGHT_GRAPHICS_PANEL))); 
-        rightPanel.add(graphicsPanel, constraints);
+        graphicsPanel.setPreferredSize(sidePanelWidth, (int) (sidePanelsHeight * WEIGHT_GRAPHICS_PANEL)); 
+        rightPanel.add((JPanel) graphicsPanel, constraints);
 
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.EAST);
