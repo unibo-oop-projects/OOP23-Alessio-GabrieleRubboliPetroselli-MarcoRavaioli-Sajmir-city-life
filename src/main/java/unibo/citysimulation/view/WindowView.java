@@ -8,6 +8,9 @@ import unibo.citysimulation.view.sidepanels.GraphicsPanel;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
 
+/**
+ * Represents the main window of the application.
+ */
 public interface WindowView {
 
     /**
@@ -15,7 +18,7 @@ public interface WindowView {
      *
      * @param adapter The component adapter to add.
      */
-    void addResizeListener(final ComponentAdapter adapter);
+    void addResizeListener(ComponentAdapter adapter);
 
     /**
      * Updates the size of the panels based on the window size.
@@ -23,7 +26,7 @@ public interface WindowView {
      * @param width the new width of the window.
      * @param height the new height of the window.
      */
-    void updateFrame(final int width, final int height);
+    void updateFrame(int width, int height);
 
     /**
      * Retrieves the info panel.

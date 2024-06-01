@@ -8,30 +8,35 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseListener;
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.awt.BasicStroke;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
+
 import java.util.HashMap;
 import java.util.Collections;
 
 /**
- * Panel for displaying the map.
+ * The class that implements MapPanel interface, here there are all the methods
+ * for the MapPanel management.
  */
-public class MapPanelImpl extends StyledPanel implements MapPanel {
+public final class MapPanelImpl extends StyledPanel implements MapPanel {
     private static final long serialVersionUID = 1L;
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
+
     private transient BufferedImage mapImage;
-    private transient List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections
-            .emptyList();
-    private transient List<Color> congestionsColorList = Collections.emptyList();
-    private transient Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
-    private transient List<Pair<Integer, Integer>> businessPoints = Collections.emptyList();
-    private transient List<String> linesName = Collections.emptyList();
+    private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
+    private List<Color> congestionsColorList = Collections.emptyList();
+    private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
+    private List<Pair<Integer, Integer>> businessPoints = Collections.emptyList();
+    private List<String> linesName = Collections.emptyList();
 
     /**
      * Constructs a MapPanel with the specified background color.
@@ -42,15 +47,12 @@ public class MapPanelImpl extends StyledPanel implements MapPanel {
         super(bgColor);
     }
 
-    public void setSize(final int width, final int height) {
-        this.setSize(new Dimension(width, height));
-    }
-
     /**
      * Paints the map image on the panel.
      *
      * @param g The Graphics context.
      */
+    @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         // Draws the image on the JPanel
@@ -129,17 +131,20 @@ public class MapPanelImpl extends StyledPanel implements MapPanel {
         });
     }
 
+    @Override
     public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points,
             final List<String> names) {
         this.linesPointsCoordinates = new ArrayList<>(points);
         this.linesName = new ArrayList<>(names);
     }
 
+    @Override
     public void setLinesColor(final List<Color> colors) {
         this.congestionsColorList = new ArrayList<>(colors);
         this.congestionsColorList = new ArrayList<>(colors);
     }
 
+    @Override
     public void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap,
             final List<Pair<Integer, Integer>> businessPoints) {
         this.peopleMap = new HashMap<>(peopleMap);
@@ -147,6 +152,7 @@ public class MapPanelImpl extends StyledPanel implements MapPanel {
         repaint();
     }
 
+    @Override
     public void setImage(final BufferedImage image) {
         mapImage = createImageDefensiveCopy(image);
         repaint();
@@ -170,11 +176,6 @@ public class MapPanelImpl extends StyledPanel implements MapPanel {
     }
 
     @Override
-    public void addMouseListener(MouseListener listener) {
-        super.addMouseListener(listener);
-    }
-
-    @Override
     public int getWidth() {
         return this.getSize().width;
     }
@@ -182,5 +183,31 @@ public class MapPanelImpl extends StyledPanel implements MapPanel {
     @Override
     public int getHeight() {
         return this.getSize().height;
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        if (mapImage != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(mapImage, "png", baos);
+            byte[] imageBytes = baos.toByteArray();
+            out.writeInt(imageBytes.length);
+            out.write(imageBytes);
+        } else {
+            out.writeInt(0);
+        }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        int length = in.readInt();
+        if (length > 0) {
+            byte[] imageBytes = new byte[length];
+            in.readFully(imageBytes);
+            ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+            mapImage = ImageIO.read(bais);
+        } else {
+            mapImage = null;
+        }
     }
 }

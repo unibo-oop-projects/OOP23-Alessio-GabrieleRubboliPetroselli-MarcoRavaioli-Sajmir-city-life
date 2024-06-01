@@ -28,7 +28,7 @@ import java.awt.event.ActionListener;
 /**
  * Panel for displaying graphics.
  */
-public class GraphicsPanelImpl extends StyledPanel implements GraphicsPanel {
+public final class GraphicsPanelImpl extends StyledPanel implements GraphicsPanel {
     private static final long serialVersionUID = 1L;
     private final JButton legendButton;
 
@@ -124,7 +124,7 @@ public class GraphicsPanelImpl extends StyledPanel implements GraphicsPanel {
     }
 
     @Override
-    public void setPreferredSize(final int width, final int height){
+    public void setPreferredSize(final int width, final int height) {
         this.setPreferredSize(new Dimension(width, height));
     }
 }

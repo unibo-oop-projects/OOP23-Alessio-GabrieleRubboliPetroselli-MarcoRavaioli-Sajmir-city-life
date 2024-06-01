@@ -20,9 +20,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.ComponentAdapter;
 
 /**
- * Represents the main window of the application.
+ * Class that implments the Windowview interface.
+ * This manages all the Panels displayed in this frame and their sizes.
  */
-public class WindowViewImpl extends JFrame implements WindowView{
+public final class WindowViewImpl extends JFrame implements WindowView {
     private static final long serialVersionUID = 1L;
     private static final List<Color> COLOR_LIST = List.of(
         new Color(50, 50, 50),
@@ -77,6 +78,7 @@ public class WindowViewImpl extends JFrame implements WindowView{
         addComponentListener(adapter);
     }
 
+    @Override
     public void updateFrame(final int width, final int height) {
 
         setSize(new Dimension(width, height));
@@ -130,22 +132,27 @@ public class WindowViewImpl extends JFrame implements WindowView{
         add(rightPanel, BorderLayout.EAST);
     }
 
+    @Override
     public InfoPanel getInfoPanel() {
         return infoPanel;
     }
 
+    @Override
     public ClockPanel getClockPanel() {
         return clockPanel;
     }
 
+    @Override
     public InputPanel getInputPanel() {
         return inputPanel;
     }
 
+    @Override
     public GraphicsPanel getGraphicsPanel() {
         return graphicsPanel;
     }
 
+    @Override
     public MapPanel getMapPanel() {
         return mapPanel;
     }

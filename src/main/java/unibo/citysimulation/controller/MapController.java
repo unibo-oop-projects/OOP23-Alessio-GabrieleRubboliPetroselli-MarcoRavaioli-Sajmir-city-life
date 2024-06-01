@@ -16,7 +16,7 @@ import unibo.citysimulation.view.sidepanels.InfoPanel;
 /**
  * Controller class responsible for handling mouse events on the map.
  */
-public class MapController implements MouseListener, ClockObserver {
+public final class MapController implements MouseListener, ClockObserver {
     private final InfoPanel infoPanel;
     private final MapPanel mapPanel;
     private final MapModelImpl mapModel;
@@ -99,20 +99,28 @@ public class MapController implements MouseListener, ClockObserver {
         mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
                 mapModel.getBusinessInfos(cityModel.getBusinesses()));
     }
+
+    /**
+     * When the mouse clicks on the map in the MapPanel this method is called and
+     * updates the map model thanks to method handleMouseClick. This method updates 
+     * also the InfoPanel.
+     * 
+     * @param e
+     */
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(final MouseEvent e) {
         handleMouseClick(e);
     }
 
     @Override
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(final MouseEvent e) { }
 
     @Override
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(final MouseEvent e) { }
 
     @Override
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(final MouseEvent e) { }
 
     @Override
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(final MouseEvent e) { }
 }

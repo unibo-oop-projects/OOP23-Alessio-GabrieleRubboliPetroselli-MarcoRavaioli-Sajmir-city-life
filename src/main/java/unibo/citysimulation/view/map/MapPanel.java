@@ -8,44 +8,61 @@ import java.util.Map;
 
 import unibo.citysimulation.utilities.Pair;
 
+/**
+ * Panel for displaying the map.
+ */
 public interface MapPanel {
 
-    int getWidth();
+        /**
+         * Gets the width of the map panel.
+         *
+         * @return the width of the map panel
+         */
+        int getWidth();
 
-    int getHeight();
+        /**
+         * Gets the height of the map panel.
+         *
+         * @return the height of the map panel
+         */
+        int getHeight();
 
-    void addMouseListener(MouseListener listener);
+        /**
+         * Adds a mouse listener to the map panel.
+         *
+         * @param listener the mouse listener to add
+         */
+        void addMouseListener(MouseListener listener);
 
-    void setSize(int width, int height);
-    /**
-     * Sets the lines information for the map.
-     *
-     * @param points the coordinates of the transport lines
-     * @param names  the names of the transport lines
-     */
-    public void setLinesInfo(final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points,
-            final List<String> names);
+        /**
+         * Sets the lines information for the map.
+         *
+         * @param points the coordinates of the transport lines
+         * @param names  the names of the transport lines
+         */
+        void setLinesInfo(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points,
+                        List<String> names);
 
-    /**
-     * Sets the colors of the transport lines based on congestion.
-     *
-     * @param colors the colors of the transport lines
-     */
-    public void setLinesColor(final List<Color> colors);
+        /**
+         * Sets the colors of the transport lines based on congestion.
+         *
+         * @param colors the colors of the transport lines
+         */
+        void setLinesColor(List<Color> colors);
 
-    /**
-     * Sets the entities to be displayed on the map.
-     *
-     * @param peopleMap      the map of people with their coordinates and colors
-     * @param businessPoints the map of businesses with their coordinates
-     */
-    void setEntities(final Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap,
-            final List<Pair<Integer, Integer>> businessPoints);
+        /**
+         * Sets the entities to be displayed on the map.
+         *
+         * @param peopleMap      the map of people with their coordinates and colors
+         * @param businessPoints the map of businesses with their coordinates
+         */
+        void setEntities(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap,
+                        List<Pair<Integer, Integer>> businessPoints);
 
-    /**
-     * Sets the image to be displayed on the map panel.
-     *
-     * @param image The BufferedImage to set.
-     */
-    void setImage(final BufferedImage image);
+        /**
+         * Sets the image to be displayed on the map panel.
+         *
+         * @param image The BufferedImage to set.
+         */
+        void setImage(BufferedImage image);
 }
