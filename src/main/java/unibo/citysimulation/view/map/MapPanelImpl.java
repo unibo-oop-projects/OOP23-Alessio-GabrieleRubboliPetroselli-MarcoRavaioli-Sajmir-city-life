@@ -9,15 +9,11 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.awt.BasicStroke;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import java.util.HashMap;
 import java.util.Collections;
@@ -31,7 +27,7 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
 
-    private transient BufferedImage mapImage;
+    private transient ImageHandler imageHandler = new ImageHandler();
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
     private List<Color> congestionsColorList = Collections.emptyList();
     private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
@@ -56,6 +52,7 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         // Draws the image on the JPanel
+        BufferedImage mapImage = imageHandler.getImage();
         if (mapImage != null) {
             g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
         }
@@ -154,25 +151,8 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
 
     @Override
     public void setImage(final BufferedImage image) {
-        mapImage = createImageDefensiveCopy(image);
+        imageHandler.setImage(image);
         repaint();
-    }
-
-    private static BufferedImage createImageDefensiveCopy(final BufferedImage original) {
-        if (original == null) {
-            throw new IllegalArgumentException("The original image cannot be null");
-        }
-        // Create a new BufferedImage with the same dimensions and type as the original
-        final BufferedImage copy = new BufferedImage(
-            original.getWidth(),
-            original.getHeight(),
-            original.getType()
-        );
-        // Draw the original image onto the copy
-        final Graphics2D g = copy.createGraphics();
-        g.drawImage(original, 0, 0, null);
-        g.dispose();
-        return copy;
     }
 
     @Override
@@ -187,27 +167,9 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
 
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
-        if (mapImage != null) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(mapImage, "png", baos);
-            byte[] imageBytes = baos.toByteArray();
-            out.writeInt(imageBytes.length);
-            out.write(imageBytes);
-        } else {
-            out.writeInt(0);
-        }
     }
 
     private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        int length = in.readInt();
-        if (length > 0) {
-            byte[] imageBytes = new byte[length];
-            in.readFully(imageBytes);
-            ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
-            mapImage = ImageIO.read(bais);
-        } else {
-            mapImage = null;
-        }
     }
 }
