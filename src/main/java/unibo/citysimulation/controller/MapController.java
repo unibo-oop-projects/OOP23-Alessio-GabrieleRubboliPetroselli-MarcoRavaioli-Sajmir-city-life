@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalTime;
 import java.util.Optional;
 
-import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.CityModelImpl;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.zone.Zone;
@@ -20,7 +20,7 @@ public class MapController implements ClockObserver {
     private final InfoPanel infoPanel;
     private final MapPanel mapPanel;
     private final MapModelImpl mapModel;
-    private final CityModel cityModel;
+    private final CityModelImpl cityModel;
 
     /**
      * Constructs a MapController object.
@@ -29,7 +29,7 @@ public class MapController implements ClockObserver {
      * @param infoPanel The InfoPanel object to display additional information.
      * @param mapPanel  The MapPanel object to display the map.
      */
-    public MapController(final CityModel cityModel, final InfoPanel infoPanel, final MapPanel mapPanel) {
+    public MapController(final CityModelImpl cityModel, final InfoPanel infoPanel, final MapPanel mapPanel) {
         this.cityModel = cityModel;
         this.infoPanel = infoPanel;
         this.mapPanel = mapPanel;

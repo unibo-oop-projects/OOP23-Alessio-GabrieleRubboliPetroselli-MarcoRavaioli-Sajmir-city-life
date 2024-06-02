@@ -3,8 +3,9 @@ package unibo.citylife;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import unibo.citysimulation.model.transport.TransportCreation;
-import unibo.citysimulation.model.transport.TransportLine;
+
+import unibo.citysimulation.model.transport.api.TransportLine;
+import unibo.citysimulation.model.transport.creation.TransportCreation;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import java.util.List;

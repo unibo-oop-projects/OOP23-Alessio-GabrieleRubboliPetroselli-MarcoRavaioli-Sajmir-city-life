@@ -4,7 +4,8 @@ package unibo.citysimulation.model.zone;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import unibo.citysimulation.model.transport.TransportLine;
+
+import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 /**
  * Private constructor to prevent instantiation.
