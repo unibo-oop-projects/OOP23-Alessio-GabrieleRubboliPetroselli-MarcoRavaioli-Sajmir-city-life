@@ -6,6 +6,7 @@ import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
 import unibo.citysimulation.view.sidepanels.ClockPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
+import java.util.Objects;
 
 /**
 * Controller class responsible for handling user input from the input panel.
@@ -25,9 +26,9 @@ public class InputController {
      */
     public InputController(final CityModel cityModel, final InputModel inputModel, 
     final InputPanel inputPanel, final ClockPanel clockPanel) {
-        this.cityModel = cityModel;
-        this.inputModel = inputModel;
-        this.inputPanel = inputPanel;
+        this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
+        this.inputModel = Objects.requireNonNull(inputModel, "inputModel must not be null");
+        this.inputPanel = Objects.requireNonNull(inputPanel, "inputPanel must not be null");
 
         inputPanel.addStartButtonListener(new ActionListener() {
             @Override
