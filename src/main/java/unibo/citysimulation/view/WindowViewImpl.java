@@ -4,10 +4,10 @@ import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.map.MapPanelImpl;
 import unibo.citysimulation.view.sidepanels.ClockPanel;
-import unibo.citysimulation.view.sidepanels.GraphicsPanel;
-import unibo.citysimulation.view.sidepanels.GraphicsPanelImpl;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
+import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanel;
+import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanelImpl;
 
 import java.util.List;
 import javax.swing.JFrame;

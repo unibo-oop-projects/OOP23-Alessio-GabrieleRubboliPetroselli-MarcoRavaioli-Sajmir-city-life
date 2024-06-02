@@ -5,6 +5,7 @@ import unibo.citysimulation.view.WindowView;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Objects;
 
 /**
  * Controller class responsible for managing the main window.
@@ -20,8 +21,8 @@ public class WindowController {
      * @param cityModel
      */
     public WindowController(final WindowView windowView, final CityModel cityModel) {
-        this.windowView = windowView;
-        this.cityModel = cityModel;
+        this.windowView = Objects.requireNonNull(windowView, "windowView must not be null");
+        this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
 
         windowView.addResizeListener(new ResizeListener());
         initializeControllers();
@@ -29,7 +30,7 @@ public class WindowController {
     }
 
     private void initializeControllers() {
-        final MapController mapController = new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
+        final MapController mapController = new MapController(cityModel, windowView);
         mapController.initialize();
         cityModel.getClockModel().addObserver(new ClockController(cityModel.getClockModel(), windowView.getClockPanel()));
         new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(), windowView.getClockPanel());

@@ -1,6 +1,7 @@
 package unibo.citysimulation.model.graphics.impl;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.awt.Color;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -68,7 +69,7 @@ public class GraphicsModelImpl implements GraphicsModel {
      */
     @Override
     public List<String> getNames() {
-        return names;
+        return Collections.unmodifiableList(names);
     }
 
     /**

@@ -3,10 +3,11 @@ package unibo.citysimulation.controller;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.graphics.api.GraphicsModel;
-import unibo.citysimulation.view.sidepanels.GraphicsPanel;
-import unibo.citysimulation.view.sidepanels.LegendPanel;
+import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanel;
+import unibo.citysimulation.view.sidepanels.graphics.LegendPanel;
 
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -24,16 +25,11 @@ public class GraphicsController implements ClockObserver {
      * @param graphicsPanel the graphics panel
      */
     public GraphicsController(final CityModel cityModel, final GraphicsPanel graphicsPanel) {
-        this.cityModel = cityModel;
+        this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
         graphicsModel = cityModel.getGraphicsModel();
         initialize(graphicsPanel);
     }
 
-    /**
-     * Initializes the controller by setting up listeners and creating graphics.
-     *
-     * @param graphicsPanel the graphics panel
-     */
     private void initialize(final GraphicsPanel graphicsPanel) {
         cityModel.getClockModel().addObserver(this);
 

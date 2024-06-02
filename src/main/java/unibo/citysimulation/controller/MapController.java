@@ -3,6 +3,7 @@ package unibo.citysimulation.controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.Optional;
 
 import unibo.citysimulation.model.CityModel;
@@ -10,6 +11,7 @@ import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
+import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 
@@ -29,10 +31,10 @@ public final class MapController implements MouseListener, ClockObserver {
      * @param infoPanel The InfoPanel object to display additional information.
      * @param mapPanel  The MapPanel object to display the map.
      */
-    public MapController(final CityModel cityModel, final InfoPanel infoPanel, final MapPanel mapPanel) {
-        this.cityModel = cityModel;
-        this.infoPanel = infoPanel;
-        this.mapPanel = mapPanel;
+    public MapController(final CityModel cityModel, final WindowView windowView) {
+        this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
+        this.infoPanel = windowView.getInfoPanel();
+        this.mapPanel = windowView.getMapPanel();
         this.mapModel = cityModel.getMapModel();
 
         mapPanel.addMouseListener(this);

@@ -150,19 +150,24 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     }
 
     @Override
-    public void setImage(final BufferedImage image) {
+    public void setImage(BufferedImage image) {
+        if (imageHandler == null) {
+            imageHandler = new ImageHandler();
+        }
         imageHandler.setImage(image);
         repaint();
     }
 
     @Override
     public int getWidth() {
-        return this.getSize().width;
+        return super.getWidth();
+        //return this.getSize().width;
     }
 
     @Override
     public int getHeight() {
-        return this.getSize().height;
+        return super.getHeight();
+        //return this.getSize().height;
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws IOException {

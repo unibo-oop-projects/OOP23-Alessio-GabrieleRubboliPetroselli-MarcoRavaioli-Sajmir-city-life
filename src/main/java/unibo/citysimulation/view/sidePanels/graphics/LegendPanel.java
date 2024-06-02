@@ -1,4 +1,4 @@
-package unibo.citysimulation.view.sidepanels;
+package unibo.citysimulation.view.sidepanels.graphics;
 
 import java.awt.Color;
 import java.awt.Dimension;

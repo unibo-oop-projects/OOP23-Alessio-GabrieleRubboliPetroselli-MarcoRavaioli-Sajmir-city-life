@@ -1,4 +1,4 @@
-package unibo.citysimulation.view.sidepanels;
+package unibo.citysimulation.view.sidepanels.graphics;
 
 import java.awt.event.ActionListener;
 import java.util.List;
