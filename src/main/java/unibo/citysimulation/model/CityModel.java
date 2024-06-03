@@ -14,7 +14,17 @@ import java.util.Optional;
 /**
  * Interface for the CityModel
  */
-public interface CityModel {
+public interface CityModel { 
+    /**
+     * Create the entities of the city.
+     */
+    void createEntities();
+
+    /**
+     * Create the businesses in the city.
+     */
+    void createBusinesses();
+    
     /**
      * Get the zone in which the position is located.
      * @param position
