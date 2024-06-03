@@ -3,7 +3,7 @@ package unibo.citysimulation.model.person.impl;
 import java.util.List;
 
 import unibo.citysimulation.model.person.api.TransportStrategy;
-import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 
 public class TransportStrategyImpl implements TransportStrategy {

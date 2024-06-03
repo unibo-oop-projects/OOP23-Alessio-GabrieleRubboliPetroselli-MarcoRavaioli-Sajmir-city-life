@@ -1,8 +1,8 @@
 package unibo.citysimulation.model.person.api;
 
-import java.util.List;
+import unibo.citysimulation.model.transport.api.TransportLine;
 
-import unibo.citysimulation.model.transport.TransportLine;
+import java.util.List;
 
 public interface TransportStrategy {
     boolean isCongested(List<TransportLine> lines);
