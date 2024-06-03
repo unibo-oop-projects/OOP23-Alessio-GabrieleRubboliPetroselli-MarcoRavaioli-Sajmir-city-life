@@ -27,6 +27,8 @@ public final class GraphicsPanelImpl extends StyledPanel implements GraphicsPane
     private final JButton legendButton;
     private final ChartManager chartManager = new ChartManager();
 
+    private List<XYSeriesCollection> datasets;
+
     private static final Pair<Integer, Integer> BUTTON_DIMENSIONS = new Pair<>(70, 40);
 
     /**
@@ -57,7 +59,8 @@ public final class GraphicsPanelImpl extends StyledPanel implements GraphicsPane
     @Override
     public void createGraphics(final List<String> names, final List<XYSeriesCollection> datasets,
             final List<Color> colors) {
-        final List<XYPlot> plots = chartManager.createCharts(names, datasets).stream()
+        this.datasets = datasets;
+        final List<XYPlot> plots = chartManager.createCharts(names, this.datasets).stream()
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(chartManager.createRenderer(plot.getSeriesCount(), colors)))
                 .collect(Collectors.toList());
@@ -74,5 +77,10 @@ public final class GraphicsPanelImpl extends StyledPanel implements GraphicsPane
     @Override
     public void setPreferredSize(final int width, final int height) {
         this.setPreferredSize(new Dimension(width, height));
+    }
+
+    @Override
+    public void updateDatasets(List<XYSeriesCollection> datasets) {
+        this.datasets = datasets;
     }
 }

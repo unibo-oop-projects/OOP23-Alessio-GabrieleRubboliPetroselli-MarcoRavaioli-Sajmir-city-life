@@ -25,7 +25,7 @@ public interface GraphicsModel {
      * @param lines      the list of transport line objects representing the transportation network
      * @param businesses the list of business objects representing the businesses
      */
-    void updateDataset(List<DynamicPerson> people, List<TransportLine> lines, List<Business> businesses);
+    List<XYSeriesCollection> updateDataset(List<DynamicPerson> people, List<TransportLine> lines, List<Business> businesses);
 
     /**
      * Retrieves the datasets used in the graphics model.

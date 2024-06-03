@@ -1,7 +1,6 @@
 package unibo.citysimulation.controller;
 
 import unibo.citysimulation.model.CityModel;
-import unibo.citysimulation.model.CityModelImpl;
 import unibo.citysimulation.view.WindowView;
 
 import java.awt.event.ComponentAdapter;

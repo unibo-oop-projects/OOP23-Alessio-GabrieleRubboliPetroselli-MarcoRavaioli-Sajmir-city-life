@@ -45,9 +45,9 @@ public class GraphicsModelImpl implements GraphicsModel {
      * @param businesses List of business objects representing the businesses.
      */
     @Override
-    public void updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
+    public List<XYSeriesCollection> updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
             final List<Business> businesses) {
-        datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
+        return datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
                 StatisticCalculator.getTransportLinesCongestion(lines),
                 StatisticCalculator.getBusinessesOccupation(businesses));
     }

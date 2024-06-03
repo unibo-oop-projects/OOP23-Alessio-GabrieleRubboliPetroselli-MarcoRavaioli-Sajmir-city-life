@@ -52,9 +52,8 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
         super.paintComponent(g);
         // Draws the image on the JPanel
         final BufferedImage mapImage = imageHandler.getImage();
-        if (mapImage != null) {
-            g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
-        }
+
+        g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
 
         if (peopleMap != null) {
             drawPeople(g);

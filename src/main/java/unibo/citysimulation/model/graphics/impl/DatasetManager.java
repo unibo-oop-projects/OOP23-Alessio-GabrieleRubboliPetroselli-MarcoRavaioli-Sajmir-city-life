@@ -68,26 +68,25 @@ public class DatasetManager {
  * @param linesCongestion      List of doubles representing the congestion levels of transport lines.
  * @param businessesOccupation List of integers representing the occupation levels of businesses.
  */
-    public void updateDataset(final List<Integer> peopleState, final List<Double> linesCongestion,
+    public List<XYSeriesCollection> updateDataset(final List<Integer> peopleState, final List<Double> linesCongestion,
             final List<Integer> businessesOccupation) {
         counter++;
 
-        final List<XYSeriesCollection> datasetsCopy = datasets;
 
-        updateSeries(datasetsCopy.get(0), peopleState, counter);
-        updateSeries(datasetsCopy.get(1), linesCongestion, counter);
-        updateSeries(datasetsCopy.get(2), businessesOccupation, counter);
+        updateSeries(datasets.get(0), peopleState, counter);
+        updateSeries(datasets.get(1), linesCongestion, counter);
+        updateSeries(datasets.get(2), businessesOccupation, counter);
 
         columnCount++;
 
         if (columnCount > ConstantAndResourceLoader.MAX_COLUMNS) {
             final int columnsToRemove = columnCount - ConstantAndResourceLoader.MAX_COLUMNS;
-            datasetsCopy.forEach(ds -> removeOldColumns(ds, columnsToRemove));
+            datasets.forEach(ds -> removeOldColumns(ds, columnsToRemove));
 
             columnCount = ConstantAndResourceLoader.MAX_COLUMNS;
         }
 
-        datasets = datasetsCopy;
+        return datasets;
     }
 
     private void removeOldColumns(final XYSeriesCollection dataset, final int columnsToRemove) {

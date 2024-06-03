@@ -26,8 +26,8 @@ public final class MapController implements MouseListener, ClockObserver {
     /**
      * Constructs a MapController object.
      *
-     * @param cityModel  The CityModel object containing the city data.
-     * @param windowView The WindowView object containing the info and map panels.
+     * @param cityModel  The CityModel interface containing the method to access and modify city data.
+     * @param windowView The WindowView interface containing the method to access and modify info and map panels.
      */
     public MapController(final CityModel cityModel, final WindowView windowView) {
         this.cityModel = cityModel;
