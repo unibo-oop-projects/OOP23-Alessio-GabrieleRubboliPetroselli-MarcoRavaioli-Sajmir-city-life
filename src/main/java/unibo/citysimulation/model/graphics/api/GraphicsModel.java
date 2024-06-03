@@ -3,7 +3,7 @@ package unibo.citysimulation.model.graphics.api;
 import org.jfree.data.xy.XYSeriesCollection;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.DynamicPerson;
-import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.api.TransportLine;
 
 import java.awt.Color;
 import java.util.List;

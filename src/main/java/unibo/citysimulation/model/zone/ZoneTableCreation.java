@@ -1,8 +1,8 @@
 package unibo.citysimulation.model.zone;
 
-import unibo.citysimulation.model.transport.TransportLine;
-
 import java.util.List;
+
+import unibo.citysimulation.model.transport.api.TransportLine;
 /**
  * This class creates and adds pairs of zones and transport lines to the zone table.
  */

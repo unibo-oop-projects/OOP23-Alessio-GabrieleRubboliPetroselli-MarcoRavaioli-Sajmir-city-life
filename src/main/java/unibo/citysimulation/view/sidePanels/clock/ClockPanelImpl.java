@@ -26,7 +26,7 @@ public class ClockPanelImpl extends StyledPanel implements ClockPanel{
     private final JButton speedButton;
     private final JButton pauseButton;
     private final List<Integer> speeds = ConstantAndResourceLoader.SPEEDS;
-    private int currentSpeedIndex = 0;
+    private int currentSpeedIndex;
 
     /**
      * Constructs a ClockPanel with the specified background color.

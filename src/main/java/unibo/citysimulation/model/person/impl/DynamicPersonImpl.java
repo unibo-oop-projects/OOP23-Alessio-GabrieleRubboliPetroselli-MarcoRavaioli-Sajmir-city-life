@@ -6,7 +6,7 @@ import java.util.Random;
 
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.api.PersonData;
-import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 
 /**

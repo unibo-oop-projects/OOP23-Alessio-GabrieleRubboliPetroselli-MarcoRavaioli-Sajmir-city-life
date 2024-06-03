@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.DynamicPerson;
-import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
 /**

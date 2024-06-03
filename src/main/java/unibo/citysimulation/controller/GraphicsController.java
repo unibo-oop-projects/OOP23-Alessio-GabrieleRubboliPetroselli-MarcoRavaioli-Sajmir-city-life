@@ -1,6 +1,6 @@
 package unibo.citysimulation.controller;
 
-import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.CityModelImpl;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.graphics.api.GraphicsModel;
 import unibo.citysimulation.view.sidepanels.GraphicsPanel;
@@ -8,12 +8,12 @@ import unibo.citysimulation.view.sidepanels.LegendPanel;
 
 import java.time.LocalTime;
 import java.util.stream.Collectors;
-
+import java.util.Objects;
 /**
  * Controller for handling graphics updates in the city simulation.
  */
 public class GraphicsController implements ClockObserver {
-    private final CityModel cityModel;
+    private final CityModelImpl cityModel;
     private final GraphicsModel graphicsModel;
 
     /**
@@ -23,8 +23,8 @@ public class GraphicsController implements ClockObserver {
      * @param cityModel     the city model
      * @param graphicsPanel the graphics panel
      */
-    public GraphicsController(final CityModel cityModel, final GraphicsPanel graphicsPanel) {
-        this.cityModel = cityModel;
+    public GraphicsController(final CityModelImpl cityModel, final GraphicsPanel graphicsPanel) {
+        this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
         graphicsModel = cityModel.getGraphicsModel();
         initialize(graphicsPanel);
     }

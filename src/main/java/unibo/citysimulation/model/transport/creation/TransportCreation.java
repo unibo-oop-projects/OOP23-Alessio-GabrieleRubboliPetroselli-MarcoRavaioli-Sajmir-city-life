@@ -1,6 +1,8 @@
-package unibo.citysimulation.model.transport;
+package unibo.citysimulation.model.transport.creation;
 
 
+import unibo.citysimulation.model.transport.api.TransportLine;
+import unibo.citysimulation.model.transport.impl.TransportLineImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
