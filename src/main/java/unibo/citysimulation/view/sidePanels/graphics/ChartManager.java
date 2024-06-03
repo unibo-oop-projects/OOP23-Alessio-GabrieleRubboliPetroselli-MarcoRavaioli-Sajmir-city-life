@@ -11,13 +11,25 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public final class ChartManager {
+/**
+ * Class that manages chart and render creation.
+ */
+public final class ChartManager implements Serializable {
+    private static final long serialVersionUID = 1L;
     private static final Double GRAPH_MARGIN = 0.01;
     private static final Integer GRAPH_RANGE = 105;
 
+    /**
+     * Creates a chart with the specified title and dataset.
+     *
+     * @param title the title of the chart
+     * @param dataset the dataset for the chart
+     * @return a JFreeChart object representing the chart
+     */
     private JFreeChart createChart(final String title, final XYDataset dataset) {
         final JFreeChart chart = ChartFactory.createXYLineChart(
                 title,
@@ -43,6 +55,13 @@ public final class ChartManager {
         return chart;
     }
 
+    /**
+     * Creates an XYLineAndShapeRenderer with the specified number of series and colors.
+     *
+     * @param num the number of series
+     * @param colors the list of colors for the series
+     * @return an XYLineAndShapeRenderer object
+     */
     public XYLineAndShapeRenderer createRenderer(final int num, final List<Color> colors) {
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         for (int i = 0; i < num; i++) {
@@ -53,6 +72,13 @@ public final class ChartManager {
         return renderer;
     }
 
+    /**
+     * Creates a list of charts with the specified names and datasets.
+     *
+     * @param names the list of names for the charts
+     * @param datasets the list of datasets for the charts
+     * @return a list of JFreeChart objects
+     */
     public List<JFreeChart> createCharts(final List<String> names, final List<XYSeriesCollection> datasets) {
         final List<JFreeChart> charts = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {

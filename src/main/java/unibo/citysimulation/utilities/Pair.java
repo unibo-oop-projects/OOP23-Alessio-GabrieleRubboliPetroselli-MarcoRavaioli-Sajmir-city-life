@@ -8,9 +8,9 @@ import java.io.Serializable;
  * @param <F> the type of the first value
  * @param <S> the type of the second value
  */
-public class Pair<F, S> implements Serializable{
+public class Pair<F, S> implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     private final F first;
     private final S second;
 

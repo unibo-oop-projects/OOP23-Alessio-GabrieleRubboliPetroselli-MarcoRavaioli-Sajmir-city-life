@@ -5,16 +5,30 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Serializable;
 
-public class ImageHandler implements Serializable {
+/**
+ * Class that handles the mapImage with serialization and deserialization.
+ * Creates defensive copies of the mapImage when necessary.
+ */
+public final class ImageHandler implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private transient BufferedImage image;
 
+    /**
+     * Gets a defensive copy of the current image.
+     *
+     * @return a defensive copy of the current image
+     */
     public BufferedImage getImage() {
         return createImageDefensiveCopy(image);
     }
 
-    public void setImage(BufferedImage image) {
+    /**
+     * Sets the image with a defensive copy.
+     *
+     * @param image the image to set
+     */
+    public void setImage(final BufferedImage image) {
         this.image = createImageDefensiveCopy(image);
     }
 
@@ -33,7 +47,7 @@ public class ImageHandler implements Serializable {
         return copy;
     }
 
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+    private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
     }
 }

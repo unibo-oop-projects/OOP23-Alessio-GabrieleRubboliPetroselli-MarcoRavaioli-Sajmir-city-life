@@ -27,9 +27,8 @@ public final class MapController implements MouseListener, ClockObserver {
     /**
      * Constructs a MapController object.
      *
-     * @param cityModel The CityModel object containing the city data.
-     * @param infoPanel The InfoPanel object to display additional information.
-     * @param mapPanel  The MapPanel object to display the map.
+     * @param cityModel  The CityModel object containing the city data.
+     * @param windowView The WindowView object containing the info and map panels.
      */
     public MapController(final CityModel cityModel, final WindowView windowView) {
         this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
@@ -39,6 +38,7 @@ public final class MapController implements MouseListener, ClockObserver {
 
         mapPanel.addMouseListener(this);
     }
+
     /**
      * Initializes the map controller.
      */
@@ -70,9 +70,8 @@ public final class MapController implements MouseListener, ClockObserver {
         infoPanel.updatePositionInfo(x, y);
         infoPanel.updateZoneName(zone.name());
         cityModel.getPeopleInZone(zone.name()).ifPresentOrElse(
-            infoPanel::updateNumberOfPeople,
-            () -> infoPanel.updateNumberOfPeople(0)
-        );
+                infoPanel::updateNumberOfPeople,
+                () -> infoPanel.updateNumberOfPeople(0));
         infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zone.name()));
         infoPanel.updateAvaragePay(cityModel.avaragePayZone(zone));
         infoPanel.updateNumberOfDirectLines(cityModel.getNumberOfDirectLinesFromZone(zone));
@@ -104,7 +103,7 @@ public final class MapController implements MouseListener, ClockObserver {
 
     /**
      * When the mouse clicks on the map in the MapPanel this method is called and
-     * updates the map model thanks to method handleMouseClick. This method updates 
+     * updates the map model thanks to method handleMouseClick. This method updates
      * also the InfoPanel.
      * 
      * @param e
@@ -115,14 +114,18 @@ public final class MapController implements MouseListener, ClockObserver {
     }
 
     @Override
-    public void mousePressed(final MouseEvent e) { }
+    public void mousePressed(final MouseEvent e) {
+    }
 
     @Override
-    public void mouseReleased(final MouseEvent e) { }
+    public void mouseReleased(final MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(final MouseEvent e) { }
+    public void mouseEntered(final MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(final MouseEvent e) { }
+    public void mouseExited(final MouseEvent e) {
+    }
 }

@@ -9,7 +9,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.awt.BasicStroke;
 import java.util.List;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
 
-    private transient ImageHandler imageHandler = new ImageHandler();
+    private final ImageHandler imageHandler = new ImageHandler();
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
     private List<Color> congestionsColorList = Collections.emptyList();
     private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
@@ -52,7 +51,7 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         // Draws the image on the JPanel
-        BufferedImage mapImage = imageHandler.getImage();
+        final BufferedImage mapImage = imageHandler.getImage();
         if (mapImage != null) {
             g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
         }
@@ -150,31 +149,18 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     }
 
     @Override
-    public void setImage(BufferedImage image) {
-        if (imageHandler == null) {
-            imageHandler = new ImageHandler();
-        }
+    public void setImage(final BufferedImage image) {
         imageHandler.setImage(image);
         repaint();
     }
 
     @Override
     public int getWidth() {
-        return super.getWidth();
-        //return this.getSize().width;
+        return this.getSize().width;
     }
 
     @Override
     public int getHeight() {
-        return super.getHeight();
-        //return this.getSize().height;
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
+        return this.getSize().height;
     }
 }
