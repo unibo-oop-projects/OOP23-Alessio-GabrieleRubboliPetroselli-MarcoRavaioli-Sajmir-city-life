@@ -13,7 +13,7 @@ import java.awt.BasicStroke;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-
+import java.util.stream.IntStream;
 import java.util.HashMap;
 import java.util.Collections;
 
@@ -50,20 +50,17 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        // Draws the image on the JPanel
-        final BufferedImage mapImage = imageHandler.getImage();
+        imageHandler.getImage().ifPresent(image -> g.drawImage(image, 0, 0, getWidth(), getHeight(), this));
 
-        g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
-
-        if (peopleMap != null) {
+        if (peopleMap.isEmpty()) {
             drawPeople(g);
         }
 
-        if (businessPoints != null) {
+        if (!businessPoints.isEmpty()) {
             drawBusinesses(g);
         }
 
-        if (linesPointsCoordinates != null) {
+        if (!linesPointsCoordinates.isEmpty()) {
             drawTransportLines(g);
         }
     }
@@ -71,36 +68,33 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     private void drawTransportLines(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
 
-        for (int i = 0; i < linesPointsCoordinates.size(); i++) {
-            final int x1 = linesPointsCoordinates.get(i).getFirst().getFirst();
-            final int y1 = linesPointsCoordinates.get(i).getFirst().getSecond();
-            final int x2 = linesPointsCoordinates.get(i).getSecond().getFirst();
-            final int y2 = linesPointsCoordinates.get(i).getSecond().getSecond();
+        IntStream.range(0, linesPointsCoordinates.size()).forEach(i -> {
+            final Pair<Integer, Integer> start = linesPointsCoordinates.get(i).getFirst();
+            final Pair<Integer, Integer> end = linesPointsCoordinates.get(i).getSecond();
             g2.setColor(congestionsColorList.get(i));
             g2.setStroke(new BasicStroke(BASIC_STROKE_SIZE));
-            g2.drawLine(x1, y1, x2, y2);
+            g2.drawLine(start.getFirst(), start.getSecond(), end.getFirst(), end.getSecond());
 
-            final String linename = linesName.get(i);
+            final String lineName = linesName.get(i);
+            final int midX = (start.getFirst() + end.getFirst()) / 2;
+            final int midY = (start.getSecond() + end.getSecond()) / 2;
 
-            final int midX = (x1 + x2) / 2;
-            final int midY = (y1 + y2) / 2;
+            drawCenteredString(g2, lineName, midX, midY);
+        });
+    }
 
-            // Set color to black before drawing the string
-            g2.setColor(Color.BLACK);
-            g2.setStroke(new BasicStroke(2));
-            final Font currentFont = g2.getFont();
-            final Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.2F);
-            g2.setFont(newFont);
+    private void drawCenteredString(Graphics2D g2, String text, int x, int y) {
+        g2.setColor(Color.BLACK);
+        g2.setStroke(new BasicStroke(2));
+        final Font originalFont = g2.getFont();
+        final Font newFont = originalFont.deriveFont(originalFont.getSize() * 1.2F);
+        g2.setFont(newFont);
 
-            final FontMetrics fm = g2.getFontMetrics();
-            final int textWidth = fm.stringWidth(linename);
-            final int textX = midX - textWidth / 2;
+        final FontMetrics fm = g2.getFontMetrics();
+        final int textWidth = fm.stringWidth(text);
+        g2.drawString(text, x - textWidth / 2, y);
 
-            g2.drawString(linename, textX, midY);
-
-            // Reset the font size for the next line
-            g2.setFont(currentFont);
-        }
+        g2.setFont(originalFont);
     }
 
     private void drawPeople(final Graphics g) {
@@ -135,7 +129,6 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
 
     @Override
     public void setLinesColor(final List<Color> colors) {
-        this.congestionsColorList = new ArrayList<>(colors);
         this.congestionsColorList = new ArrayList<>(colors);
     }
 

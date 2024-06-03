@@ -2,8 +2,8 @@ package unibo.citysimulation.view.map;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * Class that handles the mapImage with serialization and deserialization.
@@ -19,8 +19,8 @@ public final class ImageHandler implements Serializable {
      *
      * @return a defensive copy of the current image
      */
-    public BufferedImage getImage() {
-        return createImageDefensiveCopy(image);
+    public Optional<BufferedImage> getImage() {
+        return Optional.ofNullable(createImageDefensiveCopy(image));
     }
 
     /**
@@ -33,7 +33,7 @@ public final class ImageHandler implements Serializable {
     }
 
     private static BufferedImage createImageDefensiveCopy(final BufferedImage original) {
-        if (original == null) {
+        if (original.equals(null)) {
             throw new IllegalArgumentException("The original image cannot be null");
         }
         final BufferedImage copy = new BufferedImage(
@@ -45,9 +45,5 @@ public final class ImageHandler implements Serializable {
         g.drawImage(original, 0, 0, null);
         g.dispose();
         return copy;
-    }
-
-    private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
     }
 }
