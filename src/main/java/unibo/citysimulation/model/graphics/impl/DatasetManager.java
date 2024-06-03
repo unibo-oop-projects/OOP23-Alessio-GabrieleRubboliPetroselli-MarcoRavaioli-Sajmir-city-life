@@ -68,7 +68,7 @@ public class DatasetManager {
  * @param linesCongestion      List of doubles representing the congestion levels of transport lines.
  * @param businessesOccupation List of integers representing the occupation levels of businesses.
  */
-    public List<XYSeriesCollection> updateDataset(final List<Integer> peopleState, final List<Double> linesCongestion,
+    public void updateDataset(final List<Integer> peopleState, final List<Double> linesCongestion,
             final List<Integer> businessesOccupation) {
         counter++;
 
@@ -85,8 +85,6 @@ public class DatasetManager {
 
             columnCount = ConstantAndResourceLoader.MAX_COLUMNS;
         }
-
-        return datasets;
     }
 
     private void removeOldColumns(final XYSeriesCollection dataset, final int columnsToRemove) {

@@ -8,7 +8,6 @@ import unibo.citysimulation.model.transport.api.TransportLine;
 import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.Color;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Interface for managing datasets used in the graphical representation of the city simulation.
@@ -27,7 +26,7 @@ public interface GraphicsModel {
      * @param lines      the list of transport line objects representing the transportation network
      * @param businesses the list of business objects representing the businesses
      */
-    Optional<List<XYSeriesCollection>> updateDataset(List<DynamicPerson> people, List<TransportLine> lines, List<Business> businesses, int updateRate);
+    void updateDataset(List<DynamicPerson> people, List<TransportLine> lines, List<Business> businesses, int updateRate);
 
     /**
      * Retrieves the datasets used in the graphics model.

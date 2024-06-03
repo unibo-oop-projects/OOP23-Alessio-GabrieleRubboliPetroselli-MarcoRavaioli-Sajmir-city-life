@@ -13,7 +13,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Class that manages chart and render creation.
@@ -64,11 +65,11 @@ public final class ChartManager implements Serializable {
      */
     public XYLineAndShapeRenderer createRenderer(final int num, final List<Color> colors) {
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        for (int i = 0; i < num; i++) {
+        IntStream.range(0, num).forEach(i -> {
             renderer.setSeriesPaint(i, colors.get(i));
             renderer.setSeriesShapesVisible(i, false);
             renderer.setSeriesStroke(i, new BasicStroke(2.0f));
-        }
+        });
         return renderer;
     }
 
@@ -80,10 +81,8 @@ public final class ChartManager implements Serializable {
      * @return a list of JFreeChart objects
      */
     public List<JFreeChart> createCharts(final List<String> names, final List<XYSeriesCollection> datasets) {
-        final List<JFreeChart> charts = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            charts.add(createChart(names.get(i), datasets.get(i)));
-        }
-        return charts;
+        return IntStream.range(0, names.size())
+                .mapToObj(i -> createChart(names.get(i), datasets.get(i)))
+                .collect(Collectors.toList());
     }
 }

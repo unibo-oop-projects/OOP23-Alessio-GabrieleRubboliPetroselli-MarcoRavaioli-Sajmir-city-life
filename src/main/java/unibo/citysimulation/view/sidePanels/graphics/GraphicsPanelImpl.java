@@ -1,6 +1,5 @@
 package unibo.citysimulation.view.sidepanels.graphics;
 
-import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
 import org.jfree.chart.ChartPanel;
@@ -24,31 +23,41 @@ import java.awt.event.ActionListener;
  */
 public final class GraphicsPanelImpl extends StyledPanel implements GraphicsPanel {
     private static final long serialVersionUID = 1L;
+    private static final Dimension BUTTON_DIMENSIONS = new Dimension(70, 40);
+
     private final JButton legendButton;
-    private final ChartManager chartManager = new ChartManager();
-
-    private List<XYSeriesCollection> datasets;
-
-    private static final Pair<Integer, Integer> BUTTON_DIMENSIONS = new Pair<>(70, 40);
-
+    private final ChartManager chartManager;
     /**
      * Constructs a GraphicsPanel with the specified background color.
      *
      * @param bgColor The background color of the panel.
      */
-    public GraphicsPanelImpl(final Color bgColor) {
+    public GraphicsPanelImpl(final Color bgColor, final ChartManager chartManager) {
         super(bgColor);
+        this.chartManager = chartManager;
 
-        this.legendButton = new JButton("?");
-        this.legendButton.setPreferredSize(new Dimension(BUTTON_DIMENSIONS.getFirst(), BUTTON_DIMENSIONS.getSecond()));
+        this.legendButton = createLegendButton();
 
-        final JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Create a new panel for the button
+        final JPanel bottomPanel = createBottomPanel(bgColor);
+        new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(bgColor);
-        bottomPanel.add(this.legendButton); // Add the button to the panel
+        bottomPanel.add(this.legendButton);
 
-        // Add the bottom panel to this panel
-        this.setLayout(new BorderLayout()); // Set layout of GraphicsPanel
-        this.add(bottomPanel, BorderLayout.SOUTH); // Add the panel to the SOUTH position
+        this.setLayout(new BorderLayout());
+        this.add(bottomPanel, BorderLayout.SOUTH);
+    }
+
+    private JButton createLegendButton() {
+        final JButton button = new JButton("?");
+        button.setPreferredSize(BUTTON_DIMENSIONS);
+        return button;
+    }
+
+    private JPanel createBottomPanel(final Color bgColor) {
+        final JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottomPanel.setBackground(bgColor);
+        bottomPanel.add(legendButton);
+        return bottomPanel;
     }
 
     @Override
@@ -59,28 +68,26 @@ public final class GraphicsPanelImpl extends StyledPanel implements GraphicsPane
     @Override
     public void createGraphics(final List<String> names, final List<XYSeriesCollection> datasets,
             final List<Color> colors) {
-        this.datasets = datasets;
-        final List<XYPlot> plots = chartManager.createCharts(names, this.datasets).stream()
+
+        final List<XYPlot> plots = chartManager.createCharts(names, datasets).stream()
                 .map(JFreeChart::getXYPlot)
                 .peek(plot -> plot.setRenderer(chartManager.createRenderer(plot.getSeriesCount(), colors)))
                 .collect(Collectors.toList());
 
+        final JPanel chartsPanel = createChartsPanel(plots);
+        this.add(chartsPanel, BorderLayout.CENTER);
+    }
+
+    private JPanel createChartsPanel(final List<XYPlot> plots) {
         final JPanel chartsPanel = new JPanel();
         chartsPanel.setBackground(super.getBgColor());
         chartsPanel.setLayout(new GridLayout(plots.size(), 1));
-
         plots.forEach(plot -> chartsPanel.add(new ChartPanel(plot.getChart())));
-
-        this.add(chartsPanel, BorderLayout.CENTER);
+        return chartsPanel;
     }
 
     @Override
     public void setPreferredSize(final int width, final int height) {
         this.setPreferredSize(new Dimension(width, height));
-    }
-
-    @Override
-    public void updateDatasets(List<XYSeriesCollection> datasets) {
-        this.datasets = datasets;
     }
 }

@@ -6,6 +6,7 @@ import unibo.citysimulation.view.map.MapPanelImpl;
 import unibo.citysimulation.view.sidepanels.ClockPanel;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
+import unibo.citysimulation.view.sidepanels.graphics.ChartManager;
 import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanel;
 import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanelImpl;
 
@@ -65,7 +66,7 @@ public final class WindowViewImpl extends JFrame implements WindowView {
         inputPanel = new InputPanel(COLOR_LIST.get(0));
         infoPanel = new InfoPanel(COLOR_LIST.get(1));
         clockPanel = new ClockPanel(COLOR_LIST.get(2));
-        graphicsPanel = new GraphicsPanelImpl(COLOR_LIST.get(3));
+        graphicsPanel = new GraphicsPanelImpl(COLOR_LIST.get(3), new ChartManager());
 
         createComponents(width, height);
 

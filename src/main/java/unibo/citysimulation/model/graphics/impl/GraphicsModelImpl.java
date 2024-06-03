@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 import java.awt.Color;
 import org.jfree.data.xy.XYSeriesCollection;
-import java.util.Optional;
 
 /**
  * Manages datasets for graphical representation of various simulation data.
@@ -49,13 +48,14 @@ public final class GraphicsModelImpl implements GraphicsModel {
      * @param businesses List of business objects representing the businesses.
      */
     @Override
-    public Optional<List<XYSeriesCollection>> updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
+    public void updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
             final List<Business> businesses, final int updateRate) {
 
-        //System.out.println("updateRate: " + updateRate + " iterationPErUpdate/updateRate: " + (double)(ITERATION_PER_UPDATE / updateRate) + " tutto ");
-        return iterationCount++ % (ITERATION_PER_UPDATE / updateRate) == 0 ? Optional.of(datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
+        if(iterationCount++ % (ITERATION_PER_UPDATE / updateRate) == 0){
+            datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
                 StatisticCalculator.getTransportLinesCongestion(lines),
-                StatisticCalculator.getBusinessesOccupation(businesses))) : Optional.empty();
+                StatisticCalculator.getBusinessesOccupation(businesses));
+        }
     }
 
     /**

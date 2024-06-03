@@ -36,6 +36,4 @@ public interface GraphicsPanel {
      * @param height the new height of the panel
      */
     void setPreferredSize(int width, int height);
-
-    void updateDatasets(List<XYSeriesCollection> datasets);
 }
