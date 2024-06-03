@@ -10,7 +10,7 @@ import unibo.citysimulation.model.business.impl.BusinessFactory;
 import unibo.citysimulation.model.clock.api.ClockModel;
 import unibo.citysimulation.model.clock.impl.ClockModelImpl;
 import unibo.citysimulation.model.clock.impl.ClockObserverPerson;
-import unibo.citysimulation.model.clock.impl.CloclObserverBusiness;
+import unibo.citysimulation.model.clock.impl.ClockObserverBusiness;
 import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.person.api.DynamicPerson;
@@ -120,7 +120,7 @@ public final class CityModel {
         }
         clockModel.addObserver(new ClockObserverPerson(people));
 
-        clockModel.addObserver(new CloclObserverBusiness(businesses, employymentOffice));
+        clockModel.addObserver(new ClockObserverBusiness(businesses, employymentOffice));
     }
 
     /**

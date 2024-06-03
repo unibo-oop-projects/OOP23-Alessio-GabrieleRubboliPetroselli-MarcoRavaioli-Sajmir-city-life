@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
-import unibo.citysimulation.view.sidepanels.ClockPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
+import unibo.citysimulation.view.sidepanels.clock.ClockPanel;
 
 /**
 * Controller class responsible for handling user input from the input panel.
@@ -66,7 +66,7 @@ public class InputController {
         cityModel.getClockModel().restartSimulation();
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().isPaused());
-        clockPanel.getPauseButton().setEnabled(true);
+        clockPanel.setPauseButtonEnabled(true);
     }
 
     private void stopSimulation(final ClockPanel clockPanel) {
@@ -78,7 +78,7 @@ public class InputController {
 
         // Update the pause button state on the clock panel
         clockPanel.updatePauseButton(cityModel.getClockModel().isPaused());
-        clockPanel.getPauseButton().setEnabled(false);
+        clockPanel.setPauseButtonEnabled(false);
     }
 }
 

@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * A ClockObserver implementation that handles business-related operations based on time updates.
  */
-public class CloclObserverBusiness implements ClockObserver {
+public class ClockObserverBusiness implements ClockObserver {
     private final List<Business> businesses;
     private final EmployymentOfficeManager employmentManager;
     private final Map<Business, Integer> businessHiredCountMap;
@@ -24,7 +24,7 @@ public class CloclObserverBusiness implements ClockObserver {
      * @param businesses the list of businesses
      * @param employymentOffice the employment office
      */
-    public CloclObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
+    public ClockObserverBusiness(final List<Business> businesses, final EmployymentOffice employymentOffice) {
         this.businesses = businesses;
         this.employmentManager = new EmployymentOfficeManager(employymentOffice);
         this.businessHiredCountMap = new HashMap<>();

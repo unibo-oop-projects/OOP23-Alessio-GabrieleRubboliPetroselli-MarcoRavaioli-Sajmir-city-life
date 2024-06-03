@@ -2,6 +2,7 @@ package unibo.citysimulation.model.person.impl;
 
 import java.util.Optional;
 import java.util.Arrays;
+import java.util.Random;
 
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.StaticPerson;
@@ -131,7 +132,8 @@ public class StaticPersonImpl implements StaticPerson {
      *         and 20.
      */
     private int getRandomDeviation() {
-        return (int) (Math.random() * ConstantAndResourceLoader.MAX_DEVIATION_RANGE)
+        final Random random = new Random();
+        return random.nextInt(ConstantAndResourceLoader.MAX_DEVIATION_RANGE)
                 - ConstantAndResourceLoader.MAX_DEVIATION_OFFSET;
     }
 

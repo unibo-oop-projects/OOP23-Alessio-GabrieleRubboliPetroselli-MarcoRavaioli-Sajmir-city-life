@@ -73,11 +73,6 @@ public interface ClockModel {
     boolean isPaused();
 
     /**
-     * @return the current time formatted as a string.
-     */
-    String getFormattedCurrentTime();
-
-    /**
      * @return the current time as a double.
      */
     double getDoubleCurrentTime();

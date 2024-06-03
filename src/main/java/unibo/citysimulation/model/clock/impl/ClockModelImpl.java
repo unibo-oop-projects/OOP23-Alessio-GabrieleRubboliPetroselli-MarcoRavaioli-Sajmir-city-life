@@ -1,7 +1,6 @@
 package unibo.citysimulation.model.clock.impl;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,7 +19,6 @@ public class ClockModelImpl implements ClockModel {
     private int updateRate = ConstantAndResourceLoader.TIME_UPDATE_RATE;
     private Timer timer;
     private int currentDay;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     private LocalTime currentTime;
     private final List<ClockObserver> observers;
     private boolean isPaused;
@@ -33,6 +31,8 @@ public class ClockModelImpl implements ClockModel {
     public ClockModelImpl(final int totalDays) {
         this.totalDays = totalDays;
         this.observers = new ArrayList<>();
+        this.currentDay = 1;
+        this.currentTime = LocalTime.of(0, 0);
     }
 
     /**
@@ -137,16 +137,6 @@ public class ClockModelImpl implements ClockModel {
     @Override
     public LocalTime getCurrentTime() {
         return currentTime;
-    }
-
-    /**
-     * Gets the formatted current time of the simulation.
-     * 
-     * @return The formatted current time
-     */
-    @Override
-    public String getFormattedCurrentTime() {
-        return currentTime.format(formatter);
     }
 
     /**

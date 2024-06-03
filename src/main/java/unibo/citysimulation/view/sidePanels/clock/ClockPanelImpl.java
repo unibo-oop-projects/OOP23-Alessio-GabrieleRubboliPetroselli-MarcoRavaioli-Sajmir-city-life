@@ -1,10 +1,11 @@
-package unibo.citysimulation.view.sidepanels;
+package unibo.citysimulation.view.sidepanels.clock;
 
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.StyledPanel;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -13,11 +14,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.List;
+import java.awt.event.ActionListener;
 
 /**
  * Panel for displaying the clock and controlling simulation speed.
  */
-public class ClockPanel extends StyledPanel {
+public class ClockPanelImpl extends StyledPanel implements ClockPanel{
     private static final long serialVersionUID = 1L;
     private final JLabel timeDay = new JLabel("Day: 1", SwingConstants.CENTER);
     private final JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
@@ -31,7 +33,7 @@ public class ClockPanel extends StyledPanel {
      *
      * @param bgColor The background color of the panel.
      */
-    public ClockPanel(final Color bgColor) {
+    public ClockPanelImpl(final Color bgColor) {
         super(bgColor);
         speedButton = new JButton("1x");
         speedButton.setForeground(Color.black);
@@ -77,32 +79,52 @@ public class ClockPanel extends StyledPanel {
     }
 
     /**
-     * Retrieves the pause button.
-     *
-     * @return The pause button.
-     */
-    public JButton getPauseButton() {
-        return pauseButton;
-    }
-
-    /**
-     * Retrieves the speed button.
-     *
-     * @return The speed button.
-     */
-    public JButton getSpeedButton() {
-        return speedButton;
-    }
-
-    /**
      * Changes the simulation speed and updates the speed button text.
      *
      * @return The new simulation speed.
      */
+    @Override
     public int changeSpeed() {
         currentSpeedIndex = (currentSpeedIndex + 1) % speeds.size();
         final int newSpeed = speeds.get(currentSpeedIndex);
         speedButton.setText(newSpeed + "x");
         return newSpeed;
+    }
+
+    /**
+     * Sets the preferred size of the clock panel.
+     *
+     * @param width  The width to set.
+     * @param height The height to set.
+     */
+    @Override
+    public void setPreferredSize(final int width, final int height) {
+        this.setPreferredSize(new Dimension(width, height));
+    }
+
+    /**
+     * Adds an action listener to the pause button.
+     */
+    @Override
+    public void addPauseButtonActionListener(final ActionListener actionListener) {
+        pauseButton.addActionListener(actionListener);
+    }
+
+    /**
+     * Adds an action listener to the speed button.
+     */
+    @Override
+    public void addSpeedButtonActionListener(final ActionListener actionListener) {
+        speedButton.addActionListener(actionListener);
+    }
+
+    /**
+     * Sets the pause button enabled state.
+     *
+     * @param enabled Boolean indicating if the pause button is enabled.
+     */
+    @Override
+    public void setPauseButtonEnabled(final boolean enabled) {
+        pauseButton.setEnabled(enabled);
     }
 }

@@ -1,13 +1,11 @@
 package unibo.citysimulation.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 import unibo.citysimulation.model.clock.api.ClockModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
-import unibo.citysimulation.view.sidepanels.ClockPanel;
+import unibo.citysimulation.view.sidepanels.clock.ClockPanel;
 
 /**
  * Controller class responsible for managing the clock and its interactions with the user interface.
@@ -27,20 +25,10 @@ public class ClockController implements ClockObserver {
         this.clockModel = clockModel;
 
         // Add action listener for the pause button
-        clockPanel.getPauseButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                pauseSimulation();
-            }
-        });
+        clockPanel.addPauseButtonActionListener(e -> pauseSimulation());
 
         // Add action listener for the speed button
-        clockPanel.getSpeedButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                changeClockSpeed();
-            }
-        });
+        clockPanel.addSpeedButtonActionListener(e -> changeClockSpeed());
     }
 
     /**
