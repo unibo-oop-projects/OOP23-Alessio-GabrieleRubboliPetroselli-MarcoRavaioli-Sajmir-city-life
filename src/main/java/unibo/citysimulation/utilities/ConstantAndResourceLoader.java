@@ -67,7 +67,7 @@ public final class ConstantAndResourceLoader extends ClassLoader {
     /**
      * Maximum number of columns in the grapihcs abscissa.
      */
-    public static final int MAX_COLUMNS = 150;
+    public static final int MAX_COLUMNS = 50;
 
     /**
      * Maximum deviation range for random values.

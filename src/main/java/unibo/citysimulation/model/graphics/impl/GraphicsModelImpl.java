@@ -1,25 +1,29 @@
 package unibo.citysimulation.model.graphics.impl;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.awt.Color;
-import org.jfree.data.xy.XYSeriesCollection;
-
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.graphics.api.GraphicsModel;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.transport.api.TransportLine;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.awt.Color;
+import org.jfree.data.xy.XYSeriesCollection;
+import java.util.Optional;
+
 /**
  * Manages datasets for graphical representation of various simulation data.
  */
-public class GraphicsModelImpl implements GraphicsModel {
+public final class GraphicsModelImpl implements GraphicsModel {
+    private static final double ITERATION_PER_UPDATE = 500;
     private final DatasetManager datasetManager;
     private final List<String> names = Arrays.asList("Person State", "Transport Congestion", "Business Occupation");
     private final List<Integer> seriesCount = List.of(3, 7, 1);
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
             Color.PINK, Color.CYAN);
+
+    private int iterationCount = 0;
 
     /**
      * Constructs a GraphicsModel and initializes datasets.
@@ -45,11 +49,13 @@ public class GraphicsModelImpl implements GraphicsModel {
      * @param businesses List of business objects representing the businesses.
      */
     @Override
-    public List<XYSeriesCollection> updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
-            final List<Business> businesses) {
-        return datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
+    public Optional<List<XYSeriesCollection>> updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
+            final List<Business> businesses, final int updateRate) {
+
+        //System.out.println("updateRate: " + updateRate + " iterationPErUpdate/updateRate: " + (double)(ITERATION_PER_UPDATE / updateRate) + " tutto ");
+        return iterationCount++ % (ITERATION_PER_UPDATE / updateRate) == 0 ? Optional.of(datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
                 StatisticCalculator.getTransportLinesCongestion(lines),
-                StatisticCalculator.getBusinessesOccupation(businesses));
+                StatisticCalculator.getBusinessesOccupation(businesses))) : Optional.empty();
     }
 
     /**

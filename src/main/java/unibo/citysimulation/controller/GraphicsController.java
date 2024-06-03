@@ -9,6 +9,7 @@ import unibo.citysimulation.view.sidepanels.graphics.LegendPanel;
 import java.time.LocalTime;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
 /**
  * Controller for handling graphics updates in the city simulation.
  */
@@ -57,10 +58,11 @@ public class GraphicsController implements ClockObserver {
      */
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
-        graphicsPanel.updateDatasets(
-            graphicsModel.updateDataset(
-                cityModel.getAllPeople(),
-                cityModel.getTransportLines(),
-                cityModel.getBusinesses()));
+
+        graphicsModel.updateDataset(
+            cityModel.getAllPeople(),
+            cityModel.getTransportLines(),
+            cityModel.getBusinesses(),
+            cityModel.getClockModel().getUpdateRate()).ifPresent(graphicsPanel::updateDatasets);
     }
 }
