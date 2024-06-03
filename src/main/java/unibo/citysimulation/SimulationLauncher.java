@@ -1,7 +1,7 @@
 package unibo.citysimulation;
 
 import unibo.citysimulation.controller.WindowController;
-import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.model.CityModelImpl;
 import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.WindowViewImpl;
 
@@ -14,8 +14,8 @@ public final class SimulationLauncher {
      * Starts the simulation by initializing the model, view, and controller.
      */
     public void start() {
-        final CityModel cityModel = new CityModel();
-        final WindowView windowView = new WindowViewImpl(cityModel.getFrameWidth(), cityModel.getFrameHeight());
+        final CityModelImpl cityModel = new CityModelImpl();
+        final WindowView windowView = new WindowView(cityModel.getFrameWidth(), cityModel.getFrameHeight());
         new WindowController(windowView, cityModel);
     }
 }

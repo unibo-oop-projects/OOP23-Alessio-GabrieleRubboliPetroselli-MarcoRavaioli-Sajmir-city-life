@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
 /**

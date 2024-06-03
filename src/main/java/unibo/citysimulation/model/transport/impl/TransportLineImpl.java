@@ -1,6 +1,7 @@
-package unibo.citysimulation.model.transport;
+package unibo.citysimulation.model.transport.impl;
 
 import unibo.citysimulation.utilities.Pair;
+import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
 
 
