@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  * Controller for handling graphics updates in the city simulation.
  */
-public class GraphicsController implements ClockObserver {
+public final class GraphicsController implements ClockObserver {
     private final CityModel cityModel;
     private final GraphicsModel graphicsModel;
     private final GraphicsPanel graphicsPanel;

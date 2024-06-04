@@ -52,7 +52,7 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
         super.paintComponent(g);
         imageHandler.getImage().ifPresent(image -> g.drawImage(image, 0, 0, getWidth(), getHeight(), this));
 
-        if (peopleMap.isEmpty()) {
+        if (!peopleMap.isEmpty()) {
             drawPeople(g);
         }
 
@@ -83,7 +83,7 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
         });
     }
 
-    private void drawCenteredString(Graphics2D g2, String text, int x, int y) {
+    private void drawCenteredString(final Graphics2D g2, final String text, final int x, final int y) {
         g2.setColor(Color.BLACK);
         g2.setStroke(new BasicStroke(2));
         final Font originalFont = g2.getFont();

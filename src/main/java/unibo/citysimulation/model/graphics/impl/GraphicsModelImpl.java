@@ -22,13 +22,14 @@ public final class GraphicsModelImpl implements GraphicsModel {
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
             Color.PINK, Color.CYAN);
 
-    private int iterationCount = 0;
+    private int iterationCount;
 
     /**
      * Constructs a GraphicsModel and initializes datasets.
      */
     public GraphicsModelImpl() {
         this.datasetManager = new DatasetManager(seriesCount, names);
+        iterationCount = 0;
     }
 
     /**
@@ -50,8 +51,8 @@ public final class GraphicsModelImpl implements GraphicsModel {
     @Override
     public void updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
             final List<Business> businesses, final int updateRate) {
-
-        if(iterationCount++ % (ITERATION_PER_UPDATE / updateRate) == 0){
+        iterationCount++;
+        if (iterationCount % (ITERATION_PER_UPDATE / updateRate) == 0) {
             datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
                 StatisticCalculator.getTransportLinesCongestion(lines),
                 StatisticCalculator.getBusinessesOccupation(businesses));

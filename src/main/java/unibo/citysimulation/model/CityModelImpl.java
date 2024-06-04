@@ -36,8 +36,7 @@ import java.util.Collections;
  * Represents the model of the city simulation, containing zones, transports,
  * businesses, and people.
  */
-public final class CityModelImpl implements CityModel
- {
+public final class CityModelImpl implements CityModel {
     private final List<Zone> zones;
     private List<TransportLine> transports;
     private final List<Business> businesses;
@@ -72,6 +71,7 @@ public final class CityModelImpl implements CityModel
      * 
      * @param position the position to check.
      */
+    @Override
     public Optional<Zone> getZoneByPosition(final Pair<Integer, Integer> position) {
         return zones.stream()
                 .filter(zone -> isPositionInZone(position, zone))

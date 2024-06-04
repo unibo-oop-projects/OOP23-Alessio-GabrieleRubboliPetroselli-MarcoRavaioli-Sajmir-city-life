@@ -33,7 +33,7 @@ public final class ImageHandler implements Serializable {
     }
 
     private static BufferedImage createImageDefensiveCopy(final BufferedImage original) {
-        if (original.equals(null)) {
+        if (original == null) {
             throw new IllegalArgumentException("The original image cannot be null");
         }
         final BufferedImage copy = new BufferedImage(

@@ -32,9 +32,9 @@ public final class GraphicsPanelImpl extends StyledPanel implements GraphicsPane
      *
      * @param bgColor The background color of the panel.
      */
-    public GraphicsPanelImpl(final Color bgColor, final ChartManager chartManager) {
+    public GraphicsPanelImpl(final Color bgColor) {
         super(bgColor);
-        this.chartManager = chartManager;
+        this.chartManager = new ChartManagerImpl();
 
         this.legendButton = createLegendButton();
 

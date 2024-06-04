@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Represents the clock model for the simulation.
  */
-public class ClockModelImpl implements ClockModel {
+public final class ClockModelImpl implements ClockModel {
 
     private final int totalDays;
     private int updateRate = ConstantAndResourceLoader.TIME_UPDATE_RATE;
