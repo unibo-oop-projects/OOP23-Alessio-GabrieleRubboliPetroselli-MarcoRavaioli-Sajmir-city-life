@@ -1,14 +1,12 @@
 package unibo.citysimulation.model.clock.impl;
 
-import unibo.citysimulation.model.business.employye.api.EmploymentOfficeData;
-import unibo.citysimulation.model.business.employye.impl.EmployymentOfficeManager;
 import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.business.impl.EmploymentOfficeManager;
+import unibo.citysimulation.model.business.utilities.EmploymentOfficeData;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 
 import java.util.List;
 import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +16,7 @@ import java.util.Map;
  */
 public class CloclObserverBusiness implements ClockObserver {
     private final List<Business> businesses;
-    private final EmployymentOfficeManager employmentManager;
+    private final EmploymentOfficeManager employmentManager;
     private final Map<Business, Integer> businessHiredCountMap;
 
     /**
@@ -27,9 +25,9 @@ public class CloclObserverBusiness implements ClockObserver {
      * @param businesses the list of businesses
      * @param employymentOffice the employment office
      */
-    public CloclObserverBusiness(final List<Business> businesses, final EmploymentOfficeData employymentOffice) {
+    public CloclObserverBusiness(final List<Business> businesses, final EmploymentOfficeData employmentOffice) {
         this.businesses = Collections.unmodifiableList(businesses);
-        this.employmentManager = new EmployymentOfficeManager(employymentOffice);
+        this.employmentManager = new EmploymentOfficeManager(employmentOffice);
         this.businessHiredCountMap = new HashMap<>();
     }
 
@@ -43,11 +41,11 @@ public class CloclObserverBusiness implements ClockObserver {
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         for (final Business business : businesses) {
             business.checkEmployeeDelays(currentTime);
-            if (currentTime.equals(business.getOpLocalTime())) {
+            if (currentTime.equals(business.getBusinessData().opLocalTime())) {
                 final int hiredCount = employmentManager.handleEmployeeHiring(business);
                 businessHiredCountMap.put(business, hiredCount);
             }
-            if (currentTime.equals(business.getClLocalTime())) {
+            if (currentTime.equals(business.getBusinessData().clLocalTime())) {
                 final int hiredCount = businessHiredCountMap.getOrDefault(business, 0);
                 employmentManager.handleEmployeeFiring(business, hiredCount);
                 employmentManager.handleEmployyePay(business);
