@@ -24,7 +24,6 @@ public interface CityModel {
      * Create the businesses in the city.
      */
     void createBusinesses();
-    
     /**
      * Get the zone in which the position is located.
      * @param position

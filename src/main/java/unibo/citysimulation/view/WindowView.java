@@ -3,7 +3,7 @@ package unibo.citysimulation.view;
 import java.awt.event.ComponentAdapter;
 
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.view.sidepanels.ClockPanel;
+import unibo.citysimulation.view.sidepanels.clock.ClockPanel;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
 import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanel;

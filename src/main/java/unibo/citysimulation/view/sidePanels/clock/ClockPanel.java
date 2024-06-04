@@ -1,9 +1,10 @@
 package unibo.citysimulation.view.sidepanels.clock;
 
 import java.awt.event.ActionListener;
-
+/**
+ * Interface for the ClockPanel.
+ */
 public interface ClockPanel {
-
     /**
      * Sets the text of the clock label.
      *
@@ -36,11 +37,13 @@ public interface ClockPanel {
 
     /**
      * Adds an action listener to the pause button.
+     * @param actionListener The action listener to add
      */
     void addPauseButtonActionListener(ActionListener actionListener);
 
     /** 
      * Adds an action listener to the speed button.
+     * @param actionListener The action listener to add
     */
     void addSpeedButtonActionListener(ActionListener actionListener);
 

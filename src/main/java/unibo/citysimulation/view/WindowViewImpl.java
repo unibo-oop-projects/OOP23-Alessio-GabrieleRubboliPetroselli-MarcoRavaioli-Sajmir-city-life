@@ -3,7 +3,8 @@ package unibo.citysimulation.view;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.map.MapPanelImpl;
-import unibo.citysimulation.view.sidepanels.ClockPanel;
+import unibo.citysimulation.view.sidepanels.clock.ClockPanel;
+import unibo.citysimulation.view.sidepanels.clock.ClockPanelImpl;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 import unibo.citysimulation.view.sidepanels.InputPanel;
 import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanel;
@@ -64,7 +65,7 @@ public final class WindowViewImpl extends JFrame implements WindowView {
         mapPanel = new MapPanelImpl(Color.WHITE);
         inputPanel = new InputPanel(COLOR_LIST.get(0));
         infoPanel = new InfoPanel(COLOR_LIST.get(1));
-        clockPanel = new ClockPanel(COLOR_LIST.get(2));
+        clockPanel = new ClockPanelImpl(COLOR_LIST.get(2));
         graphicsPanel = new GraphicsPanelImpl(COLOR_LIST.get(3));
 
         createComponents(width, height);
@@ -85,7 +86,7 @@ public final class WindowViewImpl extends JFrame implements WindowView {
 
         inputPanel.setPreferredSize(new Dimension(width / 4, height));
         infoPanel.setPreferredSize(new Dimension(width / 4, height));
-        clockPanel.setPreferredSize(new Dimension(width / 4, height));
+        clockPanel.setPreferredSize(width / 4, height);
         graphicsPanel.setPreferredSize(width / 4, height);
         revalidate();
         repaint();
@@ -120,8 +121,8 @@ public final class WindowViewImpl extends JFrame implements WindowView {
 
         constraints.gridy = 0;
         constraints.weighty = WEIGHT_CLOCK_PANEL;
-        clockPanel.setPreferredSize(new Dimension(sidePanelWidth, (int) (sidePanelsHeight * WEIGHT_CLOCK_PANEL)));
-        rightPanel.add(clockPanel, constraints);
+        clockPanel.setPreferredSize(width / 4, height);
+        rightPanel.add((JPanel) clockPanel, constraints);
 
         constraints.gridy = 1;
         constraints.weighty = WEIGHT_GRAPHICS_PANEL;

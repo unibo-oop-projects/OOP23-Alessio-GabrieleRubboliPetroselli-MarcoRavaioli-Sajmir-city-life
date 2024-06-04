@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 /**
  * Panel for displaying the clock and controlling simulation speed.
  */
-public class ClockPanelImpl extends StyledPanel implements ClockPanel{
+public class ClockPanelImpl extends StyledPanel implements ClockPanel {
     private static final long serialVersionUID = 1L;
     private final JLabel timeDay = new JLabel("Day: 1", SwingConstants.CENTER);
     private final JLabel timeHour = new JLabel("Hour: 00:00", SwingConstants.CENTER);
@@ -64,6 +64,7 @@ public class ClockPanelImpl extends StyledPanel implements ClockPanel{
      * @param dayText  The text for the day label.
      * @param hourText The text for the hour label.
      */
+    @Override
     public void setClockText(final String dayText, final String hourText) {
         timeDay.setText("Day: " + dayText);
         timeHour.setText("Hour: " + hourText);
@@ -74,6 +75,7 @@ public class ClockPanelImpl extends StyledPanel implements ClockPanel{
      *
      * @param isPaused Boolean indicating if simulation is paused.
      */
+    @Override
     public void updatePauseButton(final boolean isPaused) {
         pauseButton.setText(isPaused ? "Resume" : "Pause");
     }
