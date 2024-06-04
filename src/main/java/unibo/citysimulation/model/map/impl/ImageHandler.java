@@ -2,22 +2,44 @@ package unibo.citysimulation.model.map.impl;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.Optional;
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 /**
- * Class that handles the mapImage with serialization and deserialization.
- * Creates defensive copies of the mapImage when necessary.
+ * Utility class to support MapModel and MapPanel to manage and handle the map image.
  */
-public final class ImageHandler implements Serializable {
+public class ImageHandler implements Serializable {
     private static final long serialVersionUID = 1L;
-
     private transient BufferedImage image;
+
+    public ImageHandler() {
+        loadImage();
+    }
+
+    /**
+     * Loads the image map from resources.
+     */
+    public void loadImage() {
+        try {
+            final URL imageUrl = ImageHandler.class.getResource("/unibo/citysimulation/images/mapImage.png");
+            if (imageUrl != null) {
+                image = ImageIO.read(imageUrl);
+            } else {
+                throw new IOException("Image file not found");
+            }
+        } catch (IOException e) {
+            handleImageLoadError(e);
+        }
+    }
 
     /**
      * Gets a defensive copy of the current image.
      *
-     * @return a defensive copy of the current image
+     * @return an optional containing a defensive copy of the current image
      */
     public Optional<BufferedImage> getImage() {
         return Optional.ofNullable(createImageDefensiveCopy(image));
@@ -32,9 +54,9 @@ public final class ImageHandler implements Serializable {
         this.image = createImageDefensiveCopy(image);
     }
 
-    private static BufferedImage createImageDefensiveCopy(final BufferedImage original) {
+    private BufferedImage createImageDefensiveCopy(final BufferedImage original) {
         if (original == null) {
-            throw new IllegalArgumentException("The original image cannot be null");
+            return null;  // Return null if the original is null
         }
         final BufferedImage copy = new BufferedImage(
             original.getWidth(),
@@ -45,5 +67,10 @@ public final class ImageHandler implements Serializable {
         g.drawImage(original, 0, 0, null);
         g.dispose();
         return copy;
+    }
+
+    private void handleImageLoadError(final IOException e) {
+        JOptionPane.showMessageDialog(null, "Error loading map image: " + e.getMessage(), "Error",
+            JOptionPane.ERROR_MESSAGE);
     }
 }

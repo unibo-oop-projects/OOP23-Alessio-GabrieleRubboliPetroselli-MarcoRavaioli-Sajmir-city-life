@@ -36,19 +36,18 @@ public final class MapController implements MouseListener, ClockObserver {
         this.mapPanel = windowView.getMapPanel();
         this.mapModel = cityModel.getMapModel();
 
+        initialize();
+
         mapPanel.addMouseListener(this);
     }
 
-    /**
-     * Initializes the map controller.
-     */
-    public void initialize() {
+    private void initialize() {
         cityModel.getClockModel().addObserver(this);
+        mapModel.setMaxCoordinates((int) cityModel.getFrameWidth() / 2, (int) cityModel.getFrameHeight());
         mapModel.setTransportInfo(cityModel.getTransportLines());
         mapModel.setTransportCongestion(cityModel.getTransportLines());
 
         mapPanel.setImage(mapModel.getImage());
-
         mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
         mapPanel.setLinesColor(mapModel.getColorList());
     }

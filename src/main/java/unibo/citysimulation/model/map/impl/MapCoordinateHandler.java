@@ -34,6 +34,9 @@ public class MapCoordinateHandler {
      * @return The denormalized coordinate.
      */
     public int denormalizeCoordinate(final int c, final int max) {
+        if (max < 0) {
+            throw new IllegalArgumentException("Max value must be non-negative");
+        }
         return (int) (c / 1000.0 * max);
     }
 

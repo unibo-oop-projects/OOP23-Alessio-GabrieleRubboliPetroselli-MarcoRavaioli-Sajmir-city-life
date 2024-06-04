@@ -22,7 +22,7 @@ public class MapModelImpl implements MapModel {
     private static final int PERCENT_50 = 50;
     private static final int COLOR_MAX = 255;
 
-    private final MapImageLoader imageLoader;
+    private final ImageHandler imageLoader;
     private final MapCoordinateHandler coordinateHandler;
     private final TransportManager transportManager;
 
@@ -30,7 +30,7 @@ public class MapModelImpl implements MapModel {
      * Constructs a MapModel object and loads the map image.
      */
     public MapModelImpl() {
-        this.imageLoader = new MapImageLoader();
+        this.imageLoader = new ImageHandler();
         this.coordinateHandler = new MapCoordinateHandler();
         this.transportManager = new TransportManager();
     }
@@ -171,6 +171,9 @@ public class MapModelImpl implements MapModel {
      */
     @Override
     public void setMaxCoordinates(final int x, final int y) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("Max coordinates must be non-negative");
+        }
         coordinateHandler.setMaxCoordinates(x, y);
     }
 
@@ -191,7 +194,7 @@ public class MapModelImpl implements MapModel {
      */
     @Override
     public BufferedImage getImage() {
-        return imageLoader.getImage();
+        return imageLoader.getImage().get();
     }
 }
 

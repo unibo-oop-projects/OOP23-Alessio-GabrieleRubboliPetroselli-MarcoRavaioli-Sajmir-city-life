@@ -29,9 +29,6 @@ public class MapImageLoader {
         return image != null ? image : new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }
 
-    /**
-     * Loads the map image from the resources.
-     */
     private void loadMapImage() {
         try {
             final URL imageUrl = MapImageLoader.class.getResource("/unibo/citysimulation/images/mapImage.png");
@@ -45,11 +42,6 @@ public class MapImageLoader {
         }
     }
 
-    /**
-     * Handles errors that occur during image loading.
-     *
-     * @param e The IOException instance representing the error.
-     */
     private void handleImageLoadError(final IOException e) {
         JOptionPane.showMessageDialog(null, "Error loading map image: " + e.getMessage(), "Error",
             JOptionPane.ERROR_MESSAGE);

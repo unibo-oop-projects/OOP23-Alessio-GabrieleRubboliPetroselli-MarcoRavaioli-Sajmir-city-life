@@ -231,7 +231,7 @@ public final class CityModelImpl implements CityModel {
         frameWidth = width;
         frameHeight = height;
 
-        mapModel.setMaxCoordinates(newWidth / 2, newWidth / 2);
+        mapModel.setMaxCoordinates(frameWidth / 2, frameHeight);
         mapModel.setTransportInfo(transports);
     }
 

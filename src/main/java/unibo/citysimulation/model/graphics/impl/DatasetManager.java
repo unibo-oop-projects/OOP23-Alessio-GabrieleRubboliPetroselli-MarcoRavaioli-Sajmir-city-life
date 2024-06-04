@@ -10,7 +10,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
 /**
- * Manages the datasets used for graphical representation in the city simulation.
+ * Manages the datasets used for graphical representation in the city
+ * simulation.
  */
 public class DatasetManager {
     private List<XYSeriesCollection> datasets;
@@ -20,7 +21,8 @@ public class DatasetManager {
     /**
      * Constructs a DatasetManager and initializes the datasets.
      *
-     * @param seriesCount a list of integers representing the number of series for each dataset
+     * @param seriesCount a list of integers representing the number of series for
+     *                    each dataset
      * @param names       a list of strings representing the names of each dataset
      */
     public DatasetManager(final List<Integer> seriesCount, final List<String> names) {
@@ -62,16 +64,18 @@ public class DatasetManager {
     }
 
     /**
- * Updates the datasets with new values.
- *
- * @param peopleState          List of integers representing the state counts of people.
- * @param linesCongestion      List of doubles representing the congestion levels of transport lines.
- * @param businessesOccupation List of integers representing the occupation levels of businesses.
- */
+     * Updates the datasets with new values.
+     *
+     * @param peopleState          List of integers representing the state counts of
+     *                             people.
+     * @param linesCongestion      List of doubles representing the congestion
+     *                             levels of transport lines.
+     * @param businessesOccupation List of integers representing the occupation
+     *                             levels of businesses.
+     */
     public void updateDataset(final List<Integer> peopleState, final List<Double> linesCongestion,
             final List<Integer> businessesOccupation) {
         counter++;
-
 
         updateSeries(datasets.get(0), peopleState, counter);
         updateSeries(datasets.get(1), linesCongestion, counter);
@@ -110,7 +114,7 @@ public class DatasetManager {
      *
      * @return The list of XYSeriesCollection datasets.
      */
-    protected List<XYSeriesCollection> getDatasets() {
+    public List<XYSeriesCollection> getDatasets() {
         return datasets;
     }
 }
