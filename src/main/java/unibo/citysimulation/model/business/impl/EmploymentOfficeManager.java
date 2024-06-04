@@ -1,20 +1,20 @@
-package unibo.citysimulation.model.business.employye.impl;
+package unibo.citysimulation.model.business.impl;
 
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
-import unibo.citysimulation.model.business.employye.api.HandleEmployye;
-import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.business.api.EmploymentOfficeBehavior;
+import unibo.citysimulation.model.business.utilities.EmploymentOfficeData;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 
 /**
  * The EmploymentOfficeManager class manages the hiring and firing of employees for businesses.
  */
-public class EmployymentOfficeManager implements HandleEmployye {
+public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
 
-    private final EmployymentOffice employymentOffice;
+    private final EmploymentOfficeData employmentOffice;
     private final Random random;
     private static final double FIRING_RATE = 0.1;
 
@@ -23,8 +23,8 @@ public class EmployymentOfficeManager implements HandleEmployye {
      * 
      * @param employymentOffice The employment office to interact with.
      */
-    public EmployymentOfficeManager(final EmployymentOffice employymentOffice) {
-        this.employymentOffice = employymentOffice;
+    public EmploymentOfficeManager(final EmploymentOfficeData employymentOffice) {
+        this.employmentOffice = employymentOffice;
         this.random = new Random();
     }
 
@@ -44,14 +44,14 @@ public class EmployymentOfficeManager implements HandleEmployye {
         if (hiredCount > 0) {
             maxToFire = Math.min(employeesToFire.size(), hiredCount - 1);
         } else {
-            maxToFire = Math.max(1, (int) Math.floor(business.getEmployees().size() * FIRING_RATE));
+            maxToFire = Math.max(1, (int) Math.floor(business.getBusinessData().employees().size() * FIRING_RATE));
         }
         if (maxToFire > 0) {
             final int numberToFire = random.nextInt(maxToFire) + 1;
             final List<Employee> selectedToFire = employeesToFire.stream()
                 .limit(numberToFire)
                 .collect(Collectors.toList());
-            fireEmployees(selectedToFire);
+            fireEmployees(business, selectedToFire);
         }
     }
     /**
@@ -78,7 +78,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
      * @return true if the business can hire more employees, false otherwise.
      */
     private boolean canHire(final Business business) {
-        return business.getEmployees().size() < business.getMaxEmployees();
+        return business.getBusinessData().employees().size() < business.getBusinessData().maxEmployees();
     }
 
     /**
@@ -88,7 +88,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
      * @return true if the employee should be fired, false otherwise.
      */
     private boolean shouldFire(final Employee employee) {
-        return employee != null && employee.getCountDelay() > employee.getBusiness().getMaxTardiness();
+        return employee != null && employee.count() > employee.businessData().maxTardiness();
     }
 
     /**
@@ -99,11 +99,11 @@ public class EmployymentOfficeManager implements HandleEmployye {
      * @return The list of people to be hired.
      */
     private Optional<List<DynamicPerson>> getPeopleToHire(final Business business) {
-        final int availableSpots = business.getMaxEmployees() - business.getEmployees().size();
+        final int availableSpots = business.getBusinessData().maxEmployees() - business.getBusinessData().employees().size();
         if (availableSpots > 0) {
-            final List<DynamicPerson> disoccupiedPeople = employymentOffice.getDisoccupiedPeople();
+            final List<DynamicPerson> disoccupiedPeople = employmentOffice.disoccupied();
             final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
-                .filter(person -> !person.getPersonData().residenceZone().equals(business.getZone()))
+                .filter(person -> !person.getPersonData().residenceZone().equals(business.getBusinessData().zone()))
                 .collect(Collectors.toList());
             final int maxPeopleToHire = Math.min(availableSpots, eligiblePeople.size());
             if (maxPeopleToHire > 0) {
@@ -127,9 +127,9 @@ public class EmployymentOfficeManager implements HandleEmployye {
         if (peopleToHire.isPresent()) {
             final List<DynamicPerson> people = peopleToHire.get();
             people.forEach(person -> {
-                final Employee employee = new Employee(person, business);
+                final Employee employee = new Employee(person, business.getBusinessData());
                 business.hire(employee);
-                employymentOffice.removeDisoccupiedPerson(person);
+                employmentOffice.disoccupied().remove(person);
             });
             return people.size();
         }
@@ -143,7 +143,7 @@ public class EmployymentOfficeManager implements HandleEmployye {
      * @return The list of employees to be fired.
      */
     private List<Employee> getEmployeesToFire(final Business business) {
-        return business.getEmployees().stream()
+        return business.getBusinessData().employees().stream()
             .filter(this::shouldFire)
             .collect(Collectors.toList());
     }
@@ -153,10 +153,10 @@ public class EmployymentOfficeManager implements HandleEmployye {
      * 
      * @param employeesToFire The list of employees to be fired.
      */
-    private void fireEmployees(final List<Employee> employeesToFire) {
+    private void fireEmployees(final Business business, final List<Employee> employeesToFire) {
         employeesToFire.forEach(employee -> {
-            employymentOffice.addDisoccupiedPerson(employee.getPerson());
-            employee.getBusiness().fire(employee);
+            employmentOffice.disoccupied().add(employee.person());
+            business.fire(employee);
         });
     }
     /**
@@ -167,9 +167,9 @@ public class EmployymentOfficeManager implements HandleEmployye {
      */
     @Override
     public final void handleEmployyePay(final Business business) {
-        business.getEmployees().forEach(employee -> {
+        business.getBusinessData().employees().forEach(employee -> {
             final double pay = business.calculatePay();
-            employee.getPerson().addMoney(pay);
+            employee.person().addMoney(pay);
         });
     }
 }
