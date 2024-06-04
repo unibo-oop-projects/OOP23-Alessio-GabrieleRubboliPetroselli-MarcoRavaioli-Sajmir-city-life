@@ -2,56 +2,55 @@
 package unibo.citysimulation.model.business.impl;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import unibo.citysimulation.utilities.Pair;
-import unibo.citysimulation.model.business.api.BusinessEmployee;
-import unibo.citysimulation.model.business.employye.impl.Employee;
+import unibo.citysimulation.model.business.api.BusinessBehavior;
 import unibo.citysimulation.model.zone.Zone;
 /**
  * The abstract class representing a business in the city simulation.
  */
-public abstract class Business implements BusinessEmployee {
+public abstract class Business implements BusinessBehavior {
 
-    private final List<Employee> employees;
-    private LocalTime opLocalTime;
-    private LocalTime clLocalTime;
-    private double revenue;
-    private int maxEmployees;
-    private final Pair<Integer, Integer> position;
-    private int minAge;
-    private int maxAge;
-    private int maxTardiness;
-    private Zone zone;
-    private static final int DEFAULT_OPENING_HOUR = 9;
-    private static final int DEFAULT_CLOSING_HOUR = 17;
+    private final BusinessData businessData;
 
-    /**
-     * Constructs a new Business object.
-     * 
-     * @param zone the zone in which the business is located
-     */
-    public Business(final Zone zone) {
-        this.employees = new ArrayList<>();
-        this.zone = zone;
-        this.position = zone.getRandomPosition();
-        this.opLocalTime = LocalTime.of(DEFAULT_OPENING_HOUR, 0);
-        this.clLocalTime = LocalTime.of(DEFAULT_CLOSING_HOUR, 0);
+    public Business(BusinessData businessData) {
+        this.businessData = Objects.requireNonNull(businessData);
     }
 
+    public static record BusinessData( 
+    List<Employee> employees,
+    LocalTime opLocalTime,
+    LocalTime clLocalTime,
+    double revenue,
+    int maxEmployees,
+    Pair<Integer, Integer> position,
+    int minAge,
+    int maxAge,
+    int maxTardiness,
+    Zone zone) {
+    }
+
+    public BusinessData getBusinessData() {
+        return businessData;
+    }
+    
     /**
      * Hires an employee for the business.
      * 
      * @param employee the employee to hire
      */
     @Override
-    public final void hire(final Employee employee) {
-        if (employee.getPerson().getPersonData().age() >= this.minAge 
-           && employee.getPerson().getPersonData().age() <= this.maxAge 
-           && employees.size() < getMaxEmployees()) {
-            employees.add(employee);
-        }
+    public final boolean hire(final Employee employee) {
+        if (employee.person().getPersonData().age() >= businessData.minAge()
+        && employee.person().getPersonData().age() <= businessData.maxAge() 
+        && businessData.employees().size() < businessData.maxEmployees()) {
+        businessData.employees().add(employee);
+        return true;
+    }
+    return false;
     }
 
     /**
@@ -61,8 +60,8 @@ public abstract class Business implements BusinessEmployee {
      */
     @Override
     public final void fire(final Employee employee) {
-        if (employee != null && employee.getCountDelay() > this.maxTardiness) {
-            employees.remove(employee);
+        if (employee != null && employee.count() > businessData.maxTardiness()) {
+            businessData.employees.remove(employee);
         }
     }
 
@@ -73,179 +72,21 @@ public abstract class Business implements BusinessEmployee {
      */
     @Override
     public void checkEmployeeDelays(final LocalTime currentTime) {
-        if (currentTime.equals(opLocalTime)) {
-            for (final Employee employee : employees) {
-                if (employee.isLate(this.position)) {
-                    employee.incrementDelayCount();
-                }
+        if (currentTime.equals(businessData.opLocalTime())) {
+        for (int i = 0; i < businessData.employees().size(); i++) {
+            Employee employee = businessData.employees().get(i);
+            if (employee.isLate(Optional.of(businessData.position()))) {
+                Employee updatedEmployee = employee.incrementDelayCount();
+                businessData.employees().set(i, updatedEmployee); // Replace the old employee with the updated one
             }
         }
     }
+    }
     @Override
     public final double calculatePay() {
-        final double hoursworked = clLocalTime.getHour() - opLocalTime.getHour();
-        return hoursworked * revenue;
+        final double hoursworked = businessData.clLocalTime().getHour() - businessData.opLocalTime.getHour();
+        return hoursworked * businessData.revenue;
     }
 
-    /**
-     * Returns the position of the business.
-     * 
-     * @return the position of the business
-     */
-    public final Pair<Integer, Integer> getPosition() {
-        return position;
-    }
-
-    /**
-     * Returns the list of employees in the business.
-     * 
-     * @return the list of employees
-     */
-    public final List<Employee> getEmployees() {
-        return employees != null ? employees : new ArrayList<>();
-    }
-
-    /**
-     * Returns the opening time of the business.
-     * 
-     * @return the opening time
-     */
-    public final LocalTime getOpLocalTime() {
-        return opLocalTime;
-    }
-
-    /**
-     * Sets the opening time of the business.
-     * 
-     * @param opLocalTime the opening time to set
-     */
-    public final void setOpLocalTime(final LocalTime opLocalTime) {
-        this.opLocalTime = opLocalTime;
-    }
-
-    /**
-     * Returns the closing time of the business.
-     * 
-     * @return the closing time
-     */
-    public final LocalTime getClLocalTime() {
-        return clLocalTime;
-    }
-
-    /**
-     * Sets the closing time of the business.
-     * 
-     * @param clLocalTime the closing time to set
-     */
-    public final void setClLocalTime(final LocalTime clLocalTime) {
-        this.clLocalTime = clLocalTime;
-    }
-
-    /**
-     * Returns the maximum number of employees allowed in the business.
-     * 
-     * @return the maximum number of employees
-     */
-    public final int getMaxEmployees() {
-        return maxEmployees;
-    }
-
-    /**
-     * Sets the maximum number of employees allowed in the business.
-     * 
-     * @param maxEmployees the maximum number of employees to set
-     */
-    public final void setMaxEmployees(final int maxEmployees) {
-        this.maxEmployees = maxEmployees;
-    }
-
-    /**
-     * Returns the revenue of the business.
-     * 
-     * @return the revenue
-     */
-    public final double getRevenue() {
-        return revenue;
-    }
-
-    /**
-     * Sets the revenue of the business.
-     * 
-     * @param revenue the revenue to set
-     */
-    public final void setRevenue(final double revenue) {
-        this.revenue = revenue;
-    }
-
-    /**
-     * Returns the minimum age requirement for employees in the business.
-     * 
-     * @return the minimum age requirement
-     */
-    public final int getMinAge() {
-        return minAge;
-    }
-
-    /**
-     * Sets the minimum age requirement for employees in the business.
-     * 
-     * @param minAge the minimum age requirement to set
-     */
-    public final void setMinAge(final int minAge) {
-        this.minAge = minAge;
-    }
-
-    /**
-     * Returns the maximum age requirement for employees in the business.
-     * 
-     * @return the maximum age requirement
-     */
-    public final int getMaxAge() {
-        return maxAge;
-    }
-
-    /**
-     * Sets the maximum age requirement for employees in the business.
-     * 
-     * @param maxAge the maximum age requirement to set
-     */
-    public final void setMaxAge(final int maxAge) {
-        this.maxAge = maxAge;
-    }
-
-    /**
-     * Returns the maximum tardiness allowed for employees in the business.
-     * 
-     * @return the maximum tardiness
-     */
-    public final int getMaxTardiness() {
-        return maxTardiness;
-    }
-
-    /**
-     * Sets the maximum tardiness allowed for employees in the business.
-     * 
-     * @param maxTardiness the maximum tardiness to set
-     */
-    public final void setMaxTardiness(final int maxTardiness) {
-        this.maxTardiness = maxTardiness;
-    }
-
-    /**
-     * Returns the zone in which the business is located.
-     * 
-     * @return the zone
-     */
-    public final Zone getZone() {
-        return zone;
-    }
-
-    /**
-     * Sets the zone in which the business is located.
-     * 
-     * @param zone the zone to set
-     */
-    public final void setZone(final Zone zone) {
-        this.zone = zone;
-    } 
+    
 }
