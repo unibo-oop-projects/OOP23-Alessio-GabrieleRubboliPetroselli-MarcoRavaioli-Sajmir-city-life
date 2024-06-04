@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.CityModelImpl;
 import unibo.citysimulation.model.InputModel;
-import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.clock.api.ClockModel;
 import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
-import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
@@ -33,11 +31,7 @@ class CityModelTest {
         assertTrue(cityModel.isPeoplePresent());
         assertTrue(cityModel.isBusinessesPresent());
     }
-    @Test
-    void testCreateBusinesses() {
-        cityModel.createBusinesses();
-        assertTrue(cityModel.isBusinessesPresent());
-    }
+
     @Test
     void testIsPositionInZone() {
         Pair<Integer, Integer> position = new Pair<>(5, 5);
