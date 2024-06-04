@@ -22,6 +22,7 @@ public class StaticPersonImpl implements StaticPerson {
     private final Pair<Integer, Integer> homePosition;
     private TransportLine[] transportLine;
     private int tripDuration;
+    private static final Random RANDOM = new Random();
 
     /**
      * Constructs a new static person with the given person data and money.
@@ -132,8 +133,7 @@ public class StaticPersonImpl implements StaticPerson {
      *         and 20.
      */
     private int getRandomDeviation() {
-        final Random random = new Random();
-        return random.nextInt(ConstantAndResourceLoader.MAX_DEVIATION_RANGE)
+        return RANDOM.nextInt(ConstantAndResourceLoader.MAX_DEVIATION_RANGE)
                 - ConstantAndResourceLoader.MAX_DEVIATION_OFFSET;
     }
 
