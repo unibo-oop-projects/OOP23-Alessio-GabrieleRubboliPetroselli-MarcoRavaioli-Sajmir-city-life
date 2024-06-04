@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.business.utilities;
 
+import java.util.LinkedList;
+
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.zone.Zone;
 
@@ -10,21 +12,20 @@ import unibo.citysimulation.model.zone.Zone;
 public class MediumBusiness extends Business {
 
     /**
-     * Constructs a new MediumBusiness object.
-     * Sets the opening time, closing time, revenue, maximum number of employees,
-     * maximum age, minimum age, and maximum tardiness based on the configuration
-     * values defined in the BusinessConfig class.
-     *
-     * @param zone the zone where the medium-sized business is located
+     * Creates a medium business in the city simulation.
+     * @param zone the zone where the medium business is located
      */
     public MediumBusiness(final Zone zone) {
-        super(zone);
-        setOpLocalTime(BusinessConfig.MEDIUM_OPENING_TIME);
-        setClLocalTime(BusinessConfig.MEDIUM_CLOSING_TIME);
-        setRevenue(BusinessConfig.MEDIUM_REVENUE);
-        setMaxEmployees(BusinessConfig.MAX_EMPLOYEES_MEDIUM_BUSINESS);
-        setMaxAge(BusinessConfig.MEDIUM_MAX_AGE);
-        setMinAge(BusinessConfig.MEDIUM_MIN_AGE);
-        setMaxTardiness(BusinessConfig.MEDIUM_MAX_TARDINESS);
+        super(new BusinessData(
+            new LinkedList<>(),
+            BusinessConfig.MEDIUM_OPENING_TIME,
+            BusinessConfig.MEDIUM_CLOSING_TIME,
+            BusinessConfig.MEDIUM_REVENUE,
+            BusinessConfig.MAX_EMPLOYEES_MEDIUM_BUSINESS,
+            zone.getRandomPosition(),
+            BusinessConfig.MEDIUM_MIN_AGE,
+            BusinessConfig.MEDIUM_MAX_AGE,
+            BusinessConfig.MEDIUM_MAX_TARDINESS,
+            zone));
     }
 }

@@ -1,20 +1,26 @@
 package unibo.citysimulation.model.business.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
 import unibo.citysimulation.model.business.utilities.BigBusiness;
+import unibo.citysimulation.model.business.utilities.BusinessConfig;
+import unibo.citysimulation.model.business.utilities.BusinessType;
 import unibo.citysimulation.model.business.utilities.MediumBusiness;
 import unibo.citysimulation.model.business.utilities.SmallBusiness;
 import unibo.citysimulation.model.zone.Zone;
 
 /**
- * The BusinessFactory class is responsible for creating instances of Business objects.
+ * The BusinessFactoryImpl class is responsible for creating instances of Business objects.
  */
-public final class BusinessFactory {
+public final class BusinessFactoryImpl {
 
-    private BusinessFactory() {
+    private static final Random RANDOM = new Random();
+
+    private BusinessFactoryImpl() {
     }
 
     /**
@@ -43,10 +49,24 @@ public final class BusinessFactory {
      * @param zones The list of available zones.
      * @return An Optional containing the created Business object.
      */
-    public static Optional<Business> getRandomBusiness(final List<Zone> zones) {
-        final Random random = new Random();
-        final BusinessType type = BusinessType.values()[random.nextInt(BusinessType.values().length)];
-        final Zone zone = zones.get(random.nextInt(zones.size()));
+    public static Optional<Business> createRandomBusiness(final List<Zone> zones) {
+        final BusinessType type = BusinessType.values()[RANDOM.nextInt(BusinessType.values().length)];
+        final Zone zone = zones.get(RANDOM.nextInt(zones.size()));
         return createBusiness(type, zone);
+    }
+
+    /**
+     * Creates multiple Business objects.
+     *
+     * @param zones The list of available zones.
+     * @param numberOfPeople The number of people.
+     * @return A collection of created Business objects.
+     */
+    public static Collection<Business> createMultipleBusiness(final List<Zone> zones, final int numberOfPeople) {
+        List<Business> businesses = new ArrayList<>();
+        for (int i = 0; i < numberOfPeople / BusinessConfig.BUSINESS_PERCENTAGE; i++) {
+            createRandomBusiness(zones).ifPresent(businesses::add);
+        }
+        return businesses;
     }
 }

@@ -33,8 +33,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         super(personData, money);
         this.lastDestination = PersonState.WORKING;
         this.late = false;
-        this.businessBegin = calculateUpdatedTime(super.getPersonData().business().get().getOpLocalTime());
-        this.businessEnd = calculateUpdatedTime(super.getPersonData().business().get().getClLocalTime());
+        this.businessBegin = calculateUpdatedTime(super.getPersonData().business().get().getBusinessData().opLocalTime());
+        this.businessEnd = calculateUpdatedTime(super.getPersonData().business().get().getBusinessData().clLocalTime());
         this.transportStrategy = new TransportStrategyImpl();
     }
 

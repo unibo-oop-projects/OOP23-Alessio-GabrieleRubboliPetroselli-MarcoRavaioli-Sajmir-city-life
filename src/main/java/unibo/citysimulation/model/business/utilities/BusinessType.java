@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.business.impl;
+package unibo.citysimulation.model.business.utilities;
 
 /**
  * The BusinessType enum represents the different types of businesses in the city simulation.

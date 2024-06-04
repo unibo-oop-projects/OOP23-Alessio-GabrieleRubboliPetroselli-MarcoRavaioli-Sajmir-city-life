@@ -118,5 +118,10 @@ public final class BusinessConfig {
      * The maximum age for employees in small businesses.
      */
     public static final int SMALL_MAX_AGE = 29;
+    /**
+     * The percentage of businesses in the city.
+     */
+    public static final int BUSINESS_PERCENTAGE = 10;
+
     private BusinessConfig() { }
 }

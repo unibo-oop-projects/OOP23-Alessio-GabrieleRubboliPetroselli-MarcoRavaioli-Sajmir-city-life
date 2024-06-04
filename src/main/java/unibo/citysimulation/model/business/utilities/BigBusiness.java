@@ -1,5 +1,7 @@
 package unibo.citysimulation.model.business.utilities;
 
+import java.util.LinkedList;
+
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.zone.Zone;
 
@@ -9,21 +11,21 @@ import unibo.citysimulation.model.zone.Zone;
  */
 public class BigBusiness extends Business {
 
-    /**
-     * Constructs a new instance of the BigBusiness class.
-     * Initializes the opening and closing times, revenue, maximum number of employees,
-     * maximum and minimum age requirements, and maximum tardiness for the big business.
-     *
+   /**
+     * Creates a big business in the city simulation.
      * @param zone the zone where the big business is located
      */
     public BigBusiness(final Zone zone) {
-        super(zone);
-        setOpLocalTime(BusinessConfig.BIG_OPENING_TIME);
-        setClLocalTime(BusinessConfig.BIG_CLOSING_TIME);
-        setRevenue(BusinessConfig.BIG_REVENUE);
-        setMaxEmployees(BusinessConfig.MAX_EMPLOYEES_BIG_BUSINESS);
-        setMaxAge(BusinessConfig.BIG_MAX_AGE);
-        setMinAge(BusinessConfig.BIG_MIN_AGE);
-        setMaxTardiness(BusinessConfig.BIG_MAX_TARDINESS);
+        super(new BusinessData(
+            new LinkedList<>(),
+            BusinessConfig.BIG_OPENING_TIME,
+            BusinessConfig.BIG_CLOSING_TIME,
+            BusinessConfig.BIG_REVENUE,
+            BusinessConfig.MAX_EMPLOYEES_BIG_BUSINESS,
+            zone.getRandomPosition(),
+            BusinessConfig.BIG_MIN_AGE,
+            BusinessConfig.BIG_MAX_AGE,
+            BusinessConfig.BIG_MAX_TARDINESS,
+            zone));
     }
 }

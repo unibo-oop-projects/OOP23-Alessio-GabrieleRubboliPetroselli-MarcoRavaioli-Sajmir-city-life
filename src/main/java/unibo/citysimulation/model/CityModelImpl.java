@@ -4,9 +4,9 @@
  */
 package unibo.citysimulation.model;
 
-import unibo.citysimulation.model.business.employye.impl.EmployymentOffice;
+import unibo.citysimulation.model.business.utilities.EmploymentOfficeData;
 import unibo.citysimulation.model.business.impl.Business;
-import unibo.citysimulation.model.business.impl.BusinessFactory;
+import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
 import unibo.citysimulation.model.clock.api.ClockModel;
 import unibo.citysimulation.model.clock.impl.ClockModelImpl;
 import unibo.citysimulation.model.clock.impl.ClockObserverPerson;
@@ -27,6 +27,7 @@ import unibo.citysimulation.utilities.Pair;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,10 +53,9 @@ public final class CityModelImpl implements CityModel {
     private final ClockModel clockModel;
     private final InputModel inputModel;
     private final GraphicsModelImpl graphicsModel;
-    private final EmployymentOffice employymentOffice;
+    private final EmploymentOfficeData employmentOfficeData;
     private int frameWidth;
     private int frameHeight;
-    private int totalBusinesses;
 
     /**
      * Constructs a CityModel object with default settings.
@@ -70,7 +70,7 @@ public final class CityModelImpl implements CityModel {
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = TransportCreation.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
-        this.employymentOffice = new EmployymentOffice();
+        this.employmentOfficeData = new EmploymentOfficeData(new LinkedList<>());
     }
 
     /**
@@ -112,12 +112,8 @@ public final class CityModelImpl implements CityModel {
 
         // Create zone table
         ZoneTableCreation.createAndAddPairs(zones, transports);
-        final int numberOfPeople = getInputModel().getNumberOfPeople();
 
-        final int numberOfBusinesses = inputModel.getNumberOfBusiness();
-        calculateTotalBusinesses(numberOfPeople, numberOfBusinesses);
-
-        createBusinesses();
+        businesses.addAll(BusinessFactoryImpl.createMultipleBusiness(zones, inputModel.getNumberOfPeople()));
 
         // Create people
         this.people = new ArrayList<>();
@@ -125,59 +121,12 @@ public final class CityModelImpl implements CityModel {
 
         for (final List<DynamicPerson> group : people) {
             for (final DynamicPerson person : group) {
-                employymentOffice.addDisoccupiedPerson(person);
+                employmentOfficeData.disoccupied().add(person);
             }
         }
         clockModel.addObserver(new ClockObserverPerson(people));
 
-        clockModel.addObserver(new ClockObserverBusiness(businesses, employymentOffice));
-    }
-
-    /**
-     * Creates businesses in the city model based on the zones and their business
-     * percentages.
-     * The total number of businesses is distributed among the zones according to
-     * their business percentages.
-     * If there are remaining businesses after distributing among the zones, they
-     * are randomly assigned to the zones.
-     */
-    @Override
-    public void createBusinesses() {
-        int remainingBusinesses = totalBusinesses;
-
-        for (final Zone zone : zones) {
-            final int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
-            remainingBusinesses -= zoneBusinessCount;
-            for (int i = 0; i < zoneBusinessCount; i++) {
-                BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(businesses::add);
-            }
-        }
-        for (int i = 0; remainingBusinesses > 0 && i < zones.size(); i++) {
-            final Zone zone = zones.get(i);
-            BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(businesses::add);
-            remainingBusinesses--;
-        }
-    }
-
-    /**
-     * Calculates the total number of businesses in the city model.
-     * 
-     * @param numberOfPeople
-     * @param numberOfBusinesses
-     */
-    @Override
-    public void calculateTotalBusinesses(final int numberOfPeople, final int numberOfBusinesses) {
-        this.totalBusinesses = numberOfPeople / 10 + numberOfBusinesses;
-    }
-
-    /**
-     * Returns the total number of businesses in the city model.
-     *
-     * @return the total number of businesses
-     */
-    @Override
-    public int getTotalBusinesses() {
-        return this.totalBusinesses;
+        clockModel.addObserver(new ClockObserverBusiness(businesses, employmentOfficeData));
     }
 
     /**
@@ -197,10 +146,10 @@ public final class CityModelImpl implements CityModel {
         double avarage = 0;
         int businessCount = 0;
         for (final Business business : businesses) {
-            if (business.getZone().equals(zone)) {
+            if (business.getBusinessData().zone().equals(zone)) {
                 businessCount++;
                 double sum = 0;
-                sum += business.getEmployees().size() * business.calculatePay();
+                sum += business.getBusinessData().employees().size() * business.calculatePay();
                 avarage = sum / businessCount;
             }
         }
@@ -431,7 +380,7 @@ public final class CityModelImpl implements CityModel {
     @Override
     public int getBusinessesInZone(final String zoneName) {
         return (int) businesses.stream()
-                .filter(b -> b.getZone().name().equals(zoneName))
+                .filter(b -> b.getBusinessData().zone().name().equals(zoneName))
                 .count();
     }
 

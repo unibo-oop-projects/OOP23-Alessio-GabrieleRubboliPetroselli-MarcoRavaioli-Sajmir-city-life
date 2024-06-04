@@ -52,20 +52,18 @@ public class MapModelImpl implements MapModel {
     public List<String> getTransportNames() {
         return transportManager.getTransportNames();
     }
-
+    
     /**
-     * Gets the business information, mapping each business to its coordinates.
-     *
-     * @param businesses the list of businesses
-     * @return a map of business indices to their coordinates
+     * Retrieves the business information for a list of businesses.
+     * 
+     * @param businesses the list of businesses to retrieve information for
+     * @return a list of pairs representing the denormalized positions of the businesses
      */
-    @Override
     public List<Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
         final int maxX = coordinateHandler.getMaxX();
         final int maxY = coordinateHandler.getMaxY();
-
         return businesses.stream()
-            .map(business -> denormalizePosition(business.getPosition(), maxX, maxY))
+            .map(business -> denormalizePosition(business.getBusinessData().position(), maxX, maxY))
             .collect(Collectors.toList());
     }
     /**

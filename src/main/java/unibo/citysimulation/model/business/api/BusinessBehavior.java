@@ -2,18 +2,20 @@ package unibo.citysimulation.model.business.api;
 
 import java.time.LocalTime;
 
-import unibo.citysimulation.model.business.employye.impl.Employee;
+import unibo.citysimulation.model.business.impl.Employee;
 
 /**
- * The interface representing a business employee.
+ * The interface representing a business behavior.
  */
-public interface BusinessEmployee {
+public interface BusinessBehavior {
+    
     /**
      * Hires an employee for the business.
-     * 
+     *
      * @param employee the employee to be hired
+     * @return true if the employee is successfully hired, false otherwise
      */
-    void hire(Employee employee);
+    boolean hire(Employee employee);
     /**
      * Fires an employee from the business.
      * 
