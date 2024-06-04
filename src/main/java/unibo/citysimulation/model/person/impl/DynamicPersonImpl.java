@@ -32,8 +32,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         super(personData, money);
         this.lastDestination = PersonState.WORKING;
         late = false;
-        businessBegin = updatedTime(super.getPersonData().business().get().getOpLocalTime());
-        businessEnd = updatedTime(super.getPersonData().business().get().getClLocalTime());
+        businessBegin = updatedTime(super.getPersonData().business().get().getBusinessData().opLocalTime());
+        businessEnd = updatedTime(super.getPersonData().business().get().getBusinessData().clLocalTime());
     }
 
     private boolean checkTimeToMove(final int currentTime, final int timeToMove, final int lineDuration) {

@@ -54,18 +54,18 @@ public class MapModelImpl implements MapModel {
     }
 
     /**
-     * Gets the business information, mapping each business to its coordinates.
+     * Gets the information of businesses, mapping each business's position to its
+     * coordinates.
      *
      * @param businesses the list of businesses
-     * @return a map of business indices to their coordinates
+     * @return the list of pairs of business coordinates
      */
-    @Override
     public List<Pair<Integer, Integer>> getBusinessInfos(final List<Business> businesses) {
         final int maxX = coordinateHandler.getMaxX();
         final int maxY = coordinateHandler.getMaxY();
-
+    
         return businesses.stream()
-            .map(business -> denormalizePosition(business.getPosition(), maxX, maxY))
+            .map(business -> denormalizePosition(business.getBusinessData().position(), maxX, maxY))
             .collect(Collectors.toList());
     }
     /**

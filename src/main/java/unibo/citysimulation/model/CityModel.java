@@ -4,9 +4,9 @@
  */
 package unibo.citysimulation.model;
 
-import unibo.citysimulation.model.business.employye.api.EmploymentOfficeData;
 import unibo.citysimulation.model.business.impl.Business;
-import unibo.citysimulation.model.business.impl.BusinessFactory;
+import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
+import unibo.citysimulation.model.business.utilities.EmploymentOfficeData;
 import unibo.citysimulation.model.clock.api.ClockModel;
 import unibo.citysimulation.model.clock.impl.ClockModelImpl;
 import unibo.citysimulation.model.clock.impl.ClockObserverPerson;
@@ -103,12 +103,9 @@ public final class CityModel {
 
         // Create zone table
         ZoneTableCreation.createAndAddPairs(zones, transports);
-        final int numberOfPeople = getInputModel().getNumberOfPeople();
 
-        final int numberOfBusinesses = inputModel.getNumberOfBusiness();
-        calculateTotalBusinesses(numberOfPeople, numberOfBusinesses);
-
-        createBusinesses();
+        
+        businesses.addAll(BusinessFactoryImpl.createMultipleBusiness(zones, getInputModel().getNumberOfPeople()));
 
         // Create people
         this.people = new ArrayList<>();
@@ -124,30 +121,7 @@ public final class CityModel {
         clockModel.addObserver(new CloclObserverBusiness(businesses, employymentOffice));
     }
 
-    /**
-     * Creates businesses in the city model based on the zones and their business
-     * percentages.
-     * The total number of businesses is distributed among the zones according to
-     * their business percentages.
-     * If there are remaining businesses after distributing among the zones, they
-     * are randomly assigned to the zones.
-     */
-    public void createBusinesses() {
-        int remainingBusinesses = totalBusinesses;
-
-        for (final Zone zone : zones) {
-            final int zoneBusinessCount = (int) (totalBusinesses * zone.businessPercents() / 100.0);
-            remainingBusinesses -= zoneBusinessCount;
-            for (int i = 0; i < zoneBusinessCount; i++) {
-                BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(businesses::add);
-            }
-        }
-        for (int i = 0; remainingBusinesses > 0 && i < zones.size(); i++) {
-            final Zone zone = zones.get(i);
-            BusinessFactory.getRandomBusiness(List.of(zone)).ifPresent(businesses::add);
-            remainingBusinesses--;
-        }
-    }
+  
 
     /**
      * Calculates the total number of businesses in the city model.
@@ -184,10 +158,10 @@ public final class CityModel {
         double avarage = 0;
         int businessCount = 0;
         for (final Business business : businesses) {
-            if (business.getZone().equals(zone)) {
+            if (business.getBusinessData().zone().equals(zone)) {
                 businessCount++;
                 double sum = 0;
-                sum += business.getEmployees().size() * business.calculatePay();
+                sum += business.getBusinessData().employees().size() * business.calculatePay();
                 avarage = sum / businessCount;
             }
         }
@@ -401,7 +375,7 @@ public final class CityModel {
      */
     public int getBusinessesInZone(final String zoneName) {
         return (int) businesses.stream()
-                .filter(b -> b.getZone().name().equals(zoneName))
+                .filter(b -> b.getBusinessData().zone().name().equals(zoneName))
                 .count();
     }
     /**

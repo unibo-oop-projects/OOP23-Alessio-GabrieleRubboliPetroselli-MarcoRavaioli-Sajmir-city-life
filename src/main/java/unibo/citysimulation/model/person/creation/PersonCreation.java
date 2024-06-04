@@ -1,7 +1,7 @@
 package unibo.citysimulation.model.person.creation;
 
-import unibo.citysimulation.model.business.employye.impl.Employee;
 import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.business.impl.Employee;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.impl.DynamicPersonImpl;
@@ -56,7 +56,7 @@ public final class PersonCreation {
                 final List<DynamicPerson> people = new ArrayList<>();
                 for (int i = 0; i < numberOfPeople; i++) {
                     final List<Business> eligibleBusinesses = businesses.stream()
-                            .filter(business -> !business.getZone().equals(residenceZone))
+                            .filter(business -> !business.getBusinessData().zone().equals(residenceZone))
                             .collect(Collectors.toList());
                     if (eligibleBusinesses.isEmpty()) {
                         throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
@@ -72,7 +72,7 @@ public final class PersonCreation {
                     );
                     optionalBusiness.ifPresentOrElse(
                         business -> {
-                            business.hire(new Employee(person, business));
+                            business.hire(new Employee(person, business.getBusinessData()));
                         }, 
                     () -> Optional.empty());
                     people.add(person);
