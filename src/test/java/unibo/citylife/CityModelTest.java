@@ -16,10 +16,14 @@ import unibo.citysimulation.utilities.Pair;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CityModelTest {
     private CityModel cityModel;
+    private static final int TEST_ZONE_X = 5;
+    private static final int TEST_ZONE_Y = 5;
 
     @BeforeEach
     void setUp() {
@@ -34,7 +38,7 @@ class CityModelTest {
 
     @Test
     void testIsPositionInZone() {
-        Pair<Integer, Integer> position = new Pair<>(5, 5);
+        Pair<Integer, Integer> position = new Pair<>(TEST_ZONE_X, TEST_ZONE_Y);
         Zone zone = new Zone("prova", 0, 0, position, position, new Boundary(0, 0, 10, 10));
         assertTrue(cityModel.isPositionInZone(position, zone));
     }
