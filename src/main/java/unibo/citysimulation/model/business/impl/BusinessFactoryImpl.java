@@ -14,7 +14,7 @@ import unibo.citysimulation.model.business.utilities.SmallBusiness;
 import unibo.citysimulation.model.zone.Zone;
 
 /**
- * The BusinessFactory class is responsible for creating instances of Business objects.
+ * The BusinessFactoryImpl class is responsible for creating instances of Business objects.
  */
 public final class BusinessFactoryImpl {
 
@@ -60,9 +60,9 @@ public final class BusinessFactoryImpl {
      *
      * @param zones The list of available zones.
      * @param numberOfPeople The number of people.
-     * @return 
+     * @return A collection of created Business objects.
      */
-    public static Collection<Business> createMultipleBusiness(final List<Zone> zones, final int numberOfPeople){
+    public static Collection<Business> createMultipleBusiness(final List<Zone> zones, final int numberOfPeople) {
         List<Business> businesses = new ArrayList<>();
         for (int i = 0; i < numberOfPeople / BusinessConfig.BUSINESS_PERCENTAGE; i++) {
             createRandomBusiness(zones).ifPresent(businesses::add);
