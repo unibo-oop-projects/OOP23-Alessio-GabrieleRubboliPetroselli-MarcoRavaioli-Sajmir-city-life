@@ -12,7 +12,7 @@ import unibo.citysimulation.utilities.Pair;
 import java.util.List;
 import java.util.Optional;
 /**
- * Interface for the CityModel
+ * Interface for the CityModel.
  */
 public interface CityModel { 
     /**
@@ -96,7 +96,7 @@ public interface CityModel {
      */
     GraphicsModelImpl getGraphicsModel();
     /**
-     * get the zones
+     * get the zones.
      * @return the list of zones.
      */
     List<Zone> getZones();
@@ -106,12 +106,12 @@ public interface CityModel {
      */
     List<TransportLine> getTransportLines();
     /**
-     * get the businesses
+     * get the businesses.
      * @return the list of businesses.
      */
     List<Business> getBusinesses();
     /**
-     * get the people
+     * get the people.
      * @return the list of all the people in the simulation.
      */
     List<DynamicPerson> getAllPeople();

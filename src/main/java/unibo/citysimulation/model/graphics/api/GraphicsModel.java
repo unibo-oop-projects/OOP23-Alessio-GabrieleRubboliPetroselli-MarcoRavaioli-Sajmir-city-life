@@ -1,10 +1,11 @@
 package unibo.citysimulation.model.graphics.api;
 
-import org.jfree.data.xy.XYSeriesCollection;
+
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.transport.api.TransportLine;
 
+import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.Color;
 import java.util.List;
 
@@ -24,8 +25,9 @@ public interface GraphicsModel {
      * @param people     the list of dynamic person objects representing the population
      * @param lines      the list of transport line objects representing the transportation network
      * @param businesses the list of business objects representing the businesses
+     * @param updateRate the rate at which the data is updated for debug concurrency access
      */
-    void updateDataset(List<DynamicPerson> people, List<TransportLine> lines, List<Business> businesses);
+    void updateDataset(List<DynamicPerson> people, List<TransportLine> lines, List<Business> businesses, int updateRate);
 
     /**
      * Retrieves the datasets used in the graphics model.

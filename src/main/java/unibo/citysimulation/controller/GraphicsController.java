@@ -1,20 +1,22 @@
 package unibo.citysimulation.controller;
 
-import unibo.citysimulation.model.CityModelImpl;
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.graphics.api.GraphicsModel;
-import unibo.citysimulation.view.sidepanels.GraphicsPanel;
-import unibo.citysimulation.view.sidepanels.LegendPanel;
+import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanel;
+import unibo.citysimulation.view.sidepanels.graphics.LegendPanel;
 
 import java.time.LocalTime;
-import java.util.stream.Collectors;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 /**
  * Controller for handling graphics updates in the city simulation.
  */
-public class GraphicsController implements ClockObserver {
-    private final CityModelImpl cityModel;
+public final class GraphicsController implements ClockObserver {
+    private final CityModel cityModel;
     private final GraphicsModel graphicsModel;
+    private final GraphicsPanel graphicsPanel;
 
     /**
      * Constructs a new GraphicsController with the specified CityModel and
@@ -23,18 +25,14 @@ public class GraphicsController implements ClockObserver {
      * @param cityModel     the city model
      * @param graphicsPanel the graphics panel
      */
-    public GraphicsController(final CityModelImpl cityModel, final GraphicsPanel graphicsPanel) {
+    public GraphicsController(final CityModel cityModel, final GraphicsPanel graphicsPanel) {
         this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
         graphicsModel = cityModel.getGraphicsModel();
-        initialize(graphicsPanel);
+        this.graphicsPanel = Objects.requireNonNull(graphicsPanel, "graphicsPanel must not be null");
+        initialize();
     }
 
-    /**
-     * Initializes the controller by setting up listeners and creating graphics.
-     *
-     * @param graphicsPanel the graphics panel
-     */
-    private void initialize(final GraphicsPanel graphicsPanel) {
+    private void initialize() {
         cityModel.getClockModel().addObserver(this);
 
         graphicsPanel.addLegendButtonActionListener(e -> showLegendPanel());
@@ -61,8 +59,9 @@ public class GraphicsController implements ClockObserver {
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         graphicsModel.updateDataset(
-                cityModel.getAllPeople(),
-                cityModel.getTransportLines(),
-                cityModel.getBusinesses());
+            cityModel.getAllPeople(),
+            cityModel.getTransportLines(),
+            cityModel.getBusinesses(),
+            cityModel.getClockModel().getUpdateRate());
     }
 }

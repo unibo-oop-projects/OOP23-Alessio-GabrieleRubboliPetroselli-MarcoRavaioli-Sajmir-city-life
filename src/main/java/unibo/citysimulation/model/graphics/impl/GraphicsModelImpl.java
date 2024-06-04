@@ -1,30 +1,35 @@
 package unibo.citysimulation.model.graphics.impl;
 
-import java.util.Arrays;
-import java.util.List;
-import java.awt.Color;
-import org.jfree.data.xy.XYSeriesCollection;
-
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.graphics.api.GraphicsModel;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.transport.api.TransportLine;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.awt.Color;
+import org.jfree.data.xy.XYSeriesCollection;
+
 /**
  * Manages datasets for graphical representation of various simulation data.
  */
-public class GraphicsModelImpl implements GraphicsModel {
+public final class GraphicsModelImpl implements GraphicsModel {
+    private static final double ITERATION_PER_UPDATE = 500;
     private final DatasetManager datasetManager;
     private final List<String> names = Arrays.asList("Person State", "Transport Congestion", "Business Occupation");
     private final List<Integer> seriesCount = List.of(3, 7, 1);
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
             Color.PINK, Color.CYAN);
 
+    private int iterationCount;
+
     /**
      * Constructs a GraphicsModel and initializes datasets.
      */
     public GraphicsModelImpl() {
         this.datasetManager = new DatasetManager(seriesCount, names);
+        iterationCount = 0;
     }
 
     /**
@@ -45,10 +50,13 @@ public class GraphicsModelImpl implements GraphicsModel {
      */
     @Override
     public void updateDataset(final List<DynamicPerson> people, final List<TransportLine> lines,
-            final List<Business> businesses) {
-        datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
+            final List<Business> businesses, final int updateRate) {
+        iterationCount++;
+        if (iterationCount % (ITERATION_PER_UPDATE / updateRate) == 0) {
+            datasetManager.updateDataset(StatisticCalculator.getPeopleStateCounts(people),
                 StatisticCalculator.getTransportLinesCongestion(lines),
                 StatisticCalculator.getBusinessesOccupation(businesses));
+        }
     }
 
     /**
@@ -68,7 +76,7 @@ public class GraphicsModelImpl implements GraphicsModel {
      */
     @Override
     public List<String> getNames() {
-        return names;
+        return Collections.unmodifiableList(names);
     }
 
     /**

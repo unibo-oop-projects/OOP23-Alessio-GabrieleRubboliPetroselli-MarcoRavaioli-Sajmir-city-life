@@ -5,6 +5,8 @@ plugins {
     // Apply the application plugin to add support for building a CLI application
     // You can run your app via task "run": ./gradlew run
     application
+
+    jacoco
  
     /*
      * Adds tasks to export a runnable jar.
@@ -51,12 +53,25 @@ application {
     // Define the main class for the application.
     mainClass.set("it.unibo.citysimulation.SimulationLauncher")
 }
+
+jacoco {
+    toolVersion = "0.8.10"
+}
  
 tasks.test {
     useJUnitPlatform()
     testLogging {
         events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
         showStandardStreams = true
+    }
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
     }
 }
  

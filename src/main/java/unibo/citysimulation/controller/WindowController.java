@@ -1,6 +1,6 @@
 package unibo.citysimulation.controller;
 
-import unibo.citysimulation.model.CityModelImpl;
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.view.WindowView;
 
 import java.awt.event.ComponentAdapter;
@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public class WindowController {
     private final WindowView windowView;
-    private final CityModelImpl cityModel;
+    private final CityModel cityModel;
 
     /**
      * Constructor for initial window and initialize all the feature in the window.
@@ -20,7 +20,7 @@ public class WindowController {
      * @param windowView
      * @param cityModel
      */
-    public WindowController(final WindowView windowView, final CityModelImpl cityModel) {
+    public WindowController(final WindowView windowView, final CityModel cityModel) {
         this.windowView = Objects.requireNonNull(windowView, "windowView must not be null");
         this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
 
@@ -30,7 +30,7 @@ public class WindowController {
     }
 
     private void initializeControllers() {
-        final MapController mapController = new MapController(cityModel, windowView.getInfoPanel(), windowView.getMapPanel());
+        final MapController mapController = new MapController(cityModel, windowView);
         mapController.initialize();
         cityModel.getClockModel().addObserver(new ClockController(cityModel.getClockModel(), windowView.getClockPanel()));
         new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(), windowView.getClockPanel());

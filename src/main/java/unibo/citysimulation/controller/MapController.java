@@ -1,40 +1,43 @@
 package unibo.citysimulation.controller;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.time.LocalTime;
 import java.util.Optional;
 
-import unibo.citysimulation.model.CityModelImpl;
+import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
+import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map.
  */
-public class MapController implements ClockObserver {
+public final class MapController implements MouseListener, ClockObserver {
     private final InfoPanel infoPanel;
     private final MapPanel mapPanel;
     private final MapModelImpl mapModel;
-    private final CityModelImpl cityModel;
+    private final CityModel cityModel;
 
     /**
      * Constructs a MapController object.
      *
-     * @param cityModel The CityModel object containing the city data.
-     * @param infoPanel The InfoPanel object to display additional information.
-     * @param mapPanel  The MapPanel object to display the map.
+     * @param cityModel  The CityModel interface containing the method to access and modify city data.
+     * @param windowView The WindowView interface containing the method to access and modify info and map panels.
      */
-    public MapController(final CityModelImpl cityModel, final InfoPanel infoPanel, final MapPanel mapPanel) {
+    public MapController(final CityModel cityModel, final WindowView windowView) {
         this.cityModel = cityModel;
-        this.infoPanel = infoPanel;
-        this.mapPanel = mapPanel;
+        this.infoPanel = windowView.getInfoPanel();
+        this.mapPanel = windowView.getMapPanel();
         this.mapModel = cityModel.getMapModel();
+
+        mapPanel.addMouseListener(this);
     }
+
     /**
      * Initializes the map controller.
      */
@@ -44,13 +47,6 @@ public class MapController implements ClockObserver {
         mapModel.setTransportCongestion(cityModel.getTransportLines());
 
         mapPanel.setImage(mapModel.getImage());
-
-        mapPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(final MouseEvent e) {
-                handleMouseClick(e);
-            }
-        });
 
         mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
         mapPanel.setLinesColor(mapModel.getColorList());
@@ -73,9 +69,8 @@ public class MapController implements ClockObserver {
         infoPanel.updatePositionInfo(x, y);
         infoPanel.updateZoneName(zone.name());
         cityModel.getPeopleInZone(zone.name()).ifPresentOrElse(
-            infoPanel::updateNumberOfPeople,
-            () -> infoPanel.updateNumberOfPeople(0)
-        );
+                infoPanel::updateNumberOfPeople,
+                () -> infoPanel.updateNumberOfPeople(0));
         infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zone.name()));
         infoPanel.updateAvaragePay(cityModel.avaragePayZone(zone));
         infoPanel.updateNumberOfDirectLines(cityModel.getNumberOfDirectLinesFromZone(zone));
@@ -103,5 +98,33 @@ public class MapController implements ClockObserver {
         mapPanel.setLinesColor(mapModel.getColorList());
         mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),
                 mapModel.getBusinessInfos(cityModel.getBusinesses()));
+    }
+
+    /**
+     * When the mouse clicks on the map in the MapPanel this method is called and
+     * updates the map model thanks to method handleMouseClick. This method updates
+     * also the InfoPanel.
+     * 
+     * @param e
+     */
+    @Override
+    public void mouseClicked(final MouseEvent e) {
+        handleMouseClick(e);
+    }
+
+    @Override
+    public void mousePressed(final MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(final MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(final MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(final MouseEvent e) {
     }
 }

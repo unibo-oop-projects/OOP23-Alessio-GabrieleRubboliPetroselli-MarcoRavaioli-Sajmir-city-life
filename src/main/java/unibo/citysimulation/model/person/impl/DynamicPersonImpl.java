@@ -1,12 +1,12 @@
 package unibo.citysimulation.model.person.impl;
 
 import java.time.LocalTime;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.api.PersonData;
-import unibo.citysimulation.model.transport.api.TransportLine;
+import unibo.citysimulation.model.person.api.TransportStrategy;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 
 /**
@@ -20,6 +20,7 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     private final Random random = new Random();
     private final int businessBegin;
     private final int businessEnd;
+    private final TransportStrategy transportStrategy;
 
     /**
      * Constructs a new dynamic person with the given person data and money.
@@ -31,58 +32,48 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     public DynamicPersonImpl(final PersonData personData, final int money) {
         super(personData, money);
         this.lastDestination = PersonState.WORKING;
-        late = false;
-        businessBegin = updatedTime(super.getPersonData().business().get().getOpLocalTime());
-        businessEnd = updatedTime(super.getPersonData().business().get().getClLocalTime());
+        this.late = false;
+        this.businessBegin = calculateUpdatedTime(super.getPersonData().business().get().getOpLocalTime());
+        this.businessEnd = calculateUpdatedTime(super.getPersonData().business().get().getClLocalTime());
+        this.transportStrategy = new TransportStrategyImpl();
     }
 
-    private boolean checkTimeToMove(final int currentTime, final int timeToMove, final int lineDuration) {
-        boolean congestioned = false;
+    private boolean shouldMove(final int currentTime, final int timeToMove, final int lineDuration) {
         if (currentTime == timeToMove || late) {
-            for (final var line : super.getTransportLine()) {
-                if (line.getCongestion() > ConstantAndResourceLoader.CONGESTION_VALUE) {
-                    congestioned = true;
-                    late = true;
-                }
+            if (transportStrategy.isCongested(List.of(getTransportLine()))) {
+                late = true;
+                return false;
             }
-            if (!congestioned) {
-                this.lastArrivingTime = (currentTime + lineDuration) % ConstantAndResourceLoader.SECONDS_IN_A_DAY;
 
-                late = false;
-                return true;
-            }
+            this.lastArrivingTime = transportStrategy.calculateArrivalTime(currentTime, lineDuration);
+            this.late = false;
+            return true;
         }
         return false;
     }
 
-    private void checkTimeToGoToWork(final LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-                businessBegin - super.getTripDuration(),
-                super.getTripDuration())) {
-            movePerson(PersonState.WORKING);
+    private void handleWorkTransition(final LocalTime currentTime) {
+        if (shouldMove(currentTime.toSecondOfDay(), businessBegin - super.getTripDuration(), super.getTripDuration())) {
+            moveTo(PersonState.WORKING);
         }
     }
 
-    private void checkTimeToGoHome(final LocalTime currentTime) {
-        if (this.checkTimeToMove(currentTime.toSecondOfDay(),
-                businessEnd,
-                super.getTripDuration())) {
-            movePerson(PersonState.AT_HOME);
+    private void handleHomeTransition(final LocalTime currentTime) {
+        if (shouldMove(currentTime.toSecondOfDay(), businessEnd, super.getTripDuration())) {
+            moveTo(PersonState.AT_HOME);
         }
     }
 
-    private int updatedTime(final LocalTime movingTime) {
-        return movingTime.toSecondOfDay() + (random.nextInt(ConstantAndResourceLoader.MAX_MOVING_TIME_VARIATION)
-                * ConstantAndResourceLoader.MINUTES_IN_A_SECOND * ConstantAndResourceLoader.SECONDS_IN_A_MINUTE);
+    private int calculateUpdatedTime(final LocalTime movingTime) {
+        return movingTime.toSecondOfDay() + random.nextInt(ConstantAndResourceLoader.MAX_MOVING_TIME_VARIATION)
+                * ConstantAndResourceLoader.MINUTES_IN_A_SECOND * ConstantAndResourceLoader.SECONDS_IN_A_MINUTE;
     }
 
-    private void checkArrivingTime(final LocalTime currentTime) {
+    private void handleArrival(final LocalTime currentTime) {
         if (currentTime.toSecondOfDay() == this.lastArrivingTime) {
             this.setState(this.lastDestination);
             updatePosition();
-            Arrays.stream(super.getTransportLine())
-                    .forEach(TransportLine::decrementPersonInLine);
-
+            transportStrategy.decrementPersonsInLine(List.of(getTransportLine()));
         }
     }
 
@@ -97,45 +88,21 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     @Override
     public void checkState(final LocalTime currentTime) {
         switch (super.getState()) {
-            case MOVING:
-                this.checkArrivingTime(currentTime);
-                break;
-            case WORKING:
-                this.checkTimeToGoHome(currentTime);
-                break;
-            case AT_HOME:
-                this.checkTimeToGoToWork(currentTime);
-                break;
-            default:
-                throw new IllegalStateException("Invalid state.");
+            case MOVING -> handleArrival(currentTime);
+            case WORKING -> handleHomeTransition(currentTime);
+            case AT_HOME -> handleWorkTransition(currentTime);
+            default -> throw new IllegalStateException("Invalid state: " + super.getState());
         }
     }
 
-    private void movePerson(final PersonState newState) {
+    private void moveTo(final PersonState newState) {
         if (super.getTripDuration() == 0) {
             this.setState(newState);
         } else {
             this.setState(PersonState.MOVING);
-            Arrays.stream(super.getTransportLine())
-                    .forEach(TransportLine::incrementPersonInLine);
+            transportStrategy.incrementPersonsInLine(List.of(getTransportLine()));
         }
         this.lastDestination = newState;
         this.updatePosition();
-    }
-
-    /**
-     * Gets the business beginning time.
-     */
-    @Override
-    public int getBusinessBegin() {
-        return businessBegin;
-    }
-
-    /**
-     * Gets the business ending time.
-     */
-    @Override
-    public int getBusinessEnd() {
-        return businessEnd;
     }
 }

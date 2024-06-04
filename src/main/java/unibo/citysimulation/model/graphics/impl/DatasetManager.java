@@ -72,22 +72,19 @@ public class DatasetManager {
             final List<Integer> businessesOccupation) {
         counter++;
 
-        final List<XYSeriesCollection> datasetsCopy = datasets;
 
-        updateSeries(datasetsCopy.get(0), peopleState, counter);
-        updateSeries(datasetsCopy.get(1), linesCongestion, counter);
-        updateSeries(datasetsCopy.get(2), businessesOccupation, counter);
+        updateSeries(datasets.get(0), peopleState, counter);
+        updateSeries(datasets.get(1), linesCongestion, counter);
+        updateSeries(datasets.get(2), businessesOccupation, counter);
 
         columnCount++;
 
         if (columnCount > ConstantAndResourceLoader.MAX_COLUMNS) {
             final int columnsToRemove = columnCount - ConstantAndResourceLoader.MAX_COLUMNS;
-            datasetsCopy.forEach(ds -> removeOldColumns(ds, columnsToRemove));
+            datasets.forEach(ds -> removeOldColumns(ds, columnsToRemove));
 
             columnCount = ConstantAndResourceLoader.MAX_COLUMNS;
         }
-
-        datasets = datasetsCopy;
     }
 
     private void removeOldColumns(final XYSeriesCollection dataset, final int columnsToRemove) {
