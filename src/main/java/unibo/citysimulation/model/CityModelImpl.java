@@ -49,7 +49,6 @@ public final class CityModelImpl implements CityModel {
     private final EmploymentOfficeData employmentOfficeData;
     private int frameWidth;
     private int frameHeight;
-    private int totalBusinesses;
 
     /**
      * Constructs a CityModel object with default settings.
