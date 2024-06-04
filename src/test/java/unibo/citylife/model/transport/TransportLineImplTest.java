@@ -1,4 +1,4 @@
-package unibo.citylife;
+package unibo.citylife.model.transport;
 
 
 import org.junit.jupiter.api.Test;
