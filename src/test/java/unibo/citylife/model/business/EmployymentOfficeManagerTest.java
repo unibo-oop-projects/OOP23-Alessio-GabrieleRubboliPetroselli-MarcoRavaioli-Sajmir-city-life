@@ -1,3 +1,4 @@
+package unibo.citylife.model.business;
 /*package unibo.citylife;
 
 

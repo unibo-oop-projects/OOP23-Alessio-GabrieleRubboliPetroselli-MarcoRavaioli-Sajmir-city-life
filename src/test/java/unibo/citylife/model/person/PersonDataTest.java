@@ -1,4 +1,4 @@
-package unibo.citylife;
+package unibo.citylife.model.person;
 
 import org.junit.jupiter.api.Test;
 
