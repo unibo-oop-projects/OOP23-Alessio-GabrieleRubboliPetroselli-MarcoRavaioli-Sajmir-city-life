@@ -15,12 +15,12 @@ import java.awt.Font;
  */
 public final class InfoPanel extends StyledPanel {
     private static final long serialVersionUID = 1L;
-    private final JLabel coordinates;
-    private final JLabel numberOfPeople;
-    private final JLabel zoneNJLabel;
-    private final JLabel numberOfBusiness;
-    private final JLabel numberOfAvaregePay;
-    private final JLabel numberDirectLines;
+    public final JLabel coordinates;
+    public final JLabel numberOfPeople;
+    public final JLabel zoneNJLabel;
+    public final JLabel numberOfBusiness;
+    public final JLabel numberOfAvaregePay;
+    public final JLabel numberDirectLines;
     private static final int COORDINATES_LABEL_GRID_Y = 1;
     private static final int NUMBER_OF_PEOPLE_LABEL_GRID_Y = 2;
     private static final int NUMBER_OF_BUSINESS_LABEL_GRID_Y = 3;
