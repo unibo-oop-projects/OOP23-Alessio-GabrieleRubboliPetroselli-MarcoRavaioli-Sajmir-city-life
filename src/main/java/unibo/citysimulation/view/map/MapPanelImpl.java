@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.map;
 
+import unibo.citysimulation.model.map.impl.ImageHandler;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 

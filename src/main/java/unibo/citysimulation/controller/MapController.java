@@ -12,6 +12,7 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.map.MapPanel;
+import java.util.Objects;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
@@ -30,7 +31,7 @@ public final class MapController implements MouseListener, ClockObserver {
      * @param windowView The WindowView interface containing the method to access and modify info and map panels.
      */
     public MapController(final CityModel cityModel, final WindowView windowView) {
-        this.cityModel = cityModel;
+        this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");;
         this.infoPanel = windowView.getInfoPanel();
         this.mapPanel = windowView.getMapPanel();
         this.mapModel = cityModel.getMapModel();

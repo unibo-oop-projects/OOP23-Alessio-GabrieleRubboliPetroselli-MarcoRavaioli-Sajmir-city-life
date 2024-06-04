@@ -1,4 +1,4 @@
-package unibo.citysimulation.view.map;
+package unibo.citysimulation.model.map.impl;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
