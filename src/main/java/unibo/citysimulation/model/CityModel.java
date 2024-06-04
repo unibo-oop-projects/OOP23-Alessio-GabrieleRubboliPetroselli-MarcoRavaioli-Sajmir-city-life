@@ -21,10 +21,6 @@ public interface CityModel {
     void createEntities();
 
     /**
-     * Create the businesses in the city.
-     */
-    void createBusinesses();
-    /**
      * Get the zone in which the position is located.
      * @param position
      * @return an optional of the zone in which the position is located.
@@ -38,19 +34,6 @@ public interface CityModel {
      */
     boolean isPositionInZone(Pair<Integer, Integer> position, Zone zone);
 
-    /**
-     * Calculates the total number of businesses based on the number of people and businesses.
-     *
-     * @param numberOfPeople The number of people.
-     * @param numberOfBusinesses The number of businesses.
-     */
-    void calculateTotalBusinesses(int numberOfPeople, int numberOfBusinesses);
-    /**
-     * Returns the total number of businesses.
-     *
-     * @return The total number of businesses.
-     */
-    int getTotalBusinesses();
     /**
      * Calculates the average pay in the specified zone.
      *

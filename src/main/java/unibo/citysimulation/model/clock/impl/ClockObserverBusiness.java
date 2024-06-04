@@ -25,7 +25,7 @@ public class ClockObserverBusiness implements ClockObserver {
      * @param businesses the list of businesses
      * @param employymentOffice the employment office
      */
-    public CloclObserverBusiness(final List<Business> businesses, final EmploymentOfficeData employmentOffice) {
+    public ClockObserverBusiness(final List<Business> businesses, final EmploymentOfficeData employmentOffice) {
         this.businesses = Collections.unmodifiableList(businesses);
         this.employmentManager = new EmploymentOfficeManager(employmentOffice);
         this.businessHiredCountMap = new HashMap<>();
