@@ -29,6 +29,9 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Optional;
 import java.util.Collections;
 
@@ -36,6 +39,10 @@ import java.util.Collections;
  * Represents the model of the city simulation, containing zones, transports,
  * businesses, and people.
  */
+@SuppressFBWarnings(value = "EI", justification = """
+    Considering the basic structure of the application, we choose to 
+    pass the mutable models as parameters, because we need to keep them always updated. In every case, we pass
+    interfaces of the models.""")
 public final class CityModelImpl implements CityModel {
     private final List<Zone> zones;
     private List<TransportLine> transports;
@@ -427,6 +434,7 @@ public final class CityModelImpl implements CityModel {
                 .filter(b -> b.getZone().name().equals(zoneName))
                 .count();
     }
+
     /**
      * Removes a specified number of businesses from the city model.
      *

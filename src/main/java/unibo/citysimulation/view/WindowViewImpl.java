@@ -13,6 +13,9 @@ import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanelImpl;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,6 +27,10 @@ import java.awt.event.ComponentAdapter;
  * Class that implments the Windowview interface.
  * This manages all the Panels displayed in this frame and their sizes.
  */
+@SuppressFBWarnings(value = "EI", justification = """
+    Considering the basic structure of the application, we choose to 
+    pass the mutable panels as parameters, because we need to keep them always updated. In every case, we pass
+    interfaces of the panels.""")
 public final class WindowViewImpl extends JFrame implements WindowView {
     private static final long serialVersionUID = 1L;
     private static final List<Color> COLOR_LIST = List.of(
