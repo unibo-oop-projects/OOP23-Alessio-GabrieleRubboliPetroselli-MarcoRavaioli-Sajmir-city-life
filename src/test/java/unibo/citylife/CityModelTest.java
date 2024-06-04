@@ -123,6 +123,4 @@ class CityModelTest {
         int businessesInZone = cityModel.getBusinessesInZone("Zone1");
         assertTrue(businessesInZone >= 0);
     }
-
-
 }
