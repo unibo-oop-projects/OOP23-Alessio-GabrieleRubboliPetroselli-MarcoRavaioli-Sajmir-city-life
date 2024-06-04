@@ -6,11 +6,13 @@ import unibo.citysimulation.model.business.impl.Employee;
 import unibo.citysimulation.utilities.Pair;
 
 /**
- * This interface represents an employee with a name and an ID.
+ * This interface represents employye behavior.
  */
 public interface EmployeeBehavior {
     /**
      * Increments the count of delays for the employee by 1.
+     *
+     * @return The updated Employee object.
      */
     Employee incrementDelayCount();
 

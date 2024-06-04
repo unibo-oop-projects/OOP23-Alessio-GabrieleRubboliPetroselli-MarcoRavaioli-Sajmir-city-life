@@ -23,7 +23,7 @@ public class ClockObserverBusiness implements ClockObserver {
      * Constructs a CloclObserverBusiness object with the given list of businesses and employment office.
      * 
      * @param businesses the list of businesses
-     * @param employymentOffice the employment office
+     * @param employmentOffice the employment office
      */
     public ClockObserverBusiness(final List<Business> businesses, final EmploymentOfficeData employmentOffice) {
         this.businesses = Collections.unmodifiableList(businesses);

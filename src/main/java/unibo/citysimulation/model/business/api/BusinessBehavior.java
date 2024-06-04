@@ -5,13 +5,15 @@ import java.time.LocalTime;
 import unibo.citysimulation.model.business.impl.Employee;
 
 /**
- * The interface representing a business employee.
+ * The interface representing a business behavior.
  */
 public interface BusinessBehavior {
+    
     /**
      * Hires an employee for the business.
-     * 
+     *
      * @param employee the employee to be hired
+     * @return true if the employee is successfully hired, false otherwise
      */
     boolean hire(Employee employee);
     /**

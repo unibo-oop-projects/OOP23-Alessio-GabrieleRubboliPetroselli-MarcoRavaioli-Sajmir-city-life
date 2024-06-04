@@ -12,11 +12,7 @@ import unibo.citysimulation.model.zone.Zone;
 public class SmallBusiness extends Business {
 
     /**
-     * Constructs a SmallBusiness object.
-     * Initializes the opening time, closing time, revenue, maximum number of employees,
-     * maximum age, minimum age, and maximum tardiness based on the configuration values
-     * defined in the BusinessConfig class.
-     *
+     * Creates a small business in the city simulation.
      * @param zone the zone where the small business is located
      */
     public SmallBusiness(final Zone zone) {

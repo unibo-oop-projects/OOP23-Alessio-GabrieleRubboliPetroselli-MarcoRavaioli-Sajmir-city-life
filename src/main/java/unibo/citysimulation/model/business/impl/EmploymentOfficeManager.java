@@ -17,6 +17,7 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
     private final EmploymentOfficeData employmentOffice;
     private final Random random;
     private static final double FIRING_RATE = 0.1;
+    private static final int ZERO = 0;
 
     /**
      * Constructs an EmploymentOfficeManager with the given employment office.
@@ -66,9 +67,9 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
     public final int handleEmployeeHiring(final Business business) {
         if (canHire(business)) {
             final Optional<List<DynamicPerson>> peopleToHire = getPeopleToHire(business);
-            return hirePeople(business, peopleToHire);
+            hirePeople(business, peopleToHire);
         }
-        return 0;
+        return ZERO;
     }
 
     /**
@@ -152,6 +153,7 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
      * Fires the specified employees and adds them to the employment office's disoccupied people list.
      * 
      * @param employeesToFire The list of employees to be fired.
+     * @param business The business that will fire the employees.
      */
     private void fireEmployees(final Business business, final List<Employee> employeesToFire) {
         employeesToFire.forEach(employee -> {

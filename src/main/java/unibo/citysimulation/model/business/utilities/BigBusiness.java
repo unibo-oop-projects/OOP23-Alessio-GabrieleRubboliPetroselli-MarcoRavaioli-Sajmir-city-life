@@ -5,9 +5,16 @@ import java.util.LinkedList;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.zone.Zone;
 
+/**
+ * Represents a big business in the city simulation.
+ * Extends the Business class.
+ */
 public class BigBusiness extends Business {
 
-    
+   /**
+     * Creates a big business in the city simulation.
+     * @param zone the zone where the big business is located
+     */
     public BigBusiness(final Zone zone) {
         super(new BusinessData(
             new LinkedList<>(),

@@ -11,6 +11,10 @@ import unibo.citysimulation.model.zone.Zone;
  */
 public class MediumBusiness extends Business {
 
+    /**
+     * Creates a medium business in the city simulation.
+     * @param zone the zone where the medium business is located
+     */
     public MediumBusiness(final Zone zone) {
         super(new BusinessData(
             new LinkedList<>(),
