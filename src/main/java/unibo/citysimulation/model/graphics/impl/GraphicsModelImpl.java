@@ -18,7 +18,7 @@ public final class GraphicsModelImpl implements GraphicsModel {
     private static final double ITERATION_PER_UPDATE = 500;
     private final DatasetManager datasetManager;
     private final List<String> names = Arrays.asList("Person State", "Transport Congestion", "Business Occupation");
-    private final List<Integer> seriesCount = List.of(3, 7, 1);
+    private final List<Integer> seriesCount = List.of(3, 7, 3);
     private final List<Color> colors = List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW,
             Color.PINK, Color.CYAN);
 

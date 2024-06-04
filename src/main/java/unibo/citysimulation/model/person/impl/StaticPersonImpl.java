@@ -138,6 +138,7 @@ public class StaticPersonImpl implements StaticPerson {
     }
 
     private void calculateTrip() {
+        if (!personData.business().equals(Optional.empty())) {
         if (personData.residenceZone().equals(personData.business().get().getBusinessData().zone())) {
             this.tripDuration = 0;
         } else {
@@ -148,5 +149,6 @@ public class StaticPersonImpl implements StaticPerson {
             }
             tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
         }
+    }
     }
 }

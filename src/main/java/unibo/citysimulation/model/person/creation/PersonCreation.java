@@ -50,38 +50,33 @@ public final class PersonCreation {
         return allPeople;
     }
 
+    @SuppressWarnings("static-access")
     private static List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
             final Pair<Integer, Integer> moneyMinMax,
             final List<Business> businesses, final Zone residenceZone) {
                 final List<DynamicPerson> people = new ArrayList<>();
-                for (int i = 0; i < numberOfPeople; i++) {
-                    final List<Business> eligibleBusinesses = businesses.stream()
-                            .filter(business -> !business.getBusinessData().zone().equals(residenceZone))
-                            .collect(Collectors.toList());
-                    if (eligibleBusinesses.isEmpty()) {
-                        throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
-                    }
-                    final Optional<Business> optionalBusiness = Optional.ofNullable(
-                            eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size())));
-                    final DynamicPerson person = createPerson(
-                            "Person" + groupCounter + i,
-                            random.nextInt(ConstantAndResourceLoader.MAX_RANDOM_AGE) + ConstantAndResourceLoader.MIN_AGE,
-                            optionalBusiness,
-                            residenceZone,
-                            random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst()
-                    );
-                    optionalBusiness.ifPresentOrElse(
-                        business -> {
-                            business.hire(new Employee(person, business.getBusinessData()));
-                        }, 
-                    () -> Optional.empty());
-                    people.add(person);
+        for (int i = 0; i < numberOfPeople; i++) {          
+            Optional<Business> assignedBusiness = Optional.empty();
+            String personName = "Person" + groupCounter + i;
+            int personAge = random.nextInt(ConstantAndResourceLoader.MAX_RANDOM_AGE) + ConstantAndResourceLoader.MIN_AGE;
+            int personMoney = random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst();
+            DynamicPerson person = createPerson(personName, personAge, assignedBusiness, residenceZone, personMoney);
+            people.add(person);
+        }
+
+        for (DynamicPerson person : people) {
+            for (Business b : businesses) {
+                if(b.hire(new Employee(person, b.getBusinessData())) && !b.getBusinessData().zone().equals(person.getPersonData().residenceZone())){
+                    person.getPersonData().business().of(b);
                 }
-                return people;
+            }
+        }
+        return people;       
     }
 
     private static DynamicPerson createPerson(final String name, final int age, final Optional<Business> business,
-            final Zone residenceZone, final int money) {
+            final Zone residenceZone, final double money) {
         return new DynamicPersonImpl(new PersonData(name, age, business, residenceZone), money);
     }
+
 }

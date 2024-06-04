@@ -29,7 +29,7 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
      * @param personData the data of the person.
      * @param money      the money of the person.
      */
-    public DynamicPersonImpl(final PersonData personData, final int money) {
+    public DynamicPersonImpl(final PersonData personData, final double money) {
         super(personData, money);
         this.lastDestination = PersonState.WORKING;
         this.late = false;
