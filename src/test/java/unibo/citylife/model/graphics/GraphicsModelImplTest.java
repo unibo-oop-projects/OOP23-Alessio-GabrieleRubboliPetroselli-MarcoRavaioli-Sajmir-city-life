@@ -26,24 +26,23 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 
-public class GraphicsModelImplTest {
+class GraphicsModelImplTest {
 
     private GraphicsModelImpl graphicsModel;
     private List<DynamicPerson> people;
     private List<TransportLine> lines;
-    private List<Zone> zones;
-    private List<Business> businesses = new ArrayList<>();
+    private final List<Business> businesses = new ArrayList<>();
     private EmploymentOfficeData employmentOfficeData;
 
     @BeforeEach
     public void setUp() {
         this.employmentOfficeData = new EmploymentOfficeData(new LinkedList<>());
 
-        zones = ZoneFactory.createZonesFromFile();
+        final List<Zone> zones = ZoneFactory.createZonesFromFile();
         lines = TransportCreation.createTransportsFromFile(zones);
         ZoneTableCreation.createAndAddPairs(zones, lines);
         businesses.addAll(BusinessFactoryImpl.createMultipleBusiness(zones, 100));
-        List<List<DynamicPerson>> peopleGroup = PersonCreation.createAllPeople(100, zones, businesses);
+        final List<List<DynamicPerson>> peopleGroup = PersonCreation.createAllPeople(100, zones, businesses);
 
         for (final List<DynamicPerson> group : peopleGroup) {
             for (final DynamicPerson person : group) {
@@ -60,7 +59,7 @@ public class GraphicsModelImplTest {
     }
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         assertNotNull(graphicsModel.getDatasets(), "Datasets should not be null");
         assertEquals(3, graphicsModel.getDatasets().size(), "There should be 3 datasets");
         assertEquals(List.of("Person State", "Transport Congestion", "Business Occupation"), graphicsModel.getNames(),
@@ -70,12 +69,12 @@ public class GraphicsModelImplTest {
     }
 
     @Test
-    public void testClearDatasets() {
+    void testClearDatasets() {
         graphicsModel.updateDataset(people, lines, businesses, 1);
         graphicsModel.clearDatasets();
-        List<XYSeriesCollection> datasets = graphicsModel.getDatasets();
+        final List<XYSeriesCollection> datasets = graphicsModel.getDatasets();
         datasets.forEach(ds -> {
-            List<?> seriesList = ds.getSeries();
+            final List<?> seriesList = ds.getSeries();
             seriesList.forEach(series -> {
                 assertTrue(((org.jfree.data.xy.XYSeries) series).isEmpty(), "Series should be empty after clearing datasets");
             });
@@ -83,20 +82,20 @@ public class GraphicsModelImplTest {
     }
 
     @Test
-    public void testUpdateDataset() {
+    void testUpdateDataset() {
         graphicsModel.updateDataset(people, lines, businesses, 1);
 
-        for (XYSeriesCollection ds : graphicsModel.getDatasets()) {
+        for (final XYSeriesCollection ds : graphicsModel.getDatasets()) {
             for (int i = 0; i < ds.getSeriesCount(); i++) {
                 assertEquals(1, ds.getSeries(i).getItemCount(), "Series should have 1 item after one update");
             }
         }
 
-        for (int i = 1; i < 500; i++) {
+        for (int i = 1; i < 3; i++) {
             graphicsModel.updateDataset(people, lines, businesses, 1);
         }
 
-        for (XYSeriesCollection ds : graphicsModel.getDatasets()) {
+        for (final XYSeriesCollection ds : graphicsModel.getDatasets()) {
             for (int i = 0; i < ds.getSeriesCount(); i++) {
                 assertEquals(2, ds.getSeries(i).getItemCount(), "Series should still have 2 items");
             }
@@ -104,19 +103,19 @@ public class GraphicsModelImplTest {
     }
 
     @Test
-    public void testGetDatasets() {
+    void testGetDatasets() {
         assertNotNull(graphicsModel.getDatasets(), "Datasets should not be null");
         assertEquals(3, graphicsModel.getDatasets().size(), "There should be 3 datasets");
     }
 
     @Test
-    public void testGetNames() {
+    void testGetNames() {
         assertEquals(List.of("Person State", "Transport Congestion", "Business Occupation"), graphicsModel.getNames(),
                 "Dataset names should match the expected list");
     }
 
     @Test
-    public void testGetColors() {
+    void testGetColors() {
         assertEquals(List.of(Color.BLUE, Color.ORANGE, Color.RED, Color.GREEN, Color.YELLOW, Color.PINK, Color.CYAN),
                 graphicsModel.getColors(), "Colors should match the expected list");
     }

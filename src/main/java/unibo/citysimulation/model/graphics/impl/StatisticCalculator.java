@@ -49,7 +49,6 @@ public final class StatisticCalculator {
                 .collect(Collectors.toList());
     }
 
-    
     /**
      * Calculates the occupation percentage of each business in the given list.
      *
@@ -58,7 +57,8 @@ public final class StatisticCalculator {
      */
     static List<Integer> getBusinessesOccupation(final List<Business> businesses) {
         return businesses.stream()
-                .map(business -> (int) ((double) business.getBusinessData().employees().size() / business.getBusinessData().maxEmployees() * 100))
+                .map(business -> (int) ((double) business.getBusinessData().employees().size() 
+                                                 / business.getBusinessData().maxEmployees() * 100))
                 .collect(Collectors.toList());
     }
 }

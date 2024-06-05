@@ -12,8 +12,8 @@ import unibo.citysimulation.model.map.impl.ImageHandler;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 
-public class ImageHandlerTest {
-    
+class ImageHandlerTest {
+
     private ImageHandler imageHandler;
     private transient BufferedImage originalImage;
 
@@ -25,8 +25,8 @@ public class ImageHandlerTest {
     }
 
     @Test
-    public void testSetImage() {
-        Optional<BufferedImage> storedImage = imageHandler.getImage();
+    void testSetImage() {
+        final Optional<BufferedImage> storedImage = imageHandler.getImage();
         assertTrue(storedImage.isPresent());
         assertNotSame(originalImage, storedImage.get());
     }
@@ -34,11 +34,11 @@ public class ImageHandlerTest {
     // getting an image should not expose internal references and
     // after serialization and deserialization should return the same image
     @Test
-    public void testGetImageNotExpose() {
-        Optional<BufferedImage> retrievedImageOpt = imageHandler.getImage();
+    void testGetImageNotExpose() {
+        final Optional<BufferedImage> retrievedImageOpt = imageHandler.getImage();
         assertTrue(retrievedImageOpt.isPresent());
 
-        BufferedImage retrievedImage = retrievedImageOpt.get();
+        final BufferedImage retrievedImage = retrievedImageOpt.get();
         assertNotSame(originalImage, retrievedImage);
         assertEquals(originalImage.getWidth(), retrievedImage.getWidth());
         assertEquals(originalImage.getHeight(), retrievedImage.getHeight());

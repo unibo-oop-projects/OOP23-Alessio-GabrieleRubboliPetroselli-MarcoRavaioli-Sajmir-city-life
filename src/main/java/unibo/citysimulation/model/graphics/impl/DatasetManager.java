@@ -6,6 +6,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
@@ -115,6 +116,6 @@ public class DatasetManager {
      * @return The list of XYSeriesCollection datasets.
      */
     public List<XYSeriesCollection> getDatasets() {
-        return datasets;
+        return new ArrayList<>(datasets);
     }
 }

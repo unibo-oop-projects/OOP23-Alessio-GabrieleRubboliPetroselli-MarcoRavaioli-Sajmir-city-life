@@ -31,7 +31,7 @@ public final class MapController implements MouseListener, ClockObserver {
      * @param windowView The WindowView interface containing the method to access and modify info and map panels.
      */
     public MapController(final CityModel cityModel, final WindowView windowView) {
-        this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");;
+        this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
         this.infoPanel = windowView.getInfoPanel();
         this.mapPanel = windowView.getMapPanel();
         this.mapModel = cityModel.getMapModel();

@@ -16,14 +16,15 @@ public class ImageHandler implements Serializable {
     private static final long serialVersionUID = 1L;
     private transient BufferedImage image;
 
+    /**
+     * Contructor to create a new ImageHandler and load the map image from Url.
+     * 
+     */
     public ImageHandler() {
         loadImage();
     }
 
-    /**
-     * Loads the image map from resources.
-     */
-    public void loadImage() {
+    private void loadImage() {
         try {
             final URL imageUrl = ImageHandler.class.getResource("/unibo/citysimulation/images/mapImage.png");
             if (imageUrl != null) {
