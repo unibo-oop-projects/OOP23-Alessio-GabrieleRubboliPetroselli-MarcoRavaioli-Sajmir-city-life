@@ -15,8 +15,9 @@ public class BigBusiness extends Business {
      * Creates a big business in the city simulation.
      * @param zone the zone where the big business is located
      */
-    public BigBusiness(final Zone zone) {
+    public BigBusiness(final int id, final Zone zone) {
         super(new BusinessData(
+            id,
             new LinkedList<>(),
             BusinessConfig.BIG_OPENING_TIME,
             BusinessConfig.BIG_CLOSING_TIME,

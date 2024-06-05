@@ -2,8 +2,10 @@ package unibo.citysimulation.model.person.impl;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.TransportStrategy;
@@ -29,17 +31,19 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
      * @param personData the data of the person.
      * @param money      the money of the person.
      */
-    public DynamicPersonImpl(final PersonData personData, final double money) {
-        super(personData, money);
+    public DynamicPersonImpl(final PersonData personData, final int money, final Optional<Business> business) {
+        super(personData, money, business);
         this.lastDestination = PersonState.WORKING;
         this.late = false;
-        this.businessBegin = calculateUpdatedTime(super.getPersonData().business().get().getBusinessData().opLocalTime());
-        this.businessEnd = calculateUpdatedTime(super.getPersonData().business().get().getBusinessData().clLocalTime());
+        this.businessBegin = business.map(b -> calculateUpdatedTime(b.getBusinessData().opLocalTime())).orElse(0);
+        this.businessEnd = business.map(b -> calculateUpdatedTime(b.getBusinessData().clLocalTime())).orElse(0);
         this.transportStrategy = new TransportStrategyImpl();
     }
 
     private boolean shouldMove(final int currentTime, final int timeToMove, final int lineDuration) {
-        if (currentTime == timeToMove || late) {
+        if (getTransportLine() == null) {
+            return false;
+        } else if (currentTime == timeToMove || late) {
             if (transportStrategy.isCongested(List.of(getTransportLine()))) {
                 late = true;
                 return false;
@@ -53,13 +57,13 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     }
 
     private void handleWorkTransition(final LocalTime currentTime) {
-        if (shouldMove(currentTime.toSecondOfDay(), businessBegin - super.getTripDuration(), super.getTripDuration())) {
+        if (super.getBusiness().isPresent() && shouldMove(currentTime.toSecondOfDay(), businessBegin - super.getTripDuration(), super.getTripDuration())) {
             moveTo(PersonState.WORKING);
         }
     }
 
     private void handleHomeTransition(final LocalTime currentTime) {
-        if (shouldMove(currentTime.toSecondOfDay(), businessEnd, super.getTripDuration())) {
+        if (super.getBusiness().isPresent() && shouldMove(currentTime.toSecondOfDay(), businessEnd, super.getTripDuration())) {
             moveTo(PersonState.AT_HOME);
         }
     }

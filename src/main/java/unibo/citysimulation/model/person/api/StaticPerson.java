@@ -2,6 +2,7 @@ package unibo.citysimulation.model.person.api;
 
 import java.util.Optional;
 
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
@@ -64,4 +65,9 @@ public interface StaticPerson {
      * @return the actual position of the person.
      */
     Optional<Pair<Integer, Integer>> getPosition();
+
+    Optional<Business> getBusiness();
+
+    void setBusiness(Optional<Business> business);
+    
 }

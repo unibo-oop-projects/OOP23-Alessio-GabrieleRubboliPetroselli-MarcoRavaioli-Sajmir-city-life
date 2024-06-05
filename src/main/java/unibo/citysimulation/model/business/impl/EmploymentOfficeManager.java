@@ -16,7 +16,6 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
 
     private final EmploymentOfficeData employmentOffice;
     private final Random random;
-    private static final double FIRING_RATE = 0.1;
     private static final int ZERO = 0;
 
     /**
@@ -45,7 +44,7 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
         if (hiredCount > 0) {
             maxToFire = Math.min(employeesToFire.size(), hiredCount - 1);
         } else {
-            maxToFire = Math.max(1, (int) Math.floor(business.getBusinessData().employees().size() * FIRING_RATE));
+            maxToFire = 0;
         }
         if (maxToFire > 0) {
             final int numberToFire = random.nextInt(maxToFire) + 1;
@@ -131,12 +130,13 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
                 final Employee employee = new Employee(person, business.getBusinessData());
                 business.hire(employee);
                 employmentOffice.disoccupied().remove(person);
+                person.setBusiness(Optional.of(business));
             });
             return people.size();
         }
         return 0;
     }
-
+    
     /**
      * Retrieves a list of employees that should be fired from the specified business.
      * 
@@ -159,6 +159,7 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
         employeesToFire.forEach(employee -> {
             employmentOffice.disoccupied().add(employee.person());
             business.fire(employee);
+            employee.person().setBusiness(Optional.empty());
         });
     }
     /**
