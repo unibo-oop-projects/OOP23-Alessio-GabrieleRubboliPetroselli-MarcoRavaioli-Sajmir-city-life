@@ -20,8 +20,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     private PersonState lastDestination;
     private boolean late;
     private final Random random = new Random();
-    private final int businessBegin;
-    private final int businessEnd;
+    private int businessBegin;
+    private int businessEnd;
     private final TransportStrategy transportStrategy;
 
     /**
@@ -41,7 +41,7 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     }
 
     private boolean shouldMove(final int currentTime, final int timeToMove, final int lineDuration) {
-        if (getTransportLine() == null) {
+        if (getTransportLine().length == 0){
             return false;
         } else if (currentTime == timeToMove || late) {
             if (transportStrategy.isCongested(List.of(getTransportLine()))) {
@@ -57,13 +57,13 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     }
 
     private void handleWorkTransition(final LocalTime currentTime) {
-        if (super.getBusiness().isPresent() && shouldMove(currentTime.toSecondOfDay(), businessBegin - super.getTripDuration(), super.getTripDuration())) {
+        if (shouldMove(currentTime.toSecondOfDay(), businessBegin - super.getTripDuration(), super.getTripDuration())) {
             moveTo(PersonState.WORKING);
         }
     }
 
     private void handleHomeTransition(final LocalTime currentTime) {
-        if (super.getBusiness().isPresent() && shouldMove(currentTime.toSecondOfDay(), businessEnd, super.getTripDuration())) {
+        if (shouldMove(currentTime.toSecondOfDay(), businessEnd, super.getTripDuration())) {
             moveTo(PersonState.AT_HOME);
         }
     }
@@ -108,5 +108,13 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         }
         this.lastDestination = newState;
         this.updatePosition();
+    }
+
+    public void setBusinessBegin(final int businessBegin) {
+        this.businessBegin = businessBegin;
+    }
+
+    public void setBusinessEnd(final int businessEnd) {
+        this.businessEnd = businessEnd;
     }
 }
