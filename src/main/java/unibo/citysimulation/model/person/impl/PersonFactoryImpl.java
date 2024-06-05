@@ -1,10 +1,10 @@
-package unibo.citysimulation.model.person.factory;
+package unibo.citysimulation.model.person.impl;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.Employee;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.api.PersonData;
-import unibo.citysimulation.model.person.impl.DynamicPersonImpl;
+import unibo.citysimulation.model.person.api.PersonFactory;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
@@ -19,21 +19,18 @@ import java.util.Optional;
  * The PersonFactory class is responsible for creating instances of
  * DynamicPerson objects.
  */
-public final class PersonFactory {
+public final class PersonFactoryImpl implements PersonFactory {
     private static Random random = new Random();
 
-    private PersonFactory() {
-    }
-
     /**
-     * Creates a list of people based on the specified parameters.
+     * Creates all the people for the simulation.
      *
      * @param numberOfPeople The total number of people to create, given in input.
      * @param zones          The list of available zones.
      * @param businesses     The list of available businesses.
      * @return A list of lists of DynamicPerson objects for every zone.
      */
-    public static List<List<DynamicPerson>> createAllPeople(final int numberOfPeople, final List<Zone> zones,
+    public List<List<DynamicPerson>> createAllPeople(final int numberOfPeople, final List<Zone> zones,
             final List<Business> businesses) {
         final List<List<DynamicPerson>> allPeople = new ArrayList<>();
         for (final Zone zone : zones) {
@@ -50,7 +47,17 @@ public final class PersonFactory {
         return allPeople;
     }
 
-    private static List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
+    /**
+     * Creates a group of people for a certain zone.
+     * 
+     * @param groupCounter a counter for the group of people.
+     * @param numberOfPeople The number of people to create for the given zone.
+     * @param moneyMinMax The minimum and maximum amount of money that the people can have in that zone.
+     * @param businesses The list of available businesses.
+     * @param residenceZone The zone where this group of people will live.
+     * @return A list of DynamicPerson objects for the given zone.
+     */
+    public List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
             final Pair<Integer, Integer> moneyMinMax,
             final List<Business> businesses, final Zone residenceZone) {
                 final List<DynamicPerson> people = new ArrayList<>();
@@ -80,7 +87,17 @@ public final class PersonFactory {
                 return people;
     }
 
-    private static DynamicPerson createPerson(final String name, final int age, final Optional<Business> business,
+    /**
+     * Creates a single person.
+     * 
+     * @param name The name of the person.
+     * @param age The age of the person.
+     * @param business The business where the person works, if any.
+     * @param residenceZone The zone where the person lives.
+     * @param money The amount of money that the person has at the creation moment.
+     * @return A DynamicPerson object.
+     */
+    public DynamicPerson createPerson(final String name, final int age, final Optional<Business> business,
             final Zone residenceZone, final int money) {
         return new DynamicPersonImpl(new PersonData(name, age, business, residenceZone), money);
     }
