@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Arrays;
 import java.util.Random;
 
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.StaticPerson;
 import unibo.citysimulation.model.transport.api.TransportLine;
@@ -23,6 +24,7 @@ public class StaticPersonImpl implements StaticPerson {
     private TransportLine[] transportLine;
     private int tripDuration;
     private static final Random RANDOM = new Random();
+    private Optional<Business> business;
 
     /**
      * Constructs a new static person with the given person data and money.
@@ -30,13 +32,14 @@ public class StaticPersonImpl implements StaticPerson {
      * @param personData the data of the person.
      * @param money      the money of the person.
      */
-    public StaticPersonImpl(final PersonData personData, final double money) {
+    public StaticPersonImpl(final PersonData personData, final double money, final Optional<Business> business) {
         this.personData = personData;
         this.money = money;
         this.state = PersonState.AT_HOME;
         this.homePosition = personData.residenceZone().getRandomPosition();
         this.position = Optional.of(homePosition);
-        this.calculateTrip();
+        this.business = business;
+        calculateTrip();
     }
 
     /**
@@ -115,7 +118,7 @@ public class StaticPersonImpl implements StaticPerson {
                 this.position = Optional.empty();
                 break;
             case WORKING:
-                final Pair<Integer, Integer> businessPosition = personData.business().get().getBusinessData().position();
+                final Pair<Integer, Integer> businessPosition = business.get().getBusinessData().position();
                 final int newX = businessPosition.getFirst() + getRandomDeviation();
                 final int newY = businessPosition.getSecond() + getRandomDeviation();
                 this.position = Optional.of(new Pair<>(newX, newY));
@@ -138,15 +141,27 @@ public class StaticPersonImpl implements StaticPerson {
     }
 
     private void calculateTrip() {
-        if (personData.residenceZone().equals(personData.business().get().getBusinessData().zone())) {
-            this.tripDuration = 0;
-        } else {
+        if (this.business.isPresent()) {
             this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(),
-                    personData.business().get().getBusinessData().zone());
+                    business.get().getBusinessData().zone());
             if (this.transportLine == null) {
                 throw new IllegalStateException("No transport line found between the given zones.");
             }
             tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
+        } else {
+            this.transportLine = new TransportLine[0];
+            tripDuration = 0;
         }
+    }
+    
+
+    @Override
+    public Optional<Business> getBusiness() {
+        return this.business;
+    }
+
+    @Override
+    public void setBusiness(Optional<Business> business) {
+        this.business = business;
     }
 }
