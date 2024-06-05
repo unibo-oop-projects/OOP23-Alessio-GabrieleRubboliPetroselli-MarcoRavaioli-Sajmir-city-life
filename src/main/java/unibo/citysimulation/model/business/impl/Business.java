@@ -95,17 +95,14 @@ public abstract class Business implements BusinessBehavior {
      * 
      * @param currentTime the current time
      */
-    @Override
     public void checkEmployeeDelays(final LocalTime currentTime) {
         if (currentTime.equals(businessData.opLocalTime())) {
-        for (int i = 0; i < businessData.employees().size(); i++) {
-            Employee employee = businessData.employees().get(i);
-            if (employee.isLate(Optional.of(businessData.position()))) {
-                Employee updatedEmployee = employee.incrementDelayCount();
-                businessData.employees().set(i, updatedEmployee); // Replace the old employee with the updated one
+            for (Employee employee : businessData.employees()) {
+                if (employee.isLate(Optional.of(businessData.position()))) {
+                    employee.incrementDelayCount();
+                }
             }
         }
-    }
     }
 
     /**

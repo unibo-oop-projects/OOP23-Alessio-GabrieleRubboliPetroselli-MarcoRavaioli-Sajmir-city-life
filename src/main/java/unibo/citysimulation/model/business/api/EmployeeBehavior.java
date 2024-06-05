@@ -2,7 +2,6 @@ package unibo.citysimulation.model.business.api;
 
 import java.util.Optional;
 
-import unibo.citysimulation.model.business.impl.Employee;
 import unibo.citysimulation.utilities.Pair;
 
 /**
@@ -14,7 +13,7 @@ public interface EmployeeBehavior {
      *
      * @return The updated Employee object.
      */
-    Employee incrementDelayCount();
+    void incrementDelayCount();
 
     /**
      * Checks if the employee is late based on the given business position.

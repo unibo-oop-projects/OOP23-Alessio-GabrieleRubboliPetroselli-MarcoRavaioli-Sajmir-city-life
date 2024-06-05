@@ -48,7 +48,6 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
                 late = true;
                 return false;
             }
-
             this.lastArrivingTime = transportStrategy.calculateArrivalTime(currentTime, lineDuration);
             this.late = false;
             return true;

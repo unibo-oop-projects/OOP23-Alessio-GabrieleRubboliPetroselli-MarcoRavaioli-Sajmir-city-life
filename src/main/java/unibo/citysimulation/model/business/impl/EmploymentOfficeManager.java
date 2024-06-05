@@ -1,5 +1,6 @@
 package unibo.citysimulation.model.business.impl;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
     private final EmploymentOfficeData employmentOffice;
     private final Random random;
     private static final int ZERO = 0;
+    private static final LocalTime TIME_ZERO = LocalTime.of(ZERO, ZERO);
 
     /**
      * Constructs an EmploymentOfficeManager with the given employment office.
@@ -38,21 +40,9 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
      * @param hiredCount The number of people hired previously.
      */
     @Override
-    public final void handleEmployeeFiring(final Business business, final int hiredCount) {
+    public final void handleEmployeeFiring(final Business business) {
         final List<Employee> employeesToFire = getEmployeesToFire(business);
-        int maxToFire;
-        if (hiredCount > 0) {
-            maxToFire = Math.min(employeesToFire.size(), hiredCount - 1);
-        } else {
-            maxToFire = 0;
-        }
-        if (maxToFire > 0) {
-            final int numberToFire = random.nextInt(maxToFire) + 1;
-            final List<Employee> selectedToFire = employeesToFire.stream()
-                .limit(numberToFire)
-                .collect(Collectors.toList());
-            fireEmployees(business, selectedToFire);
-        }
+        fireEmployees(business, employeesToFire);
     }
     /**
      * Handles the hiring of employees for the specified business.
@@ -160,6 +150,8 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
             employmentOffice.disoccupied().add(employee.person());
             business.fire(employee);
             employee.person().setBusiness(Optional.empty());
+            employee.person().setBusinessBegin(TIME_ZERO);
+            employee.person().setBusinessEnd(TIME_ZERO);
         });
     }
     /**
