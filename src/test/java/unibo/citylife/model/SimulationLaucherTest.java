@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  * @ExtendWith(MockitoExtension.class) is used to initialize mocks and inject them.
  */
 @ExtendWith(MockitoExtension.class)
-public class IntegrationTest {
+public class SimulationLaucherTest {
     private WelcomeScreen welcomeScreen;
     /**
      * This method is executed before each test. It initializes the WelcomeScreen.
