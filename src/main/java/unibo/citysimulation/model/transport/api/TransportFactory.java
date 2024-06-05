@@ -12,7 +12,5 @@ public interface TransportFactory {
      * @param zones List of Zone objects.
      * @return List of TransportLine objects.
      */
-    List<TransportLine> createTransportsFromFile(final List<Zone> zones);
-  
-    
+    List<TransportLine> createTransportsFromFile(List<Zone> zones);
 }

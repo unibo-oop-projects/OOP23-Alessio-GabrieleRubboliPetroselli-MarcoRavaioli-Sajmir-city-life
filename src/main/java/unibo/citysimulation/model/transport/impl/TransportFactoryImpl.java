@@ -29,11 +29,6 @@ import java.nio.charset.StandardCharsets;
  */
 public final class TransportFactoryImpl implements TransportFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportFactoryImpl.class);
-
-    public TransportFactoryImpl() {
-        // public constructor to prevent instantiation
-    }
-
     /**
      * Create a list of TransportLine objects based on a list of Zone objects.
      * 
