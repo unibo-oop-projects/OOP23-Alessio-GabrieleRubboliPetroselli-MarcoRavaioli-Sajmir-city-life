@@ -30,6 +30,7 @@ public final class PersonFactoryImpl implements PersonFactory {
      * @param businesses     The list of available businesses.
      * @return A list of lists of DynamicPerson objects for every zone.
      */
+    @Override
     public List<List<DynamicPerson>> createAllPeople(final int numberOfPeople, final List<Zone> zones,
             final List<Business> businesses) {
         final List<List<DynamicPerson>> allPeople = new ArrayList<>();
@@ -57,6 +58,7 @@ public final class PersonFactoryImpl implements PersonFactory {
      * @param residenceZone The zone where this group of people will live.
      * @return A list of DynamicPerson objects for the given zone.
      */
+    @Override
     public List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
             final Pair<Integer, Integer> moneyMinMax,
             final List<Business> businesses, final Zone residenceZone) {
@@ -97,6 +99,7 @@ public final class PersonFactoryImpl implements PersonFactory {
      * @param money The amount of money that the person has at the creation moment.
      * @return A DynamicPerson object.
      */
+    @Override
     public DynamicPerson createPerson(final String name, final int age, final Optional<Business> business,
             final Zone residenceZone, final int money) {
         return new DynamicPersonImpl(new PersonData(name, age, business, residenceZone), money);
