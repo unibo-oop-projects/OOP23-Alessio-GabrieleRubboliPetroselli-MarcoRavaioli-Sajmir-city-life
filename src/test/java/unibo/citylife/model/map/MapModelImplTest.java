@@ -28,13 +28,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+
+
 
 class MapModelImplTest {
     private MapModelImpl mapModel;
     private List<TransportLine> lines;
     private List<DynamicPerson> people;
-    private List<Business> businesses = new ArrayList<>();
+    private final List<Business> businesses = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
@@ -62,7 +69,7 @@ class MapModelImplTest {
     void testGetTransportNames() {
         mapModel.setTransportInfo(lines);
 
-        List<String> names = mapModel.getTransportNames();
+        final List<String> names = mapModel.getTransportNames();
 
         assertFalse(names.isEmpty());
         assertEquals(lines.size(), names.size());
@@ -73,7 +80,7 @@ class MapModelImplTest {
 
     @Test
     void testGetBusinessInfos() {
-        List<Pair<Integer, Integer>> businessInfos = mapModel.getBusinessInfos(businesses);
+        final List<Pair<Integer, Integer>> businessInfos = mapModel.getBusinessInfos(businesses);
 
         assertFalse(businessInfos.isEmpty());
         assertEquals(businesses.size(), businessInfos.size());
@@ -84,8 +91,8 @@ class MapModelImplTest {
         Map<String, Pair<Pair<Integer, Integer>, Color>> personInfos = mapModel.getPersonInfos(people);
         assertFalse(personInfos.isEmpty());
         assertEquals(people.size(), personInfos.size());
-        for (DynamicPerson person : people) {
-            Pair<Pair<Integer, Integer>, Color> info = personInfos.get(person.getPersonData().name());
+        for (final DynamicPerson person : people) {
+            final Pair<Pair<Integer, Integer>, Color> info = personInfos.get(person.getPersonData().name());
             assertNotNull(info);
             assertEquals(person.getState() == PersonState.AT_HOME ? Color.BLUE : Color.RED, info.getSecond());
         }
@@ -93,8 +100,8 @@ class MapModelImplTest {
 
     @Test
     void testGetColorList() {
-        // Ensure that the simulation hasn't started yet
-        List<TransportLine> testLines = lines;
+        final int maxColor = 255;
+        final List<TransportLine> testLines = lines;
 
         for (int i = 0; i < testLines.get(0).getCapacity(); i++) {
             testLines.get(0).incrementPersonInLine();
@@ -111,14 +118,14 @@ class MapModelImplTest {
         colors = mapModel.getColorList();
         assertEquals(testLines.size(), colors.size());
 
-        assertEquals(new Color(255, 0, 0), colors.get(0));
+        assertEquals(new Color(maxColor, 0, 0), colors.get(0));
     }
 
     @Test
     void testGetLinesPointsCoordinates() {
         mapModel.setTransportInfo(lines);
 
-        List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = mapModel.getLinesPointsCoordinates();
+        final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = mapModel.getLinesPointsCoordinates();
 
         assertFalse(coordinates.isEmpty());
         assertEquals(lines.size(), coordinates.size());
@@ -128,11 +135,11 @@ class MapModelImplTest {
     void testSetTransportInfo() {
         mapModel.setTransportInfo(lines);
 
-        List<String> names = mapModel.getTransportNames();
+        final List<String> names = mapModel.getTransportNames();
         assertFalse(names.isEmpty());
         assertEquals(lines.size(), names.size());
 
-        List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = mapModel.getLinesPointsCoordinates();
+        final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = mapModel.getLinesPointsCoordinates();
         assertFalse(coordinates.isEmpty());
         assertEquals(lines.size(), coordinates.size());
     }
@@ -141,25 +148,26 @@ class MapModelImplTest {
     void testSetTransportCongestion() {
         mapModel.setTransportCongestion(lines);
 
-        List<Color> colors = mapModel.getColorList();
+        final List<Color> colors = mapModel.getColorList();
         assertFalse(colors.isEmpty());
         assertEquals(lines.size(), colors.size());
     }
 
     @Test
 void testSetMaxCoordinates() {
+    final Pair<Integer, Integer> maxCoordinateTest = new Pair<>(100, 200); 
     // Test that an exception is thrown for negative coordinates
     assertThrows(IllegalArgumentException.class, () -> mapModel.setMaxCoordinates(-1, -1));
 
     // Test setting valid coordinates
-    mapModel.setMaxCoordinates(2000, 2000);
+    mapModel.setMaxCoordinates(maxCoordinateTest.getFirst(), maxCoordinateTest.getSecond());
     // Since there's no getter to directly check the values, we assume the method works correctly
 }
 
 
     @Test
     void testGetImage() {
-        BufferedImage image = mapModel.getImage();
+        final BufferedImage image = mapModel.getImage();
         assertNotNull(image);
     }
 
@@ -181,7 +189,7 @@ void testSetMaxCoordinates() {
             }
 
             // Use the corrupted file in the test
-            String corruptedFilePath = corruptedFile.getPath();
+            final String corruptedFilePath = corruptedFile.getPath();
             assertThrows(RuntimeException.class, () -> new ImageHandler(corruptedFilePath));
 
         } catch (IOException e) {
@@ -193,10 +201,9 @@ void testSetMaxCoordinates() {
                     Files.deleteIfExists(corruptedFile.toPath());
                 } catch (IOException e) {
                     // Log an error or handle it appropriately
-                    System.err.println("Failed to delete temporary corrupted image file: " + e.getMessage());
+                    e.getStackTrace();
                 }
             }
         }
     }
-    
 }

@@ -24,7 +24,6 @@ class ImageHandlerTest {
 
     @Test
     void testSetImage() {
-        
         final BufferedImage storedImage = imageHandler.getImage();
         assertNotSame(originalImage, storedImage);
     }

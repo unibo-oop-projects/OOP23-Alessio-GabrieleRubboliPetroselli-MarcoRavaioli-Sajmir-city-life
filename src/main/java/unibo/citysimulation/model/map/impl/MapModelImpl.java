@@ -18,7 +18,7 @@ import unibo.citysimulation.utilities.Pair;
 /**
  * Model class representing the map.
  */
-public class MapModelImpl implements MapModel {
+public final class MapModelImpl implements MapModel {
     private static final int PERCENT_50 = 50;
     private static final int COLOR_MAX = 255;
 
@@ -28,8 +28,10 @@ public class MapModelImpl implements MapModel {
 
     /**
      * Constructs a MapModel object and loads the map image.
+     * 
+     * @param imagePath The path to the map image.
      */
-    public MapModelImpl(String imagePath) {
+    public MapModelImpl(final String imagePath) {
         this.imageLoader = new ImageHandler(imagePath);
         this.coordinateHandler = new MapCoordinateHandler();
         this.transportManager = new TransportManager();

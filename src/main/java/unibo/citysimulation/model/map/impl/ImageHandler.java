@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URL;
 import javax.imageio.ImageIO;
 
 /**
@@ -17,25 +16,26 @@ public class ImageHandler implements Serializable {
     /**
      * Contructor to create a new ImageHandler and load the map image from Url.
      * 
+     * @param imagePath The path to the map image.
      */
-    public ImageHandler(String imagePath) {
+    public ImageHandler(final String imagePath) {
+        this.image = loadImageWithExceptionHandling(imagePath);
+    }
+
+    private BufferedImage loadImageWithExceptionHandling(final String imagePath) {
         try {
-            loadImage(imagePath);
+            return loadImage(imagePath);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load map image", e); // Throw a runtime exception
+            throw new ImageLoadingException("Failed to load map image", e);
         }
     }
 
-    private void loadImage(String imagePath) throws IOException {
-        final URL imageUrl = ImageHandler.class.getResource(imagePath);
-        if (imageUrl != null) {
-            image = ImageIO.read(imageUrl);
-            if (image == null) {
-                throw new IOException("Image is corrupted or unsupported");
-            }
-        } else {
-            throw new IOException("Image file not found");
+    private BufferedImage loadImage(final String imagePath) throws IOException {
+        final BufferedImage img = ImageIO.read(getClass().getResource(imagePath));
+        if (img == null) {
+            throw new IOException("Image could not be read, possibly due to invalid path: " + imagePath);
         }
+        return img;
     }
 
     /**

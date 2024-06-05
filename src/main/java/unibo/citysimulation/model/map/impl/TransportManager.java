@@ -76,8 +76,8 @@ public class TransportManager {
     }
 
     /**
-     * Sets to true the boolean simulationStarted
-     * @return
+     * Sets to true the boolean simulationStarted.
+     * 
      */
     public void setSimulationStarted() {
         simulationStarted = true;

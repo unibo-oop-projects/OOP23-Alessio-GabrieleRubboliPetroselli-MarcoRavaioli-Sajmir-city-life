@@ -18,7 +18,7 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 
-public class TransportStrategyImplTest {
+class TransportStrategyImplTest {
 
     private TransportStrategy transportStrategy;
     private List<TransportLine> allLines;
@@ -34,7 +34,7 @@ public class TransportStrategyImplTest {
 
     @Test
     void testIsCongested() {
-        List<TransportLine> lines = List.of(allLines.get(0), allLines.get(1));
+        final List<TransportLine> lines = List.of(allLines.get(0), allLines.get(1));
 
         assertFalse(transportStrategy.isCongested(lines));
 
@@ -45,19 +45,16 @@ public class TransportStrategyImplTest {
 
         @Test
     void testCalculateArrivalTime() {
-        // Assicuriamoci che il tempo di arrivo sia correttamente calcolato
-        int currentTime = 3600; // Tempo attuale: 1 ora (3600 secondi) dopo la mezzanotte
-        int tripDuration = 1800; // Durata del viaggio: 30 minuti (1800 secondi)
+        final int exampleTime = 1800;
 
-        // Il tempo di arrivo dovrebbe essere 1 ora e 30 minuti dopo la mezzanotte, cioè alle 1:30
-        int arrivalTime = transportStrategy.calculateArrivalTime(currentTime, tripDuration);
-        assertEquals(5400, arrivalTime); // 5400 secondi = 1 ora e 30 minuti
+        final int arrivalTime = transportStrategy.calculateArrivalTime(exampleTime, exampleTime);
+        assertEquals(exampleTime * 2, arrivalTime);
     }
 
     @Test
     void testIncrementAndDecrementPersonsInLine() {
         // Prendiamo una linea di trasporto dalla lista
-        TransportLine line = allLines.get(0);
+        final TransportLine line = allLines.get(0);
 
         // Verifichiamo che all'inizio non ci siano persone nella linea
         assertEquals(0, line.getPersonInLine());
@@ -74,5 +71,4 @@ public class TransportStrategyImplTest {
         // Ora dovremmo tornare a zero persone nella linea
         assertEquals(0, line.getPersonInLine());
     }
-
 }
