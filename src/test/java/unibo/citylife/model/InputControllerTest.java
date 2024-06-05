@@ -14,16 +14,27 @@ import unibo.citysimulation.model.map.impl.MapModelImpl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+/**
+ * This class tests the InputController.
+ */
 public class InputControllerTest {
     private CityModel cityModel;
     private InputModel inputModel;
     private InputPanel inputPanel;
     private ClockPanel clockPanel;
-    private MapModelImpl mapModel; // Aggiungi questo
+    private MapModelImpl mapModel; 
     private InputController inputController;
+    private static final int BUSINESS_SLIDER_VALUE = 5;
+    private static final int CAPACITY_SLIDER_VALUE = 20;
+    private static final int PEOPLE_SLIDER_VALUE = 10;
 
+    /**
+     * This method sets up the test environment.
+     */
     @BeforeEach
     public void setup() {
         cityModel = mock(CityModel.class);
@@ -32,31 +43,30 @@ public class InputControllerTest {
         clockPanel = mock(ClockPanel.class);
         ClockModel clockModel = mock(ClockModel.class);
         mapModel = mock(MapModelImpl.class); // Crea un mock di MapModelImpl
-
         // Configura i mock
         when(cityModel.getClockModel()).thenReturn(clockModel);
         when(cityModel.getMapModel()).thenReturn(mapModel); // Assicurati che getMapModel() ritorni il mock
-
         inputController = new InputController(cityModel, inputModel, inputPanel, clockPanel);
     }
 
+    /**
+     * This test verifies the action performed when the start button is clicked.
+     */
     @Test
     public void testStartButtonActionPerformed() {
         // Arrange
-        when(inputPanel.getPeopleSliderValue()).thenReturn(10);
-        when(inputPanel.getBusinessSliderValue()).thenReturn(5);
-        when(inputPanel.getCapacitySliderValue()).thenReturn(20);
-
+        when(inputPanel.getPeopleSliderValue()).thenReturn(PEOPLE_SLIDER_VALUE);
+        when(inputPanel.getBusinessSliderValue()).thenReturn(BUSINESS_SLIDER_VALUE);
+        when(inputPanel.getCapacitySliderValue()).thenReturn(CAPACITY_SLIDER_VALUE);
         // Act
         ArgumentCaptor<ActionListener> captor = ArgumentCaptor.forClass(ActionListener.class);
         verify(inputPanel).addStartButtonListener(captor.capture());
         ActionListener startButtonListener = captor.getValue();
         startButtonListener.actionPerformed(mock(ActionEvent.class));
-
         // Assert
-        verify(inputModel).setNumberOfPeople(10);
-        verify(inputModel).addNumberOfBusiness(5);
-        verify(inputModel).setCapacity(20);
+        verify(inputModel).setNumberOfPeople(PEOPLE_SLIDER_VALUE);
+        verify(inputModel).addNumberOfBusiness(BUSINESS_SLIDER_VALUE);
+        verify(inputModel).setCapacity(CAPACITY_SLIDER_VALUE);
         verify(cityModel).createEntities();
         verify(cityModel.getClockModel()).restartSimulation();
         verify(clockPanel).updatePauseButton(cityModel.getClockModel().isPaused());
@@ -64,21 +74,20 @@ public class InputControllerTest {
         verify(mapModel).startSimulation(); // Verifica che startSimulation() sia chiamato su mapModel
     }
 
+    /**
+     * This test verifies that the simulation stops when the stop button is pressed.
+     */
     @Test
     public void testStopButtonActionPerformed() {
         // Arrange
         ArgumentCaptor<ActionListener> captor = ArgumentCaptor.forClass(ActionListener.class);
         verify(inputPanel).addStopButtonListener(captor.capture());
         ActionListener stopButtonListener = captor.getValue();
-
         // Act
         stopButtonListener.actionPerformed(mock(ActionEvent.class));
-
         // Assert
         verify(cityModel.getClockModel()).stopSimulation();
         verify(clockPanel).updatePauseButton(cityModel.getClockModel().isPaused());
         verify(clockPanel).setPauseButtonEnabled(false);
     }
-
-
 }
