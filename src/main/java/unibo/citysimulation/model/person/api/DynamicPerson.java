@@ -13,4 +13,8 @@ public interface DynamicPerson extends StaticPerson {
      * @param currentTime the current time.
      */
     void checkState(LocalTime currentTime);
+
+    void setBusinessBegin(int businessBegin);
+
+    void setBusinessEnd(int businessEnd);
 }

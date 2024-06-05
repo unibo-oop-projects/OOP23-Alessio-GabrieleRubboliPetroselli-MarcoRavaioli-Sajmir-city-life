@@ -11,7 +11,6 @@ import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.Optional;
 
 
@@ -50,7 +49,6 @@ public final class PersonCreation {
         return allPeople;
     }
 
-    @SuppressWarnings("static-access")
     private static List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
             final Pair<Integer, Integer> moneyMinMax,
             final List<Business> businesses, final Zone residenceZone) {
@@ -70,6 +68,8 @@ public final class PersonCreation {
                 if(business.hire(new Employee(person, business.getBusinessData())) 
                 && !business.getBusinessData().zone().equals(person.getPersonData().residenceZone())){
                     person.setBusiness(Optional.of(business));
+                    person.setBusinessBegin(business.getBusinessData().opLocalTime().getHour());
+                    person.setBusinessEnd(business.getBusinessData().clLocalTime().getHour());
                     hired = true;
                     break;
                 }
@@ -78,13 +78,13 @@ public final class PersonCreation {
                 continue;
             }
         }
-        
         return people;
     }
 
     private static DynamicPerson createPerson(final String name, final int age, final Optional<Business> business,
             final Zone residenceZone, final int money) {
-        return new DynamicPersonImpl(new PersonData(name, age, residenceZone), money, business);
+                DynamicPersonImpl person = new DynamicPersonImpl(new PersonData(name, age, residenceZone), money, business);
+        return person;
     }
 
 }

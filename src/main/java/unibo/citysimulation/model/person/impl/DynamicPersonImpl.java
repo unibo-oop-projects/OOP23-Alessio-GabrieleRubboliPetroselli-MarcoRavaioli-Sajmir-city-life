@@ -35,8 +35,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         super(personData, money, business);
         this.lastDestination = PersonState.WORKING;
         this.late = false;
-        this.businessBegin = business.map(b -> calculateUpdatedTime(b.getBusinessData().opLocalTime())).orElse(0);
-        this.businessEnd = business.map(b -> calculateUpdatedTime(b.getBusinessData().clLocalTime())).orElse(0);
+        this.businessBegin = 0;
+        this.businessEnd = 0;
         this.transportStrategy = new TransportStrategyImpl();
     }
 
@@ -110,10 +110,12 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         this.updatePosition();
     }
 
+    @Override
     public void setBusinessBegin(final int businessBegin) {
         this.businessBegin = businessBegin;
     }
 
+    @Override
     public void setBusinessEnd(final int businessEnd) {
         this.businessEnd = businessEnd;
     }
