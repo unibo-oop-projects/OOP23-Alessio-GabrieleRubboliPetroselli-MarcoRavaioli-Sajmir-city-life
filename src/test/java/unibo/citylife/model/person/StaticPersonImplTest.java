@@ -8,7 +8,6 @@ import unibo.citysimulation.model.person.api.StaticPerson.PersonState;
 import unibo.citysimulation.model.person.impl.StaticPersonImpl;
 import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
