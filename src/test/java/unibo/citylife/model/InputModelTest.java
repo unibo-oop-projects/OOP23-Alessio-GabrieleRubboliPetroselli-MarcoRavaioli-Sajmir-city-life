@@ -11,11 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Tests for the InputModel class.
  */
 final class InputModelTest {
-    private static final int TEST_PEOPLE_VALUE = 50;
-    private static final int TEST_PEOPLE_EXPECTED = 55;
-    private static final int TEST_BUSINESS_COUNT = 30;
-    private static final int TEST_CAPACITY = 100;
-    private static final int TEST_RICHNESS = 200;
+    private static final int INITIAL_PEOPLE_PERCENTAGE = 40;
+    private static final int EXPECTED_INITIAL_PEOPLE = calculateExpectedPeople(INITIAL_PEOPLE_PERCENTAGE);
+    private static final int INCREASED_PEOPLE_PERCENTAGE = 60;
+    private static final int EXPECTED_INCREASED_PEOPLE = calculateExpectedPeople(INCREASED_PEOPLE_PERCENTAGE);
+    private static final int INITIAL_BUSINESS_COUNT = 15;
+    private static final int ADDITIONAL_BUSINESS_COUNT = 10;
+    private static final int EXPECTED_TOTAL_BUSINESS_COUNT = INITIAL_BUSINESS_COUNT + ADDITIONAL_BUSINESS_COUNT;
+    private static final int TEST_CAPACITY = 200;
+    private static final int TEST_RICHNESS = 250;
 
     private InputModel inputModel;
 
@@ -25,6 +29,7 @@ final class InputModelTest {
     @BeforeEach
     void setUp() {
         inputModel = new InputModel();
+        inputModel.addNumberOfBusiness(INITIAL_BUSINESS_COUNT);
     }
 
     /**
@@ -32,10 +37,11 @@ final class InputModelTest {
      */
     @Test
     void testNumberOfPeople() {
-        int range = ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE;
-        int valueToSet = (TEST_PEOPLE_VALUE - ConstantAndResourceLoader.MIN_PEOPLE) * 100 / range;
-        inputModel.setNumberOfPeople(valueToSet);
-        assertEquals(TEST_PEOPLE_EXPECTED, inputModel.getNumberOfPeople());
+        inputModel.setNumberOfPeople(INITIAL_PEOPLE_PERCENTAGE);
+        assertEquals(EXPECTED_INITIAL_PEOPLE, inputModel.getNumberOfPeople());
+
+        inputModel.setNumberOfPeople(INCREASED_PEOPLE_PERCENTAGE);
+        assertEquals(EXPECTED_INCREASED_PEOPLE, inputModel.getNumberOfPeople());
     }
 
     /**
@@ -43,8 +49,8 @@ final class InputModelTest {
      */
     @Test
     void testNumberOfBusiness() {
-        inputModel.addNumberOfBusiness(TEST_BUSINESS_COUNT);
-        assertEquals(TEST_BUSINESS_COUNT, inputModel.getNumberOfBusiness());
+        inputModel.incrementNumberOfBusiness(ADDITIONAL_BUSINESS_COUNT);
+        assertEquals(EXPECTED_TOTAL_BUSINESS_COUNT, inputModel.getNumberOfBusiness());
     }
 
     /**
@@ -63,6 +69,17 @@ final class InputModelTest {
     void testRichness() {
         inputModel.setRichness(TEST_RICHNESS);
         assertEquals(TEST_RICHNESS, inputModel.getRichness());
+    }
+
+    /**
+     * Calculates the expected number of people based on the percentage.
+     *
+     * @param percentage the percentage to calculate
+     * @return the expected number of people
+     */
+    private static int calculateExpectedPeople(int percentage) {
+        int range = ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE;
+        return (percentage * range / 100) + ConstantAndResourceLoader.MIN_PEOPLE;
     }
 }
 

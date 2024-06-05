@@ -51,6 +51,15 @@ public class InputModel {
     }
 
     /**
+     * Increments the number of businesses.
+     *
+     * @param numberOfBusiness the number of businesses to add
+     */
+    public void incrementNumberOfBusiness(final int numberOfBusiness) {
+        this.numberOfBusiness += numberOfBusiness;
+    }
+
+    /**
      * Gets the capacity.
      *
      * @return the capacity
