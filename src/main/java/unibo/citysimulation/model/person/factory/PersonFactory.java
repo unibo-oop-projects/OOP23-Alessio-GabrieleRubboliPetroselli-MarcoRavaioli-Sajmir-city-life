@@ -1,4 +1,4 @@
-package unibo.citysimulation.model.person.creation;
+package unibo.citysimulation.model.person.factory;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.Employee;
@@ -16,13 +16,13 @@ import java.util.Optional;
 
 
 /**
- * The PersonCreation class is responsible for creating instances of
+ * The PersonFactory class is responsible for creating instances of
  * DynamicPerson objects.
  */
-public final class PersonCreation {
+public final class PersonFactory {
     private static Random random = new Random();
 
-    private PersonCreation() {
+    private PersonFactory() {
     }
 
     /**
