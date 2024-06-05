@@ -30,8 +30,8 @@ import java.nio.charset.StandardCharsets;
 public final class TransportFactoryImpl implements TransportFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportFactoryImpl.class);
 
-    private TransportFactoryImpl() {
-        // private constructor to prevent instantiation
+    public TransportFactoryImpl() {
+        // public constructor to prevent instantiation
     }
 
     /**
