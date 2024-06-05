@@ -18,6 +18,7 @@ public abstract class Business implements BusinessBehavior {
     /**
      * Record representing the data of a business in the city simulation.
      *
+     * @param id           the id of the business
      * @param employees    the list of employees working in the business
      * @param opLocalTime  the opening time of the business
      * @param clLocalTime  the closing time of the business
@@ -30,6 +31,7 @@ public abstract class Business implements BusinessBehavior {
      * @param zone         the zone in which the business is located
      */
     public static record BusinessData( 
+    int id,
     List<Employee> employees,
     LocalTime opLocalTime,
     LocalTime clLocalTime,
