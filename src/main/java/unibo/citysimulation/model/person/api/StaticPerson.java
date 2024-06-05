@@ -54,6 +54,13 @@ public interface StaticPerson {
     int getTripDuration();
 
     /**
+     * Sets the state of the person.
+     * 
+     * @param state the new state of the person.
+     */
+    void setState(final PersonState state);
+
+    /**
      * 
      * @return the transport lines used by the person in his daily trip.
      */

@@ -81,12 +81,7 @@ public class StaticPersonImpl implements StaticPerson {
         return state;
     }
 
-    /**
-     * Sets the state of the person.
-     * 
-     * @param state the new state of the person.
-     */
-    protected void setState(final PersonState state) {
+    public void setState(final PersonState state) {
         this.state = state;
     }
 

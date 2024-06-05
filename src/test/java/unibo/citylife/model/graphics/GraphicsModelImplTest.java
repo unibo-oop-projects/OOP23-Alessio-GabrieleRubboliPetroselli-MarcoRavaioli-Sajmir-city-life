@@ -83,7 +83,8 @@ class GraphicsModelImplTest {
 
     @Test
     void testUpdateDataset() {
-        graphicsModel.updateDataset(people, lines, businesses, 1);
+        final List<Integer> utilityNum = List.of(250, 1000);
+        graphicsModel.updateDataset(people, lines, businesses, utilityNum.get(0));
 
         for (final XYSeriesCollection ds : graphicsModel.getDatasets()) {
             for (int i = 0; i < ds.getSeriesCount(); i++) {
@@ -92,12 +93,12 @@ class GraphicsModelImplTest {
         }
 
         for (int i = 1; i < 3; i++) {
-            graphicsModel.updateDataset(people, lines, businesses, 1);
+            graphicsModel.updateDataset(people, lines, businesses, utilityNum.get(1));
         }
 
         for (final XYSeriesCollection ds : graphicsModel.getDatasets()) {
             for (int i = 0; i < ds.getSeriesCount(); i++) {
-                assertEquals(2, ds.getSeries(i).getItemCount(), "Series should still have 2 items");
+                assertEquals(3, ds.getSeries(i).getItemCount(), "Series should have 3 items");
             }
         }
     }

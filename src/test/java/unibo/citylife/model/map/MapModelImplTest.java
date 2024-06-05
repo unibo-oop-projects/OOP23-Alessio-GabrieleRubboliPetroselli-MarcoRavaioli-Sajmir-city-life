@@ -1,0 +1,202 @@
+package unibo.citylife.model.map;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import unibo.citysimulation.model.business.impl.Business;
+import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
+import unibo.citysimulation.model.map.impl.ImageHandler;
+import unibo.citysimulation.model.map.impl.MapModelImpl;
+import unibo.citysimulation.model.person.api.DynamicPerson;
+import unibo.citysimulation.model.person.api.StaticPerson.PersonState;
+import unibo.citysimulation.model.person.creation.PersonCreation;
+import unibo.citysimulation.model.transport.api.TransportLine;
+import unibo.citysimulation.model.transport.creation.TransportCreation;
+import unibo.citysimulation.model.zone.Zone;
+import unibo.citysimulation.model.zone.ZoneFactory;
+import unibo.citysimulation.model.zone.ZoneTableCreation;
+import unibo.citysimulation.utilities.Pair;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class MapModelImplTest {
+    private MapModelImpl mapModel;
+    private List<TransportLine> lines;
+    private List<DynamicPerson> people;
+    private List<Business> businesses = new ArrayList<>();
+
+    @BeforeEach
+    public void setUp() {
+        final List<Zone> zones = ZoneFactory.createZonesFromFile();
+        lines = TransportCreation.createTransportsFromFile(zones);
+        ZoneTableCreation.createAndAddPairs(zones, lines);
+        businesses.addAll(BusinessFactoryImpl.createMultipleBusiness(zones, 100));
+        final List<List<DynamicPerson>> peopleGroup = PersonCreation.createAllPeople(100, zones, businesses);
+
+        people = peopleGroup.stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        mapModel = new MapModelImpl("/unibo/citysimulation/images/mapImage.png");
+        mapModel.setMaxCoordinates(1000, 1000);  // Set max coordinates for testing
+    }
+
+    @Test
+    void testStartSimulation() {
+        mapModel.startSimulation();
+        assertTrue(mapModel.getTransportNames().isEmpty());
+    }
+
+    @Test
+    void testGetTransportNames() {
+        mapModel.setTransportInfo(lines);
+
+        List<String> names = mapModel.getTransportNames();
+
+        assertFalse(names.isEmpty());
+        assertEquals(lines.size(), names.size());
+        for (int i = 0; i < lines.size(); i++) {
+            assertEquals(lines.get(i).getName(), names.get(i));
+        }
+    }
+
+    @Test
+    void testGetBusinessInfos() {
+        List<Pair<Integer, Integer>> businessInfos = mapModel.getBusinessInfos(businesses);
+
+        assertFalse(businessInfos.isEmpty());
+        assertEquals(businesses.size(), businessInfos.size());
+    }
+
+    @Test
+    void testGetPersonInfos() {
+        Map<String, Pair<Pair<Integer, Integer>, Color>> personInfos = mapModel.getPersonInfos(people);
+        assertFalse(personInfos.isEmpty());
+        assertEquals(people.size(), personInfos.size());
+        for (DynamicPerson person : people) {
+            Pair<Pair<Integer, Integer>, Color> info = personInfos.get(person.getPersonData().name());
+            assertNotNull(info);
+            assertEquals(person.getState() == PersonState.AT_HOME ? Color.BLUE : Color.RED, info.getSecond());
+        }
+    }
+
+    @Test
+    void testGetColorList() {
+        // Ensure that the simulation hasn't started yet
+        List<TransportLine> testLines = lines;
+
+        for (int i = 0; i < testLines.get(0).getCapacity(); i++) {
+            testLines.get(0).incrementPersonInLine();
+        }
+
+        // Without starting the simulation
+        mapModel.setTransportCongestion(testLines);
+        List<Color> colors = mapModel.getColorList();
+        assertEquals(Collections.nCopies(testLines.size(), Color.GRAY), colors);
+
+        // After starting the simulation
+        mapModel.startSimulation();
+        mapModel.setTransportCongestion(testLines);
+        colors = mapModel.getColorList();
+        assertEquals(testLines.size(), colors.size());
+
+        assertEquals(new Color(255, 0, 0), colors.get(0));
+    }
+
+    @Test
+    void testGetLinesPointsCoordinates() {
+        mapModel.setTransportInfo(lines);
+
+        List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = mapModel.getLinesPointsCoordinates();
+
+        assertFalse(coordinates.isEmpty());
+        assertEquals(lines.size(), coordinates.size());
+    }
+
+    @Test
+    void testSetTransportInfo() {
+        mapModel.setTransportInfo(lines);
+
+        List<String> names = mapModel.getTransportNames();
+        assertFalse(names.isEmpty());
+        assertEquals(lines.size(), names.size());
+
+        List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = mapModel.getLinesPointsCoordinates();
+        assertFalse(coordinates.isEmpty());
+        assertEquals(lines.size(), coordinates.size());
+    }
+
+    @Test
+    void testSetTransportCongestion() {
+        mapModel.setTransportCongestion(lines);
+
+        List<Color> colors = mapModel.getColorList();
+        assertFalse(colors.isEmpty());
+        assertEquals(lines.size(), colors.size());
+    }
+
+    @Test
+void testSetMaxCoordinates() {
+    // Test that an exception is thrown for negative coordinates
+    assertThrows(IllegalArgumentException.class, () -> mapModel.setMaxCoordinates(-1, -1));
+
+    // Test setting valid coordinates
+    mapModel.setMaxCoordinates(2000, 2000);
+    // Since there's no getter to directly check the values, we assume the method works correctly
+}
+
+
+    @Test
+    void testGetImage() {
+        BufferedImage image = mapModel.getImage();
+        assertNotNull(image);
+    }
+
+    @Test
+    void testImageLoadError() {
+        assertThrows(RuntimeException.class, () -> new MapModelImpl("/invalid/path/to/image.png"));
+    }
+
+    @Test
+    void testCorruptedImageLoadError() {
+        File corruptedFile = null;
+        try {
+            // Create a temporary file to act as a corrupted image
+            corruptedFile = File.createTempFile("corrupted_image", ".png");
+
+            // Write invalid data to the file to corrupt it
+            try (FileOutputStream out = new FileOutputStream(corruptedFile)) {
+                out.write("this is not a valid image content".getBytes());
+            }
+
+            // Use the corrupted file in the test
+            String corruptedFilePath = corruptedFile.getPath();
+            assertThrows(RuntimeException.class, () -> new ImageHandler(corruptedFilePath));
+
+        } catch (IOException e) {
+            fail("Failed to create corrupted image file for testing", e);
+        } finally {
+            // Clean up the temporary file
+            if (corruptedFile != null) {
+                try {
+                    Files.deleteIfExists(corruptedFile.toPath());
+                } catch (IOException e) {
+                    // Log an error or handle it appropriately
+                    System.err.println("Failed to delete temporary corrupted image file: " + e.getMessage());
+                }
+            }
+        }
+    }
+    
+}

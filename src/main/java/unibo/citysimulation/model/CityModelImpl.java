@@ -63,7 +63,7 @@ public final class CityModelImpl implements CityModel {
     public CityModelImpl() {
         takeFrameSize();
 
-        this.mapModel = new MapModelImpl();
+        this.mapModel = new MapModelImpl("/unibo/citysimulation/images/mapImage.png");
         this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
         this.inputModel = new InputModel();
         this.graphicsModel = new GraphicsModelImpl();

@@ -29,8 +29,8 @@ public class MapModelImpl implements MapModel {
     /**
      * Constructs a MapModel object and loads the map image.
      */
-    public MapModelImpl() {
-        this.imageLoader = new ImageHandler();
+    public MapModelImpl(String imagePath) {
+        this.imageLoader = new ImageHandler(imagePath);
         this.coordinateHandler = new MapCoordinateHandler();
         this.transportManager = new TransportManager();
     }
@@ -41,6 +41,7 @@ public class MapModelImpl implements MapModel {
     @Override
     public void startSimulation() {
         transportManager.setTransportCongestion(Collections.emptyList());
+        transportManager.setSimulationStarted();
     }
 
     /**
@@ -172,9 +173,6 @@ public class MapModelImpl implements MapModel {
      */
     @Override
     public void setMaxCoordinates(final int x, final int y) {
-        if (x < 0 || y < 0) {
-            throw new IllegalArgumentException("Max coordinates must be non-negative");
-        }
         coordinateHandler.setMaxCoordinates(x, y);
     }
 
@@ -188,14 +186,10 @@ public class MapModelImpl implements MapModel {
                 denormalizeCoordinate(position.getFirst(), maxX),
                 denormalizeCoordinate(position.getSecond(), maxY));
     }
-    /**
-     * Gets the image of the map.
-     *
-     * @return the map image
-     */
+
     @Override
     public BufferedImage getImage() {
-        return imageLoader.getImage().get();
+        return imageLoader.getImage();
     }
 }
 

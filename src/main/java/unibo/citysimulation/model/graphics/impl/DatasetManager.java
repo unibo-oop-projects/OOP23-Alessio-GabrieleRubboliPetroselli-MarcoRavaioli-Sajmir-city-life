@@ -96,9 +96,7 @@ public class DatasetManager {
         for (int i = 0; i < columnsToRemove; i++) {
             for (int j = 0; j < dataset.getSeriesCount(); j++) {
                 final XYSeries series = dataset.getSeries(j);
-                if (!series.isEmpty()) {
                     series.remove(0);
-                }
             }
         }
     }

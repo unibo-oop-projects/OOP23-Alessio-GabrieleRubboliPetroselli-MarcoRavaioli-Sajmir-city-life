@@ -22,6 +22,9 @@ public class MapCoordinateHandler {
      * @param y The maximum y-coordinate.
      */
     public void setMaxCoordinates(final int x, final int y) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("Coordinates must be non-negative");
+        }
         maxX = x;
         maxY = y;
     }
