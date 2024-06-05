@@ -19,7 +19,7 @@ import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.transport.creation.TransportCreation;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
+import unibo.citysimulation.model.zone.ZoneCreation;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
@@ -60,7 +60,7 @@ public final class CityModelImpl implements CityModel {
         this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
         this.inputModel = new InputModel();
         this.graphicsModel = new GraphicsModelImpl();
-        this.zones = ZoneFactory.createZonesFromFile();
+        this.zones = ZoneCreation.createZonesFromFile();
         this.transports = TransportCreation.createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
         this.employmentOfficeData = new EmploymentOfficeData(new LinkedList<>());

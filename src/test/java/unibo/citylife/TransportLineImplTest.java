@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.transport.creation.TransportCreation;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
+import unibo.citysimulation.model.zone.ZoneCreation;
 import java.util.List;
 
 //test for class transportLineImpl
 class TransportLineImplTest {
-    private final List<Zone> zones = ZoneFactory.createZonesFromFile();
+    private final List<Zone> zones = ZoneCreation.createZonesFromFile();
     private final List<TransportLine> transports = TransportCreation.createTransportsFromFile(zones);
 
     @Test
