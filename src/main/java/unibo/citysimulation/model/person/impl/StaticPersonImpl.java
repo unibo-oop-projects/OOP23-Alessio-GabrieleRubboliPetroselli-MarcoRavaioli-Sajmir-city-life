@@ -144,9 +144,6 @@ public class StaticPersonImpl implements StaticPerson {
         if (this.business.isPresent()) {
             this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(),
                     business.get().getBusinessData().zone());
-            if (this.transportLine == null) {
-                throw new IllegalStateException("No transport line found between the given zones.");
-            }
             tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
         } else {
             this.transportLine = new TransportLine[0];
@@ -154,7 +151,6 @@ public class StaticPersonImpl implements StaticPerson {
         }
     }
     
-
     @Override
     public Optional<Business> getBusiness() {
         return this.business;
@@ -163,5 +159,6 @@ public class StaticPersonImpl implements StaticPerson {
     @Override
     public void setBusiness(Optional<Business> business) {
         this.business = business;
+        calculateTrip();
     }
 }
