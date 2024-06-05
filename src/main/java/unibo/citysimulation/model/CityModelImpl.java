@@ -14,7 +14,7 @@ import unibo.citysimulation.model.clock.impl.ClockObserverBusiness;
 import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.person.api.DynamicPerson;
-import unibo.citysimulation.model.person.creation.PersonCreation;
+import unibo.citysimulation.model.person.factory.PersonFactory;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.transport.creation.TransportCreation;
 import unibo.citysimulation.model.zone.Boundary;
@@ -117,7 +117,7 @@ public final class CityModelImpl implements CityModel {
 
         // Create people
         this.people = new ArrayList<>();
-        people = PersonCreation.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
+        people = PersonFactory.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
         for (final List<DynamicPerson> group : people) {
             for (final DynamicPerson person : group) {
