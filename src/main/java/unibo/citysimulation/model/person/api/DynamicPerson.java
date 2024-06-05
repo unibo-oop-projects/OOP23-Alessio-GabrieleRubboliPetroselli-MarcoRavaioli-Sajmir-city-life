@@ -14,7 +14,7 @@ public interface DynamicPerson extends StaticPerson {
      */
     void checkState(LocalTime currentTime);
 
-    void setBusinessBegin(int businessBegin);
+    void setBusinessBegin(LocalTime businessBegin);
 
-    void setBusinessEnd(int businessEnd);
+    void setBusinessEnd(LocalTime businessEnd);
 }

@@ -111,12 +111,12 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
     }
 
     @Override
-    public void setBusinessBegin(final int businessBegin) {
-        this.businessBegin = businessBegin;
+    public void setBusinessBegin(final LocalTime businessBegin) {
+        this.businessBegin = calculateUpdatedTime(businessBegin);
     }
 
     @Override
-    public void setBusinessEnd(final int businessEnd) {
-        this.businessEnd = businessEnd;
+    public void setBusinessEnd(final LocalTime businessEnd) {
+        this.businessEnd = calculateUpdatedTime(businessEnd);
     }
 }

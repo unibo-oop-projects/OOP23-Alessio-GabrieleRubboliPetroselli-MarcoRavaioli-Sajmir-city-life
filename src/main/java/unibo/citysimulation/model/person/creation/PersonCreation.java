@@ -68,8 +68,8 @@ public final class PersonCreation {
                 if(business.hire(new Employee(person, business.getBusinessData())) 
                 && !business.getBusinessData().zone().equals(person.getPersonData().residenceZone())){
                     person.setBusiness(Optional.of(business));
-                    person.setBusinessBegin(business.getBusinessData().opLocalTime().getHour());
-                    person.setBusinessEnd(business.getBusinessData().clLocalTime().getHour());
+                    person.setBusinessBegin(business.getBusinessData().opLocalTime());
+                    person.setBusinessEnd(business.getBusinessData().clLocalTime());
                     hired = true;
                     break;
                 }
