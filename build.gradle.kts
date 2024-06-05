@@ -47,6 +47,11 @@ dependencies {
  
     // JFreeChart for creating plots
     implementation("org.jfree:jfreechart:1.5.0")
+
+    // Dependencies for Mockito
+    testImplementation("org.mockito:mockito-core:4.8.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:4.8.0")
+    testImplementation("org.mockito:mockito-core:4.6.1")
 }
  
 application {

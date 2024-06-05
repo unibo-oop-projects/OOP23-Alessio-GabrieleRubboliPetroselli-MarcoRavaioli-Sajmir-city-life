@@ -1,8 +1,8 @@
-package unibo.citysimulation.model.transport.creation;
+package unibo.citysimulation.model.transport.impl;
 
 
+import unibo.citysimulation.model.transport.api.TransportFactory;
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.impl.TransportLineImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import java.util.ArrayList;
@@ -27,20 +27,16 @@ import java.nio.charset.StandardCharsets;
  * This factory creates a list of TransportLine objects based on a list of Zone
  * objects.
  */
-public final class TransportCreation {
-    private static final Logger LOGGER = LoggerFactory.getLogger(TransportCreation.class);
-
-    private TransportCreation() {
-        // private constructor to prevent instantiation
-    }
-
+public final class TransportFactoryImpl implements TransportFactory {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportFactoryImpl.class);
     /**
      * Create a list of TransportLine objects based on a list of Zone objects.
      * 
      * @param zones List of Zone objects.
      * @return List of TransportLine objects.
      */
-    public static List<TransportLine> createTransportsFromFile(final List<Zone> zones) {
+    @Override
+    public List<TransportLine> createTransportsFromFile(final List<Zone> zones) {
         final List<TransportLine> lines = new ArrayList<>();
         final Gson gson = new Gson();
 

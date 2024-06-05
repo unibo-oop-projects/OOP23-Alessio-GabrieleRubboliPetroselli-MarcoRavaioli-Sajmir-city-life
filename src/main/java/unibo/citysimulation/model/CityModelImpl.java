@@ -14,9 +14,9 @@ import unibo.citysimulation.model.clock.impl.ClockObserverBusiness;
 import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.person.api.DynamicPerson;
-import unibo.citysimulation.model.person.creation.PersonCreation;
+import unibo.citysimulation.model.person.impl.PersonFactoryImpl;
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.creation.TransportCreation;
+import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
@@ -68,7 +68,7 @@ public final class CityModelImpl implements CityModel {
         this.inputModel = new InputModel();
         this.graphicsModel = new GraphicsModelImpl();
         this.zones = ZoneFactory.createZonesFromFile();
-        this.transports = TransportCreation.createTransportsFromFile(zones);
+        this.transports = new TransportFactoryImpl().createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
         this.employmentOfficeData = new EmploymentOfficeData(new LinkedList<>());
     }
@@ -107,7 +107,7 @@ public final class CityModelImpl implements CityModel {
     public void createEntities() {
         graphicsModel.clearDatasets();
 
-        transports = TransportCreation.createTransportsFromFile(zones);
+        transports = new TransportFactoryImpl().createTransportsFromFile(zones);
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
 
         // Create zone table
@@ -117,7 +117,7 @@ public final class CityModelImpl implements CityModel {
 
         // Create people
         this.people = new ArrayList<>();
-        people = PersonCreation.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
+        people =  new PersonFactoryImpl().createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
         for (final List<DynamicPerson> group : people) {
             for (final DynamicPerson person : group) {
