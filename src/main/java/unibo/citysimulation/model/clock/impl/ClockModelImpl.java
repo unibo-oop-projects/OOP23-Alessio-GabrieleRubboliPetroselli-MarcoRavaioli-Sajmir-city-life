@@ -123,10 +123,7 @@ public final class ClockModelImpl implements ClockModel {
      * Notifies all observers of a time update.
      */
     public void notifyObservers() {
-        final List<ClockObserver> observersCopy = new ArrayList<>(observers);
-        for (final ClockObserver observer : observersCopy) {
-            observer.onTimeUpdate(currentTime, currentDay);
-        }
+        observers.forEach(observer -> observer.onTimeUpdate(currentTime, currentDay));
     } 
 
     /**

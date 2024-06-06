@@ -22,8 +22,8 @@ public class ClockController implements ClockObserver {
      * @param clockPanel The ClockPanel object representing the clock user interface.
      */
     public ClockController(final ClockModel clockModel, final ClockPanel clockPanel) {
-        this.clockModel = Objects.requireNonNull(clockModel, "cityModel must not be null");
-        this.clockPanel = Objects.requireNonNull(clockPanel, "graphicsPanel must not be null");
+        this.clockModel = Objects.requireNonNull(clockModel, "clockModel must not be null");
+        this.clockPanel = Objects.requireNonNull(clockPanel, "clockPanel must not be null");
 
         // Add action listener for the pause button
         clockPanel.addPauseButtonActionListener(e -> pauseSimulation());
@@ -41,7 +41,7 @@ public class ClockController implements ClockObserver {
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
         // Update the clock panel text with current time and day
-        clockPanel.setClockText(Integer.toString(currentDay), currentTime.toString());
+        clockPanel.setClockText(String.valueOf(currentDay), currentTime.toString());
     }
 
     /**
@@ -49,11 +49,13 @@ public class ClockController implements ClockObserver {
      */
     private void changeClockSpeed() {
         final int speed = clockPanel.changeSpeed();
-        // Start the simulation with the new speed
+        final int updateRate = ConstantAndResourceLoader.TIME_UPDATE_RATE / speed;
+        
+        // Start or update the simulation with the new speed
         if (clockModel.getTimer() != null) {
-            clockModel.startSimulation(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
+            clockModel.startSimulation(updateRate);
         } else {
-            clockModel.setUpdateRate(ConstantAndResourceLoader.TIME_UPDATE_RATE / speed);
+            clockModel.setUpdateRate(updateRate);
         }
     }
 
