@@ -35,7 +35,7 @@ public class InputControllerTest {
      * This method sets up the test environment.
      */
     @BeforeEach
-    public void setup() {
+    public void setupInputController() {
         cityModel = mock(CityModel.class);
         inputModel = mock(InputModel.class);
         inputPanel = mock(InputPanel.class);
