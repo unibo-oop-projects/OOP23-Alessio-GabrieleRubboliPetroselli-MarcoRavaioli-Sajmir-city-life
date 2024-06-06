@@ -131,7 +131,8 @@ public class TransportLineImpl implements TransportLine {
      */
     @Override
     public void decrementPersonInLine() {
+        if(personInLine > 0){
         personInLine--;
-
+        }
     }
 }
