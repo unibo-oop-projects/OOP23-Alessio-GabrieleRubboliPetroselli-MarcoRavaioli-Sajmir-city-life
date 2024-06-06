@@ -27,7 +27,6 @@ public class InputControllerTest {
     private InputPanel inputPanel;
     private ClockPanel clockPanel;
     private MapModelImpl mapModel; 
-    private InputController inputController;
     private static final int BUSINESS_SLIDER_VALUE = 5;
     private static final int CAPACITY_SLIDER_VALUE = 20;
     private static final int PEOPLE_SLIDER_VALUE = 10;
@@ -46,7 +45,7 @@ public class InputControllerTest {
         // Configura i mock
         when(cityModel.getClockModel()).thenReturn(clockModel);
         when(cityModel.getMapModel()).thenReturn(mapModel); // Assicurati che getMapModel() ritorni il mock
-        inputController = new InputController(cityModel, inputModel, inputPanel, clockPanel);
+        new InputController(cityModel, inputModel, inputPanel, clockPanel);
     }
 
     /**
