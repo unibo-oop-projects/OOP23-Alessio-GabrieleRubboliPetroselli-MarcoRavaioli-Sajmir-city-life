@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * Class responsible for managing information related to zones, businesses, and people.
  */
-public class InfoModelImpl {
+public class InfoModelImpl implements InfoModel{
     private final InfoPanel infoPanel;
     private final CityModel cityModel;
 
@@ -32,6 +32,7 @@ public class InfoModelImpl {
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      */
+    @Override
     public void updateZoneInfo(final int x, final int y) {
         final Optional<Zone> selectedZone = cityModel.getZoneByPosition(new Pair<>(x, y));
         selectedZone.ifPresentOrElse(zone -> updateInfoPanelWithZone(zone, x, y), () -> clearInfoPanel(x, y));

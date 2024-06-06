@@ -65,7 +65,7 @@ public final class CityModelImpl implements CityModel {
 
         this.mapModel = new MapModelImpl();
         this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
-        this.inputModel = new InputModel();
+        this.inputModel = new InputModelImpl();
         this.graphicsModel = new GraphicsModelImpl();
         this.zones = ZoneFactory.createZonesFromFile();
         this.transports = new TransportFactoryImpl().createTransportsFromFile(zones);
