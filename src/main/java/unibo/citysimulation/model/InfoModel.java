@@ -10,6 +10,6 @@ public interface InfoModel {
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      */
-    void updateZoneInfo(final int x, final int y); 
+    void updateZoneInfo(int x, int y); 
 }
 

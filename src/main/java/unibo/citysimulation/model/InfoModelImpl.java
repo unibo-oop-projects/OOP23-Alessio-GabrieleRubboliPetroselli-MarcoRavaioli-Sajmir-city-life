@@ -1,8 +1,10 @@
 package unibo.citysimulation.model;
 
+
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
+import java.util.Objects;
 
 import java.util.Optional;
 
@@ -20,8 +22,8 @@ public class InfoModelImpl {
      * @param infoPanel The InfoPanel interface to update information display.
      */
     public InfoModelImpl(final CityModel cityModel, final InfoPanel infoPanel) {
-        this.cityModel = cityModel;
-        this.infoPanel = infoPanel;
+        this.cityModel = Objects.requireNonNull(cityModel, "CityModel cannot be null");
+        this.infoPanel = Objects.requireNonNull(infoPanel, "InfoPanel cannot be null");
     }
 
     /**
@@ -55,3 +57,4 @@ public class InfoModelImpl {
         infoPanel.updateNumberOfDirectLines(0);
     }
 }
+

@@ -3,6 +3,7 @@ package unibo.citysimulation.controller;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.time.LocalTime;
+import java.util.Objects;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InfoModelImpl;
@@ -10,13 +11,11 @@ import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map.
  */
 public final class MapController implements MouseListener, ClockObserver {
-    private final InfoPanel infoPanel;
     private final MapPanel mapPanel;
     private final MapModelImpl mapModel;
     private final CityModel cityModel;
@@ -29,8 +28,7 @@ public final class MapController implements MouseListener, ClockObserver {
      * @param windowView The WindowView interface containing the method to access and modify info and map panels.
      */
     public MapController(final CityModel cityModel, final WindowView windowView) {
-        this.cityModel = cityModel;
-        this.infoPanel = windowView.getInfoPanel();
+        this.cityModel = Objects.requireNonNull(cityModel, "CityModel cannot be null");
         this.mapPanel = windowView.getMapPanel();
         this.mapModel = cityModel.getMapModel();
         this.infoModel = new InfoModelImpl(cityModel, windowView.getInfoPanel());
