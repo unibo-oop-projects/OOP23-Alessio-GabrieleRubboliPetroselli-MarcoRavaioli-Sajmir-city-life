@@ -2,8 +2,10 @@ package unibo.citylife.model.map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import unibo.citysimulation.model.transport.api.TransportFactory;
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.creation.TransportCreation;
+import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
@@ -24,8 +26,9 @@ class TransportManagerTest {
 
     @BeforeEach
     public void setUp() {
+        final TransportFactory transportFactory = new TransportFactoryImpl();
         final List<Zone> zones = ZoneFactory.createZonesFromFile();
-        lines = TransportCreation.createTransportsFromFile(zones);
+        lines = transportFactory.createTransportsFromFile(zones);
         ZoneTableCreation.createAndAddPairs(zones, lines);
 
         transportManager = new TransportManager();
@@ -61,7 +64,8 @@ class TransportManagerTest {
     void testGetLinesPointsCoordinates() {
         transportManager.setTransportInfo(lines);
 
-        final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = transportManager.getLinesPointsCoordinates();
+        final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = 
+                                            transportManager.getLinesPointsCoordinates();
 
         assertFalse(coordinates.isEmpty());
         assertEquals(lines.size(), coordinates.size());
@@ -80,7 +84,8 @@ class TransportManagerTest {
         assertFalse(names.isEmpty());
         assertEquals(lines.size(), names.size());
 
-        final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = transportManager.getLinesPointsCoordinates();
+        final List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> coordinates = 
+                                            transportManager.getLinesPointsCoordinates();
         assertFalse(coordinates.isEmpty());
         assertEquals(lines.size(), coordinates.size());
     }

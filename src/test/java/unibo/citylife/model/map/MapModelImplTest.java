@@ -7,10 +7,12 @@ import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
 import unibo.citysimulation.model.map.impl.ImageHandler;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.person.api.DynamicPerson;
+import unibo.citysimulation.model.person.api.PersonFactory;
 import unibo.citysimulation.model.person.api.StaticPerson.PersonState;
-import unibo.citysimulation.model.person.creation.PersonCreation;
+import unibo.citysimulation.model.person.impl.PersonFactoryImpl;
+import unibo.citysimulation.model.transport.api.TransportFactory;
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.creation.TransportCreation;
+import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,11 +48,13 @@ class MapModelImplTest {
 
     @BeforeEach
     public void setUp() {
+        final TransportFactory transportFactory = new TransportFactoryImpl();
         final List<Zone> zones = ZoneFactory.createZonesFromFile();
-        lines = TransportCreation.createTransportsFromFile(zones);
+        lines = transportFactory.createTransportsFromFile(zones);
         ZoneTableCreation.createAndAddPairs(zones, lines);
         businesses.addAll(BusinessFactoryImpl.createMultipleBusiness(zones, 100));
-        final List<List<DynamicPerson>> peopleGroup = PersonCreation.createAllPeople(100, zones, businesses);
+        final PersonFactory personFactory = new PersonFactoryImpl();
+        final List<List<DynamicPerson>> peopleGroup = personFactory.createAllPeople(100, zones, businesses);
 
         people = peopleGroup.stream()
                 .flatMap(List::stream)
@@ -88,7 +93,7 @@ class MapModelImplTest {
 
     @Test
     void testGetPersonInfos() {
-        Map<String, Pair<Pair<Integer, Integer>, Color>> personInfos = mapModel.getPersonInfos(people);
+        final Map<String, Pair<Pair<Integer, Integer>, Color>> personInfos = mapModel.getPersonInfos(people);
         assertFalse(personInfos.isEmpty());
         assertEquals(people.size(), personInfos.size());
         for (final DynamicPerson person : people) {
@@ -185,7 +190,7 @@ void testSetMaxCoordinates() {
 
             // Write invalid data to the file to corrupt it
             try (FileOutputStream out = new FileOutputStream(corruptedFile)) {
-                out.write("this is not a valid image content".getBytes());
+                out.write("this is not a valid image content".getBytes(StandardCharsets.UTF_8));
             }
 
             // Use the corrupted file in the test
@@ -200,8 +205,7 @@ void testSetMaxCoordinates() {
                 try {
                     Files.deleteIfExists(corruptedFile.toPath());
                 } catch (IOException e) {
-                    // Log an error or handle it appropriately
-                    e.getStackTrace();
+                    // ingored
                 }
             }
         }

@@ -12,8 +12,9 @@ import org.junit.jupiter.api.Test;
 
 import unibo.citysimulation.model.person.api.TransportStrategy;
 import unibo.citysimulation.model.person.impl.TransportStrategyImpl;
+import unibo.citysimulation.model.transport.api.TransportFactory;
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.creation.TransportCreation;
+import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
@@ -25,8 +26,9 @@ class TransportStrategyImplTest {
 
     @BeforeEach
     public void setUp() {
+        TransportFactory transportFactory = new TransportFactoryImpl();
         final List<Zone> zones = ZoneFactory.createZonesFromFile();
-        allLines = TransportCreation.createTransportsFromFile(zones);
+        allLines = transportFactory.createTransportsFromFile(zones);
         ZoneTableCreation.createAndAddPairs(zones, allLines);
 
         transportStrategy = new TransportStrategyImpl();

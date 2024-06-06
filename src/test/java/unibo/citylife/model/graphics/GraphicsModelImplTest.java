@@ -19,9 +19,11 @@ import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
 import unibo.citysimulation.model.business.utilities.EmploymentOfficeData;
 import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
 import unibo.citysimulation.model.person.api.DynamicPerson;
-import unibo.citysimulation.model.person.creation.PersonCreation;
+import unibo.citysimulation.model.person.api.PersonFactory;
+import unibo.citysimulation.model.person.impl.PersonFactoryImpl;
+import unibo.citysimulation.model.transport.api.TransportFactory;
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.creation.TransportCreation;
+import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
@@ -39,10 +41,12 @@ class GraphicsModelImplTest {
         this.employmentOfficeData = new EmploymentOfficeData(new LinkedList<>());
 
         final List<Zone> zones = ZoneFactory.createZonesFromFile();
-        lines = TransportCreation.createTransportsFromFile(zones);
+        final TransportFactory transportFactory = new TransportFactoryImpl();
+        lines = transportFactory.createTransportsFromFile(zones);
         ZoneTableCreation.createAndAddPairs(zones, lines);
         businesses.addAll(BusinessFactoryImpl.createMultipleBusiness(zones, 100));
-        final List<List<DynamicPerson>> peopleGroup = PersonCreation.createAllPeople(100, zones, businesses);
+        final PersonFactory personFactory = new PersonFactoryImpl();
+        final List<List<DynamicPerson>> peopleGroup = personFactory.createAllPeople(100, zones, businesses);
 
         for (final List<DynamicPerson> group : peopleGroup) {
             for (final DynamicPerson person : group) {

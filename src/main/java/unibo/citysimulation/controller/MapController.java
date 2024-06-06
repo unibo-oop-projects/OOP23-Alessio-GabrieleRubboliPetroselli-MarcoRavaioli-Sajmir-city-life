@@ -16,7 +16,8 @@ import java.util.Objects;
 import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
- * Controller class responsible for handling mouse events on the map.
+ * Controller class responsible for handling mouse events on the map and updating the view based on the model state.
+ * Implements MouseListener to handle mouse events and ClockObserver to update the map as time progresses.
  */
 public final class MapController implements MouseListener, ClockObserver {
     private final InfoPanel infoPanel;
@@ -27,10 +28,11 @@ public final class MapController implements MouseListener, ClockObserver {
     /**
      * Constructs a MapController object.
      *
-     * @param cityModel  The CityModel interface containing the method to access and modify city data.
-     * @param windowView The WindowView interface containing the method to access and modify info and map panels.
+     * @param cityModel  The CityModel interface containing methods to access and modify city data.
+     * @param windowView The WindowView interface containing methods to access and modify info and map panels.
      */
     public MapController(final CityModel cityModel, final WindowView windowView) {
+        // Ensure that the provided cityModel is not null
         this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
         this.infoPanel = windowView.getInfoPanel();
         this.mapPanel = windowView.getMapPanel();
@@ -38,9 +40,14 @@ public final class MapController implements MouseListener, ClockObserver {
 
         initialize();
 
+        // Add this controller as a MouseListener to the mapPanel
         mapPanel.addMouseListener(this);
     }
 
+    /**
+     * Initializes the map model and view with initial data from the city model.
+     * Sets up observers and configures initial transport information and congestion levels.
+     */
     private void initialize() {
         cityModel.getClockModel().addObserver(this);
         mapModel.setMaxCoordinates((int) cityModel.getFrameWidth() / 2, (int) cityModel.getFrameHeight());
@@ -52,6 +59,12 @@ public final class MapController implements MouseListener, ClockObserver {
         mapPanel.setLinesColor(mapModel.getColorList());
     }
 
+    /**
+     * Handles mouse click events on the map panel.
+     * Translates the click coordinates and updates the zone information displayed in the info panel.
+     *
+     * @param e the MouseEvent object containing details about the mouse click
+     */
     private void handleMouseClick(final MouseEvent e) {
         final int x = (int) ((double) e.getX() / mapPanel.getWidth() * 1000);
         final int y = (int) ((double) e.getY() / mapPanel.getHeight() * 1000);
@@ -60,11 +73,24 @@ public final class MapController implements MouseListener, ClockObserver {
         mapModel.setMaxCoordinates((int) cityModel.getFrameWidth() / 2, (int) cityModel.getFrameHeight());
     }
 
+    /**
+     * Updates the information panel with details of the zone located at the given coordinates.
+     *
+     * @param x the x-coordinate of the mouse click
+     * @param y the y-coordinate of the mouse click
+     */
     private void updateZoneInfo(final int x, final int y) {
         final Optional<Zone> selectedZone = cityModel.getZoneByPosition(new Pair<>(x, y));
         selectedZone.ifPresentOrElse(zone -> updateInfoPanelWithZone(zone, x, y), () -> clearInfoPanel(x, y));
     }
 
+    /**
+     * Updates the information panel with details of the given zone.
+     *
+     * @param zone the Zone object representing the selected zone
+     * @param x    the x-coordinate of the mouse click
+     * @param y    the y-coordinate of the mouse click
+     */
     private void updateInfoPanelWithZone(final Zone zone, final int x, final int y) {
         infoPanel.updatePositionInfo(x, y);
         infoPanel.updateZoneName(zone.name());
@@ -76,6 +102,12 @@ public final class MapController implements MouseListener, ClockObserver {
         infoPanel.updateNumberOfDirectLines(cityModel.getNumberOfDirectLinesFromZone(zone));
     }
 
+    /**
+     * Clears the information panel when no zone is found at the given coordinates.
+     *
+     * @param x the x-coordinate of the mouse click
+     * @param y the y-coordinate of the mouse click
+     */
     private void clearInfoPanel(final int x, final int y) {
         infoPanel.updatePositionInfo(x, y);
         infoPanel.updateZoneName("");
@@ -111,6 +143,8 @@ public final class MapController implements MouseListener, ClockObserver {
     public void mouseClicked(final MouseEvent e) {
         handleMouseClick(e);
     }
+
+    // Unused mouse events - implemented as empty methods to fulfill
 
     @Override
     public void mousePressed(final MouseEvent e) {

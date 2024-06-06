@@ -16,7 +16,8 @@ import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.utilities.Pair;
 
 /**
- * Model class representing the map.
+ * Model class representing the map. This class handles various map-related functionalities
+ * including loading the map image, handling coordinates, and managing transport information.
  */
 public final class MapModelImpl implements MapModel {
     private static final int PERCENT_50 = 50;
@@ -28,7 +29,7 @@ public final class MapModelImpl implements MapModel {
 
     /**
      * Constructs a MapModel object and loads the map image.
-     * 
+     *
      * @param imagePath The path to the map image.
      */
     public MapModelImpl(final String imagePath) {
@@ -71,8 +72,7 @@ public final class MapModelImpl implements MapModel {
             .collect(Collectors.toList());
     }
     /**
-     * Gets the information of people, mapping each person's name to their
-     * coordinates and color.
+     * Gets the information of people, mapping each person's name to their coordinates and color.
      *
      * @param people the list of dynamic people
      * @return a map of person names to their coordinates and color
@@ -89,6 +89,7 @@ public final class MapModelImpl implements MapModel {
                                 denormalizePosition(person.getPosition().get(), maxX, maxY),
                                 getPersonColor(person))));
     }
+
     /**
      * Gets the color of a person based on their state.
      *
@@ -98,6 +99,7 @@ public final class MapModelImpl implements MapModel {
     private Color getPersonColor(final DynamicPerson person) {
         return person.getState() == PersonState.AT_HOME ? Color.BLUE : Color.RED;
     }
+
     /**
      * Gets the list of colors representing congestion levels.
      *
@@ -109,6 +111,7 @@ public final class MapModelImpl implements MapModel {
                 .map(this::getColor)
                 .collect(Collectors.toList());
     }
+
     /**
      * Gets the color representing the congestion percentage.
      *
@@ -124,14 +127,15 @@ public final class MapModelImpl implements MapModel {
             final int green = (int) (COLOR_MAX - (perc / PERCENT_50) * COLOR_MAX);
             return new Color(0, green, 0);
         } else {
-            // Red component increases from 0 to 255 and green component decreases from 255
-            // to 0 as percentage increases from 50 to 100
+            // Red component increases from 0 to 255 and green component decreases 
+            // from 255 to 0 as percentage increases from 50 to 100
             final double adjustedPerc = (perc - PERCENT_50) / PERCENT_50;
             final int red = (int) (adjustedPerc * COLOR_MAX);
             final int green = (int) ((1 - adjustedPerc) * COLOR_MAX);
             return new Color(red, green, 0);
         }
     }
+
     /**
      * Gets the coordinates of line points for all transport lines.
      *
@@ -147,6 +151,7 @@ public final class MapModelImpl implements MapModel {
                         denormalizePosition(pair.getSecond(), maxX, maxY)))
                 .collect(Collectors.toList());
     }
+
     /**
      * Sets the transport information with the given list of transport lines.
      *
@@ -156,9 +161,9 @@ public final class MapModelImpl implements MapModel {
     public void setTransportInfo(final List<TransportLine> lines) {
         transportManager.setTransportInfo(lines);
     }
+
     /**
-     * Sets the transport congestion information with the given list of transport
-     * lines.
+     * Sets the transport congestion information with the given list of transport lines.
      *
      * @param lines the list of transport lines
      */
@@ -178,10 +183,25 @@ public final class MapModelImpl implements MapModel {
         coordinateHandler.setMaxCoordinates(x, y);
     }
 
+    /**
+     * Denormalizes a coordinate based on the maximum value.
+     *
+     * @param c the normalized coordinate
+     * @param max the maximum value
+     * @return the denormalized coordinate
+     */
     private int denormalizeCoordinate(final int c, final int max) {
         return coordinateHandler.denormalizeCoordinate(c, max);
     }
 
+    /**
+     * Denormalizes a position based on the maximum x and y values.
+     *
+     * @param position the normalized position
+     * @param maxX the maximum x value
+     * @param maxY the maximum y value
+     * @return the denormalized position
+     */
     private Pair<Integer, Integer> denormalizePosition(final Pair<Integer, Integer> position, final int maxX,
             final int maxY) {
         return new Pair<>(
@@ -189,6 +209,11 @@ public final class MapModelImpl implements MapModel {
                 denormalizeCoordinate(position.getSecond(), maxY));
     }
 
+    /**
+     * Gets a copy of the map image.
+     *
+     * @return the map image
+     */
     @Override
     public BufferedImage getImage() {
         return imageLoader.getImage();
