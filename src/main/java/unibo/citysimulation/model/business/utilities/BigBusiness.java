@@ -13,6 +13,7 @@ public class BigBusiness extends Business {
 
    /**
      * Creates a big business in the city simulation.
+     * @param id the id of the big business
      * @param zone the zone where the big business is located
      */
     public BigBusiness(final int id, final Zone zone) {

@@ -384,7 +384,7 @@ public final class CityModelImpl implements CityModel {
     @Override
     public void removeBusinesses(final int numberOfBusinesses) {
         for (int i = 0; i < numberOfBusinesses; i++) {
-            businesses.remove(businesses.size() - 1);
+            businesses.remove(businesses.size());
         }
     }
 }

@@ -8,7 +8,6 @@ import unibo.citysimulation.model.business.impl.Employee;
  * The interface representing a business behavior.
  */
 public interface BusinessBehavior {
-    
     /**
      * Hires an employee for the business.
      *

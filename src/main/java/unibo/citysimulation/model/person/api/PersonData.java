@@ -8,7 +8,6 @@ import unibo.citysimulation.model.zone.Zone;
  * 
  * @param name          the name of the person.
  * @param age           the age of the person.
- * @param business      the business where the person works.
  * @param residenceZone the zone where the person lives.
  */
 public record PersonData(String name, int age,  Zone residenceZone) {

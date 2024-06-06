@@ -11,7 +11,6 @@ public interface EmployeeBehavior {
     /**
      * Increments the count of delays for the employee by 1.
      *
-     * @return The updated Employee object.
      */
     void incrementDelayCount();
 

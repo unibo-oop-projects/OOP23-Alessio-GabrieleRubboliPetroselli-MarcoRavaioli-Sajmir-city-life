@@ -31,6 +31,7 @@ public class StaticPersonImpl implements StaticPerson {
      * 
      * @param personData the data of the person.
      * @param money      the money of the person.
+     * @param business   the business where the person works.
      */
     public StaticPersonImpl(final PersonData personData, final double money, final Optional<Business> business) {
         this.personData = personData;
@@ -140,6 +141,13 @@ public class StaticPersonImpl implements StaticPerson {
                 - ConstantAndResourceLoader.MAX_DEVIATION_OFFSET;
     }
 
+    /**
+     * Calculates the trip details for the person.
+     * If the person has a business, it retrieves the transport line and trip duration
+     * based on the residence zone and business zone using the ZoneTable.
+     * If the person does not have a business, it sets the transport line to an empty array
+     * and trip duration to 0.
+     */
     private void calculateTrip() {
         if (this.business.isPresent()) {
             this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(),
@@ -150,14 +158,23 @@ public class StaticPersonImpl implements StaticPerson {
             tripDuration = 0;
         }
     }
-    
+    /**
+        * Returns the business associated with this person.
+        *
+        * @return an Optional containing the business associated with this person, or an empty Optional if no business is associated.
+        */
     @Override
-    public Optional<Business> getBusiness() {
+    public final Optional<Business> getBusiness() {
         return this.business;
     }
 
+    /**
+        * Sets the business for this person and calculates the trip details.
+        * 
+        * @param business the optional business to set for this person
+        */
     @Override
-    public void setBusiness(Optional<Business> business) {
+    public final void setBusiness(final Optional<Business> business) {
         this.business = business;
         calculateTrip();
     }

@@ -15,7 +15,7 @@ import unibo.citysimulation.utilities.ConstantAndResourceLoader;
  * Represents a dynamic person that can change state based on the current time
  * and move in order to work.
  */
-public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
+public final class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
     private int lastArrivingTime;
     private PersonState lastDestination;
     private boolean late;
@@ -30,6 +30,7 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
      * 
      * @param personData the data of the person.
      * @param money      the money of the person.
+     * @param business   the business where the person works.
      */
     public DynamicPersonImpl(final PersonData personData, final int money, final Optional<Business> business) {
         super(personData, money, business);

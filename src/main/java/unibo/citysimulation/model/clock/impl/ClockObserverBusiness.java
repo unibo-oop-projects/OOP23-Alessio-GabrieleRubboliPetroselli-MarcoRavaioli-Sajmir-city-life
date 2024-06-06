@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A ClockObserver implementation that handles business-related op
+ * A ClockObserver implementation that handles business-related operations.
  */
 public class ClockObserverBusiness implements ClockObserver {
     private final List<Business> businesses;

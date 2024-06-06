@@ -37,7 +37,6 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
      * people list and fires the employee from their business.
      * 
      * @param business The business for which to handle employee firing.
-     * @param hiredCount The number of people hired previously.
      */
     @Override
     public final void handleEmployeeFiring(final Business business) {
@@ -126,7 +125,6 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
         }
         return 0;
     }
-    
     /**
      * Retrieves a list of employees that should be fired from the specified business.
      * 

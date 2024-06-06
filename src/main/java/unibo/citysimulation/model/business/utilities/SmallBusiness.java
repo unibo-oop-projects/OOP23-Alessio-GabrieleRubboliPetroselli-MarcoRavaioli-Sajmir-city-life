@@ -13,6 +13,7 @@ public class SmallBusiness extends Business {
 
     /**
      * Creates a small business in the city simulation.
+     * @param id the id of the small business
      * @param zone the zone where the small business is located
      */
     public SmallBusiness(final int id, final Zone zone) {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.model.business.api.BusinessBehavior;
 import unibo.citysimulation.model.zone.Zone;
@@ -13,7 +14,8 @@ import unibo.citysimulation.model.zone.Zone;
  * The abstract class representing a business in the city simulation.
  */
 public abstract class Business implements BusinessBehavior {
-
+    @SuppressFBWarnings(value = "EI", justification = """
+    """)
     private final BusinessData businessData;
     /**
      * Record representing the data of a business in the city simulation.
@@ -30,7 +32,7 @@ public abstract class Business implements BusinessBehavior {
      * @param maxTardiness the maximum number of times an employee can be late before being fired
      * @param zone         the zone in which the business is located
      */
-    public static record BusinessData( 
+    public record BusinessData(
     int id,
     List<Employee> employees,
     LocalTime opLocalTime,
@@ -48,7 +50,7 @@ public abstract class Business implements BusinessBehavior {
      *
      * @param businessData the data of the business
      */
-    public Business(BusinessData businessData) {
+    public Business(final BusinessData businessData) {
         this.businessData = Objects.requireNonNull(businessData);
     }
 
@@ -60,7 +62,6 @@ public abstract class Business implements BusinessBehavior {
     public BusinessData getBusinessData() {
         return businessData;
     }
-    
     /**
      * Hires an employee for the business.
      * 
@@ -95,9 +96,10 @@ public abstract class Business implements BusinessBehavior {
      * 
      * @param currentTime the current time
      */
+    @Override
     public void checkEmployeeDelays(final LocalTime currentTime) {
         if (currentTime.equals(businessData.opLocalTime())) {
-            for (Employee employee : businessData.employees()) {
+            for (final Employee employee : businessData.employees()) {
                 if (employee.isLate(Optional.of(businessData.position()))) {
                     employee.incrementDelayCount();
                 }

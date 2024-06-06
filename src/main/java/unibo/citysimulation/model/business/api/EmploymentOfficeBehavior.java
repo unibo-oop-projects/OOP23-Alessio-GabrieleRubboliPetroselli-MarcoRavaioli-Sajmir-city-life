@@ -12,7 +12,6 @@ public interface EmploymentOfficeBehavior {
      * and fires the employee from their business.
      * 
      * @param business The business for which to handle employee firing.
-     * @param hiredCount The number of people hired previously.
      */
     void handleEmployeeFiring(Business business);
     /**
