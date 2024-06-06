@@ -119,10 +119,12 @@ public class StaticPersonImpl implements StaticPerson {
                 this.position = Optional.empty();
                 break;
             case WORKING:
+            business.ifPresent(b -> {
                 final Pair<Integer, Integer> businessPosition = business.get().getBusinessData().position();
                 final int newX = businessPosition.getFirst() + getRandomDeviation();
                 final int newY = businessPosition.getSecond() + getRandomDeviation();
                 this.position = Optional.of(new Pair<>(newX, newY));
+            });
                 break;
             case AT_HOME:
                 this.position = Optional.of(homePosition);
