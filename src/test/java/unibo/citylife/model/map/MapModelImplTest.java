@@ -14,7 +14,7 @@ import unibo.citysimulation.model.transport.api.TransportFactory;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
+import unibo.citysimulation.model.zone.ZoneCreation;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.Pair;
 
@@ -49,7 +49,7 @@ class MapModelImplTest {
     @BeforeEach
     public void setUp() {
         final TransportFactory transportFactory = new TransportFactoryImpl();
-        final List<Zone> zones = ZoneFactory.createZonesFromFile();
+        final List<Zone> zones = ZoneCreation.createZonesFromFile();
         lines = transportFactory.createTransportsFromFile(zones);
         ZoneTableCreation.createAndAddPairs(zones, lines);
         businesses.addAll(BusinessFactoryImpl.createMultipleBusiness(zones, 100));

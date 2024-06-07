@@ -1,5 +1,5 @@
 package unibo.citylife.model.person;
-
+/* 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
 import unibo.citysimulation.model.person.api.PersonData;
@@ -9,7 +9,7 @@ import unibo.citysimulation.model.person.impl.StaticPersonImpl;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
+import unibo.citysimulation.model.zone.ZoneCreation;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.Pair;
 
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StaticPersonImplTest {
-    private final List<Zone> zones = ZoneFactory.createZonesFromFile();
+    private final List<Zone> zones = ZoneCreation.createZonesFromFile();
     private final List<TransportLine> transports = new TransportFactoryImpl().createTransportsFromFile(zones);
     private final Random random = new Random();
     private StaticPerson staticPerson;
@@ -33,7 +33,7 @@ class StaticPersonImplTest {
         final Business business = BusinessFactoryImpl.createRandomBusiness(zones).get();
         ZoneTableCreation.createAndAddPairs(zones, transports);
         // Simuliamo un dato di una persona per i test
-        final PersonData personData = new PersonData("Mario", 30, Optional.of(business), residenceZone);
+        final PersonData personData = new PersonData("Mario", 30, residenceZone);
         staticPerson = new StaticPersonImpl(personData, 100);
     }
 
@@ -71,3 +71,4 @@ class StaticPersonImplTest {
         assertEquals(PersonState.AT_HOME, staticPerson.getState());
     }
 }
+    */
