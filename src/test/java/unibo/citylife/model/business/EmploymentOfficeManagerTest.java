@@ -1,4 +1,4 @@
-package unibo.citylife;
+package unibo.citylife.model.business;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
