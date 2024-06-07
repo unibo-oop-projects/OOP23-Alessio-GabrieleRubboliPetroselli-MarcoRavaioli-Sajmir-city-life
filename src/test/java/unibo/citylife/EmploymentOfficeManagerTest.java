@@ -31,11 +31,12 @@ public class EmploymentOfficeManagerTest {
     private EmploymentOfficeData employmentOfficeData;
     private Optional<Business> business;
     private List<DynamicPerson> disoccupiedPeople;
-    private Zone zone;
-    private Zone zone2;
+    
 
     @BeforeEach
     final void setUp() {
+        Zone zone;
+        Zone zone2;
         zone = ZoneCreation.createZonesFromFile().get(0);
         zone2 = ZoneCreation.createZonesFromFile().get(1);
         disoccupiedPeople = new ArrayList<>();
@@ -58,9 +59,9 @@ public class EmploymentOfficeManagerTest {
             business.get().hire(new Employee(disoccupiedPeople.get(2), business.get().getBusinessData()));
             business.get().getBusinessData().employees().get(0).incrementDelayCount();
             business.get().getBusinessData().employees().get(0).incrementDelayCount();
-            business.get().getBusinessData().employees().get(0).incrementDelayCount();     
+            business.get().getBusinessData().employees().get(0).incrementDelayCount();  
         }
-        int hiredCount = business.get().getBusinessData().employees().size();
+        final int hiredCount = business.get().getBusinessData().employees().size();
         employmentOfficeManager.handleEmployeeFiring(business.get());
         assertTrue(business.get().getBusinessData().employees().size() < hiredCount);
         assertTrue(employmentOfficeData.disoccupied().size() > 0);
@@ -71,15 +72,15 @@ public class EmploymentOfficeManagerTest {
         if (business.isPresent()) {
             business.get().hire(new Employee(disoccupiedPeople.get(0), business.get().getBusinessData()));
             business.get().hire(new Employee(disoccupiedPeople.get(1), business.get().getBusinessData()));
-            business.get().hire(new Employee(disoccupiedPeople.get(2), business.get().getBusinessData()));    
+            business.get().hire(new Employee(disoccupiedPeople.get(2), business.get().getBusinessData()));
         }
-        List<Double> initialMoney = new ArrayList<>();
-        for (Employee employee : business.get().getBusinessData().employees()) {
+        final List<Double> initialMoney = new ArrayList<>();
+        for (final Employee employee : business.get().getBusinessData().employees()) {
             initialMoney.add(employee.person().getMoney());
         }
         employmentOfficeManager.handleEmployyePay(business.get());
         for (int i = 0; i < business.get().getBusinessData().employees().size(); i++) {
-            Employee employee = business.get().getBusinessData().employees().get(i);
+            final Employee employee = business.get().getBusinessData().employees().get(i);
             assertTrue(employee.person().getMoney() > initialMoney.get(i));
         }
     }

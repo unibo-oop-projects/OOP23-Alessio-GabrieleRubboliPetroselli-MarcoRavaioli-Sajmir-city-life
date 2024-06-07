@@ -56,8 +56,8 @@ public final class StatisticCalculator {
      */
     static List<Integer> getBusinessesOccupation(final List<Business> businesses) {
         return businesses.stream()
-                .map(business -> (int) ((double) business.getBusinessData().employees().size() / 
-                business.getBusinessData().maxEmployees() * 100))
+                .map(business -> (int) ((double) business.getBusinessData().employees().size() 
+                / business.getBusinessData().maxEmployees() * 100))
                 .collect(Collectors.toList());
     }
 }

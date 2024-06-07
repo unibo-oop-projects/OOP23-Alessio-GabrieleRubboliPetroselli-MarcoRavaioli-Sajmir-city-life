@@ -32,17 +32,18 @@ public final class BusinessFactoryImpl {
      * @return An Optional containing the created Business object, or an empty Optional if the type is invalid.
      */
     public static Optional<Business> createBusiness(final BusinessType type, final Zone zone) {
-        final int id = ID++;
+        
         switch (type) {
             case BIG:
-                return Optional.of(new BigBusiness(id, zone));
+                return Optional.of(new BigBusiness(ID, zone));
             case MEDIUM:
-                return Optional.of(new MediumBusiness(id, zone));
+                return Optional.of(new MediumBusiness(ID, zone));
             case SMALL:
-                return Optional.of(new SmallBusiness(id, zone));
+                return Optional.of(new SmallBusiness(ID, zone));
             default:
                 break;
         }
+        ID++;
         return Optional.empty();
     }
     /**
@@ -65,7 +66,7 @@ public final class BusinessFactoryImpl {
      * @return A collection of created Business objects.
      */
     public static Collection<Business> createMultipleBusiness(final List<Zone> zones, final int numberOfPeople) {
-        List<Business> businesses = new ArrayList<>();
+        final List<Business> businesses = new ArrayList<>();
         for (int i = 0; i < numberOfPeople / BusinessConfig.BUSINESS_PERCENTAGE; i++) {
             createRandomBusiness(zones).ifPresent(businesses::add);
         }

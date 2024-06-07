@@ -69,7 +69,8 @@ public interface StaticPerson {
     /**
      * Returns an Optional object representing the business associated with this person.
      *
-     * @return an Optional object containing the business associated with this person, or an empty Optional if no business is associated.
+     * @return an Optional object containing the business associated with this person, 
+     * or an empty Optional if no business is associated.
      */
     Optional<Business> getBusiness();
 

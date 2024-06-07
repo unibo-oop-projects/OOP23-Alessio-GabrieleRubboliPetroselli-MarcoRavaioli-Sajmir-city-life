@@ -13,9 +13,9 @@ import unibo.citysimulation.model.zone.Zone;
 /**
  * The abstract class representing a business in the city simulation.
  */
-public abstract class Business implements BusinessBehavior {
-    @SuppressFBWarnings(value = "EI", justification = """
+@SuppressFBWarnings(value = "EI", justification = """
     """)
+public abstract class Business implements BusinessBehavior {
     private final BusinessData businessData;
     /**
      * Record representing the data of a business in the city simulation.

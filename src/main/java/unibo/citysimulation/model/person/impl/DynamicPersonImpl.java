@@ -42,7 +42,7 @@ public final class DynamicPersonImpl extends StaticPersonImpl implements Dynamic
     }
 
     private boolean shouldMove(final int currentTime, final int timeToMove, final int lineDuration) {
-        if (getTransportLine().length == 0){
+        if (getTransportLine().length == 0) {
             return false;
         } else if (currentTime == timeToMove || late) {
             if (transportStrategy.isCongested(List.of(getTransportLine()))) {

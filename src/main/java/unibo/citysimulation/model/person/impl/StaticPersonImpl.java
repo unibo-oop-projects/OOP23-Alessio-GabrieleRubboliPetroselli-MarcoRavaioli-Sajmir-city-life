@@ -163,7 +163,8 @@ public class StaticPersonImpl implements StaticPerson {
     /**
         * Returns the business associated with this person.
         *
-        * @return an Optional containing the business associated with this person, or an empty Optional if no business is associated.
+        * @return an Optional containing the business associated with this person, 
+        or an empty Optional if no business is associated.
         */
     @Override
     public final Optional<Business> getBusiness() {
