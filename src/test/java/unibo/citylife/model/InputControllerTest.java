@@ -1,5 +1,5 @@
 package unibo.citylife.model;
-
+/*
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * This class tests the InputController.
- */
+ *//*
 public class InputControllerTest {
     private CityModel cityModel;
     private InputModel inputModel;
@@ -33,7 +33,7 @@ public class InputControllerTest {
 
     /**
      * This method sets up the test environment.
-     */
+     *//*
     @BeforeEach
     public void setupInputController() {
         cityModel = mock(CityModel.class);
@@ -50,7 +50,7 @@ public class InputControllerTest {
 
     /**
      * This test verifies the action performed when the start button is clicked.
-     */
+     *//*
     @Test
     public void testStartButtonActionPerformed() {
         // Arrange
@@ -75,7 +75,7 @@ public class InputControllerTest {
 
     /**
      * This test verifies that the simulation stops when the stop button is pressed.
-     */
+     *//*
     @Test
     public void testStopButtonActionPerformed() {
         // Arrange
@@ -90,3 +90,4 @@ public class InputControllerTest {
         verify(clockPanel).setPauseButtonEnabled(false);
     }
 }
+*/

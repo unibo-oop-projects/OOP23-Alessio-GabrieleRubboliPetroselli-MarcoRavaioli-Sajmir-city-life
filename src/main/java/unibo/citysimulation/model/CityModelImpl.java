@@ -19,7 +19,7 @@ import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
-import unibo.citysimulation.model.zone.ZoneFactory;
+import unibo.citysimulation.model.zone.ZoneCreation;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.utilities.Pair;
@@ -63,11 +63,11 @@ public final class CityModelImpl implements CityModel {
     public CityModelImpl() {
         takeFrameSize();
 
-        this.mapModel = new MapModelImpl();
+        this.mapModel = new MapModelImpl("/unibo/citysimulation/images/mapImage.png");
         this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
         this.inputModel = new InputModelImpl();
         this.graphicsModel = new GraphicsModelImpl();
-        this.zones = ZoneFactory.createZonesFromFile();
+        this.zones = ZoneCreation.createZonesFromFile();
         this.transports = new TransportFactoryImpl().createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
         this.employmentOfficeData = new EmploymentOfficeData(new LinkedList<>());
@@ -231,7 +231,7 @@ public final class CityModelImpl implements CityModel {
         frameWidth = width;
         frameHeight = height;
 
-        mapModel.setMaxCoordinates(newWidth / 2, newWidth / 2);
+        mapModel.setMaxCoordinates(frameWidth / 2, frameHeight);
         mapModel.setTransportInfo(transports);
     }
 
@@ -392,7 +392,7 @@ public final class CityModelImpl implements CityModel {
     @Override
     public void removeBusinesses(final int numberOfBusinesses) {
         for (int i = 0; i < numberOfBusinesses; i++) {
-            businesses.remove(businesses.size() - 1);
+            businesses.remove(businesses.size());
         }
     }
 }

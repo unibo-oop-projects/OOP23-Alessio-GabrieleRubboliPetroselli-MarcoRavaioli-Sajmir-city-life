@@ -2,8 +2,10 @@ package unibo.citysimulation.model.person.impl;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
+import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.TransportStrategy;
@@ -13,13 +15,13 @@ import unibo.citysimulation.utilities.ConstantAndResourceLoader;
  * Represents a dynamic person that can change state based on the current time
  * and move in order to work.
  */
-public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
+public final class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
     private int lastArrivingTime;
     private PersonState lastDestination;
     private boolean late;
     private final Random random = new Random();
-    private final int businessBegin;
-    private final int businessEnd;
+    private int businessBegin;
+    private int businessEnd;
     private final TransportStrategy transportStrategy;
 
     /**
@@ -28,23 +30,25 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
      * 
      * @param personData the data of the person.
      * @param money      the money of the person.
+     * @param business   the business where the person works.
      */
-    public DynamicPersonImpl(final PersonData personData, final int money) {
-        super(personData, money);
+    public DynamicPersonImpl(final PersonData personData, final int money, final Optional<Business> business) {
+        super(personData, money, business);
         this.lastDestination = PersonState.WORKING;
         this.late = false;
-        this.businessBegin = calculateUpdatedTime(super.getPersonData().business().get().getBusinessData().opLocalTime());
-        this.businessEnd = calculateUpdatedTime(super.getPersonData().business().get().getBusinessData().clLocalTime());
+        this.businessBegin = 0;
+        this.businessEnd = 0;
         this.transportStrategy = new TransportStrategyImpl();
     }
 
     private boolean shouldMove(final int currentTime, final int timeToMove, final int lineDuration) {
-        if (currentTime == timeToMove || late) {
+        if (getTransportLine().length == 0) {
+            return false;
+        } else if (currentTime == timeToMove || late) {
             if (transportStrategy.isCongested(List.of(getTransportLine()))) {
                 late = true;
                 return false;
             }
-
             this.lastArrivingTime = transportStrategy.calculateArrivalTime(currentTime, lineDuration);
             this.late = false;
             return true;
@@ -104,5 +108,15 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         }
         this.lastDestination = newState;
         this.updatePosition();
+    }
+
+    @Override
+    public void setBusinessBegin(final LocalTime businessBegin) {
+        this.businessBegin = calculateUpdatedTime(businessBegin);
+    }
+
+    @Override
+    public void setBusinessEnd(final LocalTime businessEnd) {
+        this.businessEnd = calculateUpdatedTime(businessEnd);
     }
 }
