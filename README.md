@@ -13,12 +13,33 @@ Email Components:
 
  
 
-Project Description:
+Reference:
 
 The group aims to develop the simulation of an agent-based model for the observation of a town, over time, similar to Urban Dynamics Agent Based:
 
 https://cloud.anylogic.com/model/dc9cf4ee-0463-4324-92be-f13f394fe840?mode=SETTINGS&tab=GENERAL
 
-You can observe the movement, the pay, the performance of the vehicles, via the interactive map and graphs. The city will be divided into zones, diversified by the number of businesses and citizens in them, with citizens being able to move from one zone to another.
+## Description:
 
-For each area, the average salary, the number of people in businesses and transport congestion will be calculated, all this over a period of one/a few weeks.
+You can observe the movement, the pay, the congestion of the transport lines, via the interactive map and graphs. The city will be divided into 5 zones, diversified by the number of businesses and citizens in them, with citizens being able to move from one zone to another, in order to reach their job's location or go back home after work.
+The Businesses will hire and fire people during the simulation, and they will be distributed across the map.
+
+### Functional requirements:
+
+* Businesses creation, distribution and visualization.
+* Pay and time slot work.
+* People creation, distribution and visualization.
+* People movement.
+* People state visualization.
+* Zone suddivision.
+* Zone info visualization.
+* Transport lines creation and visualization.
+* Congestion state visualization.
+* Map visualization
+* Graphs showing entities' state trend
+* Editable number of people and businesses
+
+### Non-functional requirements:
+
+* Multiplatform application
+* Resizable window and components
