@@ -2,6 +2,7 @@ package unibo.citylife.model.person;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
+import unibo.citysimulation.model.business.utilities.BusinessType;
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.StaticPerson;
 import unibo.citysimulation.model.person.api.StaticPerson.PersonState;
@@ -32,13 +33,11 @@ class StaticPersonImplTest {
     void setUp() {
         final Zone residenceZone = zones.get(random.nextInt(zones.size()));
         Business business;
-        do {
-            business = BusinessFactoryImpl.createRandomBusiness(zones).get();
-        } while (residenceZone != business.getBusinessData().zone());
+        business = BusinessFactoryImpl.createBusiness(BusinessType.BIG, zones.get(0)).get();
         ZoneTableCreation.createAndAddPairs(zones, transports);
         // Simuliamo un dato di una persona per i test
         final PersonData personData = new PersonData("Mario", 30, residenceZone);
-        staticPerson = new StaticPersonImpl(personData, 100, Optional.of(business));
+        staticPerson = new StaticPersonImpl(personData, 100.00, Optional.of(business));
     }
 
     @Test
@@ -59,7 +58,7 @@ class StaticPersonImplTest {
 
     @Test
     void testGetMoney() {
-        assertEquals(100, staticPerson.getMoney());
+        assertEquals(100.00, staticPerson.getMoney());
     }
 
     @Test
