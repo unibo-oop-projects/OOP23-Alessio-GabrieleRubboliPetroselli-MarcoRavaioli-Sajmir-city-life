@@ -1,5 +1,6 @@
 package unibo.citysimulation.view.map;
 
+import unibo.citysimulation.model.map.impl.ImageHandler;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.StyledPanel;
 
@@ -26,7 +27,7 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     private static final Integer BASIC_STROKE_SIZE = 6;
     private static final Pair<Integer, Integer> PEOPLE_SIZE = new Pair<>(5, 5);
 
-    private final ImageHandler imageHandler = new ImageHandler();
+    private final ImageHandler imageHandler = new ImageHandler("/unibo/citysimulation/images/mapImage.png");
     private List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> linesPointsCoordinates = Collections.emptyList();
     private List<Color> congestionsColorList = Collections.emptyList();
     private Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap = Collections.emptyMap();
@@ -50,7 +51,8 @@ public final class MapPanelImpl extends StyledPanel implements MapPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        imageHandler.getImage().ifPresent(image -> g.drawImage(image, 0, 0, getWidth(), getHeight(), this));
+
+        g.drawImage(imageHandler.getImage(), 0, 0, getWidth(), getHeight(), this);
 
         if (!peopleMap.isEmpty()) {
             drawPeople(g);

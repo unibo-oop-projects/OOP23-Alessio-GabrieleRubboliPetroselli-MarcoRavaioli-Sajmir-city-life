@@ -30,8 +30,7 @@ public class WindowController {
     }
 
     private void initializeControllers() {
-        final MapController mapController = new MapController(cityModel, windowView);
-        mapController.initialize();
+        new MapController(cityModel, windowView);
         cityModel.getClockModel().addObserver(new ClockController(cityModel.getClockModel(), windowView.getClockPanel()));
         new InputController(cityModel, cityModel.getInputModel(), windowView.getInputPanel(), windowView.getClockPanel());
         new GraphicsController(cityModel, windowView.getGraphicsPanel());
@@ -50,6 +49,7 @@ public class WindowController {
             final var mapModel = cityModel.getMapModel();
             final var mapPanel = windowView.getMapPanel();
 
+            mapModel.setMaxCoordinates(newWidth / 2, newHeight);
             mapPanel.setLinesInfo(mapModel.getLinesPointsCoordinates(), mapModel.getTransportNames());
             if (cityModel.isPeoplePresent() && cityModel.isBusinessesPresent()) {
                 mapPanel.setEntities(mapModel.getPersonInfos(cityModel.getAllPeople()),

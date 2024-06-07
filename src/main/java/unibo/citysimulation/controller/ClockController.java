@@ -1,6 +1,7 @@
 package unibo.citysimulation.controller;
 
 import java.time.LocalTime;
+import java.util.Objects;
 
 import unibo.citysimulation.model.clock.api.ClockModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
@@ -21,8 +22,8 @@ public class ClockController implements ClockObserver {
      * @param clockPanel The ClockPanel object representing the clock user interface.
      */
     public ClockController(final ClockModel clockModel, final ClockPanel clockPanel) {
-        this.clockPanel = clockPanel;
-        this.clockModel = clockModel;
+        this.clockModel = Objects.requireNonNull(clockModel, "cityModel must not be null");
+        this.clockPanel = Objects.requireNonNull(clockPanel, "graphicsPanel must not be null");
 
         // Add action listener for the pause button
         clockPanel.addPauseButtonActionListener(e -> pauseSimulation());

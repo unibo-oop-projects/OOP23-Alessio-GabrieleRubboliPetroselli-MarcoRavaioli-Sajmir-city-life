@@ -23,8 +23,7 @@ public class TransportManager {
      *
      * @return A list of transport line names.
      */
-    protected List<String> getTransportNames() {
-        simulationStarted = false;
+    public List<String> getTransportNames() {
         return new ArrayList<>(linesName);
     }
 
@@ -33,7 +32,7 @@ public class TransportManager {
      *
      * @return A list of congestion levels.
      */
-    protected List<Double> getCongestionList() {
+    public List<Double> getCongestionList() {
         return new ArrayList<>(congestionsList);
     }
 
@@ -42,7 +41,7 @@ public class TransportManager {
      *
      * @return A list of pairs of coordinates for each transport line.
      */
-    protected List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> getLinesPointsCoordinates() {
+    public List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> getLinesPointsCoordinates() {
         return new ArrayList<>(linesPointsCoordinates);
     }
 
@@ -51,7 +50,7 @@ public class TransportManager {
      *
      * @param lines A list of transport lines.
      */
-    protected void setTransportInfo(final List<TransportLine> lines) {
+    public void setTransportInfo(final List<TransportLine> lines) {
         linesPointsCoordinates = lines.stream()
             .map(line -> {
                 final Pair<Integer, Integer> startPoint = line.getLinkedZones().getFirst().boundary().getCenter();
@@ -70,21 +69,26 @@ public class TransportManager {
      *
      * @param lines A list of transport lines.
      */
-    protected void setTransportCongestion(final List<TransportLine> lines) {
+    public void setTransportCongestion(final List<TransportLine> lines) {
         congestionsList = lines.stream()
             .map(TransportLine::getCongestion)
             .collect(Collectors.toList());
-
-        if (!simulationStarted) {
-            simulationStarted = true;
-        }
     }
+
+    /**
+     * Sets to true the boolean simulationStarted.
+     * 
+     */
+    public void setSimulationStarted() {
+        simulationStarted = true;
+    }
+
     /**
      * Checks if the simulation has started.
      *
      * @return True if the simulation has started, false otherwise.
      */
-    protected boolean isSimulationStarted() {
+    public boolean isSimulationStarted() {
         return simulationStarted;
     }
 }

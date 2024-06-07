@@ -1,11 +1,11 @@
-package unibo.citylife;
+package unibo.citylife.model.transport;
 
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.creation.TransportCreation;
+import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneCreation;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 //test for class transportLineImpl
 class TransportLineImplTest {
     private final List<Zone> zones = ZoneCreation.createZonesFromFile();
-    private final List<TransportLine> transports = TransportCreation.createTransportsFromFile(zones);
+    private final List<TransportLine> transports = new TransportFactoryImpl().createTransportsFromFile(zones);
 
     @Test
     void testGetName() {

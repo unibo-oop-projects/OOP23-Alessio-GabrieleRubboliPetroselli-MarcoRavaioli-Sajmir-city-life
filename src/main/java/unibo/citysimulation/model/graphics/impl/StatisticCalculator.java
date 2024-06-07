@@ -48,6 +48,7 @@ public final class StatisticCalculator {
                 .map(TransportLine::getCongestion)
                 .collect(Collectors.toList());
     }
+    
     /**
      * Calculates the occupation percentage of each business in the given list.
      *

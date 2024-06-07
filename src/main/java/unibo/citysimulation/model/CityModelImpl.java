@@ -14,9 +14,9 @@ import unibo.citysimulation.model.clock.impl.ClockObserverBusiness;
 import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
 import unibo.citysimulation.model.map.impl.MapModelImpl;
 import unibo.citysimulation.model.person.api.DynamicPerson;
-import unibo.citysimulation.model.person.creation.PersonCreation;
+import unibo.citysimulation.model.person.impl.PersonFactoryImpl;
 import unibo.citysimulation.model.transport.api.TransportLine;
-import unibo.citysimulation.model.transport.creation.TransportCreation;
+import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneCreation;
@@ -30,6 +30,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Optional;
 import java.util.Collections;
 
@@ -37,6 +40,10 @@ import java.util.Collections;
  * Represents the model of the city simulation, containing zones, transports,
  * businesses, and people.
  */
+@SuppressFBWarnings(value = "EI", justification = """
+    Considering the basic structure of the application, we choose to 
+    pass the mutable models as parameters, because we need to keep them always updated. In every case, we pass
+    interfaces of the models.""")
 public final class CityModelImpl implements CityModel {
     private final List<Zone> zones;
     private List<TransportLine> transports;
@@ -56,12 +63,12 @@ public final class CityModelImpl implements CityModel {
     public CityModelImpl() {
         takeFrameSize();
 
-        this.mapModel = new MapModelImpl();
+        this.mapModel = new MapModelImpl("/unibo/citysimulation/images/mapImage.png");
         this.clockModel = new ClockModelImpl(ConstantAndResourceLoader.SIMULATION_TOTAL_DAYS);
         this.inputModel = new InputModel();
         this.graphicsModel = new GraphicsModelImpl();
         this.zones = ZoneCreation.createZonesFromFile();
-        this.transports = TransportCreation.createTransportsFromFile(zones);
+        this.transports = new TransportFactoryImpl().createTransportsFromFile(zones);
         this.businesses = new ArrayList<>();
         this.employmentOfficeData = new EmploymentOfficeData(new LinkedList<>());
     }
@@ -100,7 +107,7 @@ public final class CityModelImpl implements CityModel {
     public void createEntities() {
         graphicsModel.clearDatasets();
 
-        transports = TransportCreation.createTransportsFromFile(zones);
+        transports = new TransportFactoryImpl().createTransportsFromFile(zones);
         transports.forEach(t -> t.setCapacity(t.getCapacity() * inputModel.getCapacity() / 100));
 
         // Create zone table
@@ -110,7 +117,7 @@ public final class CityModelImpl implements CityModel {
 
         // Create people
         this.people = new ArrayList<>();
-        people = PersonCreation.createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
+        people =  new PersonFactoryImpl().createAllPeople(getInputModel().getNumberOfPeople(), zones, businesses);
 
         for (final List<DynamicPerson> group : people) {
             for (final DynamicPerson person : group) {
@@ -224,7 +231,7 @@ public final class CityModelImpl implements CityModel {
         frameWidth = width;
         frameHeight = height;
 
-        mapModel.setMaxCoordinates(newWidth / 2, newWidth / 2);
+        mapModel.setMaxCoordinates(frameWidth / 2, frameHeight);
         mapModel.setTransportInfo(transports);
     }
 
@@ -376,6 +383,7 @@ public final class CityModelImpl implements CityModel {
                 .filter(b -> b.getBusinessData().zone().name().equals(zoneName))
                 .count();
     }
+
     /**
      * Removes a specified number of businesses from the city model.
      *
