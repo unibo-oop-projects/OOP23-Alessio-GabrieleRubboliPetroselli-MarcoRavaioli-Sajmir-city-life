@@ -110,22 +110,17 @@ public class StaticPersonImpl implements StaticPerson {
      */
     protected void updatePosition() {
         switch (this.state) {
-            case MOVING:
-                this.position = Optional.empty();
-                break;
-            case WORKING:
-            business.ifPresent(b -> {
-                final Pair<Integer, Integer> businessPosition = business.get().getBusinessData().position();
-                final int newX = businessPosition.getFirst() + getRandomDeviation();
-                final int newY = businessPosition.getSecond() + getRandomDeviation();
-                this.position = Optional.of(new Pair<>(newX, newY));
-            });
-                break;
-            case AT_HOME:
-                this.position = Optional.of(homePosition);
-                break;
-            default:
-                throw new IllegalStateException("Invalid state.");
+            case MOVING -> this.position = Optional.empty();
+            case WORKING -> {
+                business.ifPresent(b -> {
+                    final Pair<Integer, Integer> businessPosition = business.get().getBusinessData().position();
+                    final int newX = businessPosition.getFirst() + getRandomDeviation();
+                    final int newY = businessPosition.getSecond() + getRandomDeviation();
+                    this.position = Optional.of(new Pair<>(newX, newY));
+                });
+            }
+            case AT_HOME -> this.position = Optional.of(homePosition);
+            default -> throw new IllegalStateException("Invalid state.");
         }
     }
 
@@ -140,9 +135,11 @@ public class StaticPersonImpl implements StaticPerson {
 
     /**
      * Calculates the trip details for the person.
-     * If the person has a business, it retrieves the transport line and trip duration
+     * If the person has a business, it retrieves the transport line and trip
+     * duration
      * based on the residence zone and business zone using the ZoneTable.
-     * If the person does not have a business, it sets the transport line to an empty array
+     * If the person does not have a business, it sets the transport line to an
+     * empty array
      * and trip duration to 0.
      */
     private void calculateTrip() {
@@ -155,22 +152,23 @@ public class StaticPersonImpl implements StaticPerson {
             tripDuration = 0;
         }
     }
+
     /**
-        * Returns the business associated with this person.
-        *
-        * @return an Optional containing the business associated with this person, 
-        or an empty Optional if no business is associated.
-        */
+     * Returns the business associated with this person.
+     *
+     * @return an Optional containing the business associated with this person,
+     *         or an empty Optional if no business is associated.
+     */
     @Override
     public final Optional<Business> getBusiness() {
         return this.business;
     }
 
     /**
-        * Sets the business for this person and calculates the trip details.
-        * 
-        * @param business the optional business to set for this person
-        */
+     * Sets the business for this person and calculates the trip details.
+     * 
+     * @param business the optional business to set for this person
+     */
     @Override
     public final void setBusiness(final Optional<Business> business) {
         this.business = business;
