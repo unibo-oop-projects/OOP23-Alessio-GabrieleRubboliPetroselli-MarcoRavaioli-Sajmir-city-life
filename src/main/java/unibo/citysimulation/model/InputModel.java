@@ -45,3 +45,5 @@ public class InputModel {
         System.out.println(richness);
     }
 }
+
+
