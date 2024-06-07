@@ -4,7 +4,7 @@ import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 /**
  * This class represents the input model for the city simulation.
  */
-public class InputModelImpl implements InputModel{
+public class InputModelImpl implements InputModel {
     private int numberOfPeople;
     private int numberOfBusiness;
     private int capacity;

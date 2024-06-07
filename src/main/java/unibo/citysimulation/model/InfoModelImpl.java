@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * Class responsible for managing information related to zones, businesses, and people.
  */
-public class InfoModelImpl implements InfoModel{
+public class InfoModelImpl implements InfoModel {
     private final InfoPanel infoPanel;
     private final CityModel cityModel;
 

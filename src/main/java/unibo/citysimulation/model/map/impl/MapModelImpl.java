@@ -52,7 +52,6 @@ public class MapModelImpl implements MapModel {
     public List<String> getTransportNames() {
         return transportManager.getTransportNames();
     }
-    
     /**
      * Retrieves the business information for a list of businesses.
      * 

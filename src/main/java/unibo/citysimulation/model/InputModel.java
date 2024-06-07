@@ -58,3 +58,5 @@ public interface InputModel {
      */
     void setRichness(int richness);
 }
+
+
