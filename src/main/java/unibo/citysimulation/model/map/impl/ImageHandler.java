@@ -30,7 +30,6 @@ public final class ImageHandler implements Serializable {
     /**
      * Loads an image from the specified path and handles potential IOExceptions.
      *
-     * @param imagePath The path to the image file.
      * @return The loaded BufferedImage.
      */
     private BufferedImage loadImageWithExceptionHandling() {
@@ -45,7 +44,6 @@ public final class ImageHandler implements Serializable {
     /**
      * Loads an image from the specified path.
      *
-     * @param imagePath The path to the image file.
      * @return The loaded BufferedImage.
      * @throws IOException If the image cannot be read.
      */
@@ -102,7 +100,7 @@ public final class ImageHandler implements Serializable {
      * @throws IOException            if an I/O error occurs
      * @throws ClassNotFoundException if the class of a serialized object cannot be found
      */
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         this.image = loadImageWithExceptionHandling();
     }
@@ -113,7 +111,7 @@ public final class ImageHandler implements Serializable {
      * @param oos the ObjectOutputStream
      * @throws IOException if an I/O error occurs
      */
-    private void writeObject(ObjectOutputStream oos) throws IOException {
+    private void writeObject(final ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
 }

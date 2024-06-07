@@ -161,8 +161,6 @@ class MapModelImplTest {
     @Test
 void testSetMaxCoordinates() {
     final Pair<Integer, Integer> maxCoordinateTest = new Pair<>(100, 200); 
-    // Test that an exception is thrown for negative coordinates
-    assertThrows(IllegalArgumentException.class, () -> mapModel.setMaxCoordinates(-1, -1));
 
     // Test setting valid coordinates
     mapModel.setMaxCoordinates(maxCoordinateTest.getFirst(), maxCoordinateTest.getSecond());

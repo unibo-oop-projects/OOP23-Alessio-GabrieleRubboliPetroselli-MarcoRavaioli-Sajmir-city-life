@@ -59,7 +59,7 @@ public interface StaticPerson {
      * 
      * @param state the new state of the person.
      */
-    void setState(final PersonState state);
+    void setState(PersonState state);
 
     /**
      * 

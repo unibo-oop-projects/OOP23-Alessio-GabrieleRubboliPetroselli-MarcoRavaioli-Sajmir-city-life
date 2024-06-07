@@ -2,7 +2,6 @@ package unibo.citysimulation.model.person.api;
 
 import unibo.citysimulation.model.zone.Zone;
 
-
 /**
  * Represents the static data of a person, containing the name, age, business, and residence zone.
  * 

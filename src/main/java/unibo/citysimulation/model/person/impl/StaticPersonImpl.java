@@ -85,6 +85,12 @@ public class StaticPersonImpl implements StaticPerson {
         return state;
     }
 
+    /**
+     * Sets the state of the person.
+     * 
+     * @param state the new state of the person.
+     */
+    @Override
     public void setState(final PersonState state) {
         this.state = state;
     }
@@ -110,17 +116,22 @@ public class StaticPersonImpl implements StaticPerson {
      */
     protected void updatePosition() {
         switch (this.state) {
-            case MOVING -> this.position = Optional.empty();
-            case WORKING -> {
+            case MOVING:
+                this.position = Optional.empty();
+                break;
+            case WORKING:
                 business.ifPresent(b -> {
-                    final Pair<Integer, Integer> businessPosition = business.get().getBusinessData().position();
+                    final Pair<Integer, Integer> businessPosition = b.getBusinessData().position();
                     final int newX = businessPosition.getFirst() + getRandomDeviation();
                     final int newY = businessPosition.getSecond() + getRandomDeviation();
                     this.position = Optional.of(new Pair<>(newX, newY));
                 });
-            }
-            case AT_HOME -> this.position = Optional.of(homePosition);
-            default -> throw new IllegalStateException("Invalid state.");
+                break;
+            case AT_HOME:
+                this.position = Optional.of(homePosition);
+                break;
+            default:
+                throw new IllegalStateException("Invalid state.");
         }
     }
 
