@@ -21,32 +21,32 @@ public interface PersonFactory {
      * @param businesses     The list of available businesses.
      * @return A list of lists of DynamicPerson objects for every zone.
      */
-    List<List<DynamicPerson>> createAllPeople(final int numberOfPeople, final List<Zone> zones,
-            final List<Business> businesses);
+    List<List<DynamicPerson>> createAllPeople(int numberOfPeople, List<Zone> zones, List<Business> businesses);
 
     /**
      * Creates a group of people for a certain zone.
      * 
-     * @param groupCounter a counter for the group of people.
+     * @param groupCounter   a counter for the group of people.
      * @param numberOfPeople The number of people to create for the given zone.
-     * @param moneyMinMax The minimum and maximum amount of money that the people can have in that zone.
-     * @param businesses The list of available businesses.
-     * @param residenceZone The zone where this group of people will live.
+     * @param moneyMinMax    The minimum and maximum amount of money that the people
+     *                       can have in that zone.
+     * @param businesses     The list of available businesses.
+     * @param residenceZone  The zone where this group of people will live.
      * @return A list of DynamicPerson objects for the given zone.
      */
-    List<DynamicPerson> createGroupOfPeople(final int groupCounter, final int numberOfPeople,
-            final Pair<Integer, Integer> moneyMinMax, final List<Business> businesses, final Zone residenceZone);
+    List<DynamicPerson> createGroupOfPeople(int groupCounter, int numberOfPeople, Pair<Integer, Integer> moneyMinMax,
+            List<Business> businesses, Zone residenceZone);
 
     /**
      * Creates a single person.
      * 
-     * @param name The name of the person.
-     * @param age The age of the person.
-     * @param business The business where the person works, if any.
+     * @param name          The name of the person.
+     * @param age           The age of the person.
+     * @param business      The business where the person works, if any.
      * @param residenceZone The zone where the person lives.
-     * @param money The amount of money that the person has at the creation moment.
+     * @param money         The amount of money that the person has at the creation
+     *                      moment.
      * @return A DynamicPerson object.
      */
-    DynamicPerson createPerson(final String name, final int age, final Optional<Business> business,
-            final Zone residenceZone, final int money);
+    DynamicPerson createPerson(String name, int age, Optional<Business> business, Zone residenceZone, int money);
 }

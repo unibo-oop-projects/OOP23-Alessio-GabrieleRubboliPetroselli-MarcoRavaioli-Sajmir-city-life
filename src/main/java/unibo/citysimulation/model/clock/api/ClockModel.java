@@ -25,6 +25,11 @@ public interface ClockModel {
     void removeObserver(ClockObserver observer);
 
     /**
+     * Notifies all the observers of the clock model.
+     */
+    void notifyObservers();
+
+    /**
      * Starts the simulation with the specified update rate.
      * 
      * @param updateRate The update rate of the simulation, in milliseconds 

@@ -66,7 +66,7 @@ class ClockModelTest {
 
         clockModel.setUpdateRate(ConstantAndResourceLoader.TIME_UPDATE_RATE / 10);
 
-        assertTrue(clockModel.getUpdateRate() == ConstantAndResourceLoader.TIME_UPDATE_RATE / 10);
+        assertEquals(clockModel.getUpdateRate(), ConstantAndResourceLoader.TIME_UPDATE_RATE / 10);
 
         // Restart the simulation
         clockModel.restartSimulation();

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 /**
  * The PersonFactory class is responsible for creating instances of
@@ -32,29 +32,25 @@ public final class PersonFactoryImpl implements PersonFactory {
     @Override
     public List<List<DynamicPerson>> createAllPeople(final int numberOfPeople, final List<Zone> zones,
             final List<Business> businesses) {
-        final List<List<DynamicPerson>> allPeople = new ArrayList<>();
-        for (final Zone zone : zones) {
-            final int zoneIndex = zones.indexOf(zone);
-            final int peopleInZone = (int) (numberOfPeople * (zone.personPercents() / 100.0));
-            final List<DynamicPerson> peopleInCurrentZone = createGroupOfPeople(
-                    zoneIndex,
-                    peopleInZone,
-                    zone.wellfareMinMax(),
-                    businesses,
-                    zone);
-            allPeople.add(peopleInCurrentZone);
-        }
-        return allPeople;
+        return zones.stream()
+                .map(zone -> createGroupOfPeople(
+                        zones.indexOf(zone),
+                        (int) (numberOfPeople * (zone.personPercents() / 100.0)),
+                        zone.wellfareMinMax(),
+                        businesses,
+                        zone))
+                .collect(Collectors.toList());
     }
 
     /**
      * Creates a group of people for a certain zone.
      * 
-     * @param groupCounter a counter for the group of people.
+     * @param groupCounter   a counter for the group of people.
      * @param numberOfPeople The number of people to create for the given zone.
-     * @param moneyMinMax The minimum and maximum amount of money that the people can have in that zone.
-     * @param businesses The list of available businesses.
-     * @param residenceZone The zone where this group of people will live.
+     * @param moneyMinMax    The minimum and maximum amount of money that the people
+     *                       can have in that zone.
+     * @param businesses     The list of available businesses.
+     * @param residenceZone  The zone where this group of people will live.
      * @return A list of DynamicPerson objects for the given zone.
      */
     @Override
@@ -94,11 +90,12 @@ public final class PersonFactoryImpl implements PersonFactory {
     /**
      * Creates a single person.
      * 
-     * @param name The name of the person.
-     * @param age The age of the person.
-     * @param business The business where the person works, if any.
+     * @param name          The name of the person.
+     * @param age           The age of the person.
+     * @param business      The business where the person works, if any.
      * @param residenceZone The zone where the person lives.
-     * @param money The amount of money that the person has at the creation moment.
+     * @param money         The amount of money that the person has at the creation
+     *                      moment.
      * @return A DynamicPerson object.
      */
     @Override
