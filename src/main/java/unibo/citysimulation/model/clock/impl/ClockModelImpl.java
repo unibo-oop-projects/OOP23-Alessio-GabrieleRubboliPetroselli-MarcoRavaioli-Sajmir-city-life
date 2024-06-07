@@ -122,6 +122,7 @@ public final class ClockModelImpl implements ClockModel {
     /**
      * Notifies all observers of a time update.
      */
+    @Override
     public void notifyObservers() {
         observers.forEach(observer -> observer.onTimeUpdate(currentTime, currentDay));
     } 

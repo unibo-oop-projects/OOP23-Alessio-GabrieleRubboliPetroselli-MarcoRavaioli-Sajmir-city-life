@@ -50,7 +50,6 @@ public class ClockController implements ClockObserver {
     private void changeClockSpeed() {
         final int speed = clockPanel.changeSpeed();
         final int updateRate = ConstantAndResourceLoader.TIME_UPDATE_RATE / speed;
-        
         // Start or update the simulation with the new speed
         if (clockModel.getTimer() != null) {
             clockModel.startSimulation(updateRate);
