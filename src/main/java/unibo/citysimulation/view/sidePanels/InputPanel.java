@@ -60,7 +60,7 @@ public class InputPanel extends StyledPanel {
         gbc.weighty = 0.5;
         add(peopleSlider, gbc);
         // Create and add slider for the number of businesses
-        businessSlider = createSlider("Number of Businesses", 0, 100); // Initialize businessSlider here
+        businessSlider = createSlider("Add Businesses", 0, 100); // Initialize businessSlider here
         //set zero the value of the slider
         businessSlider.setValue(0);
         gbc.gridy = 2;
