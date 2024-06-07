@@ -13,10 +13,12 @@ public class MediumBusiness extends Business {
 
     /**
      * Creates a medium business in the city simulation.
+     * @param id the id of the medium business
      * @param zone the zone where the medium business is located
      */
-    public MediumBusiness(final Zone zone) {
+    public MediumBusiness(final int id, final Zone zone) {
         super(new BusinessData(
+            id,
             new LinkedList<>(),
             BusinessConfig.MEDIUM_OPENING_TIME,
             BusinessConfig.MEDIUM_CLOSING_TIME,

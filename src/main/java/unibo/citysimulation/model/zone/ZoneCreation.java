@@ -21,11 +21,11 @@ import org.slf4j.LoggerFactory;
  * The ZoneFactory class is responsible for creating zones from a JSON file.
  * It provides a static method to create zones and a private helper method to create a single zone.
  */
-public final class ZoneFactory {
+public final class ZoneCreation {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZoneFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZoneCreation.class);
 
-    private ZoneFactory() {
+    private ZoneCreation() {
     }
 
     /**

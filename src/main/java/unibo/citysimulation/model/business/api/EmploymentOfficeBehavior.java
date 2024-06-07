@@ -12,9 +12,8 @@ public interface EmploymentOfficeBehavior {
      * and fires the employee from their business.
      * 
      * @param business The business for which to handle employee firing.
-     * @param hiredCount The number of people hired previously.
      */
-    void handleEmployeeFiring(Business business, int hiredCount);
+    void handleEmployeeFiring(Business business);
     /**
      * Handles the hiring of employees for the specified business.
      * Hires a minimum of 4 employees from the employment office's disoccupied people list 

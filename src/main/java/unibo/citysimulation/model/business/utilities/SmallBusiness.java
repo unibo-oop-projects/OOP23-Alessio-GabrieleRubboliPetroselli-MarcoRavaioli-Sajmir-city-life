@@ -13,10 +13,12 @@ public class SmallBusiness extends Business {
 
     /**
      * Creates a small business in the city simulation.
+     * @param id the id of the small business
      * @param zone the zone where the small business is located
      */
-    public SmallBusiness(final Zone zone) {
+    public SmallBusiness(final int id, final Zone zone) {
         super(new BusinessData(
+            id,
             new LinkedList<>(),
             BusinessConfig.SMALL_OPENING_TIME,
             BusinessConfig.SMALL_CLOSING_TIME,

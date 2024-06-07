@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A ClockObserver implementation that handles business-related operations based on time updates.
+ * A ClockObserver implementation that handles business-related operations.
  */
 public class ClockObserverBusiness implements ClockObserver {
     private final List<Business> businesses;
@@ -46,8 +46,7 @@ public class ClockObserverBusiness implements ClockObserver {
                 businessHiredCountMap.put(business, hiredCount);
             }
             if (currentTime.equals(business.getBusinessData().clLocalTime())) {
-                final int hiredCount = businessHiredCountMap.getOrDefault(business, 0);
-                employmentManager.handleEmployeeFiring(business, hiredCount);
+                employmentManager.handleEmployeeFiring(business);
                 employmentManager.handleEmployyePay(business);
             }
         }

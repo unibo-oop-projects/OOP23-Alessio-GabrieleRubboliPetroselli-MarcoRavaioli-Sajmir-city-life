@@ -97,7 +97,7 @@ public final class BusinessConfig {
     /**
      * The minimum age for employees in big businesses.
      */
-    public static final int BIG_MIN_AGE = 35;
+    public static final int BIG_MIN_AGE = 20;
     /**
      * The minimum age for employees in medium businesses.
      */

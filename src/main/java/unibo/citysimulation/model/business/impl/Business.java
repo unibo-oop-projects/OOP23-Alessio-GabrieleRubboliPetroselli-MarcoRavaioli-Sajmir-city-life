@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.model.business.api.BusinessBehavior;
 import unibo.citysimulation.model.zone.Zone;
@@ -12,12 +13,14 @@ import unibo.citysimulation.model.zone.Zone;
 /**
  * The abstract class representing a business in the city simulation.
  */
+@SuppressFBWarnings(value = "EI", justification = """
+    """)
 public abstract class Business implements BusinessBehavior {
-
     private final BusinessData businessData;
     /**
      * Record representing the data of a business in the city simulation.
      *
+     * @param id           the id of the business
      * @param employees    the list of employees working in the business
      * @param opLocalTime  the opening time of the business
      * @param clLocalTime  the closing time of the business
@@ -29,7 +32,8 @@ public abstract class Business implements BusinessBehavior {
      * @param maxTardiness the maximum number of times an employee can be late before being fired
      * @param zone         the zone in which the business is located
      */
-    public static record BusinessData( 
+    public record BusinessData(
+    int id,
     List<Employee> employees,
     LocalTime opLocalTime,
     LocalTime clLocalTime,
@@ -46,7 +50,7 @@ public abstract class Business implements BusinessBehavior {
      *
      * @param businessData the data of the business
      */
-    public Business(BusinessData businessData) {
+    public Business(final BusinessData businessData) {
         this.businessData = Objects.requireNonNull(businessData);
     }
 
@@ -58,7 +62,6 @@ public abstract class Business implements BusinessBehavior {
     public BusinessData getBusinessData() {
         return businessData;
     }
-    
     /**
      * Hires an employee for the business.
      * 
@@ -96,14 +99,12 @@ public abstract class Business implements BusinessBehavior {
     @Override
     public void checkEmployeeDelays(final LocalTime currentTime) {
         if (currentTime.equals(businessData.opLocalTime())) {
-        for (int i = 0; i < businessData.employees().size(); i++) {
-            Employee employee = businessData.employees().get(i);
-            if (employee.isLate(Optional.of(businessData.position()))) {
-                Employee updatedEmployee = employee.incrementDelayCount();
-                businessData.employees().set(i, updatedEmployee); // Replace the old employee with the updated one
+            for (final Employee employee : businessData.employees()) {
+                if (employee.isLate(Optional.of(businessData.position()))) {
+                    employee.incrementDelayCount();
+                }
             }
         }
-    }
     }
 
     /**

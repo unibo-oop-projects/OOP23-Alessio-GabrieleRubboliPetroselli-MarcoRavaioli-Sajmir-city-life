@@ -31,10 +31,8 @@ public class ClockObserverPerson implements ClockObserver {
      */
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
-        for (final List<DynamicPerson> group : people) {
-            for (final var person : group) {
-                person.checkState(currentTime);
-            }
-        }
+        people.stream()
+              .flatMap(List::stream)
+              .forEach(person -> person.checkState(currentTime));
     }
 }
