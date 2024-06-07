@@ -12,15 +12,16 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.map.MapPanel;
+import unibo.citysimulation.model.InfoModel;
+
 import java.util.Objects;
-import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map and updating the view based on the model state.
  * Implements MouseListener to handle mouse events and ClockObserver to update the map as time progresses.
  */
 public final class MapController implements MouseListener, ClockObserver {
-    private final InfoPanel infoPanel;
+    private final InfoModel infoModel;
     private final MapPanel mapPanel;
     private final MapModelImpl mapModel;
     private final CityModel cityModel;
@@ -34,7 +35,7 @@ public final class MapController implements MouseListener, ClockObserver {
     public MapController(final CityModel cityModel, final WindowView windowView) {
         // Ensure that the provided cityModel is not null
         this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
-        this.infoPanel = windowView.getInfoPanel();
+        this.infoModel = cityModel.getInfoModel();
         this.mapPanel = windowView.getMapPanel();
         this.mapModel = cityModel.getMapModel();
 
@@ -69,52 +70,8 @@ public final class MapController implements MouseListener, ClockObserver {
         final int x = (int) ((double) e.getX() / mapPanel.getWidth() * 1000);
         final int y = (int) ((double) e.getY() / mapPanel.getHeight() * 1000);
 
-        updateZoneInfo(x, y);
+        infoModel.updateZoneInfo(x, y);
         mapModel.setMaxCoordinates((int) cityModel.getFrameWidth() / 2, (int) cityModel.getFrameHeight());
-    }
-
-    /**
-     * Updates the information panel with details of the zone located at the given coordinates.
-     *
-     * @param x the x-coordinate of the mouse click
-     * @param y the y-coordinate of the mouse click
-     */
-    private void updateZoneInfo(final int x, final int y) {
-        final Optional<Zone> selectedZone = cityModel.getZoneByPosition(new Pair<>(x, y));
-        selectedZone.ifPresentOrElse(zone -> updateInfoPanelWithZone(zone, x, y), () -> clearInfoPanel(x, y));
-    }
-
-    /**
-     * Updates the information panel with details of the given zone.
-     *
-     * @param zone the Zone object representing the selected zone
-     * @param x    the x-coordinate of the mouse click
-     * @param y    the y-coordinate of the mouse click
-     */
-    private void updateInfoPanelWithZone(final Zone zone, final int x, final int y) {
-        infoPanel.updatePositionInfo(x, y);
-        infoPanel.updateZoneName(zone.name());
-        cityModel.getPeopleInZone(zone.name()).ifPresentOrElse(
-                infoPanel::updateNumberOfPeople,
-                () -> infoPanel.updateNumberOfPeople(0));
-        infoPanel.updateNumberOfBusiness(cityModel.getBusinessesInZone(zone.name()));
-        infoPanel.updateAvaragePay(cityModel.avaragePayZone(zone));
-        infoPanel.updateNumberOfDirectLines(cityModel.getNumberOfDirectLinesFromZone(zone));
-    }
-
-    /**
-     * Clears the information panel when no zone is found at the given coordinates.
-     *
-     * @param x the x-coordinate of the mouse click
-     * @param y the y-coordinate of the mouse click
-     */
-    private void clearInfoPanel(final int x, final int y) {
-        infoPanel.updatePositionInfo(x, y);
-        infoPanel.updateZoneName("");
-        infoPanel.updateNumberOfPeople(0);
-        infoPanel.updateNumberOfBusiness(0);
-        infoPanel.updateAvaragePay(0);
-        infoPanel.updateNumberOfDirectLines(0);
     }
 
     /**

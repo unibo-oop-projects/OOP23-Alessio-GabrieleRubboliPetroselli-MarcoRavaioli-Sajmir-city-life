@@ -24,37 +24,29 @@ public final class ImageHandler implements Serializable {
      */
     public ImageHandler(final String imagePath) {
         this.imagePath = imagePath;
-        this.image = loadImageWithExceptionHandling();
+        this.image = loadImage();
     }
 
     /**
-     * Loads an image from the specified path and handles potential IOExceptions.
-     *
-     * @param imagePath The path to the image file.
-     * @return The loaded BufferedImage.
-     */
-    private BufferedImage loadImageWithExceptionHandling() {
-        try {
-            return loadImage();
-        } catch (IOException e) {
-            // Throw a custom exception if the image loading fails
-            throw new ImageLoadingException("Failed to load map image", e);
-        }
-    }
 
-    /**
      * Loads an image from the specified path.
+
      *
-     * @param imagePath The path to the image file.
+
      * @return The loaded BufferedImage.
-     * @throws IOException If the image cannot be read.
+
      */
-    private BufferedImage loadImage() throws IOException {
-        final BufferedImage img = ImageIO.read(getClass().getResource(imagePath));
-        if (img == null) {
-            throw new IOException("Image could not be read, possibly due to invalid path: " + imagePath);
+
+     private BufferedImage loadImage() {
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource(imagePath));
+            if (img == null) {
+                throw new IOException("Image could not be read, possibly due to invalid path: " + imagePath);
+            }
+            return img;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load map image", e);
         }
-        return img;
     }
 
     /**
@@ -102,9 +94,9 @@ public final class ImageHandler implements Serializable {
      * @throws IOException            if an I/O error occurs
      * @throws ClassNotFoundException if the class of a serialized object cannot be found
      */
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
-        this.image = loadImageWithExceptionHandling();
+        this.image = loadImage();
     }
 
     /**
@@ -113,7 +105,7 @@ public final class ImageHandler implements Serializable {
      * @param oos the ObjectOutputStream
      * @throws IOException if an I/O error occurs
      */
-    private void writeObject(ObjectOutputStream oos) throws IOException {
+    private void writeObject(final ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
 }

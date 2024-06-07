@@ -219,4 +219,3 @@ public final class MapModelImpl implements MapModel {
         return imageLoader.getImage();
     }
 }
-
