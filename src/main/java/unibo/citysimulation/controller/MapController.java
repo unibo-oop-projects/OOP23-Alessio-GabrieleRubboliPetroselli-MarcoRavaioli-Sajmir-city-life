@@ -12,7 +12,7 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.model.InfoModel;
+//import unibo.citysimulation.model.InfoModel;
 
 import java.util.Objects;
 
@@ -21,7 +21,7 @@ import java.util.Objects;
  * Implements MouseListener to handle mouse events and ClockObserver to update the map as time progresses.
  */
 public final class MapController implements MouseListener, ClockObserver {
-    private final InfoModel infoModel;
+    //private final InfoModel infoModel;
     private final MapPanel mapPanel;
     private final MapModelImpl mapModel;
     private final CityModel cityModel;
@@ -35,7 +35,7 @@ public final class MapController implements MouseListener, ClockObserver {
     public MapController(final CityModel cityModel, final WindowView windowView) {
         // Ensure that the provided cityModel is not null
         this.cityModel = Objects.requireNonNull(cityModel, "cityModel must not be null");
-        this.infoModel = cityModel.getInfoModel();
+        //this.infoModel = cityModel.getInfoModel();
         this.mapPanel = windowView.getMapPanel();
         this.mapModel = cityModel.getMapModel();
 
@@ -70,7 +70,7 @@ public final class MapController implements MouseListener, ClockObserver {
         final int x = (int) ((double) e.getX() / mapPanel.getWidth() * 1000);
         final int y = (int) ((double) e.getY() / mapPanel.getHeight() * 1000);
 
-        infoModel.updateZoneInfo(x, y);
+        //infoModel.updateZoneInfo(x, y);
         mapModel.setMaxCoordinates((int) cityModel.getFrameWidth() / 2, (int) cityModel.getFrameHeight());
     }
 
