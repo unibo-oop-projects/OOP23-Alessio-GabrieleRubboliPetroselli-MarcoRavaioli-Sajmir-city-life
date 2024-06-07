@@ -31,7 +31,6 @@ public class EmploymentOfficeManagerTest {
     private EmploymentOfficeData employmentOfficeData;
     private Optional<Business> business;
     private List<DynamicPerson> disoccupiedPeople;
-    
 
     @BeforeEach
     final void setUp() {
@@ -59,7 +58,7 @@ public class EmploymentOfficeManagerTest {
             business.get().hire(new Employee(disoccupiedPeople.get(2), business.get().getBusinessData()));
             business.get().getBusinessData().employees().get(0).incrementDelayCount();
             business.get().getBusinessData().employees().get(0).incrementDelayCount();
-            business.get().getBusinessData().employees().get(0).incrementDelayCount();  
+            business.get().getBusinessData().employees().get(0).incrementDelayCount();
         }
         final int hiredCount = business.get().getBusinessData().employees().size();
         employmentOfficeManager.handleEmployeeFiring(business.get());

@@ -19,7 +19,7 @@ import unibo.citysimulation.model.zone.Zone;
 public final class BusinessFactoryImpl {
 
     private static final Random RANDOM = new Random();
-    private static int ID = 0;
+    private static int ID_COUNTER = 0;
 
     private BusinessFactoryImpl() {
     }
@@ -32,18 +32,17 @@ public final class BusinessFactoryImpl {
      * @return An Optional containing the created Business object, or an empty Optional if the type is invalid.
      */
     public static Optional<Business> createBusiness(final BusinessType type, final Zone zone) {
-        
         switch (type) {
             case BIG:
-                return Optional.of(new BigBusiness(ID, zone));
+                return Optional.of(new BigBusiness(ID_COUNTER, zone));
             case MEDIUM:
-                return Optional.of(new MediumBusiness(ID, zone));
+                return Optional.of(new MediumBusiness(ID_COUNTER, zone));
             case SMALL:
-                return Optional.of(new SmallBusiness(ID, zone));
+                return Optional.of(new SmallBusiness(ID_COUNTER, zone));
             default:
                 break;
         }
-        ID++;
+        ID_COUNTER++;
         return Optional.empty();
     }
     /**
