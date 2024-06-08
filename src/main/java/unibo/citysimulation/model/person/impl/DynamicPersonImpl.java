@@ -105,4 +105,8 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         this.lastDestination = newState;
         this.updatePosition();
     }
+
+    public int getBusinessBegin() {
+        return businessBegin;
+    }
 }

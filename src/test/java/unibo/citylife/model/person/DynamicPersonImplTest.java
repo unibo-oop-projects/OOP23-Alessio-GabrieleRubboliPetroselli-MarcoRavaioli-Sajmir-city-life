@@ -1,12 +1,13 @@
 package unibo.citylife.model.person;
-/* 
 import unibo.citysimulation.model.business.impl.Business;
-import unibo.citysimulation.model.business.impl.BusinessFactory;
-import unibo.citysimulation.model.person.DynamicPersonImpl;
-import unibo.citysimulation.model.person.PersonData;
-import unibo.citysimulation.model.person.StaticPerson.PersonState;
-import unibo.citysimulation.model.transport.TransportFactory;
-import unibo.citysimulation.model.transport.TransportLine;
+import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
+import unibo.citysimulation.model.business.api.BusinessFactory;
+import unibo.citysimulation.model.person.impl.DynamicPersonImpl;
+import unibo.citysimulation.model.person.api.PersonData;
+import unibo.citysimulation.model.person.api.StaticPerson.PersonState;
+import unibo.citysimulation.model.transport.api.TransportFactory;
+import unibo.citysimulation.model.transport.api.TransportLine;
+import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.model.zone.ZoneFactory;
 import unibo.citysimulation.model.zone.ZoneTableCreation;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DynamicPersonImplTest {
     private final List<Zone> zones = ZoneFactory.createZonesFromFile();
-    private final List<TransportLine> transports = TransportFactory.createTransportsFromFile(zones);
+    private final List<TransportLine> transports =  new TransportFactoryImpl().createTransportsFromFile(zones);
     @BeforeEach
     void setUp() {
         ZoneTableCreation.createAndAddPairs(zones, transports);
@@ -33,10 +34,10 @@ class DynamicPersonImplTest {
         final Zone residenceZone = zones.get(2);
         Business business;
         do {
-            business = BusinessFactory.getRandomBusiness(zones).get();
-        } while (business.getZone().equals(residenceZone));
+            business = BusinessFactoryImpl.createRandomBusiness(zones).get();
+        } while (business.getBusinessData().zone().equals(residenceZone));
         // Creazione di un oggetto DynamicPersonImpl da testare
-        final PersonData personData = new PersonData("alberto casa", 60, business, residenceZone);
+        final PersonData personData = new PersonData("alberto casa", 60, Optional.of(business), residenceZone);
 
         final DynamicPersonImpl person = new DynamicPersonImpl(personData, 100);
 
@@ -56,4 +57,3 @@ class DynamicPersonImplTest {
         assertEquals(1, person.getTransportLine()[0].getPersonInLine());
     }
 }
-*/
