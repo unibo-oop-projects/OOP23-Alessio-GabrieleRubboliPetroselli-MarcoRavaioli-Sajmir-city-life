@@ -25,6 +25,8 @@ public class StaticPersonImpl implements StaticPerson {
     private int tripDuration;
     private static final Random RANDOM = new Random();
     private Optional<Business> business;
+    private Optional<Business> newBusiness;
+    private boolean newHire;
 
     /**
      * Constructs a new static person with the given person data and money.
@@ -120,12 +122,10 @@ public class StaticPersonImpl implements StaticPerson {
                 this.position = Optional.empty();
                 break;
             case WORKING:
-                business.ifPresent(b -> {
-                    final Pair<Integer, Integer> businessPosition = b.getBusinessData().position();
+                    final Pair<Integer, Integer> businessPosition = business.get().getBusinessData().position();
                     final int newX = businessPosition.getFirst() + getRandomDeviation();
                     final int newY = businessPosition.getSecond() + getRandomDeviation();
                     this.position = Optional.of(new Pair<>(newX, newY));
-                });
                 break;
             case AT_HOME:
                 this.position = Optional.of(homePosition);
@@ -180,9 +180,22 @@ public class StaticPersonImpl implements StaticPerson {
      * 
      * @param business the optional business to set for this person
      */
-    @Override
-    public final void setBusiness(final Optional<Business> business) {
-        this.business = business;
-        calculateTrip();
+    public final void setBusiness() {
+        if (newBusiness.isEmpty()) {
+            this.business = Optional.empty();
+        } else {
+            this.business = Optional.of(newBusiness.get());
+            calculateTrip();
+        }
+        this.newHire = false;
+    }
+
+    public void hirePerson(final Optional<Business> business) {
+        this.newBusiness = business;
+        this.newHire = true;
+    }
+
+    public boolean isNewHire() {
+        return newHire;
     }
 }

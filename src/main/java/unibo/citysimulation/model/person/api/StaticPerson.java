@@ -81,10 +81,7 @@ public interface StaticPerson {
      */
     Optional<Business> getBusiness();
 
-    /**
-     * Sets the business for the person.
-     *
-     * @param business an optional representing the business the person is associated with
-     */
-    void setBusiness(Optional<Business> business);
+    void hirePerson(Optional<Business> business);
+
+    void setBusiness();
 }

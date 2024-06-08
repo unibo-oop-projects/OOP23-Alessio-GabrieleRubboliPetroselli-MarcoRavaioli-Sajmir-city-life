@@ -18,11 +18,13 @@ public class ClockObserverBusiness implements ClockObserver {
     private final List<Business> businesses;
     private final EmploymentOfficeManager employmentManager;
     private final Map<Business, Integer> businessHiredCountMap;
+    private int counterDay = 1;
 
     /**
-     * Constructs a CloclObserverBusiness object with the given list of businesses and employment office.
+     * Constructs a CloclObserverBusiness object with the given list of businesses
+     * and employment office.
      * 
-     * @param businesses the list of businesses
+     * @param businesses       the list of businesses
      * @param employmentOffice the employment office
      */
     public ClockObserverBusiness(final List<Business> businesses, final EmploymentOfficeData employmentOffice) {
@@ -35,19 +37,25 @@ public class ClockObserverBusiness implements ClockObserver {
      * Handles business operations based on the current time and day.
      * 
      * @param currentTime the current time
-     * @param currentDay the current day
+     * @param currentDay  the current day
      */
     @Override
     public void onTimeUpdate(final LocalTime currentTime, final int currentDay) {
+        if (currentDay != counterDay) {
+            counterDay = currentDay;
+        }
         for (final Business business : businesses) {
             business.checkEmployeeDelays(currentTime);
-            if (currentTime.equals(business.getBusinessData().opLocalTime())) {
-                final int hiredCount = employmentManager.handleEmployeeHiring(business);
-                businessHiredCountMap.put(business, hiredCount);
-            }
-            if (currentTime.equals(business.getBusinessData().clLocalTime())) {
-                employmentManager.handleEmployeeFiring(business);
-                employmentManager.handleEmployyePay(business);
+            if (counterDay % 2 == 0) {
+                if (currentTime.equals(LocalTime.of(0, 5))) {
+                    final int hiredCount = employmentManager.handleEmployeeHiring(business);
+                    businessHiredCountMap.put(business, hiredCount);
+                }
+            } else {
+                if (currentTime.equals(LocalTime.of(0, 5))) {
+                    employmentManager.handleEmployeeFiring(business);
+                    employmentManager.handleEmployyePay(business);
+                }
             }
         }
     }

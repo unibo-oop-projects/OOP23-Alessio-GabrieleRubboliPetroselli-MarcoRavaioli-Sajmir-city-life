@@ -91,21 +91,30 @@ public final class DynamicPersonImpl extends StaticPersonImpl implements Dynamic
      */
     @Override
     public void checkState(final LocalTime currentTime) {
+        if (super.getBusiness().isEmpty()) {
+            return;
+        }
         switch (super.getState()) {
             case MOVING -> handleArrival(currentTime);
             case WORKING -> handleHomeTransition(currentTime);
-            case AT_HOME -> handleWorkTransition(currentTime);
+            case AT_HOME -> {
+                if (super.isNewHire()) {
+                    super.setBusiness();
+                    if (super.getBusiness().isPresent()) {
+                        this.businessBegin = super.getBusiness().get().getBusinessData().opLocalTime().toSecondOfDay();
+                        this.businessEnd = super.getBusiness().get().getBusinessData().clLocalTime().toSecondOfDay();
+                        System.out.println(super.getPersonData().name() + " is working from " + super.getBusiness().get().getBusinessData().opLocalTime() + " to " + super.getBusiness().get().getBusinessData().clLocalTime());
+                    }
+                }
+                handleWorkTransition(currentTime);
+            }
             default -> throw new IllegalStateException("Invalid state: " + super.getState());
         }
     }
 
     private void moveTo(final PersonState newState) {
-        if (super.getTripDuration() == 0) {
-            this.setState(newState);
-        } else {
-            this.setState(PersonState.MOVING);
-            transportStrategy.incrementPersonsInLine(List.of(getTransportLine()));
-        }
+        this.setState(PersonState.MOVING);
+        transportStrategy.incrementPersonsInLine(List.of(getTransportLine()));
         this.lastDestination = newState;
         this.updatePosition();
     }

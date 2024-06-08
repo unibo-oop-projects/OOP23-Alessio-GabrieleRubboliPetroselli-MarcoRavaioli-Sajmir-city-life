@@ -21,7 +21,7 @@ public final class BusinessConfig {
     /**
      * The end time for medium businesses.
      */
-    public static final int END_TIME_MEDIUM_BUSINESS = 23;
+    public static final int END_TIME_MEDIUM_BUSINESS = 20;
     /**
      * The start time for small businesses.
      */

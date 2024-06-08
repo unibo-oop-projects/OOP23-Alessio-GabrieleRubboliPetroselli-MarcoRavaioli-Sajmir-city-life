@@ -123,7 +123,9 @@ public class TransportLineImpl implements TransportLine {
      */
     @Override
     public void incrementPersonInLine() {
+        if (personInLine < capacity) {
         personInLine++;
+        }
     }
     /**
      * Decrements the number of people in line by one.
