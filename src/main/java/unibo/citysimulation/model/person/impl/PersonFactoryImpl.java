@@ -61,9 +61,6 @@ public final class PersonFactoryImpl implements PersonFactory {
             final List<Business> eligibleBusinesses = businesses.stream()
                     .filter(business -> !business.getBusinessData().zone().equals(residenceZone))
                     .collect(Collectors.toList());
-            if (eligibleBusinesses.isEmpty()) {
-                throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
-            }
             final Business business = eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size()));
             final DynamicPerson person = createPerson(
                     "Person" + groupCounter + i,

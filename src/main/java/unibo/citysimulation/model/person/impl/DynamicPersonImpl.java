@@ -13,7 +13,7 @@ import unibo.citysimulation.utilities.ConstantAndResourceLoader;
  * Represents a dynamic person that can change state based on the current time
  * and move in order to work.
  */
-public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
+public final class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson {
     private int lastArrivingTime;
     private PersonState lastDestination;
     private boolean late;
@@ -106,7 +106,19 @@ public class DynamicPersonImpl extends StaticPersonImpl implements DynamicPerson
         this.updatePosition();
     }
 
+    /**
+     * @return the time when the person has to go to work, in seconds.
+     */
+    @Override
     public int getBusinessBegin() {
         return businessBegin;
+    }
+
+    /**
+     * @return the time when the person has to go back home, in seconds.
+     */
+    @Override
+    public int getBusinessEnd() {
+        return businessEnd;
     }
 }

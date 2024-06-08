@@ -10,7 +10,7 @@ import unibo.citysimulation.model.person.api.DynamicPerson;
 /**
  * Represents an observer for the clock model that observes people.
  */
-public class ClockObserverPerson implements ClockObserver {
+public final class ClockObserverPerson implements ClockObserver {
     private final List<List<DynamicPerson>> people;
 
     /**
