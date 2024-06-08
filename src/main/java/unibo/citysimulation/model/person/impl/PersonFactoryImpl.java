@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.Optional;
 
 /**
  * The PersonFactory class is responsible for creating instances of
