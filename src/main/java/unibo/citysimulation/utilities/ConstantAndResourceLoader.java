@@ -87,7 +87,7 @@ public final class ConstantAndResourceLoader extends ClassLoader {
     /**
      * Maximum variation in moving time.
      */
-    public static final int MAX_MOVING_TIME_VARIATION = 13;
+    public static final int MAX_MOVING_TIME_VARIATION = 12;
 
     /**
      * Number of seconds in a minute.
