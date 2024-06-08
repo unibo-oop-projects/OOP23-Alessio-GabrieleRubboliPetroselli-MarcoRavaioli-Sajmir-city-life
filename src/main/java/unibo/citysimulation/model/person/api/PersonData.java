@@ -2,7 +2,6 @@ package unibo.citysimulation.model.person.api;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.zone.Zone;
-import java.util.Optional;
 
 
 /**
@@ -13,5 +12,5 @@ import java.util.Optional;
  * @param business      the business where the person works.
  * @param residenceZone the zone where the person lives.
  */
-public record PersonData(String name, int age, Optional<Business> business, Zone residenceZone) {
+public record PersonData(String name, int age, Business business, Zone residenceZone) {
 }

@@ -33,7 +33,7 @@ class StaticPersonImplTest {
         final Business business = BusinessFactoryImpl.createRandomBusiness(zones).get();
         ZoneTableCreation.createAndAddPairs(zones, transports);
         // Simuliamo un dato di una persona per i test
-        final PersonData personData = new PersonData("Mario", 30, Optional.of(business), residenceZone);
+        final PersonData personData = new PersonData("Mario", 30, business, residenceZone);
         staticPerson = new StaticPersonImpl(personData, 100);
     }
 

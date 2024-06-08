@@ -115,14 +115,10 @@ public class StaticPersonImpl implements StaticPerson {
                 this.position = Optional.empty();
                 break;
             case WORKING:
-                personData.business().ifPresentOrElse(business -> {
-                    final Pair<Integer, Integer> businessPosition = business.getBusinessData().position();
-                    final int newX = businessPosition.getFirst() + getRandomDeviation();
-                    final int newY = businessPosition.getSecond() + getRandomDeviation();
-                    this.position = Optional.of(new Pair<>(newX, newY));
-                }, () -> {
-                    throw new IllegalStateException("No business present for the person.");
-                });
+                final Pair<Integer, Integer> businessPosition = personData.business().getBusinessData().position();
+                final int newX = businessPosition.getFirst() + getRandomDeviation();
+                final int newY = businessPosition.getSecond() + getRandomDeviation();
+                this.position = Optional.of(new Pair<>(newX, newY));
                 break;
             case AT_HOME:
                 this.position = Optional.of(homePosition);
@@ -142,17 +138,11 @@ public class StaticPersonImpl implements StaticPerson {
     }
 
     private void calculateTrip() {
-        personData.business().ifPresent(business -> {
-            if (personData.residenceZone().equals(business.getBusinessData().zone())) {
-                this.tripDuration = 0;
-            } else {
-                this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(),
-                        business.getBusinessData().zone());
-                if (this.transportLine == null) {
-                    throw new IllegalStateException("No transport line found between the given zones.");
-                }
-                tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
-            }
-        });
+        this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(),
+                personData.business().getBusinessData().zone());
+        if (this.transportLine == null) {
+            throw new IllegalStateException("No transport line found between the given zones.");
+        }
+        tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
     }
 }

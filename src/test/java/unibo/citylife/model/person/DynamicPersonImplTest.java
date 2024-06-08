@@ -1,11 +1,9 @@
 package unibo.citylife.model.person;
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.business.impl.BusinessFactoryImpl;
-import unibo.citysimulation.model.business.api.BusinessFactory;
 import unibo.citysimulation.model.person.impl.DynamicPersonImpl;
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.StaticPerson.PersonState;
-import unibo.citysimulation.model.transport.api.TransportFactory;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.transport.impl.TransportFactoryImpl;
 import unibo.citysimulation.model.zone.Zone;
@@ -37,7 +35,7 @@ class DynamicPersonImplTest {
             business = BusinessFactoryImpl.createRandomBusiness(zones).get();
         } while (business.getBusinessData().zone().equals(residenceZone));
         // Creazione di un oggetto DynamicPersonImpl da testare
-        final PersonData personData = new PersonData("alberto casa", 60, Optional.of(business), residenceZone);
+        final PersonData personData = new PersonData("alberto casa", 60, business, residenceZone);
 
         final DynamicPersonImpl person = new DynamicPersonImpl(personData, 100);
 

@@ -65,19 +65,14 @@ public final class PersonFactoryImpl implements PersonFactory {
             if (eligibleBusinesses.isEmpty()) {
                 throw new IllegalStateException("No eligible businesses found for zone: " + residenceZone.name());
             }
-            final Optional<Business> optionalBusiness = Optional.ofNullable(
-                    eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size())));
+            final Business business = eligibleBusinesses.get(random.nextInt(eligibleBusinesses.size()));
             final DynamicPerson person = createPerson(
                     "Person" + groupCounter + i,
                     random.nextInt(ConstantAndResourceLoader.MAX_RANDOM_AGE) + ConstantAndResourceLoader.MIN_AGE,
-                    optionalBusiness,
+                    business,
                     residenceZone,
                     random.nextInt(moneyMinMax.getSecond() - moneyMinMax.getFirst()) + moneyMinMax.getFirst());
-            optionalBusiness.ifPresentOrElse(
-                    business -> {
-                        business.hire(new Employee(person, business.getBusinessData()));
-                    },
-                    () -> Optional.empty());
+                business.hire(new Employee(person, business.getBusinessData()));
             people.add(person);
         }
         return people;
@@ -95,7 +90,7 @@ public final class PersonFactoryImpl implements PersonFactory {
      * @return A DynamicPerson object.
      */
     @Override
-    public DynamicPerson createPerson(final String name, final int age, final Optional<Business> business,
+    public DynamicPerson createPerson(final String name, final int age, final Business business,
             final Zone residenceZone, final int money) {
         return new DynamicPersonImpl(new PersonData(name, age, business, residenceZone), money);
     }

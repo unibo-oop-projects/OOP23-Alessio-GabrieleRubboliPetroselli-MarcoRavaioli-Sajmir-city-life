@@ -5,7 +5,6 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * A factory for a single person, a group of person for a certain zone,
@@ -48,5 +47,5 @@ public interface PersonFactory {
      *                      moment.
      * @return A DynamicPerson object.
      */
-    DynamicPerson createPerson(String name, int age, Optional<Business> business, Zone residenceZone, int money);
+    DynamicPerson createPerson(String name, int age, Business business, Zone residenceZone, int money);
 }
