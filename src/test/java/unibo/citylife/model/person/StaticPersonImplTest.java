@@ -34,7 +34,7 @@ class StaticPersonImplTest {
         Business business;
         do {
             business = BusinessFactoryImpl.createBusiness(BusinessType.BIG, zones.get(random.nextInt(zones.size()))).get();
-        } while (business.getBusinessData().zone() == residenceZone);
+        } while (business.getBusinessData().zone().equals(residenceZone));
         ZoneTableCreation.createAndAddPairs(zones, transports);
         // Simuliamo un dato di una persona per i test
         final PersonData personData = new PersonData("Mario", 30, business, residenceZone);
