@@ -191,7 +191,11 @@ public class StaticPersonImpl implements StaticPerson {
     }
 
     public void hirePerson(final Optional<Business> business) {
-        this.newBusiness = business;
+        if (business.isEmpty()) {
+            this.newBusiness = Optional.empty();
+        } else {
+            this.newBusiness = Optional.of(business.get());
+        }
         this.newHire = true;
     }
 

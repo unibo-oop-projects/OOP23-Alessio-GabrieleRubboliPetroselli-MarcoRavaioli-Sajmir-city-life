@@ -74,7 +74,6 @@ public final class PersonFactoryImpl implements PersonFactory {
                 if (business.hire(new Employee(person, business.getBusinessData())) 
                 && !business.getBusinessData().zone().equals(person.getPersonData().residenceZone())) {
                     person.hirePerson(Optional.of(business));
-                    person.setBusiness();
                     hired = true;
                     break;
                 }
