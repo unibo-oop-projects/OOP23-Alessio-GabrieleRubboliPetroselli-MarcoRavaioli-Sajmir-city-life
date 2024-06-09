@@ -78,8 +78,7 @@ final class InputModelTest {
      * @return the expected number of people
      */
     private static int calculateExpectedPeople(final int percentage) {
-        int range = ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE;
-        return (percentage * range / 100) + ConstantAndResourceLoader.MIN_PEOPLE;
+        final int range = ConstantAndResourceLoader.MAX_PEOPLE - ConstantAndResourceLoader.MIN_PEOPLE;
+        return percentage * range / 100 + ConstantAndResourceLoader.MIN_PEOPLE;
     }
 }
-

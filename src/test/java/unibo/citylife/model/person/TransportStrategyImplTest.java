@@ -26,7 +26,7 @@ class TransportStrategyImplTest {
 
     @BeforeEach
     public void setUp() {
-        TransportFactory transportFactory = new TransportFactoryImpl();
+        final TransportFactory transportFactory = new TransportFactoryImpl();
         final List<Zone> zones = ZoneCreation.createZonesFromFile();
         allLines = transportFactory.createTransportsFromFile(zones);
         ZoneTableCreation.createAndAddPairs(zones, allLines);

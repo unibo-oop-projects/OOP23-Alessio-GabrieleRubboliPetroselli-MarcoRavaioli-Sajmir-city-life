@@ -203,7 +203,7 @@ void testSetMaxCoordinates() {
                 try {
                     Files.deleteIfExists(corruptedFile.toPath());
                 } catch (IOException e) {
-                    // ingored
+                    fail("Failed to delete corrupted image file", e);
                 }
             }
         }
