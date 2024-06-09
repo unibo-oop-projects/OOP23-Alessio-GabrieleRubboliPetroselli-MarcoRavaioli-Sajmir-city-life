@@ -17,7 +17,6 @@ import unibo.citysimulation.utilities.Pair;
 import java.util.Optional;
 import java.util.Random;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,11 +34,11 @@ class StaticPersonImplTest {
         Business business;
         do {
             business = BusinessFactoryImpl.createBusiness(BusinessType.BIG, zones.get(random.nextInt(zones.size()))).get();
-        } while (business.getBusinessData().zone() == residenceZone);
+        } while (business.getBusinessData().zone().equals(residenceZone));
         ZoneTableCreation.createAndAddPairs(zones, transports);
         // Simuliamo un dato di una persona per i test
-        final PersonData personData = new PersonData("Mario", 30, residenceZone);
-        staticPerson = new StaticPersonImpl(personData, 100.00, Optional.of(business));
+        final PersonData personData = new PersonData("Mario", 30, business, residenceZone);
+        staticPerson = new StaticPersonImpl(personData, 100);
     }
 
     @Test
@@ -60,7 +59,7 @@ class StaticPersonImplTest {
 
     @Test
     void testGetMoney() {
-        assertEquals(100.00, staticPerson.getMoney());
+        assertEquals(100, staticPerson.getMoney());
     }
 
     @Test

@@ -1,6 +1,5 @@
 package unibo.citysimulation.model.business.impl;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -17,8 +16,8 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
 
     private final EmploymentOfficeData employmentOffice;
     private final Random random;
+    private static final double FIRING_RATE = 0.1;
     private static final int ZERO = 0;
-    private static final LocalTime TIME_ZERO = LocalTime.of(ZERO, ZERO);
 
     /**
      * Constructs an EmploymentOfficeManager with the given employment office.
@@ -37,11 +36,24 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
      * people list and fires the employee from their business.
      * 
      * @param business The business for which to handle employee firing.
+     * @param hiredCount The number of people hired previously.
      */
     @Override
-    public final void handleEmployeeFiring(final Business business) {
+    public final void handleEmployeeFiring(final Business business, final int hiredCount) {
         final List<Employee> employeesToFire = getEmployeesToFire(business);
-        fireEmployees(business, employeesToFire);
+        int maxToFire;
+        if (hiredCount > 0) {
+            maxToFire = Math.min(employeesToFire.size(), hiredCount - 1);
+        } else {
+            maxToFire = Math.max(1, (int) Math.floor(business.getBusinessData().employees().size() * FIRING_RATE));
+        }
+        if (maxToFire > 0) {
+            final int numberToFire = random.nextInt(maxToFire) + 1;
+            final List<Employee> selectedToFire = employeesToFire.stream()
+                .limit(numberToFire)
+                .collect(Collectors.toList());
+            fireEmployees(business, selectedToFire);
+        }
     }
     /**
      * Handles the hiring of employees for the specified business.
@@ -119,12 +131,12 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
                 final Employee employee = new Employee(person, business.getBusinessData());
                 business.hire(employee);
                 employmentOffice.disoccupied().remove(person);
-                person.setBusiness(Optional.of(business));
             });
             return people.size();
         }
         return 0;
     }
+
     /**
      * Retrieves a list of employees that should be fired from the specified business.
      * 
@@ -147,9 +159,6 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
         employeesToFire.forEach(employee -> {
             employmentOffice.disoccupied().add(employee.person());
             business.fire(employee);
-            employee.person().setBusiness(Optional.empty());
-            employee.person().setBusinessBegin(TIME_ZERO);
-            employee.person().setBusinessEnd(TIME_ZERO);
         });
     }
     /**
