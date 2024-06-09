@@ -1,7 +1,6 @@
 package unibo.citysimulation.model.business.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -63,7 +62,7 @@ public final class BusinessFactoryImpl {
      * @param numberOfPeople The number of people.
      * @return A collection of created Business objects.
      */
-    public static Collection<Business> createMultipleBusiness(final List<Zone> zones, final int numberOfPeople) {
+    public static List<Business> createMultipleBusiness(final List<Zone> zones, final int numberOfPeople) {
         final List<Business> businesses = new ArrayList<>();
         for (int i = 0; i < numberOfPeople / BusinessConfig.BUSINESS_PERCENTAGE; i++) {
             createRandomBusiness(zones).ifPresent(businesses::add);

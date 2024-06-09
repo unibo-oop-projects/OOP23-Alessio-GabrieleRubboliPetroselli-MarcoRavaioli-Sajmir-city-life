@@ -47,7 +47,7 @@ import java.util.Collections;
 public final class CityModelImpl implements CityModel {
     private final List<Zone> zones;
     private List<TransportLine> transports;
-    private final List<Business> businesses;
+    private List<Business> businesses;
     private List<List<DynamicPerson>> people;
     private final MapModelImpl mapModel;
     private final ClockModel clockModel;
@@ -113,7 +113,7 @@ public final class CityModelImpl implements CityModel {
         // Create zone table
         ZoneTableCreation.createAndAddPairs(zones, transports);
 
-        businesses.addAll(BusinessFactoryImpl.createMultipleBusiness(zones, inputModel.getNumberOfPeople()));
+        businesses = BusinessFactoryImpl.createMultipleBusiness(zones, inputModel.getNumberOfPeople());
 
         // Create people
         this.people = new ArrayList<>();
@@ -382,17 +382,5 @@ public final class CityModelImpl implements CityModel {
         return (int) businesses.stream()
                 .filter(b -> b.getBusinessData().zone().name().equals(zoneName))
                 .count();
-    }
-
-    /**
-     * Removes a specified number of businesses from the city model.
-     *
-     * @param numberOfBusinesses the number of businesses to remove
-     */
-    @Override
-    public void removeBusinesses(final int numberOfBusinesses) {
-        for (int i = 0; i < numberOfBusinesses -1; i++) {
-            businesses.remove(businesses.size());
-        }
     }
 }

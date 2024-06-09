@@ -140,11 +140,4 @@ public interface CityModel {
      * @return The number of businesses in the zone.
      */
     int getBusinessesInZone(String zoneName);
-
-    /**
-     * Removes the specified number of businesses from the city.
-     *
-     * @param numberOfBusinesses The number of businesses to remove.
-     */
-    void removeBusinesses(int numberOfBusinesses);
 }
