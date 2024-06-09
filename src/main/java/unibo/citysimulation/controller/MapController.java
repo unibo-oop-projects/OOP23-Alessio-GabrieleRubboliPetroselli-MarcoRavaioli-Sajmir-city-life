@@ -12,8 +12,9 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.map.MapPanel;
+import unibo.citysimulation.view.sidepanelsfffff.InfoPanel;
+
 import java.util.Objects;
-import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 /**
  * Controller class responsible for handling mouse events on the map and updating the view based on the model state.

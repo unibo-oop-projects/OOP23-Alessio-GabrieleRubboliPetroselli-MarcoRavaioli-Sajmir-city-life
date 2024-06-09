@@ -1,4 +1,4 @@
-package unibo.citysimulation.view.sidepanels.clock;
+package unibo.citysimulation.view.sidepanelsfffff.clock;
 
 import java.awt.event.ActionListener;
 /**

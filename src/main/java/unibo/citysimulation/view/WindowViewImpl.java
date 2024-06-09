@@ -3,12 +3,12 @@ package unibo.citysimulation.view;
 import unibo.citysimulation.utilities.ConstantAndResourceLoader;
 import unibo.citysimulation.view.map.MapPanel;
 import unibo.citysimulation.view.map.MapPanelImpl;
-import unibo.citysimulation.view.sidepanels.clock.ClockPanel;
-import unibo.citysimulation.view.sidepanels.clock.ClockPanelImpl;
-import unibo.citysimulation.view.sidepanels.InfoPanel;
-import unibo.citysimulation.view.sidepanels.InputPanel;
-import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanel;
-import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanelImpl;
+import unibo.citysimulation.view.sidepanelsfffff.InfoPanel;
+import unibo.citysimulation.view.sidepanelsfffff.InputPanel;
+import unibo.citysimulation.view.sidepanelsfffff.clock.ClockPanel;
+import unibo.citysimulation.view.sidepanelsfffff.clock.ClockPanelImpl;
+import unibo.citysimulation.view.sidepanelsfffff.graphics.GraphicsPanel;
+import unibo.citysimulation.view.sidepanelsfffff.graphics.GraphicsPanelImpl;
 
 import java.util.List;
 import javax.swing.JFrame;

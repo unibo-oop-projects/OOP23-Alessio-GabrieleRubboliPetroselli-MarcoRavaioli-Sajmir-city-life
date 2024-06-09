@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
-import unibo.citysimulation.view.sidepanels.InputPanel;
-import unibo.citysimulation.view.sidepanels.clock.ClockPanel;
+import unibo.citysimulation.view.sidepanelsfffff.InputPanel;
+import unibo.citysimulation.view.sidepanelsfffff.clock.ClockPanel;
 
 /**
 * Controller class responsible for handling user input from the input panel.
