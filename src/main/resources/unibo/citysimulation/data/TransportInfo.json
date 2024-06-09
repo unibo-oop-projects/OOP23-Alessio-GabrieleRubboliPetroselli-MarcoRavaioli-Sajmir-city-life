@@ -1,0 +1,65 @@
+[
+    {
+        "name": "Ring Road",
+        "capacity": 50,
+        "duration": 40,
+        "zone": {
+            "a": 0,
+            "b": 1
+        }
+    },
+    {
+        "name": "Circular Road",
+        "capacity": 40,
+        "duration": 20,
+        "zone": {
+            "a": 0,
+            "b": 2
+        }
+    },
+    {
+        "name": "State Road 1",
+        "capacity": 30,
+        "duration": 10,
+        "zone": {
+            "a": 0,
+            "b": 3
+        }
+    },
+    {
+        "name": "State Road 2",
+        "capacity": 45,
+        "duration": 15,
+        "zone": {
+            "a": 0,
+            "b": 4
+        }
+    },
+    {
+        "name": "State Road 3",
+        "capacity": 55,
+        "duration": 20,
+        "zone": {
+            "a": 1,
+            "b": 4
+        }
+    },
+    {
+        "name": "State Road 7",
+        "capacity": 30,
+        "duration": 30,
+        "zone": {
+            "a": 2,
+            "b": 3
+        }
+    },
+    {
+        "name": "State Road 10",
+        "capacity": 35,
+        "duration": 25,
+        "zone": {
+            "a": 3,
+            "b": 4
+        }
+    }
+]

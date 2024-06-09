@@ -1,20 +1,22 @@
 package unibo.citysimulation;
-import unibo.citysimulation.view.NewSimulationView;
+
+import unibo.citysimulation.controller.WindowController;
+import unibo.citysimulation.model.CityModelImpl;
+import unibo.citysimulation.model.CityModel;
+import unibo.citysimulation.view.WindowView;
+import unibo.citysimulation.view.WindowViewImpl;
 
 /**
- * The main launcher of the Java application, made to build the JAR.
+ * The main launcher of the Java application, used to build the JAR.
  */
 public final class SimulationLauncher {
-    
-    private SimulationLauncher() {
-    }
 
-        /**
-     * The main method.
-     *
-     * @param args No arguments should be passed to this program.
+    /**
+     * Starts the simulation by initializing the model, view, and controller.
      */
-    public static void main(final String[] args) {
-        new NewSimulationView();
+    public void start() {
+        final CityModel cityModel = new CityModelImpl();
+        final WindowView windowView = new WindowViewImpl(cityModel.getFrameWidth(), cityModel.getFrameHeight());
+        new WindowController(windowView, cityModel);
     }
 }

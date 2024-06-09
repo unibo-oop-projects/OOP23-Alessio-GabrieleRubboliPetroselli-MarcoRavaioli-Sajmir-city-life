@@ -1,67 +1,68 @@
 package unibo.citysimulation.view.map;
 
-import unibo.citysimulation.view.StyledPanel;
-import unibo.citysimulation.view.sidePanels.InfoPanel;
-import unibo.citysimulation.controller.MapController;
-import unibo.citysimulation.model.MapModel;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import javax.swing.*;
+import java.util.List;
+import java.util.Map;
 
-public class MapPanel extends StyledPanel {
-    private MapController mapController;
-    private BufferedImage mapImage;
+import unibo.citysimulation.utilities.Pair;
 
-    public MapPanel(MapModel mapModel, InfoPanel infoPanel) {
-        super(bgColor); // Chiama il costruttore di StyledPanel per applicare lo stile al pannello
-        this.mapController = new MapController(mapModel, infoPanel);
+/**
+ * Panel for displaying the map.
+ */
+public interface MapPanel {
 
-        try {
-            // Carica l'immagine usando un percorso relativo al classpath
-            URL imageUrl = getClass().getResource("/unibo/citysimulation/mapImage.jpeg");
-            if (imageUrl != null) {
-                mapImage = ImageIO.read(imageUrl);
-            } else {
-                throw new IOException("Image file not found");
-            }
-        } catch (IOException e) {
-            handleImageLoadError(e);
-        }
+        /**
+         * Gets the width of the map panel.
+         *
+         * @return the width of the map panel
+         */
+        int getWidth();
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
-                mapController.handleMouseclick(x, y);
-            }
-        });
+        /**
+         * Gets the height of the map panel.
+         *
+         * @return the height of the map panel
+         */
+        int getHeight();
 
+        /**
+         * Adds a mouse listener to the map panel.
+         *
+         * @param listener the mouse listener to add
+         */
+        void addMouseListener(MouseListener listener);
 
-    }
+        /**
+         * Sets the lines information for the map.
+         *
+         * @param points the coordinates of the transport lines
+         * @param names  the names of the transport lines
+         */
+        void setLinesInfo(List<Pair<Pair<Integer, Integer>, Pair<Integer, Integer>>> points,
+                        List<String> names);
 
-    private void handleImageLoadError(IOException e) {
-        // Gestisci l'errore in modo significativo, ad esempio mostrando un messaggio di errore all'utente
-        JOptionPane.showMessageDialog(this, "Error loading map image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        /**
+         * Sets the colors of the transport lines based on congestion.
+         *
+         * @param colors the colors of the transport lines
+         */
+        void setLinesColor(List<Color> colors);
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // Disegna l'immagine sulla JPanel
-        if (mapImage != null) {
-            g.drawImage(mapImage, 0, 0, getWidth(), getHeight(), this);
-        }
-    }
+        /**
+         * Sets the entities to be displayed on the map.
+         *
+         * @param peopleMap      the map of people with their coordinates and colors
+         * @param businessPoints the map of businesses with their coordinates
+         */
+        void setEntities(Map<String, Pair<Pair<Integer, Integer>, Color>> peopleMap,
+                        List<Pair<Integer, Integer>> businessPoints);
 
-    @Override
-    public Dimension getPreferredSize() {
-        // Imposta le dimensioni preferite della JPanel in base alle dimensioni dell'immagine
-        return new Dimension(mapImage.getWidth(), mapImage.getHeight());
-    }
+        /**
+         * Sets the image to be displayed on the map panel.
+         *
+         * @param image The BufferedImage to set.
+         */
+        void setImage(BufferedImage image);
 }
