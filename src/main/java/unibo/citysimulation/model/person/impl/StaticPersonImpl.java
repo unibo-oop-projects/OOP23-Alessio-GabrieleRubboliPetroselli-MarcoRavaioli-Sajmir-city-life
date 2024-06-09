@@ -25,6 +25,7 @@ public class StaticPersonImpl implements StaticPerson {
     private int tripDuration;
     private static final Random RANDOM = new Random();
     private Optional<Business> business;
+    public Boolean travel = false;
 
     /**
      * Constructs a new static person with the given person data and money.
@@ -182,7 +183,9 @@ public class StaticPersonImpl implements StaticPerson {
      */
     @Override
     public final void setBusiness(final Optional<Business> business) {
-        this.business = business;
-        calculateTrip();
+        if(!travel){
+            this.business = business;
+            calculateTrip();
+        }
     }
 }

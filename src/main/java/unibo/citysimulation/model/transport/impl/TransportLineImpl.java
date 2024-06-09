@@ -14,6 +14,8 @@ public class TransportLineImpl implements TransportLine {
     private int personInLine;
     private final int duration;
     private final Pair<Zone, Zone> link;
+    private static int count_increment = 0;
+    private static int count_decrement = 0;
     /**
      * Constructor for TransportLineImpl.
      * @param name
@@ -95,6 +97,7 @@ public class TransportLineImpl implements TransportLine {
      */
     @Override
     public double getCongestion() {
+        //System.out.println("Congestion: " + (double) personInLine * 100 / capacity);
         return (double) personInLine * 100 / capacity;
     }
     /**
@@ -123,6 +126,7 @@ public class TransportLineImpl implements TransportLine {
      */
     @Override
     public void incrementPersonInLine() {
+        //System.out.println("Incrementing person in line " + name + " " + count_increment++);
         personInLine++;
     }
     /**
@@ -131,8 +135,10 @@ public class TransportLineImpl implements TransportLine {
      */
     @Override
     public void decrementPersonInLine() {
-        if (personInLine > 0) {
-        personInLine--;
+        //System.out.println("Decrementing person");
+        if (personInLine > 0){
+            //System.out.println("Decrementing person in line " + name + " " + count_decrement++);
+            personInLine--;
         }
     }
 }
