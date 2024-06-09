@@ -86,9 +86,7 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
                 break;
             }
         }
-    
-        System.out.println("Total hired count: " + hiredCount);
-        return hiredCount;
+            return hiredCount;
     }
 
     /**
@@ -119,23 +117,15 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
      * @return The list of people to be hired.
      */
     private Optional<List<DynamicPerson>> getPeopleToHire(final Business business) {
-        final int availableSpots = business.getBusinessData().maxEmployees() - business.getBusinessData().employees().size();
-        System.out.println("Available spots: " + availableSpots);
-    
+        final int availableSpots = business.getBusinessData().maxEmployees() - business.getBusinessData().employees().size();    
         if (availableSpots > 0) {
-            final List<DynamicPerson> disoccupiedPeople = employmentOffice.disoccupied();
-            System.out.println("Disoccupied people before filtering: " + disoccupiedPeople.size());
-    
+            final List<DynamicPerson> disoccupiedPeople = employmentOffice.disoccupied();    
             final List<DynamicPerson> eligiblePeople = disoccupiedPeople.stream()
                 .filter(person -> !person.getPersonData().residenceZone().equals(business.getBusinessData().zone()))
-                .collect(Collectors.toList());
-    
-            System.out.println("Eligible people count: " + eligiblePeople.size());
-    
+                .collect(Collectors.toList());    
             final int maxPeopleToHire = Math.min(availableSpots, eligiblePeople.size());
             if (maxPeopleToHire > 0) {
                 final int peopleToHireCount = random.nextInt(maxPeopleToHire) + 1;
-                System.out.println("People to hire count: " + peopleToHireCount);
                 return Optional.of(eligiblePeople.stream()
                     .limit(peopleToHireCount)
                     .collect(Collectors.toList()));
@@ -154,9 +144,10 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
     private int hirePeople(final Business business, final List<DynamicPerson> peopleToHire) {
         peopleToHire.forEach(person -> {
             final Employee employee = new Employee(person, business.getBusinessData());
-            business.hire(employee);
+            if(business.hire(employee)){
             employmentOffice.disoccupied().remove(person);
-            person.setBusiness(Optional.of(business));
+            person.setBusiness(Optional.of(business)); 
+            }    
         });    
         return peopleToHire.size();
     }
