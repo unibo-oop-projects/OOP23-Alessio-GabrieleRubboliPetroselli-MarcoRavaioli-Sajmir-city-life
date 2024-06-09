@@ -63,21 +63,3 @@ public final class ZoneTable {
                              .sum();
     }
 }
-
-/*
- * zoneTable ci da i collegamenti nodo - arco
- * 
- * una volta istanziati trasporti e zone PathFinder calcola la tabella dei
- * percorsi da una zona a tutte le altre
- * 
- * la tabella si applica ad ogni zona
- * 
- * INIZIA LA SIMULAZIONE
- * 
- * person1234 deve andare da ZoneA a ZoneZ interroga la lista della zona in cui
- * è
- * 
- * persona1234 scorre cercando il primo percorso con tutte le linee libere
- * 
- * se non trova linee riprova il ciclo di clock successivo
- */
