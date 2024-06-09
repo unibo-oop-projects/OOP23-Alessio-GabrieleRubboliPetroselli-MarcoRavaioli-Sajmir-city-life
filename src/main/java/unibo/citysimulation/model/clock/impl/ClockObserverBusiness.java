@@ -44,10 +44,8 @@ public class ClockObserverBusiness implements ClockObserver {
         for (final Business business : businesses) {
             business.checkEmployeeDelays(currentTime);
             if (currentTime.equals(OP_TIME)) {
-                System.out.println(business.getBusinessData().employees().size());
                 employmentManager.handleEmployees(business);
                 businessHiredCountMap.put(business, business.getBusinessData().employees().size());
-                System.out.println(business.getBusinessData().employees().size());
             }
             if (currentTime.equals(CL_TIME)) {
                 employmentManager.handleEmployeePay(business);
