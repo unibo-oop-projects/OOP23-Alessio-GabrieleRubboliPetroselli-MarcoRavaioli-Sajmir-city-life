@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
-import unibo.citysimulation.model.map.impl.MapModelImpl;
+import unibo.citysimulation.model.map.api.MapModel;
 import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
@@ -22,7 +22,7 @@ import unibo.citysimulation.view.sidepanels.InfoPanel;
 public final class MapController implements MouseListener, ClockObserver {
     private final InfoPanel infoPanel;
     private final MapPanel mapPanel;
-    private final MapModelImpl mapModel;
+    private final MapModel mapModel;
     private final CityModel cityModel;
 
     /**

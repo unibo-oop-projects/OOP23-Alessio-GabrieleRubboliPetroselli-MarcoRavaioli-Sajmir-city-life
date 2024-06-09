@@ -6,8 +6,8 @@ import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.CityModelImpl;
 import unibo.citysimulation.model.InputModel;
 import unibo.citysimulation.model.clock.api.ClockModel;
-import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
-import unibo.citysimulation.model.map.impl.MapModelImpl;
+import unibo.citysimulation.model.graphics.api.GraphicsModel;
+import unibo.citysimulation.model.map.api.MapModel;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.zone.Boundary;
 import unibo.citysimulation.model.zone.Zone;
@@ -51,7 +51,7 @@ class CityModelTest {
 
     @Test
     void testGetMapModel() {
-        final MapModelImpl mapModel = cityModel.getMapModel();
+        final MapModel mapModel = cityModel.getMapModel();
         assertNotNull(mapModel);
     }
 
@@ -69,7 +69,7 @@ class CityModelTest {
 
     @Test
     void testGetGraphicsModel() {
-        final GraphicsModelImpl graphicsModel = cityModel.getGraphicsModel();
+        final GraphicsModel graphicsModel = cityModel.getGraphicsModel();
         assertNotNull(graphicsModel);
     }
 

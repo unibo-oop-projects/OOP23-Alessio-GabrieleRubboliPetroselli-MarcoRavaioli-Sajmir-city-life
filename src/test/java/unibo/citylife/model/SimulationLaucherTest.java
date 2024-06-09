@@ -1,9 +1,7 @@
 package unibo.citylife.model;
 
-/* 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,13 +16,13 @@ import javax.swing.JPanel;
  * It verifies that the simulation starts when the start button is pressed.
  * 
  * @ExtendWith(MockitoExtension.class) is used to initialize mocks and inject them.
- *//*
+ */
 @ExtendWith(MockitoExtension.class)
 public class SimulationLaucherTest {
     private WelcomeScreen welcomeScreen;
     /**
      * This method is executed before each test. It initializes the WelcomeScreen.
-     *//*
+     */
     @BeforeEach
     public void setUp() {
         welcomeScreen = new WelcomeScreen();
@@ -40,7 +38,7 @@ public class SimulationLaucherTest {
      * This test verifies that the simulation starts when the start button is pressed.
      * It first finds the start button in the WelcomeScreen, then simulates a button click,
      * and finally asserts that the WelcomeScreen is no longer visible.
-     *//*
+     */
     @Test
     public void testSimulationStartsWhenStartButtonPressed() {
         // Arrange
@@ -64,5 +62,3 @@ public class SimulationLaucherTest {
         assertFalse(welcomeScreen.isVisible(), "Welcome screen should be closed");
     }
 }
-
-*/

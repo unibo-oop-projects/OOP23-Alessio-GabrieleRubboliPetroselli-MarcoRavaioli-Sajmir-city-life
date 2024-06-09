@@ -2,8 +2,8 @@ package unibo.citysimulation.model;
 
 import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.clock.api.ClockModel;
-import unibo.citysimulation.model.graphics.impl.GraphicsModelImpl;
-import unibo.citysimulation.model.map.impl.MapModelImpl;
+import unibo.citysimulation.model.graphics.api.GraphicsModel;
+import unibo.citysimulation.model.map.api.MapModel;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.transport.api.TransportLine;
 import unibo.citysimulation.model.zone.Zone;
@@ -61,7 +61,7 @@ public interface CityModel {
      * get the map model.
      * @return the map model.
      */
-    MapModelImpl getMapModel();
+    MapModel getMapModel();
     /**
      * get the clock model.
      * @return the clock model.
@@ -76,7 +76,7 @@ public interface CityModel {
      * get the graphics model.
      * @return the graphics model.
      */
-    GraphicsModelImpl getGraphicsModel();
+    GraphicsModel getGraphicsModel();
     /**
      * get the zones.
      * @return the list of zones.
