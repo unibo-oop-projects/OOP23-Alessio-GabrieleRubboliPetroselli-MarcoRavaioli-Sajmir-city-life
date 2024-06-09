@@ -29,7 +29,6 @@ public class InputModel {
         int scaledPeople = numberOfPeople * range;
         scaledPeople = scaledPeople / 100;
         this.numberOfPeople = scaledPeople + ConstantAndResourceLoader.MIN_PEOPLE;
-        //System.out.println(numberOfPeople);
     }
 
     /**

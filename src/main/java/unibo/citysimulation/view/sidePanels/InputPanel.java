@@ -54,12 +54,12 @@ public class InputPanel extends StyledPanel {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridwidth = 1; // Resets to one column for the subsequent elements
         // Create and add slider for the number of people
-        peopleSlider = createSlider("Number of People %", 0, 100);
+        peopleSlider = createSlider("Number of People %", 10, 100);
         gbc.gridy = 1;
         gbc.weighty = 0.5;
         add(peopleSlider, gbc);
         // Create and add slider for the transport line capacities
-        capacitySlider = createSlider("Transports' Capacity", 0, 100);
+        capacitySlider = createSlider("Transports' Capacity", 10, 100);
         gbc.gridy = 3;
         add(capacitySlider, gbc);
         // Create and add slider for the general wealth of people
