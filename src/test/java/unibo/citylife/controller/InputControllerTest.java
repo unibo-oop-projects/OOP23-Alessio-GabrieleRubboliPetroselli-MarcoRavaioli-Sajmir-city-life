@@ -21,13 +21,12 @@ import static org.mockito.Mockito.when;
 /**
 * This class tests the InputController.
 */
-public class InputControllerTest {
+class InputControllerTest {
     private CityModel cityModel;
     private InputModel inputModel;
     private InputPanel inputPanel;
     private ClockPanel clockPanel;
     private MapModel mapModel;
-    private ClockModel clockModel;
     private static final int CAPACITY_SLIDER_VALUE = 20;
     private static final int PEOPLE_SLIDER_VALUE = 10;
  
@@ -35,11 +34,12 @@ public class InputControllerTest {
      * This method sets up the test environment.
      */
     @BeforeEach
-    public void setup() {
+    public void setupTest() {
         cityModel = mock(CityModel.class);
         inputModel = mock(InputModel.class);
         inputPanel = mock(InputPanel.class);
         clockPanel = mock(ClockPanel.class);
+        ClockModel clockModel;
         clockModel = mock(ClockModel.class);
         mapModel = mock(MapModel.class); // Change the type to MapModelImpl
         when(cityModel.getClockModel()).thenReturn(clockModel);
@@ -51,14 +51,14 @@ public class InputControllerTest {
      * This test verifies the action performed when the start button is clicked.
      */
     @Test
-    public void testStartButtonActionPerformed() {
+    void testStartButtonActionPerformed() {
         // Arrange
         when(inputPanel.getPeopleSliderValue()).thenReturn(PEOPLE_SLIDER_VALUE);
         when(inputPanel.getCapacitySliderValue()).thenReturn(CAPACITY_SLIDER_VALUE);
         // Act
-        ArgumentCaptor<ActionListener> captor = ArgumentCaptor.forClass(ActionListener.class);
+        final ArgumentCaptor<ActionListener> captor = ArgumentCaptor.forClass(ActionListener.class);
         verify(inputPanel).addStartButtonListener(captor.capture());
-        ActionListener startButtonListener = captor.getValue();
+        final ActionListener startButtonListener = captor.getValue();
         startButtonListener.actionPerformed(mock(ActionEvent.class));
         // Assert
         verify(inputModel).setNumberOfPeople(PEOPLE_SLIDER_VALUE);
@@ -74,11 +74,11 @@ public class InputControllerTest {
      * This test verifies that the simulation stops when the stop button is pressed.
      */
     @Test
-    public void testStopButtonActionPerformed() {
+    void testStopButtonActionPerformed() {
         // Arrange
-        ArgumentCaptor<ActionListener> captor = ArgumentCaptor.forClass(ActionListener.class);
+        final ArgumentCaptor<ActionListener> captor = ArgumentCaptor.forClass(ActionListener.class);
         verify(inputPanel).addStopButtonListener(captor.capture());
-        ActionListener stopButtonListener = captor.getValue();
+        final ActionListener stopButtonListener = captor.getValue();
         // Act
         stopButtonListener.actionPerformed(mock(ActionEvent.class));
         // Assert

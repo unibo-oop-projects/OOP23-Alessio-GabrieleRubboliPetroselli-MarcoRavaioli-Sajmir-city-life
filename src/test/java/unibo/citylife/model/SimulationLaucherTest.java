@@ -20,20 +20,20 @@ import javax.swing.JPanel;
  * @ExtendWith(MockitoExtension.class) is used to initialize mocks and inject them.
  */
 @ExtendWith(MockitoExtension.class)
-public class SimulationLaucherTest {
+class SimulationLaucherTest {
     private WelcomeScreen welcomeScreen;
     /**
      * This method is executed before each test. It initializes the WelcomeScreen.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         welcomeScreen = new WelcomeScreen();
     }
     /**
      * This method is executed after each test. It disposes the WelcomeScreen.
      */
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         welcomeScreen.dispose();
     }
      /**
@@ -42,14 +42,14 @@ public class SimulationLaucherTest {
      * and finally asserts that the WelcomeScreen is no longer visible.
      */
     @Test
-    public void testSimulationStartsWhenStartButtonPressed() {
+    void testSimulationStartsWhenStartButtonPressed() {
         // Arrange
         JButton startButton = null;
-        for (Component component : welcomeScreen.getContentPane().getComponents()) {
+        for (final Component component : welcomeScreen.getContentPane().getComponents()) {
             if (component instanceof JPanel) {
-                JPanel buttonPanel = (JPanel) component;
-                for (Component buttonComponent : buttonPanel.getComponents()) {
-                    if (buttonComponent instanceof JButton && ((JButton) buttonComponent).getText().equals("START")) {
+                final JPanel buttonPanel = (JPanel) component;
+                for (final Component buttonComponent : buttonPanel.getComponents()) {
+                    if (buttonComponent instanceof JButton && "START".equals(((JButton) buttonComponent).getText())) {
                         startButton = (JButton) buttonComponent;
                         break;
                     }
