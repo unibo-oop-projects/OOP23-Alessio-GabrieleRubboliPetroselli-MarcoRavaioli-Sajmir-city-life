@@ -38,51 +38,51 @@ class CityModelTest {
 
     @Test
     void testIsPositionInZone() {
-        Pair<Integer, Integer> position = new Pair<>(TEST_ZONE_X, TEST_ZONE_Y);
-        Zone zone = new Zone("prova", 0, 0, position, position, new Boundary(0, 0, 10, 10));
+        final Pair<Integer, Integer> position = new Pair<>(TEST_ZONE_X, TEST_ZONE_Y);
+        final Zone zone = new Zone("prova", 0, 0, position, position, new Boundary(0, 0, 10, 10));
         assertTrue(cityModel.isPositionInZone(position, zone));
     }
     @Test
     void testGetNumberOfDirectLinesFromZone() {
-        Zone zone = new Zone("test", 0, 0, new Pair<>(1, 10), new Pair<>(1, 100), new Boundary(0, 0, 10, 10));
-        int lines = cityModel.getNumberOfDirectLinesFromZone(zone);
+        final Zone zone = new Zone("test", 0, 0, new Pair<>(1, 10), new Pair<>(1, 100), new Boundary(0, 0, 10, 10));
+        final int lines = cityModel.getNumberOfDirectLinesFromZone(zone);
         assertTrue(lines >= 0);
     }
 
     @Test
     void testGetMapModel() {
-        MapModelImpl mapModel = cityModel.getMapModel();
+        final MapModelImpl mapModel = cityModel.getMapModel();
         assertNotNull(mapModel);
     }
 
     @Test
     void testGetClockModel() {
-        ClockModel clockModel = cityModel.getClockModel();
+        final ClockModel clockModel = cityModel.getClockModel();
         assertNotNull(clockModel);
     }
 
     @Test
     void testGetInputModel() {
-        InputModel inputModel = cityModel.getInputModel();
+        final InputModel inputModel = cityModel.getInputModel();
         assertNotNull(inputModel);
     }
 
     @Test
     void testGetGraphicsModel() {
-        GraphicsModelImpl graphicsModel = cityModel.getGraphicsModel();
+        final GraphicsModelImpl graphicsModel = cityModel.getGraphicsModel();
         assertNotNull(graphicsModel);
     }
 
     @Test
     void testGetZones() {
-        List<Zone> zones = cityModel.getZones();
+        final List<Zone> zones = cityModel.getZones();
         assertNotNull(zones);
         assertFalse(zones.isEmpty());
     }
 
     @Test
     void testGetTransportLines() {
-        List<TransportLine> transportLines = cityModel.getTransportLines();
+        final List<TransportLine> transportLines = cityModel.getTransportLines();
         assertNotNull(transportLines);
         assertFalse(transportLines.isEmpty());
     }
@@ -100,25 +100,25 @@ class CityModelTest {
 
     @Test
     void testGetFrameWidth() {
-        int width = cityModel.getFrameWidth();
+        final int width = cityModel.getFrameWidth();
         assertTrue(width > 0);
     }
 
     @Test
     void testGetFrameHeight() {
-        int height = cityModel.getFrameHeight();
+        final int height = cityModel.getFrameHeight();
         assertTrue(height > 0);
     }
 
     @Test
     void testGetPeopleInZone() {
-        Optional<Integer> peopleInZone = cityModel.getPeopleInZone("Zone1");
+        final Optional<Integer> peopleInZone = cityModel.getPeopleInZone("Zone1");
         assertTrue(peopleInZone.isPresent());
     }
 
     @Test
     void testGetBusinessesInZone() {
-        int businessesInZone = cityModel.getBusinessesInZone("Zone1");
+        final int businessesInZone = cityModel.getBusinessesInZone("Zone1");
         assertTrue(businessesInZone >= 0);
     }
 }
