@@ -12,7 +12,7 @@ import unibo.citysimulation.model.zone.Zone;
 import unibo.citysimulation.utilities.Pair;
 import unibo.citysimulation.view.WindowView;
 import unibo.citysimulation.view.map.MapPanel;
-import unibo.citysimulation.view.sidepanelsfffff.InfoPanel;
+import unibo.citysimulation.view.sidepanels.InfoPanel;
 
 import java.util.Objects;
 

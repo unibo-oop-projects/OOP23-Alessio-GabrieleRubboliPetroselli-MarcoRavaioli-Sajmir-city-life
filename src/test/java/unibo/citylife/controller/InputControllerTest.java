@@ -8,8 +8,8 @@ import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.InputModel;
 import unibo.citysimulation.model.clock.api.ClockModel;
 import unibo.citysimulation.model.map.api.MapModel;
-import unibo.citysimulation.view.sidepanelsfffff.InputPanel;
-import unibo.citysimulation.view.sidepanelsfffff.clock.ClockPanel;
+import unibo.citysimulation.view.sidepanels.InputPanel;
+import unibo.citysimulation.view.sidepanels.clock.ClockPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

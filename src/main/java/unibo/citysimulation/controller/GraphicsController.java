@@ -3,8 +3,8 @@ package unibo.citysimulation.controller;
 import unibo.citysimulation.model.CityModel;
 import unibo.citysimulation.model.clock.api.ClockObserver;
 import unibo.citysimulation.model.graphics.api.GraphicsModel;
-import unibo.citysimulation.view.sidepanelsfffff.graphics.GraphicsPanel;
-import unibo.citysimulation.view.sidepanelsfffff.graphics.LegendPanel;
+import unibo.citysimulation.view.sidepanels.graphics.GraphicsPanel;
+import unibo.citysimulation.view.sidepanels.graphics.LegendPanel;
 
 import java.time.LocalTime;
 import java.util.Objects;

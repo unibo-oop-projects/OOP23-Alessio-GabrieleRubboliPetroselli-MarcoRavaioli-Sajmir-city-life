@@ -1,4 +1,4 @@
-package unibo.citysimulation.view.sidepanelsfffff.graphics;
+package unibo.citysimulation.view.sidepanels.graphics;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
