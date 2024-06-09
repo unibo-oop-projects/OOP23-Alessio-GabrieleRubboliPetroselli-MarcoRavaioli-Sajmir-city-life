@@ -55,22 +55,16 @@ class TransportStrategyImplTest {
 
     @Test
     void testIncrementAndDecrementPersonsInLine() {
-        // Prendiamo una linea di trasporto dalla lista
         final TransportLine line = allLines.get(0);
 
-        // Verifichiamo che all'inizio non ci siano persone nella linea
         assertEquals(0, line.getPersonInLine());
 
-        // Incrementiamo il numero di persone nella linea
         transportStrategy.incrementPersonsInLine(List.of(line));
 
-        // Ora dovremmo avere una persona nella linea
         assertEquals(1, line.getPersonInLine());
 
-        // Decrementiamo il numero di persone nella linea
         transportStrategy.decrementPersonsInLine(List.of(line));
 
-        // Ora dovremmo tornare a zero persone nella linea
         assertEquals(0, line.getPersonInLine());
     }
 }

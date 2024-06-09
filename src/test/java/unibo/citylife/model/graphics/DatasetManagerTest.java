@@ -36,19 +36,16 @@ class DatasetManagerTest {
 
     @Test
     void testClearDatasets() {
-        // Simula alcuni aggiornamenti ai dataset per assicurarsi che contengano dati
         final List<Integer> peopleState = Arrays.asList(1, 2, 3);
         final List<Double> linesCongestion = Arrays.asList(1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7);
         final List<Integer> businessesOccupation = Arrays.asList(10, 20, 30);
         datasetManager.updateDataset(peopleState, linesCongestion, businessesOccupation);
 
-        // Pulisce i dataset
+        // clear the dataset
         datasetManager.clearDatasets();
 
-        // Recupera i dataset aggiornati
         final List<XYSeriesCollection> datasets = datasetManager.getDatasets();
 
-        // Verifica che ogni serie in ogni dataset sia vuota
         datasets.forEach(ds -> {
             for (int i = 0; i < ds.getSeriesCount(); i++) {
                 assertTrue(ds.getSeries(i).isEmpty(), "Series should be empty after clearing");
@@ -65,7 +62,6 @@ class DatasetManagerTest {
         datasetManager.updateDataset(peopleState, linesCongestion, businessesOccupation);
         final List<XYSeriesCollection> datasets = datasetManager.getDatasets();
 
-        // Verifica che i valori di peopleState siano correttamente aggiunti
         final XYSeriesCollection peopleDataset = datasets.get(0);
         for (int i = 0; i < peopleState.size(); i++) {
             final XYSeries series = peopleDataset.getSeries(i);
@@ -73,7 +69,6 @@ class DatasetManagerTest {
             assertEquals(peopleState.get(i), series.getY(1).intValue(), "Value should be " + linesCongestion.get(i));
         }
 
-        // Verifica che i valori di linesCongestion siano correttamente aggiunti
         final XYSeriesCollection congestionDataset = datasets.get(1);
         for (int i = 0; i < linesCongestion.size(); i++) {
             final XYSeries series = congestionDataset.getSeries(i);
