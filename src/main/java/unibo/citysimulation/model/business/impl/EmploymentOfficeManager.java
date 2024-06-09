@@ -144,10 +144,9 @@ public class EmploymentOfficeManager implements EmploymentOfficeBehavior {
     private int hirePeople(final Business business, final List<DynamicPerson> peopleToHire) {
         peopleToHire.forEach(person -> {
             final Employee employee = new Employee(person, business.getBusinessData());
-            if(business.hire(employee)){
+            business.hire(employee);
             employmentOffice.disoccupied().remove(person);
             person.setBusiness(Optional.of(business)); 
-            }    
         });    
         return peopleToHire.size();
     }
