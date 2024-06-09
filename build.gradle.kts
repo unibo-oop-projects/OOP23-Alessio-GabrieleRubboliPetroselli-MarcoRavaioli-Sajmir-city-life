@@ -56,7 +56,7 @@ dependencies {
  
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.citysimulation.SimulationLauncher")
+    mainClass.set("unibo.citysimulation.WelcomeScreen")
 }
 
 jacoco {

@@ -43,7 +43,7 @@ class ClockModelTest {
 
         assertEquals(clockModel.getCurrentDay(), 1);
 
-        assertEquals((Double) clockModel.getDoubleCurrentTime(), clockModel.getDoubleCurrentTime());
+        assertNotNull(clockModel.getDoubleCurrentTime());
 
         assertNotNull(clockModel.getTimer());
 
