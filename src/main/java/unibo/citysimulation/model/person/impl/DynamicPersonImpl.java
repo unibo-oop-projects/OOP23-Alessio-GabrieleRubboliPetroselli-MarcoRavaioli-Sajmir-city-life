@@ -2,10 +2,8 @@ package unibo.citysimulation.model.person.impl;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
-import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.DynamicPerson;
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.TransportStrategy;
@@ -20,8 +18,8 @@ public final class DynamicPersonImpl extends StaticPersonImpl implements Dynamic
     private PersonState lastDestination;
     private boolean late;
     private final Random random = new Random();
-    private int businessBegin;
-    private int businessEnd;
+    private final int businessBegin;
+    private final int businessEnd;
     private final TransportStrategy transportStrategy;
 
     /**
@@ -30,25 +28,23 @@ public final class DynamicPersonImpl extends StaticPersonImpl implements Dynamic
      * 
      * @param personData the data of the person.
      * @param money      the money of the person.
-     * @param business   the business where the person works.
      */
-    public DynamicPersonImpl(final PersonData personData, final int money, final Optional<Business> business) {
-        super(personData, money, business);
+    public DynamicPersonImpl(final PersonData personData, final int money) {
+        super(personData, money);
         this.lastDestination = PersonState.WORKING;
         this.late = false;
-        this.businessBegin = 0;
-        this.businessEnd = 0;
+        this.businessBegin = calculateUpdatedTime(super.getPersonData().business().getBusinessData().opLocalTime());
+        this.businessEnd = calculateUpdatedTime(super.getPersonData().business().getBusinessData().clLocalTime());
         this.transportStrategy = new TransportStrategyImpl();
     }
 
     private boolean shouldMove(final int currentTime, final int timeToMove, final int lineDuration) {
-        if (getTransportLine().length == 0) {
-            return false;
-        } else if (currentTime == timeToMove || late) {
+        if (currentTime == timeToMove || late) {
             if (transportStrategy.isCongested(List.of(getTransportLine()))) {
                 late = true;
                 return false;
             }
+
             this.lastArrivingTime = transportStrategy.calculateArrivalTime(currentTime, lineDuration);
             this.late = false;
             return true;
@@ -110,13 +106,19 @@ public final class DynamicPersonImpl extends StaticPersonImpl implements Dynamic
         this.updatePosition();
     }
 
+    /**
+     * @return the time when the person has to go to work, in seconds.
+     */
     @Override
-    public void setBusinessBegin(final LocalTime businessBegin) {
-        this.businessBegin = calculateUpdatedTime(businessBegin);
+    public int getBusinessBegin() {
+        return businessBegin;
     }
 
+    /**
+     * @return the time when the person has to go back home, in seconds.
+     */
     @Override
-    public void setBusinessEnd(final LocalTime businessEnd) {
-        this.businessEnd = calculateUpdatedTime(businessEnd);
+    public int getBusinessEnd() {
+        return businessEnd;
     }
 }

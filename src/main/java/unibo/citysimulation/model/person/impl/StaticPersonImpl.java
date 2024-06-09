@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.Arrays;
 import java.util.Random;
 
-import unibo.citysimulation.model.business.impl.Business;
 import unibo.citysimulation.model.person.api.PersonData;
 import unibo.citysimulation.model.person.api.StaticPerson;
 import unibo.citysimulation.model.transport.api.TransportLine;
@@ -24,23 +23,20 @@ public class StaticPersonImpl implements StaticPerson {
     private TransportLine[] transportLine;
     private int tripDuration;
     private static final Random RANDOM = new Random();
-    private Optional<Business> business;
 
     /**
      * Constructs a new static person with the given person data and money.
      * 
      * @param personData the data of the person.
      * @param money      the money of the person.
-     * @param business   the business where the person works.
      */
-    public StaticPersonImpl(final PersonData personData, final double money, final Optional<Business> business) {
+    public StaticPersonImpl(final PersonData personData, final double money) {
         this.personData = personData;
         this.money = money;
         this.state = PersonState.AT_HOME;
         this.homePosition = personData.residenceZone().getRandomPosition();
         this.position = Optional.of(homePosition);
-        this.business = business;
-        calculateTrip();
+        this.calculateTrip();
     }
 
     /**
@@ -90,8 +86,7 @@ public class StaticPersonImpl implements StaticPerson {
      * 
      * @param state the new state of the person.
      */
-    @Override
-    public void setState(final PersonState state) {
+    protected void setState(final PersonState state) {
         this.state = state;
     }
 
@@ -120,12 +115,10 @@ public class StaticPersonImpl implements StaticPerson {
                 this.position = Optional.empty();
                 break;
             case WORKING:
-                business.ifPresent(b -> {
-                    final Pair<Integer, Integer> businessPosition = b.getBusinessData().position();
-                    final int newX = businessPosition.getFirst() + getRandomDeviation();
-                    final int newY = businessPosition.getSecond() + getRandomDeviation();
-                    this.position = Optional.of(new Pair<>(newX, newY));
-                });
+                final Pair<Integer, Integer> businessPosition = personData.business().getBusinessData().position();
+                final int newX = businessPosition.getFirst() + getRandomDeviation();
+                final int newY = businessPosition.getSecond() + getRandomDeviation();
+                this.position = Optional.of(new Pair<>(newX, newY));
                 break;
             case AT_HOME:
                 this.position = Optional.of(homePosition);
@@ -144,45 +137,12 @@ public class StaticPersonImpl implements StaticPerson {
                 - ConstantAndResourceLoader.MAX_DEVIATION_OFFSET;
     }
 
-    /**
-     * Calculates the trip details for the person.
-     * If the person has a business, it retrieves the transport line and trip
-     * duration
-     * based on the residence zone and business zone using the ZoneTable.
-     * If the person does not have a business, it sets the transport line to an
-     * empty array
-     * and trip duration to 0.
-     */
     private void calculateTrip() {
-        if (this.business.isPresent()) {
-            this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(),
-                    business.get().getBusinessData().zone());
-            tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
-        } else {
-            this.transportLine = new TransportLine[0];
-            tripDuration = 0;
+        this.transportLine = ZoneTable.getInstance().getTransportLine(personData.residenceZone(),
+                personData.business().getBusinessData().zone());
+        if (this.transportLine == null) {
+            throw new IllegalStateException("No transport line found between the given zones.");
         }
-    }
-
-    /**
-     * Returns the business associated with this person.
-     *
-     * @return an Optional containing the business associated with this person,
-     *         or an empty Optional if no business is associated.
-     */
-    @Override
-    public final Optional<Business> getBusiness() {
-        return this.business;
-    }
-
-    /**
-     * Sets the business for this person and calculates the trip details.
-     * 
-     * @param business the optional business to set for this person
-     */
-    @Override
-    public final void setBusiness(final Optional<Business> business) {
-        this.business = business;
-        calculateTrip();
+        tripDuration = ZoneTable.getInstance().getTripDuration(transportLine);
     }
 }
